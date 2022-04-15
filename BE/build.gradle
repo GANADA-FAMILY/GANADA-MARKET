@@ -1,0 +1,52 @@
+buildscript {
+	ext{
+		queryDslVersion = "5.0.0"
+	}
+}
+
+plugins {
+	id 'org.springframework.boot' version '2.4.5'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.marketganada'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	// spring-boot-starter
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	//db
+	runtimeOnly("mysql:mysql-connector-java")
+
+	// lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// swagger
+	implementation "io.springfox:springfox-boot-starter:3.0.0"	// swagger2와 swagger-ui 포함되어 있음
+	implementation("io.swagger:swagger-annotations:1.5.21")
+	implementation("io.swagger:swagger-models:1.5.21")
+
+
+	// querydsl
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
