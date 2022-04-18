@@ -28,7 +28,7 @@ const routes = Object.keys(ROUTES).map((route) => {
 export const Routing = () => {
   const App = preserved?.["_app"] || Fragment;
   const NotFound = preserved?.["404"] || Fragment;
-
+  console.log(Object.getOwnPropertyNames(preserved));
   return (
     <App>
       <Suspense fallback={"Loading..."}>
@@ -36,7 +36,7 @@ export const Routing = () => {
           {routes.map(({ path, component: Component = Fragment }) => (
             <Route key={path} path={path} element={<Component />} />
           ))}
-          <Route path="*" element={NotFound}></Route>
+          <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </Suspense>
     </App>

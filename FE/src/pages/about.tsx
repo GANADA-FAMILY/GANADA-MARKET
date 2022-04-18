@@ -1,7 +1,7 @@
 import React from "react";
 
 const moon = () => {
-  return <div>moon</div>;
+  return <div>about</div>;
 };
 
 export default moon;
