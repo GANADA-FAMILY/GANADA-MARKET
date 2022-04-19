@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
+
+/* 메인 컨텐츠는 좌우 패딩 40px, 내용은 1200px로 맞춰주세요 */
+
+*,
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: inherit;
+}
+
+html {
+  /* 1rem = 16px font-size: 100% */
+  /* 1rem = 10px */
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Noto Sans KR", sans-serif;
+  line-height: 1;
+  font-weight: 400;
+  color: var(--color-grey-dark-3);
+}
