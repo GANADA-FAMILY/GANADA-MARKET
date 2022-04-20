@@ -6,7 +6,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/testdb?useUniCode=yes&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/ganada?useUniCode=yes&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
     username: ssafy
     password: ssafy
   jpa:
