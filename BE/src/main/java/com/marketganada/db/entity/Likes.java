@@ -10,17 +10,18 @@ import javax.persistence.*;
 @Getter
 @DynamicInsert
 @DynamicUpdate
-@Table(name="CategorySmall")
-public class CategorySmall {
+@Table(name="Likes")
+public class Likes {
     @Id
-    @Column(name = "category_id")
+    @Column(name = "like_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long categoryId;
-
-    @Column(name = "name", columnDefinition = "varchar(20)")
-    private String categoryLarge;
+    private Long likeId;
 
     @ManyToOne
-    @JoinColumn(name = "category_L")
-    private CategoryLarge categoryL;
+    @JoinColumn(name = "auction_id")
+    private Auction auction;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

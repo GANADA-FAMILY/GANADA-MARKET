@@ -23,4 +23,8 @@ public class ProductHistory {
 
     @Column(name = "price", columnDefinition = "int")
     private String historyPrice;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 }

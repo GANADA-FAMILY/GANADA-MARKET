@@ -31,4 +31,8 @@ public class AddressBook {
 
     @Column(name = "address_detail", columnDefinition = "varchar(100)")
     private String addressDetail;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

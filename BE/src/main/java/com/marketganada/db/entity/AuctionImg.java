@@ -19,4 +19,8 @@ public class AuctionImg {
 
     @Column(name = "img_url", columnDefinition = "varchar(500)")
     private String imgUrl;
+
+    @ManyToOne
+    @JoinColumn(name = "auction_id")
+    private Auction auction;
 }

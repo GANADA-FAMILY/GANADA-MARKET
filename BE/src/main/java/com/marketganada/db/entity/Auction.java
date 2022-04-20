@@ -44,4 +44,12 @@ public class Auction {
 
     @Column(name = "like_cnt", columnDefinition = "int")
     private int likeCnt;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User seller;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 }

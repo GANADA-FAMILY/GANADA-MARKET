@@ -35,4 +35,12 @@ public class Product {
 
     @Column(name = "release_price", columnDefinition = "int")
     private String releasePrice;
+
+    @ManyToOne
+    @JoinColumn(name = "category_l")
+    private CategoryLarge categoryL;
+
+    @ManyToOne
+    @JoinColumn(name = "category_s")
+    private CategorySmall categoryS;
 }

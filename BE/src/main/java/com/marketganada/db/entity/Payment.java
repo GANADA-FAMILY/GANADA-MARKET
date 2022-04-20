@@ -47,4 +47,12 @@ public class Payment {
 
     @Column(name = "address_detail", columnDefinition = "varchar(100)")
     private String addressDetail;
+
+    @ManyToOne
+    @JoinColumn(name = "buyer_id")
+    private User buyer;
+
+    @ManyToOne
+    @JoinColumn(name = "auction_id")
+    private Auction auction;
 }
