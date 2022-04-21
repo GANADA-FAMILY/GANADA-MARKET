@@ -6,6 +6,8 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -17,6 +19,14 @@ public class Auction {
     @Column(name = "auction_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long auctionId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     @Column(name = "title", columnDefinition = "varchar(50)")
     private String auctionTitle;
@@ -45,11 +55,12 @@ public class Auction {
     @Column(name = "like_cnt", columnDefinition = "int")
     private int likeCnt;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User seller;
+    @OneToOne(mappedBy = "auction", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Payment payment = new Payment();
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @OneToMany(mappedBy = "auction", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    Set<Likes> likes = new HashSet<>();
+
+    @OneToMany(mappedBy = "auction", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    Set<AuctionImg> auctionImgs = new HashSet<>();
 }

@@ -12,19 +12,23 @@ import java.util.Set;
 @Getter
 @DynamicInsert
 @DynamicUpdate
-@Table(name="CategoryLarge")
-public class CategoryLarge {
+@Table(name="CategoryMiddle")
+public class CategoryMiddle {
     @Id
-    @Column(name = "category_large_id")
+    @Column(name = "category_middle_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long categoryLargeId;
+    private Long categoryMiddleId;
 
     @Column(name = "name", columnDefinition = "varchar(20)")
     private String name;
 
-    @OneToMany(mappedBy = "categoryLarge", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    Set<CategoryMiddle> categoryMiddles = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "category_large_id")
+    private CategoryLarge categoryLarge;
 
-    @OneToMany(mappedBy = "categoryLarge", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "categoryMiddle", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    Set<CategorySmall> categorySmalls = new HashSet<>();
+
+    @OneToMany(mappedBy = "categoryMiddle", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     Set<Product> products = new HashSet<>();
 }

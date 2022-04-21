@@ -50,9 +50,9 @@ public class Payment {
 
     @ManyToOne
     @JoinColumn(name = "buyer_id")
-    private User buyer;
+    private User user;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "auction_id")
     private Auction auction;
 }

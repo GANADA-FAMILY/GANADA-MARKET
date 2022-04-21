@@ -6,6 +6,8 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -17,6 +19,18 @@ public class Product {
     @Column(name = "product_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
+
+    @ManyToOne
+    @JoinColumn(name = "category_large_id")
+    private CategoryLarge categoryLarge;
+
+    @ManyToOne
+    @JoinColumn(name = "category_middle_id")
+    private CategorySmall categoryMiddle;
+
+    @ManyToOne
+    @JoinColumn(name = "category_small_id")
+    private CategorySmall categorySmall;
 
     @Column(name = "name", columnDefinition = "varchar(50)")
     private String productName;
@@ -36,11 +50,9 @@ public class Product {
     @Column(name = "release_price", columnDefinition = "int")
     private String releasePrice;
 
-    @ManyToOne
-    @JoinColumn(name = "category_l")
-    private CategoryLarge categoryL;
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    Set<Auction> auctions = new HashSet<>();
 
-    @ManyToOne
-    @JoinColumn(name = "category_s")
-    private CategorySmall categoryS;
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    Set<ProductHistory> productHistories = new HashSet<>();
 }
