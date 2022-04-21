@@ -1,4 +1,4 @@
-import styled, { StyledComponent } from "@emotion/styled";
+import styled from "@emotion/styled";
 import { CSSProperties, ReactNode } from "react";
 
 interface MenuProps{
@@ -6,8 +6,7 @@ interface MenuProps{
     className?: string;
     mode?: string;
     style?: CSSProperties;
-    title: string;
-    titleStyle?: any;
+    title?: string;
 }
 
 const Menu : React.FC<MenuProps>= ({
@@ -16,7 +15,6 @@ const Menu : React.FC<MenuProps>= ({
     mode,
     style,
     title,
-    titleStyle,
     ...rest
 })=>{
     return (
@@ -27,13 +25,10 @@ const Menu : React.FC<MenuProps>= ({
         }}
         {...rest}
     >
-        <MenuTitle
-            style={titleStyle}
-        >
+        <MenuTitle>
             {title}
         </MenuTitle>
-        <MenuList
-        >
+        <MenuList>
             {children}
         </MenuList>
     </Molecule>
