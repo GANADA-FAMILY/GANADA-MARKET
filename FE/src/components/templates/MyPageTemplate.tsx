@@ -1,15 +1,22 @@
-import MyHomeContainer from "../organisms/my/MyHomeContainer";
-import MyPurchaseContainer from "../organisms/my/MyPurchaseContainer";
+import styled from "@emotion/styled";
+import { ReactNode } from "react";
 import SideNavBarContainer from "../organisms/my/SideNavBarContainer";
 
-const MyPageTemplate = () =>{
+interface MyPageTemplateProps{
+    children?: ReactNode;
+    element: React.ReactNode;
+}
+
+const MyPageTemplate : React.FC<MyPageTemplateProps>= ({element}) =>{
     return(
-        <>
+        <Template>
             <SideNavBarContainer/>
-            <MyHomeContainer/>
-            <MyPurchaseContainer/>
-        </>
+            {element}
+        </Template>
     );
 }
+const Template = styled.div`
+
+`;
 
 export default MyPageTemplate;

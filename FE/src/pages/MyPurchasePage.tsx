@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
-import MyHomeContainer from '../components/organisms/my/MyHomeContainer';
+import MyPurchaseContainer from '../components/organisms/my/MyPurchaseContainer';
 import MyPageTemplate from '../components/templates/MyPageTemplate';
 
-const MyPage = () => {
+const MyPurchasePage = () => {
   return (
       <MainContainer>
-        <MyPageTemplate element={<MyHomeContainer/>}/>
+        <MyPageTemplate element={<MyPurchaseContainer/>}/>
       </MainContainer>
   );
 };
@@ -18,4 +18,4 @@ const MainContainer = styled.div`
 
 
 
-export default MyPage;
+export default MyPurchasePage;

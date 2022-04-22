@@ -4,6 +4,7 @@ import Loading from "./components/Loading";
 
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 const MyPage = React.lazy(() => import("./pages/MyPage"));
+const MyPurchasePage = React.lazy(()=> import("./pages/MyPurchasePage"));
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/my" element={<MyPage />} />
+          <Route path="/my/buying" element={<MyPurchasePage />} />
         </Routes>
       </React.Suspense>
     </Router>

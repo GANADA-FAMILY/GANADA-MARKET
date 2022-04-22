@@ -2,14 +2,19 @@ import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import Menu from "../../molecules/my/Menu";
 import MenuItem from "../../atoms/my/MenuItem";
+import { useEffect, useState } from "react";
 
 const SideNavBarContainer = () =>{
+    const [index, setIndex] = useState(0);
+    const onClickHandler = (e: React.MouseEvent<HTMLElement>)=>{
+        console.log(e);
+    }
     return(
         <Container>
+                <Link to="/my" onClick={onClickHandler}><SideBarMainTitle>마이 페이지</SideBarMainTitle></Link>
             <SideNavBar>
-                <Link to="/my"><SideBarMainTitle>마이 페이지</SideBarMainTitle></Link>
                 <Menu title="쇼핑 정보">
-                    <MenuItem><Link to ="/my/buying">구매 내역</Link></MenuItem>
+                    <MenuItem onClick={onClickHandler}><Link to ="/my/buying">구매 내역</Link></MenuItem>
                     <MenuItem><Link to ="/my/selling">판매 내역</Link></MenuItem>
                     <MenuItem><Link to ="/my/wish">관심 내역</Link></MenuItem>
                 </Menu>
@@ -29,6 +34,19 @@ const Container = styled.div`
     float: left;
     width: 180px;
     margin-right: 20px;
+    a{
+    text-decoration: none;
+    color: inherit;
+    }
+    div strong{
+        line-height: 22px;
+        margin-bottom: 12px;
+        display: inline-block;
+        vertical-align: top;
+        font-size: 18px;
+        letter-spacing: -.27px;
+        font-weight: 700;
+    }
 `
 
 const SideBarMainTitle = styled.h2`
@@ -40,25 +58,12 @@ const SideBarMainTitle = styled.h2`
     letter-spacing: -.15px;
     text-decoration: none;
 `
-const SideNavBar = styled.div`
-    a{
-    text-decoration: none;
-    color: inherit;
-    }
+const SideNavBar = styled.nav`
     div + div {
         margin-top: 40px
     }
     li + li{
         margin-top: 12px
-    }
-    div strong{
-        line-height: 22px;
-        margin-bottom: 12px;
-        display: inline-block;
-        vertical-align: top;
-        font-size: 18px;
-        letter-spacing: -.27px;
-        font-weight: 700;
     }
     li a{
         line-height: 18px;
