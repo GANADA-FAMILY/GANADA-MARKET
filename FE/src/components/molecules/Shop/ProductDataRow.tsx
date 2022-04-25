@@ -12,24 +12,25 @@ function ProductDataRow({ row }: ProductDataRowT): JSX.Element {
 
   const [state, setState] = useState([false, false]);
 
-  useEffect(() => {}, [state]);
+  const toggleLink = (num: number) => {
+    const list = state.map((el: boolean, idx: number) =>
+      idx === num ? !el : el,
+    );
+    setState(list);
+  };
+
+  // useEffect(() => {}, [state]);
 
   return (
     <>
       <Text>브랜드</Text>
-      <LinkTag onClick={(isClick) => !isClick} isClick={false}>
+      <LinkTag onClick={() => toggleLink(0)} isClick={state[0]}>
         Apple
       </LinkTag>
-      <LinkTag
-        onClick={() =>
-          setState((prev) => {
-            prev[1] = !prev[1];
-          })
-        }
-        isClick={state[1]}
-      >
+      <LinkTag onClick={() => toggleLink(1)} isClick={state[1]}>
         Samsung
       </LinkTag>
+      <div>state {state}</div>
     </>
   );
 }
