@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button Button Component Snapshot 1`] = `
+.emotion-0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: pointer;
+  outline: none;
+  -webkit-flex: auto;
+  -ms-flex: auto;
+  flex: auto;
+  border: 0.7px solid black;
+  color: black;
+}
+
+.emotion-0.small {
+  padding: 7px 7px;
+  font-size: 1rem;
+}
+
+.emotion-0.normal {
+  padding: 10px 10px;
+  font-size: 1.2rem;
+}
+
+.emotion-0.big {
+  padding: 14px 14px;
+  font-size: 1.4rem;
+}
+
+.emotion-0::after {
+  content: "";
+  display: none;
+  background-color: #dfe0e5;
+  width: 0.1rem;
+  height: 1.6rem;
+}
+
+<button
+  className="2em normal emotion-0"
+  color="black"
+  onClick={[Function]}
+  size="2em"
+  type="button"
+>
+  버튼
+</button>
+`;
