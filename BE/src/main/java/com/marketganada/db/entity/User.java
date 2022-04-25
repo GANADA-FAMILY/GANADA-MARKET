@@ -1,7 +1,10 @@
 package com.marketganada.db.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
+
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -12,6 +15,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @DynamicInsert
 @DynamicUpdate
 @Table(name="User")
@@ -62,4 +66,29 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     Set<Payment> payments = new HashSet<>();
+
+    @Builder
+    public User(String _userEmail, String _userPw, String _userNickname, String _userPhone) {
+        userEmail = _userEmail;
+        userPw = _userPw;
+        userNickname = _userNickname;
+        userPhone = _userPw;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", profileImageUrl='" + profileImageUrl + '\'' +
+                ", userEmail='" + userEmail + '\'' +
+                ", userPw='" + userPw + '\'' +
+                ", userNickname='" + userNickname + '\'' +
+                ", userPhone='" + userPhone + '\'' +
+                ", userType=" + userType +
+                ", bank='" + bank + '\'' +
+                ", bankNum='" + bankNum + '\'' +
+                ", role='" + role + '\'' +
+                ", grade='" + grade + '\'' +
+                '}';
+    }
 }
