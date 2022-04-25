@@ -1,6 +1,8 @@
 package com.marketganada.db.entity;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -9,6 +11,7 @@ import java.io.Serializable;
 
 @Entity
 @Getter
+@NoArgsConstructor
 @DynamicInsert
 @DynamicUpdate
 @IdClass(LikesId.class)
@@ -23,4 +26,10 @@ public class Likes implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Builder
+    public Likes(Auction auction, User user) {
+        this.auction = auction;
+        this.user = user;
+    }
 }

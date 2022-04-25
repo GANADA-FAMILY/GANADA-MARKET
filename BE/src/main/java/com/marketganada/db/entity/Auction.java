@@ -1,6 +1,8 @@
 package com.marketganada.db.entity;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -11,6 +13,7 @@ import java.util.Set;
 
 @Entity
 @Getter
+@NoArgsConstructor
 @DynamicInsert
 @DynamicUpdate
 @Table(name="Auction")
@@ -50,7 +53,7 @@ public class Auction {
     private int depreciation;
 
     @Column(name = "status", columnDefinition = "boolean")
-    private int auctionStatus;
+    private boolean auctionStatus;
 
     @Column(name = "like_cnt", columnDefinition = "int")
     private int likeCnt;
@@ -63,4 +66,20 @@ public class Auction {
 
     @OneToMany(mappedBy = "auction", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     Set<AuctionImg> auctionImgs = new HashSet<>();
+
+    @Builder
+
+    public Auction(User user, Product product, String auctionTitle, String description, Date startTime, Date endTime, int startPrice, Date cycle, int depreciation, boolean auctionStatus, int likeCnt) {
+        this.user = user;
+        this.product = product;
+        this.auctionTitle = auctionTitle;
+        this.description = description;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.startPrice = startPrice;
+        this.cycle = cycle;
+        this.depreciation = depreciation;
+        this.auctionStatus = auctionStatus;
+        this.likeCnt = likeCnt;
+    }
 }

@@ -1,6 +1,8 @@
 package com.marketganada.db.entity;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -8,6 +10,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
+@NoArgsConstructor
 @DynamicInsert
 @DynamicUpdate
 @Table(name="AddressBook")
@@ -35,4 +38,14 @@ public class AddressBook {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Builder
+    public AddressBook(String addressName, String addressPhone, String postalCode, String address, String addressDetail, User user) {
+        this.addressName = addressName;
+        this.addressPhone = addressPhone;
+        this.postalCode = postalCode;
+        this.address = address;
+        this.addressDetail = addressDetail;
+        this.user = user;
+    }
 }
