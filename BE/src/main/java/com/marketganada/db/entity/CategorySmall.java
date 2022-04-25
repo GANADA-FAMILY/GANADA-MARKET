@@ -1,6 +1,8 @@
 package com.marketganada.db.entity;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -10,6 +12,7 @@ import java.util.Set;
 
 @Entity
 @Getter
+@NoArgsConstructor
 @DynamicInsert
 @DynamicUpdate
 @Table(name="CategorySmall")
@@ -28,4 +31,20 @@ public class CategorySmall {
 
     @OneToMany(mappedBy = "categorySmall", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     Set<Product> products = new HashSet<>();
+
+    @Builder
+    public CategorySmall(String name, CategoryMiddle categoryMiddle) {
+        this.name = name;
+        this.categoryMiddle = categoryMiddle;
+    }
+
+    @Override
+    public String toString() {
+        return "CategorySmall{" +
+                "categorySmallId=" + categorySmallId +
+                ", name='" + name + '\'' +
+                ", categoryMiddle=" + categoryMiddle +
+                ", products=" + products +
+                '}';
+    }
 }

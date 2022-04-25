@@ -1,6 +1,8 @@
 package com.marketganada.db.entity;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -9,6 +11,7 @@ import java.util.Date;
 
 @Entity
 @Getter
+@NoArgsConstructor
 @DynamicInsert
 @DynamicUpdate
 @Table(name="ProductHistory")
@@ -22,9 +25,16 @@ public class ProductHistory {
     private Date historyDate;
 
     @Column(name = "price", columnDefinition = "int")
-    private String historyPrice;
+    private int historyPrice;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+
+    @Builder
+    public ProductHistory(Date historyDate, int historyPrice, Product product) {
+        this.historyDate = historyDate;
+        this.historyPrice = historyPrice;
+        this.product = product;
+    }
 }
