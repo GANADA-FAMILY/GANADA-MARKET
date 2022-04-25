@@ -7,16 +7,22 @@ interface MyPageTemplateProps{
     element: React.ReactNode;
 }
 
-const MyPageTemplate : React.FC<MyPageTemplateProps>= ({element}) =>{
+function MyPageTemplate({element}: MyPageTemplateProps){
     return(
         <Template>
             <SideNavBarContainer/>
-            {element}
+            <ContentContainer>
+                {element}
+            </ContentContainer>
         </Template>
     );
 }
 const Template = styled.div`
 
+`;
+const ContentContainer = styled.div`
+    overflow: hidden;
+    min-height: 380px;
 `;
 
 export default MyPageTemplate;

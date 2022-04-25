@@ -9,14 +9,14 @@ interface MenuProps{
     title?: string;
 }
 
-const Menu : React.FC<MenuProps>= ({
+function Menu({
     children,
     className,
     mode,
     style,
     title,
     ...rest
-})=>{
+} : MenuProps){
     return (
     <Molecule
         className={className}

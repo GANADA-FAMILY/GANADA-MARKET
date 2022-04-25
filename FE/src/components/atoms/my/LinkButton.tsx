@@ -9,18 +9,18 @@ interface ButtonProps{
     href : string;
 }
 
-const LinkButton : React.FC<ButtonProps>= ({children, href, ...rest}) => {
+function LinkButton({children, href, ...rest} : ButtonProps){
     return(
-        <StyledLinkButton 
+        <Atom 
         to={{pathname : href,}}
         {...rest}
         >
             {children}
-        </StyledLinkButton>
+        </Atom>
     )
 };
 
-const StyledLinkButton = styled(Link)`
+const Atom = styled(Link)`
     margin-top: 12px;
     -ms-flex-item-align: start;
     align-self: flex-start;

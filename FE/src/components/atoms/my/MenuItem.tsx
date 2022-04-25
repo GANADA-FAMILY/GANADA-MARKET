@@ -9,14 +9,14 @@ interface MenuItemProps{
     onClick?: React.MouseEventHandler<HTMLElement>,
     selected?: boolean,
 }
-const MenuItem : React.FC<MenuItemProps> = ({
+function MenuItem({
     children,
     className,
     disabled,
     onClick,
     selected,
     ...rest
-})=>{
+}: MenuItemProps){
     return (<>
         <Atom
             className={className}

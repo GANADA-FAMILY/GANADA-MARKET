@@ -4,7 +4,7 @@ import Menu from "../../molecules/my/Menu";
 import MenuItem from "../../atoms/my/MenuItem";
 import { useEffect, useState } from "react";
 
-const SideNavBarContainer = () =>{
+function SideNavBarContainer(){
     const [index, setIndex] = useState(0);
     const onClickHandler = (e: React.MouseEvent<HTMLElement>)=>{
         console.log(e);
