@@ -21,6 +21,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public String login(UserLoginRequest userLoginRequest) {
         Optional<User> user = userRepository.findByUserEmail(userLoginRequest.getUserEmail());
+
         if(!user.isPresent()){
             return "fail1";
         }
@@ -36,4 +37,6 @@ public class UserServiceImpl implements UserService{
         Optional<User> user = userRepository.findByUserEmail(userEmail);
         return user;
     }
+
+
 }

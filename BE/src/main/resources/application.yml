@@ -22,5 +22,6 @@ spring:
 # jwt
 jwt:
   secret : GanadaHub98c7WfOzFB6XEQeQj1fzRlVgTxNL8PYh1b1iymZwvqzpMEU7EJkim
+  #unit is ms. 1 * 24 * 60 * 60 * 1000 = 1 days
   expiration : 86400000
 

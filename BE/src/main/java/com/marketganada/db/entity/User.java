@@ -1,6 +1,7 @@
 package com.marketganada.db.entity;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Entity
 @Getter
+@Setter
 @DynamicInsert
 @DynamicUpdate
 @Table(name="User")

@@ -39,4 +39,5 @@ public class AuthController {
 
         return ResponseEntity.ok(UserLoginResponse.of(200,"Success", JwtTokenUtil.getToken(userLoginRequest.getUserEmail())));
     }
+
 }
