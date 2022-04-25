@@ -1,6 +1,8 @@
 package com.marketganada.db.entity;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -9,6 +11,7 @@ import java.util.Date;
 
 @Entity
 @Getter
+@NoArgsConstructor
 @DynamicInsert
 @DynamicUpdate
 @Table(name="Payment")
@@ -19,10 +22,10 @@ public class Payment {
     private Long paymentId;
 
     @Column(name = "price", columnDefinition = "int")
-    private String price;
+    private int price;
 
     @Column(name = "status", columnDefinition = "int")
-    private String releasePrice;
+    private int status;
 
     @Column(name = "tracking_num", columnDefinition = "varchar(20)")
     private String trackingNum;
@@ -55,4 +58,19 @@ public class Payment {
     @OneToOne
     @JoinColumn(name = "auction_id")
     private Auction auction;
+
+    @Builder
+    public Payment(int price, int status, String paymentMethod, Date tradeDate, String buyerName, String phone, String postalCode, String address, String addressDetail, User user, Auction auction) {
+        this.price = price;
+        this.status = status;
+        this.paymentMethod = paymentMethod;
+        this.tradeDate = tradeDate;
+        this.buyerName = buyerName;
+        this.phone = phone;
+        this.postalCode = postalCode;
+        this.address = address;
+        this.addressDetail = addressDetail;
+        this.user = user;
+        this.auction = auction;
+    }
 }
