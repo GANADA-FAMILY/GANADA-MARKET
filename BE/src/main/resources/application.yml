@@ -16,4 +16,11 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+
+
+# jwt
+jwt:
+  secret : GanadaHub98c7WfOzFB6XEQeQj1fzRlVgTxNL8PYh1b1iymZwvqzpMEU7EJkim
+  expiration : 86400000
 

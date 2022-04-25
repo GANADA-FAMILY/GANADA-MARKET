@@ -19,10 +19,11 @@ public class GanadaUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println("확인");
+
         Optional<User> user = userRepository.findByUserEmail(username);
         if(user.isPresent()){
             GanadaUserDetails userDetails = new GanadaUserDetails(user.get());
+            System.out.println("확인");
             return userDetails;
         }
 

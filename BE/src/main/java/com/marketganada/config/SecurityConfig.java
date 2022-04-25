@@ -2,6 +2,7 @@ package com.marketganada.config;
 
 import com.marketganada.api.service.UserService;
 import com.marketganada.common.auth.GanadaUserDetailService;
+import com.marketganada.common.auth.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -29,8 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     GanadaUserDetailService ganadaUserDetailService;
 
-//    @Autowired
-//    private UserService userService;
+    @Autowired
+    private UserService userService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -56,9 +57,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)// 토큰 기반 인증이므로 세션 사용 하지않음
                 .and()
-                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)//@CrossOrigin(인증을 안쓸때), 인증을 타는 모든 요청은 필터에 등록을 해줘야함
+                .addFilter(corsFilter)//@CrossOrigin(인증을 안쓸때), 인증을 타는 모든 요청은 필터에 등록을 해줘야함
                 .formLogin().disable()
                 .httpBasic().disable()
+                .addFilter(new JwtAuthenticationFilter(authenticationManager(), userService)) //HTTP 요청에 JWT 토큰 인증 필터를 거치도록 필터를 추가
                 .authorizeRequests()
                 .antMatchers("/api/user/**")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")

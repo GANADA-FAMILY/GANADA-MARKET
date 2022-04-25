@@ -5,20 +5,18 @@ import com.marketganada.api.request.UserLoginRequest;
 import com.marketganada.api.response.UserLoginResponse;
 import com.marketganada.api.service.UserService;
 import com.marketganada.common.auth.GanadaUserDetails;
+import com.marketganada.common.auth.JwtTokenUtil;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Api(value = "인증 API", tags = {"Auth."})
-@RestController("/api/auth")
+@RestController
+@RequestMapping("/api/auth")
 public class AuthController {
 
     @Autowired
@@ -39,6 +37,6 @@ public class AuthController {
             return ResponseEntity.status(401).body(UserLoginResponse.of(401,"비밀번호를 확인 해 주세요.",null));
         }
 
-        return ResponseEntity.ok(UserLoginResponse.of(200,"Success","asdasd"));
+        return ResponseEntity.ok(UserLoginResponse.of(200,"Success", JwtTokenUtil.getToken(userLoginRequest.getUserEmail())));
     }
 }
