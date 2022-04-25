@@ -31,7 +31,7 @@ public class User {
     @Column(name = "user_email", columnDefinition = "varchar(30)")
     private String userEmail;
 
-    @Column(name = "user_pw", columnDefinition = "varchar(20)")
+    @Column(name = "user_pw", columnDefinition = "varchar(100)")
     private String userPw;
 
     @Column(name = "user_nickname", columnDefinition = "varchar(20)")
