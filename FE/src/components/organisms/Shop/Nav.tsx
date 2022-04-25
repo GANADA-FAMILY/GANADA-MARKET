@@ -1,7 +1,7 @@
-import React from "react";
-import NavFilter from "../../molecules/Shop/NavFilter";
-import NavTitle from "../../molecules/Shop/NavTitle";
-import FlexContainer from "../../templates/FlexContainer";
+import React from 'react';
+import NavFilter from '../../molecules/Shop/NavFilter';
+import NavTitle from '../../molecules/Shop/NavTitle';
+import FlexContainer from '../../templates/Shop/FlexContainer';
 
 interface NavProps {
   initialData: string;
@@ -9,13 +9,13 @@ interface NavProps {
   setState: (state: string) => void;
 }
 
-const Nav = ({ initialData, count, setState }: NavProps) => {
+function Nav({ initialData, count, setState }: NavProps): JSX.Element {
   return (
     <FlexContainer>
       <NavTitle title={initialData} count={count} />
       <NavFilter setState={setState} />
     </FlexContainer>
   );
-};
+}
 
 export default Nav;
