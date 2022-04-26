@@ -44,6 +44,11 @@ dependencies {
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
 
+	//ssh 터널링
+	implementation 'com.jcraft:jsch:0.1.54'
+
+	// jwt
+	implementation("com.auth0:java-jwt:3.10.3")
 
 }
 
