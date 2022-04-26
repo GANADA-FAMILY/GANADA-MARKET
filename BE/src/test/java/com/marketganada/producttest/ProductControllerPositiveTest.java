@@ -64,7 +64,7 @@ public class ProductControllerPositiveTest {
 
 	private String getAccessToken() throws Exception {
 		UserLoginRequest userLogin = new UserLoginRequest();
-		userLogin.setUserEmail("test@ssafy.com");
+		userLogin.setUserEmail("tttt@test.com");
 		userLogin.setUserPw("test123!@#");
 
 		ResultActions result = mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/login")
@@ -72,7 +72,7 @@ public class ProductControllerPositiveTest {
 				.contentType("application/json")
 				.content((new JSONObject(oMapper.writeValueAsString(userLogin)).toString())));
 
-		return new JSONObject(result.andReturn().getResponse().getContentAsString()).getString("accessToken");
+		return new JSONObject(result.andReturn().getResponse().getContentAsString()).getString("token");
 	}
 
 	@Test
