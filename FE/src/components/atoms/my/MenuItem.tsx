@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import styled from '@emotion/styled';
 import React from 'react';
 
@@ -28,11 +29,8 @@ const Atom = styled.li``;
 MenuItem.defaultProps = {
   className: '',
   disabled: false,
-  onClick: noop,
+  onClick: () => {},
   selected: false,
 };
 
-function noop() {
-  return null;
-}
 export default MenuItem;
