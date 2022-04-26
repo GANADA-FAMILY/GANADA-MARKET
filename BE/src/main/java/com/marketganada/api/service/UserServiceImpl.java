@@ -1,6 +1,7 @@
 package com.marketganada.api.service;
 
 import com.marketganada.api.request.UserLoginRequest;
+import com.marketganada.api.request.UserSignUpRequest;
 import com.marketganada.db.entity.User;
 import com.marketganada.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,18 @@ public class UserServiceImpl implements UserService{
             return "fail2";
         }
 
+        return "success";
+    }
+
+    @Override
+    public String insertUser(UserSignUpRequest userSignUpRequest) {
+        User user = new User();
+        user.setUserEmail(userSignUpRequest.getUserEmail());
+        user.setUserPw(passwordEncoder.encode(userSignUpRequest.getUserPw()));
+        user.setUserNickname(userSignUpRequest.getUserNickname());
+        user.setUserPhone(userSignUpRequest.getUserPhone());
+        user.setRole("ROLE_USER");
+        userRepository.save(user);
         return "success";
     }
 
