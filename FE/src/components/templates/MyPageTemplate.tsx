@@ -1,28 +1,23 @@
-import styled from "@emotion/styled";
-import { ReactNode } from "react";
-import SideNavBarContainer from "../organisms/my/SideNavBarContainer";
+import styled from '@emotion/styled';
+import React from 'react';
+import SideNavBarContainer from '../organisms/my/SideNavBarContainer';
 
-interface MyPageTemplateProps{
-    children?: ReactNode;
-    element: React.ReactNode;
+interface MyPageTemplateProps {
+  element: React.ReactNode;
 }
 
-function MyPageTemplate({element}: MyPageTemplateProps){
-    return(
-        <Template>
-            <SideNavBarContainer/>
-            <ContentContainer>
-                {element}
-            </ContentContainer>
-        </Template>
-    );
+function MyPageTemplate({ element }: MyPageTemplateProps) {
+  return (
+    <Template>
+      <SideNavBarContainer />
+      <ContentContainer>{element}</ContentContainer>
+    </Template>
+  );
 }
-const Template = styled.div`
-
-`;
+const Template = styled.div``;
 const ContentContainer = styled.div`
-    overflow: hidden;
-    min-height: 380px;
+  overflow: hidden;
+  min-height: 380px;
 `;
 
 export default MyPageTemplate;

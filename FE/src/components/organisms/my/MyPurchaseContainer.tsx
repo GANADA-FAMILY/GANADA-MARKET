@@ -1,10 +1,7 @@
+import React from 'react';
 
-const MyPurchaseContainer = ()=>{
-    return (
-        <div>
-            MyPurchaseContainer
-        </div>
-    );
+function MyPurchaseContainer() {
+  return <div>MyPurchaseContainer</div>;
 }
 
 export default MyPurchaseContainer;
