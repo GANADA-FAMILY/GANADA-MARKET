@@ -11,4 +11,5 @@ public interface UserService  {
     String insertUser(UserSignUpRequest userSignUpRequest);
     Optional<User> getUserByUserEmail(String userEmail);
 
+
 }

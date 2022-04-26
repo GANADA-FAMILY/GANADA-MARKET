@@ -35,6 +35,15 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public String insertUser(UserSignUpRequest userSignUpRequest) {
+        Optional<User> duplicateCheckId = userRepository.findByUserEmail(userSignUpRequest.getUserEmail());
+        if(duplicateCheckId.isPresent()){
+            return "fail";
+        }
+        Optional<User> duplicateCheckNickname = userRepository.findByUserNickname(userSignUpRequest.getUserNickname());
+        if(duplicateCheckNickname.isPresent()){
+            return "fail";
+        }
+
         User user = new User();
         user.setUserEmail(userSignUpRequest.getUserEmail());
         user.setUserPw(passwordEncoder.encode(userSignUpRequest.getUserPw()));

@@ -33,7 +33,7 @@ public class AuthController {
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<UserLoginResponse> login(@RequestBody @ApiParam(value = "로그인 요청 정보", required = true) UserLoginRequest userLoginRequest) {
+    public ResponseEntity<UserLoginResponse> login(@RequestBody @ApiParam(value = "로그인 요청 정보", required = true) @Valid UserLoginRequest userLoginRequest) {
         String user = userService.login(userLoginRequest);
         if (user.equals("fail1")) {
             return ResponseEntity.status(401).body(UserLoginResponse.of(401,"존재하지 않는 아이디 입니다.",null));
@@ -53,7 +53,7 @@ public class AuthController {
     })
     public ResponseEntity<BaseResponseBody> signup(@RequestBody @ApiParam(value = "회원가입 요청 정보", required = true) @Valid UserSignUpRequest userSignUpRequest) {
         String user = userService.insertUser(userSignUpRequest);
-        if (user.equals("fail1")) {
+        if (user.equals("fail")) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401,"회원가입 실패"));
         }
 
