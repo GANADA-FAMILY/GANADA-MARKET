@@ -39,7 +39,10 @@
     "prettier/prettier": ["error", { "endOfLine": "auto" }],
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "react/jsx-one-expression-per-line": "off",
-    "no-use-before-define": "off"
+    "no-use-before-define": "off",
+    "react/jsx-props-no-spreading": "off",
+    "no-empty-function": "off",
+    "@typescript-eslint/no-empty-function": ["error"]
   },
   "settings": {
     "import/resolver": {
