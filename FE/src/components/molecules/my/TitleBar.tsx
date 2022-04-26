@@ -8,13 +8,7 @@ interface TitleBarProps {
   src?: string;
 }
 
-function TitleBar({
-  title,
-  size,
-  boundary = '3px solid #222',
-  src,
-  ...rest
-}: TitleBarProps) {
+function TitleBar({ title, size, boundary, src, ...rest }: TitleBarProps) {
   return (
     <Molecule style={{}} {...rest}>
       <h3
