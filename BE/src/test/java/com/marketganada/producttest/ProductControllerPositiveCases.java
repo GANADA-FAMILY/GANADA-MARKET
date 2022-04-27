@@ -25,12 +25,12 @@ import java.util.Date;
 @AutoConfigureMockMvc
 @TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ProductControllerPositiveTest {
+public class ProductControllerPositiveCases {
     @Autowired
     private MockMvc mockMvc;
 
     private static ObjectMapper oMapper = new ObjectMapper();
-    Logger logger = LoggerFactory.getLogger(ProductControllerPositiveTest.class);
+    Logger logger = LoggerFactory.getLogger(ProductControllerPositiveCases.class);
     private String accessToken;
 
 	private static ProductInsertRequest product;
