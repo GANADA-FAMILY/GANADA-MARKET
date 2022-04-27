@@ -22,7 +22,6 @@ public class UserServiceImpl implements UserService{
     @Override
     public String login(UserLoginRequest userLoginRequest) {
         Optional<User> user = userRepository.findByUserEmail(userLoginRequest.getUserEmail());
-
         if(!user.isPresent()){
             return "fail1";
         }
@@ -35,12 +34,12 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public String insertUser(UserSignUpRequest userSignUpRequest) {
-        Optional<User> duplicateCheckId = userRepository.findByUserEmail(userSignUpRequest.getUserEmail());
-        if(duplicateCheckId.isPresent()){
+       String duplicateCheckEmail =  checkDuplicateUserEmail(userSignUpRequest.getUserEmail());
+        if(duplicateCheckEmail.equals("fail")){
             return "fail";
         }
-        Optional<User> duplicateCheckNickname = userRepository.findByUserNickname(userSignUpRequest.getUserNickname());
-        if(duplicateCheckNickname.isPresent()){
+        String duplicateCheckNickname =  checkDuplicateUserNickname(userSignUpRequest.getUserNickname());
+        if(duplicateCheckNickname.equals("fail")){
             return "fail";
         }
 
@@ -58,6 +57,24 @@ public class UserServiceImpl implements UserService{
     public Optional<User> getUserByUserEmail(String userEmail) {
         Optional<User> user = userRepository.findByUserEmail(userEmail);
         return user;
+    }
+
+    @Override
+    public String checkDuplicateUserEmail(String userEmail) {
+        Optional<User> user = userRepository.findByUserEmail(userEmail);
+        if(user.isPresent()){
+            return "fail";
+        }
+        return "success";
+    }
+
+    @Override
+    public String checkDuplicateUserNickname(String userNickname) {
+        Optional<User> user = userRepository.findByUserNickname(userNickname);
+        if(user.isPresent()){
+            return "fail";
+        }
+        return "success";
     }
 
 

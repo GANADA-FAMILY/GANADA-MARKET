@@ -10,6 +10,6 @@ public interface UserService  {
     String login(UserLoginRequest userLoginRequest);
     String insertUser(UserSignUpRequest userSignUpRequest);
     Optional<User> getUserByUserEmail(String userEmail);
-
-
+    String checkDuplicateUserEmail(String userEmail);
+    String checkDuplicateUserNickname(String userNickname);
 }
