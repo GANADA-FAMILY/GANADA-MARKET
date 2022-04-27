@@ -1,6 +1,7 @@
 package com.marketganada.api.contoroller;
 
 import com.marketganada.api.request.UserNicknameUpdateRequest;
+import com.marketganada.api.request.UserPwUpdateRequest;
 import com.marketganada.api.response.BaseResponseBody;
 import com.marketganada.api.response.UserInfoResponse;
 import com.marketganada.api.response.UserLoginResponse;
@@ -57,11 +58,31 @@ public class UserController {
                                                                          @RequestBody UserNicknameUpdateRequest userNicknameUpdateRequest) {
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
+
         String res = userService.updateUserNickname(userNicknameUpdateRequest, user);
         if(res.equals("fail")){
             return ResponseEntity.status(401).body(BaseResponseBody.of(409,"닉네임 변경 실패"));
         }
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "닉네임 변경 성공"));
+    }
+
+    @PutMapping("/pw")
+    @ApiOperation(value = "비밀번호 변경", notes = " 현재 비밀번호와 새 비밀번호를 입력받아 확인하고 비밀번호를 변경한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공", response = UserLoginResponse.class),
+            @ApiResponse(code = 401, message = "현재 비밀번호 불일치"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> updateUserPw(@ApiIgnore Authentication authentication,
+                                                                   @RequestBody UserPwUpdateRequest userPwUpdateRequest) {
+        GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
+        User user = userDetails.getUser();
+
+        String res = userService.updateUserPw(userPwUpdateRequest, user);
+        if(res.equals("fail")){
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401,"비밀번호 변경 실패"));
+        }
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "비밀번호 변경 성공"));
     }
 
 

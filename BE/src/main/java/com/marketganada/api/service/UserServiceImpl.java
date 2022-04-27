@@ -2,6 +2,7 @@ package com.marketganada.api.service;
 
 import com.marketganada.api.request.UserLoginRequest;
 import com.marketganada.api.request.UserNicknameUpdateRequest;
+import com.marketganada.api.request.UserPwUpdateRequest;
 import com.marketganada.api.request.UserSignUpRequest;
 import com.marketganada.db.entity.User;
 import com.marketganada.db.repository.UserRepository;
@@ -89,6 +90,19 @@ public class UserServiceImpl implements UserService{
         }else{
             return "fail";
         }
+    }
+
+    @Override
+    public String updateUserPw(UserPwUpdateRequest userPwUpdateRequest, User user) {
+
+        if (!passwordEncoder.matches(userPwUpdateRequest.getCurrentPw(), user.getUserPw())) {
+            return "fail";
+        }else{
+            user.setUserPw(passwordEncoder.encode(userPwUpdateRequest.getNewPw()));
+            userRepository.save(user);
+            return "success";
+        }
+
     }
 
 
