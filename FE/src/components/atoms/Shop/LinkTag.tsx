@@ -4,8 +4,12 @@ import styled from '@emotion/styled';
 interface LinkProps {
   onClick: React.MouseEventHandler<HTMLElement>;
   children: React.ReactNode;
-  isClick: boolean;
+  isClick?: boolean;
 }
+
+LinkTag.defaultProps = {
+  isClick: false,
+};
 
 function LinkTag({ onClick, children, isClick }: LinkProps): JSX.Element {
   return (

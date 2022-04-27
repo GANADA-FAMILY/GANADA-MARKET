@@ -13,6 +13,7 @@ html {
   /* 1rem = 10px */
   font-size: 62.5%;
   box-sizing: border-box;
+  background-color: #f9f9f9;
 }
 
 body {

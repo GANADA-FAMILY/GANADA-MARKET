@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import FlexContainer from '../../templates/Shop/FlexContainer';
+import FlexContainer from '../../layouts/FlexContainer';
 import LinkTag from '../../atoms/Shop/LinkTag';
 
 interface ButtonFilterT {

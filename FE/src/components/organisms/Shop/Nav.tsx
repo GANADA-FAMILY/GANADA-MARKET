@@ -1,7 +1,7 @@
 import React from 'react';
 import NavFilter from '../../molecules/Shop/NavFilter';
 import NavTitle from '../../molecules/Shop/NavTitle';
-import FlexContainer from '../../templates/Shop/FlexContainer';
+import FlexContainer from '../../layouts/FlexContainer';
 
 interface NavProps {
   initialData: string;
@@ -11,11 +11,15 @@ interface NavProps {
 
 function Nav({ initialData, count, setState }: NavProps): JSX.Element {
   return (
-    <FlexContainer>
+    <FlexContainer {...style}>
       <NavTitle title={initialData} count={count} />
       <NavFilter setState={setState} />
     </FlexContainer>
   );
 }
+
+const style = {
+  flexDirection: 'row',
+};
 
 export default Nav;
