@@ -45,6 +45,7 @@ public class AuthControllerPositiveCases {
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                 .andDo(MockMvcResultHandlers.print());
     }
+
     @Test
     @Order(2)
     void loginTest() throws Exception {
@@ -58,5 +59,7 @@ public class AuthControllerPositiveCases {
                 .andDo(MockMvcResultHandlers.print());
         accessToken =  new JSONObject(result.andReturn().getResponse().getContentAsString()).getString("token");
     }
+
+
 
 }

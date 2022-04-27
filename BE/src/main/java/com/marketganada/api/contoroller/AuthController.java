@@ -51,7 +51,7 @@ public class AuthController {
     public ResponseEntity<BaseResponseBody> signup(@RequestBody @ApiParam(value = "회원가입 요청 정보", required = true) @Valid UserSignUpRequest userSignUpRequest) {
         String result = userService.insertUser(userSignUpRequest);
         if (result.equals("fail")) {
-            return ResponseEntity.status(401).body(BaseResponseBody.of(401,"회원가입 실패"));
+            return ResponseEntity.status(409).body(BaseResponseBody.of(409,"회원가입 실패"));
         }
 
         return ResponseEntity.ok(BaseResponseBody.of(200,"회원가입 성공"));
@@ -67,14 +67,19 @@ public class AuthController {
 //        return ResponseEntity.ok(BaseResponseBody.of(200,"이메일 사용 가능"));
 //    }
 
-    @ApiOperation("닉네임 중복 검사")
     @GetMapping("/duplicate-nickname/{userNickname}")
+    @ApiOperation(value = "닉네임 중복 검사", notes = "입력한 <strong>닉네임</strong>을 통해 중복 검사 한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공", response = UserLoginResponse.class),
+            @ApiResponse(code = 401, message = "회원가입 실패"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
     public ResponseEntity<BaseResponseBody> checkDuplicateUserNickName(@PathVariable("userNickname") String userNickname) {
         String result = userService.checkDuplicateUserNickname(userNickname);
         if (result.equals("fail")) {
-            return ResponseEntity.status(401).body(BaseResponseBody.of(401,"아이디 중복"));
+            return ResponseEntity.status(409).body(BaseResponseBody.of(409,"닉네임 중복"));
         }
-        return ResponseEntity.ok(BaseResponseBody.of(200,"아이디 사용 가능"));
+        return ResponseEntity.ok(BaseResponseBody.of(200,"닉네임 사용 가능"));
     }
 
 }
