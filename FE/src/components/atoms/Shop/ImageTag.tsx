@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import LinkTag from './LinkTag';
 import Router from '../../../hooks/Router';
-import Container from '../../layouts/BlockContainer';
+import Container from '../../layouts/Shop/BlockContainer';
 
 interface PropsType {
   url: string;

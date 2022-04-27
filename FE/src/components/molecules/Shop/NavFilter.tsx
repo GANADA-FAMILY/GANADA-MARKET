@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import FlexContainer from '../../layouts/FlexContainer';
+import FlexContainer from '../../layouts/Shop/FlexContainer';
 import LinkTag from '../../atoms/Shop/LinkTag';
 
 interface ButtonFilterT {
@@ -9,12 +9,14 @@ interface ButtonFilterT {
 function ButtonFilter({ setState }: ButtonFilterT) {
   const [property, setProperty] = useState('time');
 
+  // 리덕스로 값 바꾸자
+  // 변수로 태그 하나 Depth가 길어지니 전역으로 관리하기
+
   return (
     <FlexContainer>
       <LinkTag
         isClick={property === 'time'}
         onClick={() => {
-          setState('time');
           setProperty('time');
         }}
       >
@@ -23,7 +25,6 @@ function ButtonFilter({ setState }: ButtonFilterT) {
       <LinkTag
         isClick={property === 'recommend'}
         onClick={() => {
-          setState('recommend');
           setProperty('recommend');
         }}
       >
@@ -32,7 +33,6 @@ function ButtonFilter({ setState }: ButtonFilterT) {
       <LinkTag
         isClick={property === 'lowPrice'}
         onClick={() => {
-          setState('lowPrice');
           setProperty('lowPrice');
         }}
       >
@@ -41,7 +41,6 @@ function ButtonFilter({ setState }: ButtonFilterT) {
       <LinkTag
         isClick={property === 'highPrice'}
         onClick={() => {
-          setState('highPrice');
           setProperty('highPrice');
         }}
       >

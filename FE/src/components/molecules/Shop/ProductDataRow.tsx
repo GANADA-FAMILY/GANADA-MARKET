@@ -1,4 +1,5 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
+import { useParams } from 'react-router-dom';
 import LinkTag from '../../atoms/Shop/LinkTag';
 import TextTag from '../../atoms/Shop/TextTag';
 import { StateType } from '../../organisms/Shop/ProductData';
@@ -15,7 +16,6 @@ function ProductDataRow({
   title,
 }: ProductDataRowT): JSX.Element {
   const [state, setState] = useState<boolean[]>([]);
-
   // 클릭하면 색깔 변화 주고
   // 클릭이 일어나면 리스트 변화
   const toggleLink = (num: number) => {

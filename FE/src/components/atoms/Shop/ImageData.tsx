@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import TextTag from './TextTag';
-import FlexContainer from '../../layouts/GridContainer';
+import FlexContainer from '../../layouts/Shop/GridContainer';
 
 interface PropsData {
   brand: string;

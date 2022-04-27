@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ResultItem from '../../molecules/Shop/ResultItem';
-import GridContainer from '../../layouts/GridContainer';
+import GridContainer from '../../layouts/Shop/GridContainer';
 
 export interface DataType {
   url: string;
@@ -42,7 +42,7 @@ function ResultList() {
       date: '07:33:03',
     },
     {
-      id: 3,
+      id: 4,
       url: 'https://image.univstore.com/iPhone_13_Pro_Green_thumbnail.jpg',
       brand: 'Apple',
       product: 'iPhone 13 Pro 자급제',

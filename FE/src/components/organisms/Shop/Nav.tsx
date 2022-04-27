@@ -1,7 +1,7 @@
 import React from 'react';
 import NavFilter from '../../molecules/Shop/NavFilter';
 import NavTitle from '../../molecules/Shop/NavTitle';
-import FlexContainer from '../../layouts/FlexContainer';
+import FlexContainer from '../../layouts/Shop/FlexContainer';
 
 interface NavProps {
   initialData: string;

@@ -14,7 +14,7 @@ const Block = styled.div`
   position: 'relative';
   width: '300px';
   height: '300px';
-  backgroundcolor: '#fff';
+  background-color: '#fff';
 `;
 
 export default BlockContainer;

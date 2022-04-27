@@ -1,28 +1,32 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useParams, useSearchParams } from 'react-router-dom';
 import Nav from '../components/organisms/Shop/Nav';
 import ProductData from '../components/organisms/Shop/ProductData';
 import ResultList from '../components/organisms/Shop/ResultList';
-import FlexContainer from '../components/layouts/FlexContainer';
+import FlexContainer from '../components/layouts/Shop/FlexContainer';
 
 interface ShopProps {
   kind: string;
 }
 
-function Shop() {
+function ShopPage() {
   const [state, setState] = useState({
-    product: 'cellphone',
     resultList: [],
   });
+  const [searchParams] = useSearchParams();
+  const { product } = useParams();
   const [type, setType] = useState('time');
   const [filterList, setFilterList] = useState([]);
-  const { product, resultList } = state;
+
   useEffect(() => {
-    // phone 추천순으로 받아와야함  kind + recommend 기준
-  }, []);
+    // 쿼리 바뀔 때마다 데이터 들고옴
+    const currentParams = Object.fromEntries(searchParams);
+    console.log(currentParams);
+  }, [searchParams]);
 
   useEffect(() => {
     // filterList 갱신
-  }, [state.product]);
+  }, [product]);
 
   useEffect(() => {
     // resultList 갱신 api state.product + type + filterList 기준
@@ -30,7 +34,7 @@ function Shop() {
 
   return (
     <FlexContainer {...style}>
-      <Nav initialData={product} count={resultList.length} setState={setType} />
+      <Nav initialData={String(product)} count={2} setState={setType} />
 
       <ProductData />
       <ResultList />
@@ -46,4 +50,4 @@ const style = {
   margin: 'auto',
 };
 
-export default Shop;
+export default ShopPage;

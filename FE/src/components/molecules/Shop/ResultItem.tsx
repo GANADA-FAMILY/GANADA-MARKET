@@ -2,7 +2,7 @@ import React from 'react';
 import { DataType } from '../../organisms/Shop/ResultList';
 import ImageTag from '../../atoms/Shop/ImageTag';
 import TextTag from '../../atoms/Shop/TextTag';
-import FlexContainer from '../../layouts/FlexContainer';
+import FlexContainer from '../../layouts/Shop/FlexContainer';
 import ImageData from '../../atoms/Shop/ImageData';
 
 interface PropType {
