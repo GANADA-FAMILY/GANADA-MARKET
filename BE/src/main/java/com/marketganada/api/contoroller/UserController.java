@@ -1,5 +1,6 @@
 package com.marketganada.api.contoroller;
 
+import com.marketganada.api.request.UserNicknameUpdateRequest;
 import com.marketganada.api.response.BaseResponseBody;
 import com.marketganada.api.response.UserInfoResponse;
 import com.marketganada.api.response.UserLoginResponse;
@@ -25,7 +26,7 @@ public class UserController {
 
     @ApiOperation("jwt 테스트")
     @GetMapping("/test")
-    public ResponseEntity<? extends BaseResponseBody> updateUserNickname(@ApiIgnore Authentication authentication) {
+    public ResponseEntity<? extends BaseResponseBody> testJWT(@ApiIgnore Authentication authentication) {
 
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "토큰 인증 성공"));
@@ -44,7 +45,24 @@ public class UserController {
 
         return ResponseEntity.status(200).body(UserInfoResponse.of(200, "회원 정보 조회 성공", user));
     }
-    
+
+    @PutMapping("/nickname")
+    @ApiOperation(value = "닉네임 변경", notes = " 입력한 닉네임으로 닉네임을 변경한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공", response = UserLoginResponse.class),
+            @ApiResponse(code = 409, message = "중복 검사 실패"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> updateUserNickname(@ApiIgnore Authentication authentication,
+                                                                         @RequestBody UserNicknameUpdateRequest userNicknameUpdateRequest) {
+        GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
+        User user = userDetails.getUser();
+        String res = userService.updateUserNickname(userNicknameUpdateRequest, user);
+        if(res.equals("fail")){
+            return ResponseEntity.status(401).body(BaseResponseBody.of(409,"닉네임 변경 실패"));
+        }
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "닉네임 변경 성공"));
+    }
 
 
 }

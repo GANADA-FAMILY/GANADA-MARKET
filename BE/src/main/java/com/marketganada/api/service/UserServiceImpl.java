@@ -1,6 +1,7 @@
 package com.marketganada.api.service;
 
 import com.marketganada.api.request.UserLoginRequest;
+import com.marketganada.api.request.UserNicknameUpdateRequest;
 import com.marketganada.api.request.UserSignUpRequest;
 import com.marketganada.db.entity.User;
 import com.marketganada.db.repository.UserRepository;
@@ -75,6 +76,19 @@ public class UserServiceImpl implements UserService{
             return "fail";
         }
         return "success";
+    }
+
+    @Override
+    public String updateUserNickname(UserNicknameUpdateRequest userNicknameUpdateRequest, User user) {
+        String res = checkDuplicateUserNickname(userNicknameUpdateRequest.getUserNickname());
+        if(res.equals("success")){
+            user.setUserNickname(userNicknameUpdateRequest.getUserNickname());
+
+            userRepository.save(user);
+            return "success";
+        }else{
+            return "fail";
+        }
     }
 
 

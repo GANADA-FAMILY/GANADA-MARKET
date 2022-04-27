@@ -1,6 +1,7 @@
 package com.marketganada.api.service;
 
 import com.marketganada.api.request.UserLoginRequest;
+import com.marketganada.api.request.UserNicknameUpdateRequest;
 import com.marketganada.api.request.UserSignUpRequest;
 import com.marketganada.db.entity.User;
 
@@ -12,4 +13,5 @@ public interface UserService  {
     Optional<User> getUserByUserEmail(String userEmail);
     String checkDuplicateUserEmail(String userEmail);
     String checkDuplicateUserNickname(String userNickname);
+    String updateUserNickname(UserNicknameUpdateRequest userNicknameUpdateRequest, User user);
 }
