@@ -28,13 +28,13 @@ public class User {
     @Column(name = "profile_image_url", columnDefinition = "varchar(500)")
     private String profileImageUrl;
 
-    @Column(name = "user_email", columnDefinition = "varchar(30)")
+    @Column(name = "user_email", unique = true, columnDefinition = "varchar(100)")
     private String userEmail;
 
     @Column(name = "user_pw", columnDefinition = "varchar(100)")
     private String userPw;
 
-    @Column(name = "user_nickname", columnDefinition = "varchar(20)")
+    @Column(name = "user_nickname", unique = true, columnDefinition = "varchar(20)")
     private String userNickname;
 
     @Column(name = "user_phone", columnDefinition = "varchar(20)")
