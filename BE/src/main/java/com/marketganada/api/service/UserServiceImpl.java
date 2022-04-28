@@ -1,9 +1,7 @@
 package com.marketganada.api.service;
 
-import com.marketganada.api.request.UserLoginRequest;
-import com.marketganada.api.request.UserNicknameUpdateRequest;
-import com.marketganada.api.request.UserPwUpdateRequest;
-import com.marketganada.api.request.UserSignUpRequest;
+import com.marketganada.api.request.*;
+import com.marketganada.common.AES256;
 import com.marketganada.db.entity.User;
 import com.marketganada.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +49,9 @@ public class UserServiceImpl implements UserService{
         user.setUserNickname(userSignUpRequest.getUserNickname());
         user.setUserPhone(userSignUpRequest.getUserPhone());
         user.setRole("ROLE_USER");
+        user.setGrade("일반 회원");
+        user.setProfileImageUrl("기본 이미지 url");
+        user.setUserType(0);
         userRepository.save(user);
         return "success";
     }
@@ -103,6 +104,19 @@ public class UserServiceImpl implements UserService{
             return "success";
         }
 
+    }
+
+    @Override
+    public void updateUserBank(UserBankUpdateRequest userBankUpdateRequest, User user) throws Exception {
+
+        AES256 aes256 = new AES256();
+        String cipherText =  aes256.encrypt(userBankUpdateRequest.getBankNum());
+
+        user.setBank(userBankUpdateRequest.getBank());
+        user.setBankNum(cipherText);
+        user.setBankHolder(userBankUpdateRequest.getBankHolder());
+
+        userRepository.save(user);
     }
 
 

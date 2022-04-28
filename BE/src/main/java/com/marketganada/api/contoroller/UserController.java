@@ -1,8 +1,10 @@
 package com.marketganada.api.contoroller;
 
+import com.marketganada.api.request.UserBankUpdateRequest;
 import com.marketganada.api.request.UserNicknameUpdateRequest;
 import com.marketganada.api.request.UserPwUpdateRequest;
 import com.marketganada.api.response.BaseResponseBody;
+import com.marketganada.api.response.UserBankResponse;
 import com.marketganada.api.response.UserInfoResponse;
 import com.marketganada.api.response.UserLoginResponse;
 import com.marketganada.api.service.UserService;
@@ -84,6 +86,37 @@ public class UserController {
         }
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "비밀번호 변경 성공"));
     }
+
+    @GetMapping("/bank")
+    @ApiOperation(value = "정산 계좌 조회", notes = "회원의 정산계좌를 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공", response = UserLoginResponse.class),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> getUserBank(@ApiIgnore Authentication authentication
+                                                                     ) throws Exception {
+        GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
+        User user = userDetails.getUser();
+
+        return ResponseEntity.status(200).body(UserBankResponse.of(200, "정산 계좌 조회 성공",user));
+    }
+    @PutMapping("/bank")
+    @ApiOperation(value = "정산 계좌 등록 및 수정", notes = " 은행명, 계좌번호, 예금주를 입력받아 정산계좌로 등록 및 변경한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공", response = UserLoginResponse.class),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> updateUserBank(@ApiIgnore Authentication authentication,
+                                                                     @RequestBody UserBankUpdateRequest userBankUpdateRequest) throws Exception {
+        GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
+        User user = userDetails.getUser();
+
+        userService.updateUserBank(userBankUpdateRequest, user);
+
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "정산 계좌 변경 성공"));
+    }
+
+
 
 
 }

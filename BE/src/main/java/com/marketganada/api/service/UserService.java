@@ -1,9 +1,6 @@
 package com.marketganada.api.service;
 
-import com.marketganada.api.request.UserLoginRequest;
-import com.marketganada.api.request.UserNicknameUpdateRequest;
-import com.marketganada.api.request.UserPwUpdateRequest;
-import com.marketganada.api.request.UserSignUpRequest;
+import com.marketganada.api.request.*;
 import com.marketganada.db.entity.User;
 
 import java.util.Optional;
@@ -16,4 +13,6 @@ public interface UserService  {
     String checkDuplicateUserNickname(String userNickname);
     String updateUserNickname(UserNicknameUpdateRequest userNicknameUpdateRequest, User user);
     String updateUserPw(UserPwUpdateRequest userPwUpdateRequest, User user);
+    void updateUserBank(UserBankUpdateRequest userBankUpdateRequest, User user) throws Exception;
+
 }

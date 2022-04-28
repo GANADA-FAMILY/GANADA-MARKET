@@ -46,8 +46,11 @@ public class User {
     @Column(name = "bank", columnDefinition = "varchar(20)")
     private String bank;
 
-    @Column(name = "bank_num", columnDefinition = "varchar(30)")
+    @Column(name = "bank_num", columnDefinition = "varchar(100)")
     private String bankNum;
+
+    @Column(name = "bank_holder", columnDefinition = "varchar(30)")
+    private String bankHolder;
 
     @Column(name = "role", columnDefinition = "varchar(30)")
     private String role;
