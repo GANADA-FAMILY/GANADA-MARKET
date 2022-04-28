@@ -1,16 +1,26 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { Input } from 'antd';
+
+const ASD = styled(Input)`
+  display: block;
+`;
 
 interface TitleBarProps {
   title: string;
   size?: number;
-  boundary?: string;
   src?: string;
+  bordered?: boolean;
 }
 
-function TitleBar({ title, size, boundary, src, ...rest }: TitleBarProps) {
+function TitleBar({ title, size, bordered, src, ...rest }: TitleBarProps) {
   return (
-    <Molecule style={{}} {...rest}>
+    <Molecule
+      style={{
+        borderBottom: bordered ? '3px solid #222' : '',
+      }}
+      {...rest}
+    >
       <h3
         style={{
           fontSize: `${size}px`,
@@ -24,7 +34,7 @@ function TitleBar({ title, size, boundary, src, ...rest }: TitleBarProps) {
 
 TitleBar.defaultProps = {
   size: 18,
-  boundary: '3px solid #222',
+  bordered: false,
   src: '#',
 };
 const Molecule = styled.div``;

@@ -1,15 +1,17 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-empty-function */
+import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 
-interface ButtonProps {
+interface LinkButtonProps {
   children: React.ReactNode;
   href: string;
+  onClick?: React.MouseEventHandler<HTMLElement>;
 }
 
-function LinkButton({ children, href, ...rest }: ButtonProps) {
+function LinkButton({ children, href, onClick, ...rest }: LinkButtonProps) {
   return (
-    <Atom to={{ pathname: href }} {...rest}>
+    <Atom onClick={onClick} to={{ pathname: href }} {...rest}>
       {children}
     </Atom>
   );
@@ -36,5 +38,9 @@ const Atom = styled(Link)`
   background-color: #fff;
   text-decoration: none;
 `;
+
+LinkButton.defaultProps = {
+  onClick: () => {},
+};
 
 export default LinkButton;
