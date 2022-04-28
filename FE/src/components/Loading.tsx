@@ -1,7 +1,21 @@
-import React from 'react';
+import React, { memo } from 'react';
+import ReactLoading from 'react-loading';
+import styled from '@emotion/styled';
 
-function Loading() {
-  return <div>TEST 4</div>;
+const LoaderWrap = styled.div`
+  width: 100%;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+`;
+function Loader() {
+  return (
+    <LoaderWrap>
+      <ReactLoading type="spin" color="#A593E0" />
+    </LoaderWrap>
+  );
 }
 
-export default Loading;
+export default memo(Loader);

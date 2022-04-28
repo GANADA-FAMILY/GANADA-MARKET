@@ -5,8 +5,8 @@ interface PropsStyle {
   children: React.ReactNode;
 }
 
-function GridContainer({ children }: PropsStyle) {
-  return <Grid>{children}</Grid>;
+function GridContainer({ children, ...rest }: PropsStyle) {
+  return <Grid style={{ ...rest }}>{children}</Grid>;
 }
 
 const Grid = styled.div`

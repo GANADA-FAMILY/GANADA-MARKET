@@ -2,34 +2,26 @@ import React from 'react';
 import styled from '@emotion/styled';
 import LinkTag from './LinkTag';
 import Router from '../../../hooks/Router';
-import Container from '../../layouts/Shop/BlockContainer';
+import BlockContainer from '../../layouts/Shop/BlockContainer';
 
 interface PropsType {
   url: string;
 }
 
 function ImageTag({ url }: PropsType) {
+  const route = Router();
   const linkDetail = () => {
-    const route = Router();
-    route.push('');
+    route.push('/');
   };
 
   return (
     <LinkTag onClick={linkDetail}>
-      <Container {...style}>
+      <BlockContainer {...imageWrapperStyle}>
         <StyledImage url={url} />
-      </Container>
+      </BlockContainer>
     </LinkTag>
   );
 }
-
-const style = {
-  display: 'block',
-  position: 'relative',
-  width: '300px',
-  height: '300px',
-  backgroundColor: '#fff',
-};
 
 const StyledImage = styled.div<PropsType>`
   background-image: url(${(props: PropsType) => props.url});
@@ -41,10 +33,17 @@ const StyledImage = styled.div<PropsType>`
   width: 100%;
   border-radius: 8px;
   transition: all ease-in-out 300ms;
-
+  padding-top: 100%;
   &:hover {
     transform: scale(1.2);
   }
 `;
+
+const imageWrapperStyle = {
+  width: '333px',
+  height: '333px',
+  position: 'relative',
+  backgroundColor: '#fff',
+};
 
 export default ImageTag;

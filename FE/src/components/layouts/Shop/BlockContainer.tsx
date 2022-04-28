@@ -5,16 +5,12 @@ interface PropsStyle {
   children: React.ReactNode;
 }
 
-function BlockContainer({ children }: PropsStyle) {
-  return <Block>{children}</Block>;
+function BlockContainer({ children, ...rest }: PropsStyle) {
+  return <Block style={{ ...rest }}>{children}</Block>;
 }
 
 const Block = styled.div`
-  display: 'block';
-  position: 'relative';
-  width: '300px';
-  height: '300px';
-  background-color: '#fff';
+  display: block;
 `;
 
 export default BlockContainer;

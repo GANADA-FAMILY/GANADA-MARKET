@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import LinkTag from '../../atoms/Shop/LinkTag';
 import TextTag from '../../atoms/Shop/TextTag';
 import { StateType } from '../../organisms/Shop/ProductData';
+import FlexContainer from '../../layouts/Shop/FlexContainer';
+import BlockContainer from '../../layouts/Shop/BlockContainer';
 
 interface ProductDataRowT {
   rowData: string[];
@@ -42,7 +44,6 @@ function ProductDataRow({
         list.push(rowData[idx]);
       }
     });
-
     setFilter((prev: StateType) => {
       return {
         ...prev,
@@ -52,15 +53,52 @@ function ProductDataRow({
   }, [state]);
 
   return (
-    <div>
-      <TextTag>title: {title}</TextTag>
-      {rowData.map((el, idx) => (
-        <LinkTag key={el} onClick={() => toggleLink(idx)} isClick={state[idx]}>
-          {el}
-        </LinkTag>
-      ))}
-    </div>
+    <FlexContainer {...flexContainer}>
+      <BlockContainer {...titleBlockContainer}>
+        <TextTag {...filterTilte}>{title}</TextTag>
+      </BlockContainer>
+      <BlockContainer {...filterBlockContainer}>
+        {rowData.map((el, idx) => (
+          <LinkTag
+            {...filterStyle}
+            key={el}
+            onClick={() => toggleLink(idx)}
+            isClick={state[idx]}
+            hoverColor
+          >
+            {el}
+          </LinkTag>
+        ))}
+      </BlockContainer>
+    </FlexContainer>
   );
 }
+
+const flexContainer = {
+  border: '1px solid #ecedf1',
+};
+
+const filterStyle = {
+  fontSize: '1.3rem',
+  marginRight: '1.2rem',
+};
+
+const filterTilte = {
+  fontSize: '1.3rem',
+  fontWeight: 'bold',
+};
+
+const titleBlockContainer = {
+  height: '100%',
+  borderRight: '1px solid #ecedf1',
+  backgroundColor: '#f9f9f9',
+  width: '15rem',
+  padding: '0.8rem',
+};
+
+const filterBlockContainer = {
+  height: '100%',
+  padding: '0.8rem',
+};
 
 export default ProductDataRow;
