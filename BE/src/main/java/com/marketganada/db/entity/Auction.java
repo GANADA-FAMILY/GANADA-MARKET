@@ -46,8 +46,8 @@ public class Auction {
     @Column(name = "start_price", columnDefinition = "int")
     private int startPrice;
 
-    @Column(name = "cycle", columnDefinition = "datetime default CURRENT_TIMESTAMP")
-    private Date cycle;
+    @Column(name = "cycle", columnDefinition = "int")
+    private int cycle;
 
     @Column(name = "depreciation", columnDefinition = "int")
     private int depreciation;
@@ -69,7 +69,7 @@ public class Auction {
 
     @Builder
 
-    public Auction(User user, Product product, String auctionTitle, String description, Date startTime, Date endTime, int startPrice, Date cycle, int depreciation, boolean auctionStatus, int likeCnt) {
+    public Auction(User user, Product product, String auctionTitle, String description, Date startTime, Date endTime, int startPrice, int cycle, int depreciation, boolean auctionStatus, int likeCnt) {
         this.user = user;
         this.product = product;
         this.auctionTitle = auctionTitle;
