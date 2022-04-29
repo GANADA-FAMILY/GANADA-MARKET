@@ -10,15 +10,16 @@
  **/
 package com.marketganada.api.request;
 
-import com.sun.istack.NotNull;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
 @ApiModel("UserNicknameUpdateRequset")
 public class UserNicknameUpdateRequest {
-    @NotNull
+    @NotBlank
     String userNickname;
 }

@@ -44,7 +44,7 @@ public class AuthController {
     @PostMapping("/signup")
     @ApiOperation(value = "회원가입", notes = "입력한 회원 정보 를 통해 회원가입 한다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "성공", response = UserLoginResponse.class),
+            @ApiResponse(code = 200, message = "성공", response = BaseResponseBody.class),
             @ApiResponse(code = 409, message = "회원가입 실패"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
@@ -70,7 +70,7 @@ public class AuthController {
     @GetMapping("/duplicate-nickname/{userNickname}")
     @ApiOperation(value = "닉네임 중복 검사", notes = "입력한 닉네임을 통해 중복 검사 한다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "성공", response = UserLoginResponse.class),
+            @ApiResponse(code = 200, message = "성공", response = BaseResponseBody.class),
             @ApiResponse(code = 409, message = "중복 검사 실패"),
             @ApiResponse(code = 500, message = "서버 오류")
     })

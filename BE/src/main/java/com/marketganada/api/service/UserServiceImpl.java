@@ -2,19 +2,27 @@ package com.marketganada.api.service;
 
 import com.marketganada.api.request.*;
 import com.marketganada.common.AES256;
+import com.marketganada.db.entity.AddressBook;
 import com.marketganada.db.entity.User;
+import com.marketganada.db.repository.AddressBookRepository;
 import com.marketganada.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
+import java.util.List;
 import java.util.Optional;
+
 
 @Service("userService")
 public class UserServiceImpl implements UserService{
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    AddressBookRepository addressBookRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -54,6 +62,11 @@ public class UserServiceImpl implements UserService{
         user.setUserType(0);
         userRepository.save(user);
         return "success";
+    }
+
+    @Override
+    public void deleteUser(User user) {
+        userRepository.delete(user);
     }
 
     @Override
@@ -117,6 +130,52 @@ public class UserServiceImpl implements UserService{
         user.setBankHolder(userBankUpdateRequest.getBankHolder());
 
         userRepository.save(user);
+    }
+
+    @Override
+    public void insertUserAddressBook(AddressBookInsertRequest addressBookInsertRequest, User user) {
+        AddressBook addressBook = AddressBook.builder()
+                .addressName(addressBookInsertRequest.getAddressName())
+                .addressPhone(addressBookInsertRequest.getAddressPhone())
+                .postalCode(addressBookInsertRequest.getPostalCode())
+                .address(addressBookInsertRequest.getAddress())
+                .addressDetail(addressBookInsertRequest.getAddressDetail())
+                .user(user).build();
+        addressBookRepository.save(addressBook);
+    }
+
+    @Override
+    public List<AddressBook> getAddressBookList(User user) {
+        List<AddressBook> addressBookList = addressBookRepository.findByUser(user);
+        for(AddressBook addressBook : addressBookList){
+            System.out.println(addressBook.getAddressName());
+        }
+        return addressBookList;
+    }
+
+    @Override
+    public String updateAddressBook(AddressBookInsertRequest addressBookInsertRequest, User user, Long addressId) {
+        Optional<AddressBook> addressBook = addressBookRepository.findByAddressIdAndUser(addressId,user);
+        if(!addressBook.isPresent()){
+            return "fail";
+        }
+        addressBook.get().setAddressName(addressBookInsertRequest.getAddressName());
+        addressBook.get().setAddressPhone(addressBookInsertRequest.getAddressPhone());
+        addressBook.get().setPostalCode(addressBookInsertRequest.getPostalCode());
+        addressBook.get().setAddress(addressBookInsertRequest.getAddress());
+        addressBook.get().setAddressDetail(addressBookInsertRequest.getAddressDetail());
+        addressBookRepository.save(addressBook.get());
+        return "success";
+    }
+
+    @Override
+    public String deleteAddressBook(User user, Long addressId) {
+        Optional<AddressBook> addressBook = addressBookRepository.findByAddressIdAndUser(addressId,user);
+        if(!addressBook.isPresent()){
+            return "fail";
+        }
+        addressBookRepository.delete(addressBook.get());
+        return "success";
     }
 
 
