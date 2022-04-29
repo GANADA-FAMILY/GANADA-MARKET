@@ -1,54 +1,70 @@
-import React, { useState } from 'react';
-import FlexContainer from '../../templates/Shop/FlexContainer';
+import React, { useState, useCallback, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import FlexContainer from '../../layouts/Shop/FlexContainer';
 import LinkTag from '../../atoms/Shop/LinkTag';
+import { setNavFilter } from '../../../state/reducers/ShopNavFilter';
+import { useRootSelector } from '../../../state/Hooks';
 
-interface ButtonFilterT {
-  setState: (state: string) => void;
-}
-
-function ButtonFilter({ setState }: ButtonFilterT) {
+function ButtonFilter() {
   const [property, setProperty] = useState('time');
 
+  // 리덕스로 값 바꾸자
+  // 변수로 태그 하나 Depth가 길어지니 전역으로 관리하기
+
+  const dispatch = useDispatch();
+
+  const ClickEvent = (value: string) => {
+    setProperty(value);
+    dispatch(setNavFilter({ name: value }));
+  };
+
   return (
-    <FlexContainer>
+    <FlexContainer {...style}>
       <LinkTag
         isClick={property === 'time'}
         onClick={() => {
-          setState('time');
-          setProperty('time');
+          ClickEvent('time');
         }}
+        virtualAfter
+        hoverColor
       >
         남은 시간순
       </LinkTag>
       <LinkTag
         isClick={property === 'recommend'}
         onClick={() => {
-          setState('recommend');
-          setProperty('recommend');
+          ClickEvent('recommend');
         }}
+        virtualAfter
+        hoverColor
       >
         추천
       </LinkTag>
       <LinkTag
         isClick={property === 'lowPrice'}
         onClick={() => {
-          setState('lowPrice');
-          setProperty('lowPrice');
+          ClickEvent('lowPrice');
         }}
+        virtualAfter
+        hoverColor
       >
         낮은가격순
       </LinkTag>
       <LinkTag
         isClick={property === 'highPrice'}
         onClick={() => {
-          setState('highPrice');
-          setProperty('highPrice');
+          ClickEvent('highPrice');
         }}
+        hoverColor
       >
         높은가격순
       </LinkTag>
     </FlexContainer>
   );
 }
+
+const style = {
+  justifyContent: 'space-between',
+};
 
 export default ButtonFilter;
