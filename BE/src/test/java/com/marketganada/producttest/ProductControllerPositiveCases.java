@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -26,13 +25,13 @@ import java.util.Date;
 @AutoConfigureMockMvc
 @TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ProductControllerPositiveTest {
+public class ProductControllerPositiveCases {
     @Autowired
     private MockMvc mockMvc;
 
     private static ObjectMapper oMapper = new ObjectMapper();
-    Logger logger = LoggerFactory.getLogger(ProductControllerPositiveTest.class);
-//    private static String accessToken;
+    Logger logger = LoggerFactory.getLogger(ProductControllerPositiveCases.class);
+    private String accessToken;
 
 	private static ProductInsertRequest product;
 	private static CategoryLargeInsertRequest categoryLarge;
@@ -62,7 +61,9 @@ public class ProductControllerPositiveTest {
 		product.setReleasePrice(10000);
 	}
 
-	private String getAccessToken() throws Exception {
+	@Test
+	@Order(0)
+	void getAccessToken() throws Exception {
 		UserLoginRequest userLogin = new UserLoginRequest();
 		userLogin.setUserEmail("tttt@test.com");
 		userLogin.setUserPw("test123!@#");
@@ -70,16 +71,18 @@ public class ProductControllerPositiveTest {
 		ResultActions result = mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/login")
 				.header("Accept", "application/json")
 				.contentType("application/json")
-				.content((new JSONObject(oMapper.writeValueAsString(userLogin)).toString())));
+				.content((new JSONObject(oMapper.writeValueAsString(userLogin)).toString())))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andDo(MockMvcResultHandlers.print());
 
-		return new JSONObject(result.andReturn().getResponse().getContentAsString()).getString("token");
+		accessToken = new JSONObject(result.andReturn().getResponse().getContentAsString()).getString("token");
 	}
 
 	@Test
 	@Order(1)
 	void insertCategoryLargeTest() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.post("/api/product/category-large")
-			.header(HttpHeaders.AUTHORIZATION, "Bearer "+getAccessToken())
+			.header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
 			.contentType("application/json")
 			.content((new JSONObject(oMapper.writeValueAsString(categoryLarge)).toString())))
 			.andExpect(MockMvcResultMatchers.status().isCreated())
@@ -90,7 +93,7 @@ public class ProductControllerPositiveTest {
 	@Order(2)
 	void getCategoryLargeListTest() throws Exception {
 		ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/api/product/category-large-list")
-						.header(HttpHeaders.AUTHORIZATION, "Bearer "+getAccessToken()))
+						.header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andDo(MockMvcResultHandlers.print());
 
@@ -106,7 +109,7 @@ public class ProductControllerPositiveTest {
 	@Order(3)
 	void insertCategoryMiddleTest() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.post("/api/product/category-middle")
-						.header(HttpHeaders.AUTHORIZATION, "Bearer "+getAccessToken())
+						.header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
 						.contentType("application/json")
 						.content((new JSONObject(oMapper.writeValueAsString(categoryMiddle)).toString())))
 				.andExpect(MockMvcResultMatchers.status().isCreated())
@@ -117,7 +120,7 @@ public class ProductControllerPositiveTest {
 	@Order(4)
 	void getCategoryMiddleListTest() throws Exception {
 		ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/api/product/category-middle-list")
-						.header(HttpHeaders.AUTHORIZATION, "Bearer "+getAccessToken()))
+						.header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andDo(MockMvcResultHandlers.print());
 
@@ -133,7 +136,7 @@ public class ProductControllerPositiveTest {
 	@Order(5)
 	void insertCategorySmallTest() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.post("/api/product/category-small")
-						.header(HttpHeaders.AUTHORIZATION, "Bearer "+getAccessToken())
+						.header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
 						.contentType("application/json")
 						.content((new JSONObject(oMapper.writeValueAsString(categorySmall)).toString())))
 				.andExpect(MockMvcResultMatchers.status().isCreated())
@@ -144,7 +147,7 @@ public class ProductControllerPositiveTest {
 	@Order(6)
 	void getCategorySmallListTest() throws Exception {
 		ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/api/product/category-small-list")
-						.header(HttpHeaders.AUTHORIZATION, "Bearer "+getAccessToken()))
+						.header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andDo(MockMvcResultHandlers.print());
 
@@ -159,7 +162,7 @@ public class ProductControllerPositiveTest {
 	@Order(7)
 	void insertProductTest() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.post("/api/product")
-						.header(HttpHeaders.AUTHORIZATION, "Bearer "+getAccessToken())
+						.header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
 						.contentType("application/json")
 						.content((new JSONObject(oMapper.writeValueAsString(product)).toString())))
 				.andExpect(MockMvcResultMatchers.status().isCreated())
@@ -170,7 +173,7 @@ public class ProductControllerPositiveTest {
 	@Order(8)
 	void getProductListTest() throws Exception {
 		ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/api/product/product-list")
-						.header(HttpHeaders.AUTHORIZATION, "Bearer "+getAccessToken()))
+						.header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andDo(MockMvcResultHandlers.print());
 
@@ -187,7 +190,7 @@ public class ProductControllerPositiveTest {
 		product.setProductName("edit name");
 
 		mockMvc.perform(MockMvcRequestBuilders.put("/api/product/"+productId)
-						.header(HttpHeaders.AUTHORIZATION, "Bearer "+getAccessToken())
+						.header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
 						.contentType("application/json")
 						.content((new JSONObject(oMapper.writeValueAsString(product)).toString())))
 				.andExpect(MockMvcResultMatchers.status().isCreated())
@@ -200,7 +203,7 @@ public class ProductControllerPositiveTest {
 		categoryLarge.setCategoryName("edit large");
 
 		mockMvc.perform(MockMvcRequestBuilders.put("/api/product/category-large/"+product.getCategoryLarge())
-						.header(HttpHeaders.AUTHORIZATION, "Bearer "+getAccessToken())
+						.header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
 						.contentType("application/json")
 						.content((new JSONObject(oMapper.writeValueAsString(categoryLarge)).toString())))
 				.andExpect(MockMvcResultMatchers.status().isCreated())
@@ -213,7 +216,7 @@ public class ProductControllerPositiveTest {
 		categoryMiddle.setCategoryName("edit middle");
 
 		mockMvc.perform(MockMvcRequestBuilders.put("/api/product/category-middle/"+product.getCategoryMiddle())
-						.header(HttpHeaders.AUTHORIZATION, "Bearer "+getAccessToken())
+						.header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
 						.contentType("application/json")
 						.content((new JSONObject(oMapper.writeValueAsString(categoryMiddle)).toString())))
 				.andExpect(MockMvcResultMatchers.status().isCreated())
@@ -226,7 +229,7 @@ public class ProductControllerPositiveTest {
 		categorySmall.setCategoryName("edit small");
 
 		mockMvc.perform(MockMvcRequestBuilders.put("/api/product/category-small/"+product.getCategorySmall())
-						.header(HttpHeaders.AUTHORIZATION, "Bearer "+getAccessToken())
+						.header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
 						.contentType("application/json")
 						.content((new JSONObject(oMapper.writeValueAsString(categorySmall)).toString())))
 				.andExpect(MockMvcResultMatchers.status().isCreated())
@@ -237,7 +240,7 @@ public class ProductControllerPositiveTest {
 	@Order(13)
 	void getProductTest() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.get("/api/product/"+productId)
-						.header(HttpHeaders.AUTHORIZATION, "Bearer "+getAccessToken()))
+						.header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andDo(MockMvcResultHandlers.print());
 	}
@@ -246,7 +249,7 @@ public class ProductControllerPositiveTest {
 	@Order(14)
 	void deleteProductTest() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.delete("/api/product/"+productId)
-						.header(HttpHeaders.AUTHORIZATION, "Bearer "+getAccessToken())
+						.header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
 						.contentType("application/json"))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andDo(MockMvcResultHandlers.print());
@@ -256,7 +259,7 @@ public class ProductControllerPositiveTest {
 	@Order(15)
 	void deleteCategoryLargeTest() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.delete("/api/product/category-large/"+product.getCategoryLarge())
-						.header(HttpHeaders.AUTHORIZATION, "Bearer "+getAccessToken())
+						.header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
 						.contentType("application/json"))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andDo(MockMvcResultHandlers.print());
@@ -266,7 +269,7 @@ public class ProductControllerPositiveTest {
 	@Order(16)
 	void deleteCategoryMiddleTest() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.delete("/api/product/category-middle/"+product.getCategoryMiddle())
-						.header(HttpHeaders.AUTHORIZATION, "Bearer "+getAccessToken())
+						.header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
 						.contentType("application/json"))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andDo(MockMvcResultHandlers.print());
@@ -276,7 +279,7 @@ public class ProductControllerPositiveTest {
 	@Order(17)
 	void deleteCategorySmallTest() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.delete("/api/product/category-small/"+product.getCategorySmall())
-						.header(HttpHeaders.AUTHORIZATION, "Bearer "+getAccessToken())
+						.header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
 						.contentType("application/json"))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andDo(MockMvcResultHandlers.print());
