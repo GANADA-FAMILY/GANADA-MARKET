@@ -20,13 +20,13 @@ public class AuctionInsertRequest {
     List<MultipartFile> auctionImages;
 
     @ApiModelProperty(name = "제품 ID")
-    int productId;
+    Long productId;
 
     @ApiModelProperty(name = "경매 시작가")
     int startPrice;
 
     @ApiModelProperty(name = "감가 주기")
-    Date cycle;
+    int cycle;
 
     @ApiModelProperty(name = "감가액")
     int depreciation;

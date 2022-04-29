@@ -44,11 +44,11 @@ public class AuctionControllerPositiveCases {
     private static AuctionInsertRequest auctionEarphone;
     private static LikeRequest like;
 
-    private static int auctionPhoneId;
-    private static int auctionEarphoneId;
+    private static Long auctionPhoneId;
+    private static Long auctionEarphoneId;
 
-    private static final int TEST_PRODUCT_PHONE_ID = 1;
-    private static final int TEST_PRODUCT_EARPHONE_ID = 1;
+    private static final Long TEST_PRODUCT_PHONE_ID = Long.valueOf(1);
+    private static final Long TEST_PRODUCT_EARPHONE_ID = Long.valueOf(1);
 
     @BeforeAll
     public static void setup() throws Exception {
@@ -63,7 +63,7 @@ public class AuctionControllerPositiveCases {
 		auctionPhone = new AuctionInsertRequest();
 		auctionPhone.setAuctionTitle("sample title");
 		auctionPhone.setAuctionImages(fileList);
-		auctionPhone.setCycle(new Date());
+		auctionPhone.setCycle(1);
 		auctionPhone.setDepreciation(100);
 		auctionPhone.setEndTime(new Date());
 		auctionPhone.setStartPrice(10000);
@@ -72,7 +72,7 @@ public class AuctionControllerPositiveCases {
         auctionEarphone = new AuctionInsertRequest();
         auctionEarphone.setAuctionTitle("sample title");
         auctionEarphone.setAuctionImages(fileList);
-        auctionEarphone.setCycle(new Date());
+        auctionEarphone.setCycle(1);
         auctionEarphone.setDepreciation(100);
         auctionEarphone.setEndTime(new Date());
         auctionEarphone.setStartPrice(10000);
@@ -133,7 +133,7 @@ public class AuctionControllerPositiveCases {
         JSONArray resultArray = tmp.getJSONArray("auctionList");
         tmp = resultArray.getJSONObject(resultArray.length()-1);
 
-        auctionPhoneId = tmp.getInt("auctionId");
+        auctionPhoneId = tmp.getLong("auctionId");
     }
 
     @Test
@@ -149,7 +149,7 @@ public class AuctionControllerPositiveCases {
         JSONArray resultArray = tmp.getJSONArray("auctionList");
         tmp = resultArray.getJSONObject(resultArray.length()-1);
 
-        auctionEarphoneId = tmp.getInt("auctionId");
+        auctionEarphoneId = tmp.getLong("auctionId");
     }
 
     @Test

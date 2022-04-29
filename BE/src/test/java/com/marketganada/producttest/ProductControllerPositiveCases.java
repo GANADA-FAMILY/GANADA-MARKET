@@ -101,7 +101,7 @@ public class ProductControllerPositiveCases {
 		JSONArray resultArray = tmp.getJSONArray("categoryLargeList");
 		tmp = resultArray.getJSONObject(resultArray.length()-1);
 
-		categoryMiddle.setCategoryLargeId(tmp.getInt("categoryLargeId"));
+		categoryMiddle.setCategoryLargeId(tmp.getLong("categoryLargeId"));
 		product.setCategoryLarge(categoryMiddle.getCategoryLargeId());
 	}
 
@@ -128,7 +128,7 @@ public class ProductControllerPositiveCases {
 		JSONArray resultArray = tmp.getJSONArray("categoryMiddleList");
 		tmp = resultArray.getJSONObject(resultArray.length()-1);
 
-		categorySmall.setCategoryMiddleId(tmp.getInt("categoryMiddleId"));
+		categorySmall.setCategoryMiddleId(tmp.getLong("categoryMiddleId"));
 		product.setCategoryMiddle(categorySmall.getCategoryMiddleId());
 	}
 
@@ -155,7 +155,7 @@ public class ProductControllerPositiveCases {
 		JSONArray resultArray = tmp.getJSONArray("categorySmallList");
 		tmp = resultArray.getJSONObject(resultArray.length()-1);
 
-		product.setCategorySmall(tmp.getInt("categorySmallId"));
+		product.setCategorySmall(tmp.getLong("categorySmallId"));
 	}
 
 	@Test
@@ -238,6 +238,15 @@ public class ProductControllerPositiveCases {
 
 	@Test
 	@Order(13)
+	void getCategoryLargeTest() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders.get("/api/product/categoryLarge"+product.getCategoryLarge())
+						.header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andDo(MockMvcResultHandlers.print());
+	}
+
+	@Test
+	@Order(14)
 	void getProductTest() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.get("/api/product/"+productId)
 						.header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
@@ -246,7 +255,7 @@ public class ProductControllerPositiveCases {
 	}
 
 	@Test
-	@Order(14)
+	@Order(15)
 	void deleteProductTest() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.delete("/api/product/"+productId)
 						.header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
@@ -256,7 +265,7 @@ public class ProductControllerPositiveCases {
 	}
 
 	@Test
-	@Order(15)
+	@Order(16)
 	void deleteCategoryLargeTest() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.delete("/api/product/category-large/"+product.getCategoryLarge())
 						.header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
@@ -266,7 +275,7 @@ public class ProductControllerPositiveCases {
 	}
 
 	@Test
-	@Order(16)
+	@Order(17)
 	void deleteCategoryMiddleTest() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.delete("/api/product/category-middle/"+product.getCategoryMiddle())
 						.header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
@@ -276,7 +285,7 @@ public class ProductControllerPositiveCases {
 	}
 
 	@Test
-	@Order(17)
+	@Order(18)
 	void deleteCategorySmallTest() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.delete("/api/product/category-small/"+product.getCategorySmall())
 						.header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)

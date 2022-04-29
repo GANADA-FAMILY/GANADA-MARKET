@@ -183,6 +183,15 @@ public class ProductControllerJwtErrorCases {
 
     @Test
     @Order(13)
+    void getCategoryLargeTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/product/categoryLarge/-1")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
+                .andExpect(MockMvcResultMatchers.status().isUnauthorized())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    @Order(14)
     void getProductTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/product/"+productId)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
@@ -191,7 +200,7 @@ public class ProductControllerJwtErrorCases {
     }
 
     @Test
-    @Order(14)
+    @Order(15)
     void deleteProductTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/product/"+productId)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
@@ -201,7 +210,7 @@ public class ProductControllerJwtErrorCases {
     }
 
     @Test
-    @Order(15)
+    @Order(16)
     void deleteCategoryLargeTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/product/category-large/-1")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
@@ -211,7 +220,7 @@ public class ProductControllerJwtErrorCases {
     }
 
     @Test
-    @Order(16)
+    @Order(17)
     void deleteCategoryMiddleTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/product/category-middle/-1")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
@@ -221,7 +230,7 @@ public class ProductControllerJwtErrorCases {
     }
 
     @Test
-    @Order(17)
+    @Order(18)
     void deleteCategorySmallTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/product/category-small/-1")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)

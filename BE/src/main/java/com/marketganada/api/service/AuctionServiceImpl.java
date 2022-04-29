@@ -1,4 +1,4 @@
 package com.marketganada.api.service;
 
-public class AuctionServiceImpl {
+public class AuctionServiceImpl implements AuctionService {
 }

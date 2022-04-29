@@ -25,7 +25,7 @@ import javax.transaction.Transactional;
 @Transactional
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ProductControllerNegativeCases {
+public class ProductControllerForbiddenCases {
     @Autowired
     private MockMvc mockMvc;
 
@@ -79,7 +79,7 @@ public class ProductControllerNegativeCases {
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
                         .contentType("application/json")
                         .content((new JSONObject(oMapper.writeValueAsString(categoryLarge)).toString())))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.status().isForbidden())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -90,7 +90,7 @@ public class ProductControllerNegativeCases {
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
                         .contentType("application/json")
                         .content((new JSONObject(oMapper.writeValueAsString(categoryMiddle)).toString())))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.status().isForbidden())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -101,7 +101,7 @@ public class ProductControllerNegativeCases {
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
                         .contentType("application/json")
                         .content((new JSONObject(oMapper.writeValueAsString(categorySmall)).toString())))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.status().isForbidden())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -112,7 +112,7 @@ public class ProductControllerNegativeCases {
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
                         .contentType("application/json")
                         .content((new JSONObject(oMapper.writeValueAsString(product)).toString())))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.status().isForbidden())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -123,7 +123,7 @@ public class ProductControllerNegativeCases {
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
                         .contentType("application/json")
                         .content((new JSONObject(oMapper.writeValueAsString(product)).toString())))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.status().isForbidden())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -134,7 +134,7 @@ public class ProductControllerNegativeCases {
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
                         .contentType("application/json")
                         .content((new JSONObject(oMapper.writeValueAsString(product)).toString())))
-                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.status().isForbidden())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -145,7 +145,7 @@ public class ProductControllerNegativeCases {
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
                         .contentType("application/json")
                         .content((new JSONObject(oMapper.writeValueAsString(categoryLarge)).toString())))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.status().isForbidden())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -156,7 +156,7 @@ public class ProductControllerNegativeCases {
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
                         .contentType("application/json")
                         .content((new JSONObject(oMapper.writeValueAsString(categoryLarge)).toString())))
-                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.status().isForbidden())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -167,7 +167,7 @@ public class ProductControllerNegativeCases {
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
                         .contentType("application/json")
                         .content((new JSONObject(oMapper.writeValueAsString(categoryMiddle)).toString())))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.status().isForbidden())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -178,7 +178,7 @@ public class ProductControllerNegativeCases {
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
                         .contentType("application/json")
                         .content((new JSONObject(oMapper.writeValueAsString(categoryMiddle)).toString())))
-                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.status().isForbidden())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -189,7 +189,7 @@ public class ProductControllerNegativeCases {
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
                         .contentType("application/json")
                         .content((new JSONObject(oMapper.writeValueAsString(categorySmall)).toString())))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.status().isForbidden())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -200,7 +200,7 @@ public class ProductControllerNegativeCases {
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
                         .contentType("application/json")
                         .content((new JSONObject(oMapper.writeValueAsString(categorySmall)).toString())))
-                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.status().isForbidden())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -209,7 +209,7 @@ public class ProductControllerNegativeCases {
     void getCategoryLargeTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/product/categoryLarge/-1")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
-                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.status().isForbidden())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -218,7 +218,7 @@ public class ProductControllerNegativeCases {
     void getProductTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/product/-1")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
-                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.status().isForbidden())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -228,7 +228,7 @@ public class ProductControllerNegativeCases {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/product/-1")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
                         .contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.status().isForbidden())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -238,7 +238,7 @@ public class ProductControllerNegativeCases {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/product/category-large/-1")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
                         .contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.status().isForbidden())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -248,7 +248,7 @@ public class ProductControllerNegativeCases {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/product/category-middle/-1")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
                         .contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.status().isForbidden())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -258,7 +258,7 @@ public class ProductControllerNegativeCases {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/product/category-small/-1")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
                         .contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.status().isForbidden())
                 .andDo(MockMvcResultHandlers.print());
     }
 }
