@@ -21,17 +21,15 @@ import javax.transaction.Transactional;
 import java.util.Date;
 
 @SpringBootTest
-@Transactional
 @AutoConfigureMockMvc
 @TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ProductControllerPositiveCases {
     @Autowired
     private MockMvc mockMvc;
 
     private static ObjectMapper oMapper = new ObjectMapper();
     Logger logger = LoggerFactory.getLogger(ProductControllerPositiveCases.class);
-    private String accessToken;
+    private static String accessToken;
 
 	private static ProductInsertRequest product;
 	private static CategoryLargeInsertRequest categoryLarge;
