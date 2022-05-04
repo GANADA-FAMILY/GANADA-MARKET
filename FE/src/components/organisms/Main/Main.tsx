@@ -19,20 +19,20 @@ function Main({ data }: Props) {
   const [goods, setGoods] = useState<Goods[]>([]);
   const [noMore, setNoMore] = useState<boolean>(true);
   const moreGoods = () => {
-    if (data.length < 4) {
-      setGoods([...goods, ...data]);
+    const dataLen = data.length;
+    const goodsLen = goods.length;
+    if (dataLen - goodsLen < 4) {
+      setGoods([...goods, ...data.slice(goodsLen, dataLen)]);
     } else {
-      setGoods([...goods, ...data.splice(0, 4)]);
-    }
-    if (data.length < 4) {
-      setNoMore(!noMore);
+      setGoods([...goods, ...data.slice(goodsLen, goodsLen + 4)]);
+      if (dataLen - goodsLen <= 4) {
+        setNoMore(!noMore);
+      }
     }
   };
   useEffect(() => {
     if (goods.length === 0) {
-      const temp = data.splice(0, 4);
-      console.log(temp);
-      setGoods([...goods, ...temp]);
+      setGoods(data.slice(0, 4));
     }
   }, []);
   return (
