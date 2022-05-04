@@ -6,16 +6,17 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
 @ApiModel("CategoryLargeInsertRequest")
 public class CategoryMiddleInsertRequest {
     @ApiModelProperty(name = "대분류 ID")
-    @NotBlank
+    @NotNull(message = "상위 대분류 ID값을 입력해주세요.")
     Long categoryLargeId;
 
     @ApiModelProperty(name = "중분류 이름")
-    @NotBlank
+    @NotBlank(message = "중분류명을 입력해주세요.")
     String categoryName;
 }

@@ -12,6 +12,6 @@ import javax.validation.constraints.NotBlank;
 @ApiModel("CategoryLargeInsertRequest")
 public class CategoryLargeInsertRequest {
     @ApiModelProperty(name = "대분류 이름")
-    @NotBlank
+    @NotBlank(message = "대분류명을 입력해주세요.")
     String categoryName;
 }

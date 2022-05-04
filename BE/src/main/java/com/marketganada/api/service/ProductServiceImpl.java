@@ -72,6 +72,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public String updateProduct(ProductInsertRequest productInsertRequest, Long productId) {
+        Optional<Product> product = productRepository.findById(productId);
+
+        if(!product.isPresent())
+            throw new IllegalArgumentException("not found");
+
         CategoryLarge categoryLarge;
         CategoryMiddle categoryMiddle;
         CategorySmall categorySmall;
@@ -83,12 +88,8 @@ public class ProductServiceImpl implements ProductService {
             return "Category Error";
         }
 
-        Optional<Product> product = productRepository.findById(productId);
-
-        if(!product.isPresent())
-            throw new IllegalArgumentException("not found");
-
         product.get().update(productInsertRequest, categoryLarge, categoryMiddle, categorySmall);
+        productRepository.save(product.get());
 
         return "success";
     }
@@ -138,6 +139,7 @@ public class ProductServiceImpl implements ProductService {
             throw new IllegalArgumentException("not found");
 
         categoryLarge.get().update(categoryLargeInsertRequest);
+        categoryLargeRepository.save(categoryLarge.get());
 
         return "success";
     }
@@ -155,8 +157,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public String insertCategoryMiddle(CategoryMiddleInsertRequest categoryMiddleInsertRequest) {
+        Optional<CategoryLarge> categoryLarge = categoryLargeRepository.findById(categoryMiddleInsertRequest.getCategoryLargeId());
+
+        if(!categoryLarge.isPresent())
+            throw new IllegalArgumentException("category large doesn't exist");
+
         CategoryMiddle categoryMiddle = CategoryMiddle.builder()
                 .name(categoryMiddleInsertRequest.getCategoryName())
+                .categoryLarge(categoryLarge.get())
                 .build();
         categoryMiddleRepository.save(categoryMiddle);
 
@@ -176,6 +184,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<CategoryMiddle> getCategoryMiddleList() {
         List<CategoryMiddle> categoryMiddles = categoryMiddleRepository.findAll();
+
         return categoryMiddles;
     }
 
@@ -191,6 +200,7 @@ public class ProductServiceImpl implements ProductService {
             throw new IllegalArgumentException("Category Large doesn't exist!");
 
         categoryMiddle.get().update(categoryMiddleInsertRequest, categoryLarge.get());
+        categoryMiddleRepository.save(categoryMiddle.get());
 
         return "success";
     }
@@ -208,8 +218,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public String insertCategorySmall(CategorySmallInsertRequest categorySmallInsertRequest) {
+        Optional<CategoryMiddle> categoryMiddle = categoryMiddleRepository.findById(categorySmallInsertRequest.getCategoryMiddleId());
+
+        if(!categoryMiddle.isPresent())
+            throw new IllegalArgumentException("category middle doesn't exist");
+
         CategorySmall categorySmall = CategorySmall.builder()
                 .name(categorySmallInsertRequest.getCategoryName())
+                .categoryMiddle(categoryMiddle.get())
                 .build();
         categorySmallRepository.save(categorySmall);
 
@@ -244,6 +260,7 @@ public class ProductServiceImpl implements ProductService {
             throw new IllegalArgumentException("Category Middle doesn't exist!");
 
         categorySmall.get().update(categorySmallInsertRequest, categoryMiddle.get());
+        categorySmallRepository.save(categorySmall.get());
 
         return "success";
     }

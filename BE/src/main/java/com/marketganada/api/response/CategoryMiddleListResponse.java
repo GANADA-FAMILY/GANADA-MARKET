@@ -5,11 +5,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
+@Transactional
 public class CategoryMiddleListResponse extends BaseResponseBody {
     List<CategoryMiddleListResponse.CategoryMiddleList> categoryMiddleList;
 
@@ -28,6 +30,7 @@ public class CategoryMiddleListResponse extends BaseResponseBody {
         return res;
     }
 
+    @Getter
     static class CategoryMiddleList {
         Long categoryMiddleId;
         String categoryMiddleName;

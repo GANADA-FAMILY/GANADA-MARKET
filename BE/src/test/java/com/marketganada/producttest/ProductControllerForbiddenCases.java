@@ -16,8 +16,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import javax.transaction.Transactional;
-
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
@@ -82,6 +80,7 @@ public class ProductControllerForbiddenCases {
     @Test
     @Order(2)
     void insertCategoryMiddleTest() throws Exception {
+        System.out.println(categoryMiddle);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/product/category-middle")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
                         .contentType("application/json")
@@ -202,24 +201,6 @@ public class ProductControllerForbiddenCases {
 
     @Test
     @Order(13)
-    void getCategoryLargeTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/product/categoryLarge/-1")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
-                .andExpect(MockMvcResultMatchers.status().isForbidden())
-                .andDo(MockMvcResultHandlers.print());
-    }
-
-    @Test
-    @Order(14)
-    void getProductTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/product/-1")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
-                .andExpect(MockMvcResultMatchers.status().isForbidden())
-                .andDo(MockMvcResultHandlers.print());
-    }
-
-    @Test
-    @Order(15)
     void deleteProductTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/product/-1")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
@@ -229,7 +210,7 @@ public class ProductControllerForbiddenCases {
     }
 
     @Test
-    @Order(16)
+    @Order(14)
     void deleteCategoryLargeTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/product/category-large/-1")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
@@ -239,7 +220,7 @@ public class ProductControllerForbiddenCases {
     }
 
     @Test
-    @Order(17)
+    @Order(15)
     void deleteCategoryMiddleTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/product/category-middle/-1")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
@@ -249,7 +230,7 @@ public class ProductControllerForbiddenCases {
     }
 
     @Test
-    @Order(18)
+    @Order(16)
     void deleteCategorySmallTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/product/category-small/-1")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)

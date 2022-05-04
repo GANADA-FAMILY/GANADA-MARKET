@@ -29,6 +29,7 @@ public class CategorySmallListResponse extends BaseResponseBody {
         return res;
     }
 
+    @Getter
     static class CategorySmallList {
         Long categorySmallId;
         String categorySmallName;

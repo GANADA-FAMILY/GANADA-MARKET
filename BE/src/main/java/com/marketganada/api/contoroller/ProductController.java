@@ -1,16 +1,12 @@
 package com.marketganada.api.contoroller;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import com.marketganada.api.request.CategoryLargeInsertRequest;
 import com.marketganada.api.request.CategoryMiddleInsertRequest;
 import com.marketganada.api.request.CategorySmallInsertRequest;
 import com.marketganada.api.request.ProductInsertRequest;
 import com.marketganada.api.response.*;
 import com.marketganada.api.service.ProductService;
-import com.marketganada.db.entity.CategoryLarge;
 import com.marketganada.db.entity.CategoryMiddle;
-import com.marketganada.db.entity.CategorySmall;
-import com.marketganada.db.entity.Product;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,47 +43,6 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(BaseResponseBody.of(500,"내부 서버 오류"));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(BaseResponseBody.of(201,"제품 정보 입력 성공"));
-    }
-
-    @GetMapping
-    @ApiOperation(value = "제품 정보 목록 조회", notes = "DB에 등록된 제품 정보를 리스트업하여 조회한다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공", response = ProductListResponse.class),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 403, message = "권한 없는 유저"),
-            @ApiResponse(code = 404, message = "존재하지 않는 ID"),
-            @ApiResponse(code = 500, message = "서버 오류")
-    })
-    public ResponseEntity<ProductListResponse> getProductList() {
-        List<Product> products;
-        products = productService.getProductList();
-
-        return ResponseEntity.ok(ProductListResponse.of(200,"success",products));
-    }
-
-    @GetMapping("/{productId}")
-    @ApiOperation(value = "제품 정보 상세 조회", notes = "DB에 등록된 제품 정보를 <strong>제품 ID</strong>로 조회한다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공", response = ProductDetailResponse.class),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 403, message = "권한 없는 유저"),
-            @ApiResponse(code = 404, message = "존재하지 않는 ID"),
-            @ApiResponse(code = 500, message = "서버 오류")
-    })
-    public ResponseEntity<ProductDetailResponse> getProductById(@PathVariable Long productId) {
-        Product product;
-        try {
-            product = productService.getProductById(productId);
-        } catch (Exception e) {
-            if(e.getMessage().equals("not found")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ProductDetailResponse.of(404,"해당 ID의 제품이 존재하지 않습니다.",null));
-            }
-            else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ProductDetailResponse.of(500,"내부 서버 오류",null));
-            }
-        }
-
-        return ResponseEntity.ok(ProductDetailResponse.of(200,"success",product));
     }
 
     @PutMapping("/{productId}")
@@ -170,47 +125,6 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(BaseResponseBody.of(500,"내부 서버 오류"));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(BaseResponseBody.of(201,result));
-    }
-
-    @GetMapping("/category-large/{categoryLargeId}")
-    @ApiOperation(value = "대분류 정보 상세 조회", notes = "대분류명 및 해당 대분류에 종속된 하위 분류를 조회한다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공", response = CategoryLargeResponse.class),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 403, message = "권한 없는 유저"),
-            @ApiResponse(code = 404, message = "존재하지 않는 ID"),
-            @ApiResponse(code = 500, message = "서버 오류")
-    })
-    public ResponseEntity<CategoryLargeResponse> getCategoryLargeById(@PathVariable Long categoryLargeId) {
-        CategoryLarge categoryLarge;
-        try {
-            categoryLarge = productService.getCategoryLargeById(categoryLargeId);
-        } catch (Exception e) {
-            if(e.getMessage().equals("not found")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(CategoryLargeResponse.of(404,"해당 ID의 대분류가 존재하지 않습니다.",null));
-            }
-            else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(CategoryLargeResponse.of(500,"내부 서버 오류",null));
-            }
-        }
-
-        return ResponseEntity.ok(CategoryLargeResponse.of(200,"success",categoryLarge));
-    }
-
-    @GetMapping("/category-large-list")
-    @ApiOperation(value = "대분류 목록 조회", notes = "DB에 등록된 대분류 정보를 리스트업하여 조회한다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공", response = CategoryLargeListResponse.class),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 403, message = "권한 없는 유저"),
-            @ApiResponse(code = 404, message = "존재하지 않는 ID"),
-            @ApiResponse(code = 500, message = "서버 오류")
-    })
-    public ResponseEntity<CategoryLargeListResponse> getCategoryLargeList() {
-        List<CategoryLarge> categoryLarges;
-        categoryLarges = productService.getCategoryLargeList();
-
-        return ResponseEntity.ok(CategoryLargeListResponse.of(200,"success",categoryLarges));
     }
 
     @PutMapping("/category-large/{categoryLargeId}")
@@ -389,22 +303,6 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(BaseResponseBody.of(500,"내부 서버 오류"));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(BaseResponseBody.of(201,result));
-    }
-
-    @GetMapping("/category-small-list")
-    @ApiOperation(value = "소분류 목록 조회", notes = "DB에 등록된 소분류 정보를 리스트업하여 조회한다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공", response = CategorySmallListResponse.class),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 403, message = "권한 없는 유저"),
-            @ApiResponse(code = 404, message = "존재하지 않는 ID"),
-            @ApiResponse(code = 500, message = "서버 오류")
-    })
-    public ResponseEntity<CategorySmallListResponse> getCategorySmallList() {
-        List<CategorySmall> categorySmalls;
-        categorySmalls = productService.getCategorySmallList();
-
-        return ResponseEntity.ok(CategorySmallListResponse.of(200,"success",categorySmalls));
     }
 
     @PutMapping("/category-small/{categorySmallId}")

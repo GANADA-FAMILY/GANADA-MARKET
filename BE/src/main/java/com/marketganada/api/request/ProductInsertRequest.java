@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Getter
@@ -21,11 +22,11 @@ public class ProductInsertRequest {
     String productBrand;
 
     @ApiModelProperty(name = "제품 출시일")
-    @NotBlank
+    @NotNull
     Date releaseDate;
 
     @ApiModelProperty(name = "제품 출고가")
-    @NotBlank
+    @NotNull
     int releasePrice;
 
     @ApiModelProperty(name = "제품 모델명")
@@ -37,14 +38,14 @@ public class ProductInsertRequest {
     String description;
 
     @ApiModelProperty(name = "대분류 ID")
-    @NotBlank
+    @NotNull
     Long categoryLarge;
 
     @ApiModelProperty(name = "중분류 ID")
-    @NotBlank
+    @NotNull
     Long categoryMiddle;
 
     @ApiModelProperty(name = "소분류 ID")
-    @NotBlank
+    @NotNull
     Long categorySmall;
 }

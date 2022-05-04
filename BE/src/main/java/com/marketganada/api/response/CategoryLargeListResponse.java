@@ -28,6 +28,7 @@ public class CategoryLargeListResponse extends BaseResponseBody {
         return res;
     }
 
+    @Getter
     static class CategoryLargeList {
         Long categoryLargeId;
         String categoryLargeName;

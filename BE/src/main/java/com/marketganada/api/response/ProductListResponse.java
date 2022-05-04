@@ -33,6 +33,7 @@ public class ProductListResponse extends BaseResponseBody {
         return res;
     }
 
+    @Getter
     static class ReturnProduct {
         private Long productId;
         private String categoryLarge;

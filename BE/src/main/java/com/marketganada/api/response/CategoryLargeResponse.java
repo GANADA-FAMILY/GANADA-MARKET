@@ -21,19 +21,24 @@ public class CategoryLargeResponse extends BaseResponseBody {
         CategoryLargeResponse res = new CategoryLargeResponse();
         res.setStatusCode(statusCode);
         res.setMessage(message);
-        res.setCategoryMiddleList(new ArrayList<>());
 
-        Set<CategoryMiddle> categoryMiddles = categoryLarge.getCategoryMiddles();
+        if(categoryLarge != null) {
+            res.setCategoryLargeName(categoryLarge.getName());
+            res.setCategoryMiddleList(new ArrayList<>());
 
-        for(CategoryMiddle c : categoryMiddles) {
-            res.getCategoryMiddleList().add(CategoryMiddleList.builder()
-                    .categoryMiddle(c)
-                    .build());
+            Set<CategoryMiddle> categoryMiddles = categoryLarge.getCategoryMiddles();
+
+            for (CategoryMiddle c : categoryMiddles) {
+                res.getCategoryMiddleList().add(CategoryMiddleList.builder()
+                        .categoryMiddle(c)
+                        .build());
+            }
         }
 
         return res;
     }
 
+    @Getter
     static class CategoryMiddleList {
         Long categoryMiddleId;
         String categoryMiddleName;
@@ -55,6 +60,7 @@ public class CategoryLargeResponse extends BaseResponseBody {
         }
     }
 
+    @Getter
     static class CategorySmallList {
         Long categorySmallId;
         String categorySmallName;
