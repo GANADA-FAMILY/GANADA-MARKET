@@ -1,5 +1,5 @@
 pipeline {
-	agent none
+	agent any
 	options { skipDefaultCheckout(false) }
 	stages {
 		stage('git pull') {
@@ -7,7 +7,6 @@ pipeline {
 		
 		}
 		stage('Docker build') {
-			agent any
 			steps {
 				try {
 					sh 'sudo docker-compose -f docker-compose.yml build'
