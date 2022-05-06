@@ -6,6 +6,7 @@ const HomePage = React.lazy(() => import('./pages/HomePage'));
 const MyPage = React.lazy(() => import('./pages/MyPage'));
 const MyPurchasePage = React.lazy(() => import('./pages/MyPurchasePage'));
 const MyProfilePage = React.lazy(() => import('./pages/MyProfilePage'));
+const MyAddressPage = React.lazy(() => import('./pages/MyAddressPage'));
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/my" element={<MyPage />} />
           <Route path="/my/buying" element={<MyPurchasePage />} />
           <Route path="/my/profile" element={<MyProfilePage />} />
+          <Route path="/my/address" element={<MyAddressPage />} />
         </Routes>
       </React.Suspense>
     </Router>

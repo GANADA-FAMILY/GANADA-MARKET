@@ -9,6 +9,7 @@ import Title from '../../atoms/my/Title';
 import InfoGroup from '../../molecules/my/InfoGroup';
 import TitleBar from '../../molecules/my/TitleBar';
 import InputBox from '../../atoms/my/InputBox';
+import Text from '../../atoms/my/Text';
 
 const user = {
   name: '홍길동',
@@ -43,11 +44,13 @@ function MyProfileContainer() {
   };
   return (
     <Container>
-      <MainTitleBar title="프로필 정보" size={24} bordered />
+      <MainTitleBar title="프로필 정보" size={29} bordered />
       <UserProfile>
         <ProfileAvatar src={imageUrl} />
         <ProfileDetail>
-          <Title size={24}>{user.name}</Title>
+          <Text size={24} strong>
+            {user.name}
+          </Text>
           <ProfileButtonBox>
             <LinkButton onClick={onClickImageHandler} href="/">
               이미지 변경
@@ -160,7 +163,6 @@ const WithdrawalLink = styled(Link)`
   display: inline-block;
   font-size: 13px;
   letter-spacing: -0.07px;
-  color: rgba(34, 34, 34, 0.5);
   text-decoration: underline;
 `;
 

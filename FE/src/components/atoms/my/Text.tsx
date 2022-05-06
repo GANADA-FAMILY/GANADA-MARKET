@@ -1,58 +1,44 @@
 import styled from '@emotion/styled';
 import React from 'react';
+import theme from '../../../styles/theme';
 
 interface TextProps {
   children: React.ReactNode;
   className?: string;
-  fontWeight?: string;
   color?: string;
-  display?: string;
   textAlign?: string;
-  style?: string;
-  // role?: string;
   size?: number;
+  strong?: boolean;
+  inline?: boolean;
 }
 
-function Text({
-  children,
-  className,
-  fontWeight,
-  color,
-  display,
-  textAlign,
-  style,
-  // role,
-  size = 14,
-  ...rest
-}: TextProps) {
+function Text({ children, ...props }: TextProps) {
   return (
-    <Atom
-      style={{
-        color: `${color}`,
-        display: `${display}`,
-        fontSize: `${size}px`,
-        ...rest,
-      }}
-
-      // {...rest}
-    >
+    <StyledText className={props.className} {...props}>
       {children}
-    </Atom>
+    </StyledText>
   );
 }
 
-const Atom = styled.span`
-  font-size: 14px;
+const StyledText = styled.p<TextProps>`
+  font-size: ${(props) => `${props.size}px`};
+  color: ${(props) =>
+    `${
+      theme.color[props.color === undefined ? 'black' : props.color]
+    } !important`};
+  font-weight: ${(props) =>
+    `${props.strong ? theme.fontWeight.bold : ''} !important`};
+  display: ${(props) =>
+    `${props.inline ? 'inline-block' : 'block'} !important`};
 `;
 
 Text.defaultProps = {
   className: '',
-  fontWeight: '',
-  color: '#000000',
-  display: 'block',
+  color: 'black',
   textAlign: '',
-  style: '',
-  size: '14',
+  size: 14,
+  strong: false,
+  inline: false,
 };
 
 export default Text;

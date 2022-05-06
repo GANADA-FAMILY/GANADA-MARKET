@@ -1,5 +1,14 @@
 import styled from '@emotion/styled';
 import React from 'react';
+import theme from '../../../styles/theme';
+
+const Typograph = {
+  h1: 'h1',
+  h2: 'h2',
+  h3: 'h3',
+  h4: 'h4',
+  h5: 'h5',
+};
 
 interface TitleProps {
   children: React.ReactNode;
@@ -9,47 +18,51 @@ interface TitleProps {
   display?: string;
   textAlign?: string;
   style?: string;
-  // role?: string;
   size?: number;
+  lineHeight?: number;
+  level?: 1 | 2 | 3 | 4 | 5;
 }
+type TitleTag = 'h1' | 'h2' | 'h3' | 'h4' | 'h5';
 
 function Title({
   children,
   className,
   fontWeight,
-  color,
+  color = 'black',
   display,
   textAlign,
   style,
-  // role,
+  level,
   size = 14,
-  ...rest
+  lineHeight = 15,
+  ...props
 }: TitleProps) {
+  const Tag = `h${level}` as TitleTag;
   return (
-    <Atom
+    <Tag
       style={{
-        color: `${color}`,
-        display: `${display}`,
-        fontSize: `${size}px`,
+        fontSize: `${size / 10}rem`,
+        color: `${theme.color[color]}`,
+        lineHeight: `${lineHeight / 10}`,
       }}
+      className={className}
+      {...props}
     >
       {children}
-    </Atom>
+    </Tag>
   );
 }
-
-const Atom = styled.strong`
-  color: #000000;
-  font-size: 18px;
-`;
 
 Title.defaultProps = {
   className: '',
   fontWeight: '',
-  color: '#000000',
+  color: 'black',
   display: 'block',
   textAlign: 'center',
   style: '',
-  size: 18,
+  level: 5,
+  size: 14,
+  lineHeight: 15,
 };
+
 export default Title;

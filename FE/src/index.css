@@ -21,3 +21,13 @@ body {
   font-weight: 400;
   color: var(--color-grey-dark-3);
 }
+
+/*  */
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style-type: none
+}

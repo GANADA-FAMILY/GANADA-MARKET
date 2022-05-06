@@ -5,8 +5,12 @@ interface ModifyBoxProps {
   children: React.ReactNode;
   toggle: boolean;
 }
-function ModifyBox({ children, toggle }: ModifyBoxProps) {
-  return <Atom toggle={toggle}>{children}</Atom>;
+function ModifyBox({ children, toggle, ...props }: ModifyBoxProps) {
+  return (
+    <Atom toggle={toggle} {...props}>
+      {children}
+    </Atom>
+  );
 }
 
 const Atom = styled.div<ModifyBoxProps>`

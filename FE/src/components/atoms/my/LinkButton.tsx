@@ -19,7 +19,6 @@ function LinkButton({ children, href, onClick, ...rest }: LinkButtonProps) {
 
 const Atom = styled(Link)`
   margin-top: 12px;
-  -ms-flex-item-align: start;
   align-self: flex-start;
   height: 36px;
   line-height: 34px;
