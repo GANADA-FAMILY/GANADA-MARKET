@@ -1,0 +1,38 @@
+pipeline {
+	agent none
+	options { skipDefaultCheckout(false) }
+	stages {
+		stage('git pull') {
+			git branch: 'develop', credentialsId: 'scarlet', url: 'git@lab.ssafy.com:s06-final/S06P31D204.git'
+		
+		}
+		stage('Docker build') {
+			agent any
+			steps {
+				try {
+					sh 'sudo docker-compose -f docker-compose.yml build'
+				} catch(e) {
+					sh 'echo Dockerfile build Fail!!!'
+					slackSend (channel: '#jenkins-test', color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+				}
+				
+			}		
+	
+		}
+		stage('Docker-compose') {
+			steps {
+				script {
+					try {
+						sh 'sudo docker-compose -f docker-compose.yml up -d'
+						slackSend (channel: '#jenkins-test', color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")	
+					} catche(e) {
+						sh 'echo Docker-compose Fail!!!'
+						slackSend (channel: '#jenkins-test', color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+					}
+				}
+			}
+		}
+
+	}
+
+}
