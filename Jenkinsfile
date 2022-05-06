@@ -2,10 +2,7 @@ pipeline {
 	agent any
 	options { skipDefaultCheckout(false) }
 	stages {
-		stage('git pull') {
-			git branch: 'develop', credentialsId: 'scarlet', url: 'git@lab.ssafy.com:s06-final/S06P31D204.git'
-		
-		}
+
 		stage('Docker build') {
 			steps {
 				try {
