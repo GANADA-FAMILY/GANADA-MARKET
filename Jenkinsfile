@@ -5,11 +5,17 @@ pipeline {
 
 		stage('Docker build') {
 			steps {
-				try {
-					sh 'sudo docker-compose -f docker-compose.yml build'
-				} catch(e) {
-					sh 'echo Dockerfile build Fail!!!'
-					slackSend (channel: '#jenkins-test', color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+				script {
+
+
+				
+					try {
+						sh 'sudo docker-compose -f docker-compose.yml build'
+					} catch(e) {
+						sh 'echo Dockerfile build Fail!!!'
+						slackSend (channel: '#jenkins-test', color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+					}
+
 				}
 				
 			}		
