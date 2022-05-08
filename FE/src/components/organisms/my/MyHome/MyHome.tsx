@@ -1,25 +1,42 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
-// import Avatar from '../../atoms/my/Avatar';
-// import LinkButton from '../../atoms/my/LinkButton';
-// import Text from '../../atoms/my/Text';
-// import Title from '../../atoms/my/Title';
-// import TabPane from '../../atoms/my/TabPane';
-// import Tabs from '../../molecules/my/Tabs';
-// import TitleBar from '../../molecules/my/TitleBar';
-// import List from '../../molecules/my/List';
+import MembershipBox from './MembershipBox';
+import User from '../../../../type/User';
+import PurchaseBox from './PurchaseBox';
+import SellBox from './SellBox/SellBox';
+import TitleBar from '../../../molecules/my/TitleBar';
+import List from '../../../molecules/my/List';
 
-const user = {
-  name: '홍길동',
-  email: 'zxc123@naver.com',
-  grade: '일반 회원',
+const user: User = {
+  userEmail: 'zxc123@naver.com',
+  userNickname: 'zxc123',
+  userPhone: '01033334444',
+  profileImageUrl: 'https://kream.co.kr/_nuxt/img/blank_profile.4347742.png',
 };
 
 function MyHome() {
-  return <Container>3232</Container>;
+  return (
+    <Container>
+      <MembershipBox user={user} />
+      <MyHomeTitle title="구매 내역" size={18} src="/my/buying" />
+      <PurchaseBox />
+      <MyHomeTitle title="판매 내역" size={18} src="/my/selling" />
+      <SellBox />
+      <MyHomeTitle title="관심 상품" size={18} src="/my/wish" />
+      <ListArea>
+        <List items={[]} />
+      </ListArea>
+    </Container>
+  );
 }
 
+const MyHomeTitle = styled(TitleBar)`
+  margin-top: 42px;
+  padding-bottom: 16px;
+  display: flex;
+  max-width: 100%;
+`;
 const Container = styled.section``;
-
+const ListArea = styled.div``;
 export default MyHome;

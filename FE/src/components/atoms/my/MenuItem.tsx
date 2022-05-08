@@ -6,7 +6,6 @@ interface MenuItemProps {
   children: React.ReactNode;
   className?: string;
   disabled?: boolean;
-  //   key?: string;
   onClick?: React.MouseEventHandler<HTMLElement>;
   selected?: boolean;
 }

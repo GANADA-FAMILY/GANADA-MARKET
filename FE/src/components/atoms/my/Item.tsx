@@ -4,7 +4,6 @@ import styled from '@emotion/styled';
 interface Props {
   children: React.ReactNode;
   item: any;
-  // activate: boolean,
 }
 function Item({ children, item, ...props }: Props) {
   return <StyledItem {...props}>{children}</StyledItem>;

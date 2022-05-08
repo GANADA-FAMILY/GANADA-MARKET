@@ -10,6 +10,7 @@ interface TextProps {
   size?: number;
   strong?: boolean;
   inline?: boolean;
+  lineHeight?: number;
 }
 
 function Text({ children, ...props }: TextProps) {
@@ -21,7 +22,10 @@ function Text({ children, ...props }: TextProps) {
 }
 
 const StyledText = styled.p<TextProps>`
-  font-size: ${(props) => `${props.size}px`};
+  font-size: ${(props) =>
+    `${props.size !== undefined ? props.size / 10 : 1.4}rem`};
+  line-height: ${(props) =>
+    `${props.lineHeight !== undefined ? props.lineHeight / 10 : 1.4}rem`};
   color: ${(props) =>
     `${
       theme.color[props.color === undefined ? 'black' : props.color]
@@ -39,6 +43,7 @@ Text.defaultProps = {
   size: 14,
   strong: false,
   inline: false,
+  lineHeight: 14,
 };
 
 export default Text;

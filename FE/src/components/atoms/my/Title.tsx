@@ -1,14 +1,5 @@
-import styled from '@emotion/styled';
 import React from 'react';
 import theme from '../../../styles/theme';
-
-const Typograph = {
-  h1: 'h1',
-  h2: 'h2',
-  h3: 'h3',
-  h4: 'h4',
-  h5: 'h5',
-};
 
 interface TitleProps {
   children: React.ReactNode;

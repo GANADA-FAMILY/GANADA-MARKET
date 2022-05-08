@@ -4,21 +4,17 @@ import Address from '../../../../../type/Address';
 import LinkButton from '../../../../atoms/my/LinkButton';
 
 interface ButtonBoxProps {
-  active?: boolean;
   item: Address;
 }
-function ButtonsBox({ active, item }: ButtonBoxProps) {
+function ButtonsBox({ ...props }: ButtonBoxProps) {
   return (
     <Molecule>
-      {active ? <LinkButton href="/">기본 배송지</LinkButton> : ''}
+      {props.item.activate ? '' : <LinkButton href="/">기본 배송지</LinkButton>}
       <LinkButton href="/">수정</LinkButton>
       <LinkButton href="/">삭제</LinkButton>
     </Molecule>
   );
 }
-ButtonsBox.defaultProps = {
-  active: false,
-};
 const Molecule = styled.div`
   margin-top: 14px;
   margin-left: auto;
