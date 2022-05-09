@@ -102,7 +102,7 @@ public class EntityTest {
         auction = Auction.builder()
                 .auctionStatus(true)
                 .auctionTitle("title")
-                .cycle(1)
+                .cycle(10)
                 .depreciation(0)
                 .description("desc")
                 .endTime(new Date())
