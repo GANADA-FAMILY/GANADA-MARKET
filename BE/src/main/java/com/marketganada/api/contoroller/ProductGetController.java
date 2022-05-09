@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Api(value = "상품정보 조회 API", tags = {"Product."})
+@Api(value = "상품정보 조회 API", tags = {"ProductGet."})
 @RestController
 @RequestMapping("/api/product-get")
 public class ProductGetController {
