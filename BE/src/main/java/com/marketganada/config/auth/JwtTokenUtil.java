@@ -1,4 +1,4 @@
-package com.marketganada.common.auth;
+package com.marketganada.config.auth;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
