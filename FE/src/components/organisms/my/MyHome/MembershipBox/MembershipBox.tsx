@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import User from '../../../../../type/User';
-import Avatar from '../../../../atoms/my/Avatar';
+import Avatar from '../../../../atoms/my/Avartar/Avatar';
 import HomeInfo from '../../../../molecules/my/HomeInfo/HomeInfo';
 import MembershipDetail from '../../../../molecules/my/HomeInfo/Membership';
 

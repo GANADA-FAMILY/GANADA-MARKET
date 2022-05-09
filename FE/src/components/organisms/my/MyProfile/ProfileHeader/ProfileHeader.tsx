@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React, { useRef, useState } from 'react';
 import User from '../../../../../type/User';
-import Avatar from '../../../../atoms/my/Avatar';
+import Avatar from '../../../../atoms/my/Avartar/Avatar';
 import ImageInput from '../../../../atoms/my/ImageInput';
 import LinkButton from '../../../../atoms/my/LinkButton';
 import Text from '../../../../atoms/my/Text';

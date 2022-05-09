@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
-import Avatar from '../../atoms/my/Avatar';
+import Avatar from '../../atoms/my/Avartar/Avatar';
 import LinkButton from '../../atoms/my/LinkButton';
 import Text from '../../atoms/my/Text';
 import Title from '../../atoms/my/Title';
@@ -16,7 +16,7 @@ const user = {
   grade: '일반 회원',
 };
 
-function MyHomeContainer() {
+const MyHomeContainer = () => {
   return (
     <Container>
       <MembershipContainer>
@@ -130,7 +130,7 @@ function MyHomeContainer() {
       </ListArea>
     </Container>
   );
-}
+};
 const Container = styled.section``;
 const MembershipContainer = styled.div`
   padding: 23px 0 23px 23px;

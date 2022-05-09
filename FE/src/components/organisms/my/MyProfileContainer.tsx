@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Avatar from '../../atoms/my/Avatar';
+import Avatar from '../../atoms/my/Avartar/Avatar';
 import ImageInput from '../../atoms/my/ImageInput';
 import InfoGroupItem from '../../molecules/my/InfoItem';
 import LinkButton from '../../atoms/my/LinkButton';
