@@ -1,13 +1,14 @@
 pipeline {
 	agent any
 	options { skipDefaultCheckout(false) }
+	environment {
+		PATH = "$PATH:/usr/local/bin/docker-compose"
+	}
+
 	stages {
 		stage('Checkout') {
 			steps {
-				git branch: 'develop',
-				credentialsId: 'scar',
-				url: 'https://lab.ssafy.com/s06-final/S06P31D204.git'
-			
+				checkout scm	
 			}
 	
 		}
