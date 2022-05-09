@@ -16,7 +16,7 @@ const user = {
   grade: '일반 회원',
 };
 
-const MyHomeContainer = () => {
+function MyHomeContainer() {
   return (
     <Container>
       <MembershipContainer>
@@ -130,7 +130,7 @@ const MyHomeContainer = () => {
       </ListArea>
     </Container>
   );
-};
+}
 const Container = styled.section``;
 const MembershipContainer = styled.div`
   padding: 23px 0 23px 23px;

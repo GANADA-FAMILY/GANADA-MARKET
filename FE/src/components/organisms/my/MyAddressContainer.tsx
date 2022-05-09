@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
 import LinkButton from '../../atoms/my/LinkButton';
-import Text from '../../atoms/my/Text';
 import TitleBar from '../../molecules/my/TitleBar';
 
 function MyAddressContainer() {

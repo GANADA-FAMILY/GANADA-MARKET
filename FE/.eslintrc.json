@@ -7,7 +7,8 @@
     "plugin:react/recommended",
     "airbnb",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:storybook/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -56,6 +57,36 @@
     "no-empty-function": "off",
     "@typescript-eslint/no-empty-function": [
       "error"
+    ],
+    "react/require-default-props": [
+      0,
+      {}
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "**/example/**",
+          "*.tsx",
+          "**/*.test.tsx",
+          "**/*.stories.*",
+          "**/scripts/*.tsx",
+          "**/stories/**/*.tsx",
+          "**/__tests__/**/*.tsx",
+          "**/.storybook/**/*.*"
+        ],
+        "peerDependencies": true
+      }
+    ],
+    "react/react-in-jsx-scope": "off",
+    "react/function-component-definition": [
+      "error",
+      {
+        "namedComponents": [
+          "arrow-function",
+          "function-declaration"
+        ] // 'function-declaration' | 'function-expression' | 'arrow-function'
+      }
     ]
   },
   "settings": {

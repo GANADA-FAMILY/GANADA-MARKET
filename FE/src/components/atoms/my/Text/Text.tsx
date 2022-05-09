@@ -1,9 +1,8 @@
 import styled from '@emotion/styled';
-import React from 'react';
-import theme from '../../../styles/theme';
+import theme from '../../../../styles/theme';
 
-interface TextProps {
-  children: React.ReactNode;
+export interface TextProps {
+  children?: React.ReactNode;
   className?: string;
   color?: string;
   textAlign?: string;
@@ -44,6 +43,7 @@ Text.defaultProps = {
   strong: false,
   inline: false,
   lineHeight: 14,
+  children: '',
 };
 
 export default Text;
