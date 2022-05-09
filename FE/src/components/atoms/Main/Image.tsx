@@ -6,6 +6,7 @@ interface ImageProps {
   alt: string;
   maxHeight?: string;
   margin?: string;
+  height?: string;
 }
 
 function Image({ src, alt, ...rest }: ImageProps) {
@@ -15,14 +16,15 @@ function Image({ src, alt, ...rest }: ImageProps) {
 Image.defaultProps = {
   maxHeight: '282px',
   margin: '0',
+  height: '20vw',
 };
 
-const ImageAtom = styled.div<ImageProps>`
+const ImageAtom = styled.img<ImageProps>`
   max-width: 128rem;
   max-height: ${(props) => props.maxHeight};
-  background-image: url('${(props) => props.src}');
+  src: url('${(props) => props.src}');
   width: 100%;
-  height: 20vw;
+  height: ${(props) => props.height};
   border-radius: 1rem;
   background-position: center;
   background-size: contain;
