@@ -7,6 +7,7 @@ const MyPage = React.lazy(() => import('./pages/MyPage'));
 const MyPurchasePage = React.lazy(() => import('./pages/MyPurchasePage'));
 const ShopPage = React.lazy(() => import('./pages/ShopPage'));
 const Error404 = React.lazy(() => import('./components/Error404'));
+const TestPage = React.lazy(() => import('./pages/TestPage'));
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/my" element={<MyPage />} />
           <Route path="/my/buying" element={<MyPurchasePage />} />
           <Route path="/shop/:product" element={<ShopPage />} />
+          <Route path="/TestPage" element={<TestPage />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
       </React.Suspense>
