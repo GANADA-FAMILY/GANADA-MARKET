@@ -1,13 +1,13 @@
-package com.marketganada;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
-@SpringBootTest
-class MarketganadaApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
-
-}
+//package com.marketganada;
+//
+//import org.junit.jupiter.api.Test;
+//import org.springframework.boot.test.context.SpringBootTest;
+//
+//@SpringBootTest
+//class MarketganadaApplicationTests {
+//
+//	@Test
+//	void contextLoads() {
+//	}
+//
+//}
