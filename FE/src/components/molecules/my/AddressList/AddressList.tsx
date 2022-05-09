@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import Item from '../../../atoms/my/Item';
+import Item from '../../../atoms/my/Item/Item';
 import AddressInfo from './AddressInfo';
 import ButtonsBox from './ButtonsBox';
 

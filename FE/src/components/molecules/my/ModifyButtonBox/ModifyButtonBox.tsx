@@ -7,18 +7,18 @@ interface ModifyButtonBoxProps {
 }
 function ModifyButtonBox({ cancel, submit }: ModifyButtonBoxProps) {
   return (
-    <Atom>
+    <Molecules>
       <button type="button" className="button_cancel" onClick={cancel}>
         취소
       </button>
       <button type="button" className="button_submit" onClick={submit}>
         저장
       </button>
-    </Atom>
+    </Molecules>
   );
 }
 
-const Atom = styled.div`
+const Molecules = styled.div`
   padding-top: 28px;
   text-align: center;
   font-size: 0;

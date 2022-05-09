@@ -55,9 +55,7 @@
     "no-use-before-define": "off",
     "react/jsx-props-no-spreading": "off",
     "no-empty-function": "off",
-    "@typescript-eslint/no-empty-function": [
-      "error"
-    ],
+    "@typescript-eslint/no-empty-function": "off",
     "react/require-default-props": [
       0,
       {}

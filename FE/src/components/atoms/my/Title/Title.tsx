@@ -1,8 +1,8 @@
 import React from 'react';
-import theme from '../../../styles/theme';
+import theme from '../../../../styles/theme';
 
 interface TitleProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
   fontWeight?: string;
   color?: string;
@@ -16,7 +16,7 @@ interface TitleProps {
 type TitleTag = 'h1' | 'h2' | 'h3' | 'h4' | 'h5';
 
 function Title({
-  children,
+  children = '',
   className,
   fontWeight,
   color = 'black',

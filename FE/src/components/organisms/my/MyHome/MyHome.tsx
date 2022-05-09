@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
+import User from 'type/User';
+import TitleBar from 'components/molecules/my/TitleBar';
+import List from 'components/molecules/my/List';
 import MembershipBox from './MembershipBox';
-import User from '../../../../type/User';
 import PurchaseBox from './PurchaseBox';
-import SellBox from './SellBox/SellBox';
-import TitleBar from '../../../molecules/my/TitleBar';
-import List from '../../../molecules/my/List';
+import SellBox from './SellBox';
 
 const user: User = {
   userEmail: 'zxc123@naver.com',

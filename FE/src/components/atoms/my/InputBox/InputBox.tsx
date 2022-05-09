@@ -1,17 +1,22 @@
-import React from 'react';
 import styled from '@emotion/styled';
 
 interface InputBoxProps {
   title: string;
   type: string;
   placeholder: string;
+  value?: string;
 }
-function InputBox({ title, type, placeholder }: InputBoxProps) {
+function InputBox({ title, type, placeholder, value = '' }: InputBoxProps) {
   return (
     <Atom>
       <h6 className="input_title">{title}</h6>
       <div className="input_item">
-        <input type={type} className="input_text" placeholder={placeholder} />
+        <input
+          type={type}
+          className="input_text"
+          placeholder={placeholder}
+          value={value}
+        />
       </div>
     </Atom>
   );

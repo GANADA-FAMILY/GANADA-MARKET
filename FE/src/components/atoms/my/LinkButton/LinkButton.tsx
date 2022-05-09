@@ -1,15 +1,18 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 
 interface LinkButtonProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   href: string;
   onClick?: React.MouseEventHandler<HTMLElement>;
 }
 
-function LinkButton({ children, href, onClick, ...rest }: LinkButtonProps) {
+function LinkButton({
+  children = '',
+  href,
+  onClick,
+  ...rest
+}: LinkButtonProps) {
   return (
     <Atom onClick={onClick} to={{ pathname: href }} {...rest}>
       {children}

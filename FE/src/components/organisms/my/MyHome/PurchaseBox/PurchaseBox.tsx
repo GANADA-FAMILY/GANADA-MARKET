@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
-import TabPane from '../../../../atoms/my/TabPane';
-import Tabs from '../../../../molecules/my/Tabs';
-import List from '../../../../molecules/my/List';
+import TabPane from 'components/atoms/my/TabPane/TabPane';
+import Tabs from 'components/molecules/my/Tabs';
+import List from 'components/molecules/my/List';
 
 function PurchaseBox() {
   return (

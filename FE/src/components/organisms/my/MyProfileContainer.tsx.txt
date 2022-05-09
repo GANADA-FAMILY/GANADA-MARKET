@@ -5,10 +5,10 @@ import Avatar from '../../atoms/my/Avartar/Avatar';
 import ImageInput from '../../atoms/my/ImageInput';
 import InfoGroupItem from '../../molecules/my/InfoItem';
 import LinkButton from '../../atoms/my/LinkButton';
-import Title from '../../atoms/my/Title';
+import Title from '../../atoms/my/Title/Title';
 import InfoGroup from '../../molecules/my/InfoGroup';
 import TitleBar from '../../molecules/my/TitleBar';
-import InputBox from '../../atoms/my/InputBox';
+import InputBox from '../../atoms/my/InputBox/InputBox';
 import Text from '../../atoms/my/Text';
 
 const user = {

@@ -23,7 +23,9 @@ function MenuItem({
     </Atom>
   );
 }
-const Atom = styled.li``;
+const Atom = styled.li`
+  list-style-type: none;
+`;
 
 MenuItem.defaultProps = {
   className: '',

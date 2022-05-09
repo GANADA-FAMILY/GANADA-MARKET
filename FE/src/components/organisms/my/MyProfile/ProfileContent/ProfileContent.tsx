@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import User from '../../../../../type/User';
-import InputBox from '../../../../atoms/my/InputBox';
-import Title from '../../../../atoms/my/Title';
-import InfoGroup from '../../../../molecules/my/InfoGroup';
-import InfoItem from '../../../../molecules/my/InfoItem';
+import User from 'type/User';
+import InputBox from 'components/atoms/my/InputBox/InputBox';
+import Title from 'components/atoms/my/Title/Title';
+import InfoGroup from 'components/molecules/my/InfoGroup';
+import InfoItem from 'components/molecules/my/InfoItem';
 
 interface ProfileContentProps {
   user: User;

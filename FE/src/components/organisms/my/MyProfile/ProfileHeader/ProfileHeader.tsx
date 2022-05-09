@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import React, { useRef, useState } from 'react';
-import User from '../../../../../type/User';
-import Avatar from '../../../../atoms/my/Avartar/Avatar';
-import ImageInput from '../../../../atoms/my/ImageInput';
-import LinkButton from '../../../../atoms/my/LinkButton';
-import Text from '../../../../atoms/my/Text';
+import User from 'type/User';
+import Avatar from 'components/atoms/my/Avartar/Avatar';
+import ImageInput from 'components/atoms/my/ImageInput';
+import LinkButton from 'components/atoms/my/LinkButton';
+import Text from 'components/atoms/my/Text';
 
 interface ProfileHeaderProps {
   user: User;
