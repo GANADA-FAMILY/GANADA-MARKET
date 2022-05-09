@@ -10,5 +10,5 @@ import lombok.Setter;
 @ApiModel("ProductInsertRequest")
 public class LikeRequest {
     @ApiModelProperty(name = "관심상품 타겟 ID")
-    int auctionId;
+    Long auctionId;
 }

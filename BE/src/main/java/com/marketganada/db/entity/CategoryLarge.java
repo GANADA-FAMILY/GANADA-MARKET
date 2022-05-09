@@ -1,5 +1,6 @@
 package com.marketganada.db.entity;
 
+import com.marketganada.api.request.CategoryLargeInsertRequest;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,10 @@ public class CategoryLarge {
     @Builder
     public CategoryLarge(String name) {
         this.name = name;
+    }
+
+    public void update(CategoryLargeInsertRequest categoryLargeInsertRequest) {
+        name = categoryLargeInsertRequest.getCategoryName();
     }
 
     @Override

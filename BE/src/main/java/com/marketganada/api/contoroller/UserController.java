@@ -6,13 +6,14 @@ import com.marketganada.api.request.UserNicknameUpdateRequest;
 import com.marketganada.api.request.UserPwUpdateRequest;
 import com.marketganada.api.response.*;
 import com.marketganada.api.service.UserService;
-import com.marketganada.common.auth.GanadaUserDetails;
+import com.marketganada.config.auth.GanadaUserDetails;
 import com.marketganada.db.entity.AddressBook;
 import com.marketganada.db.entity.User;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -44,6 +45,7 @@ public class UserController {
     public ResponseEntity<? extends BaseResponseBody> getUserInfo(@ApiIgnore Authentication authentication) {
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
+        System.out.println("들어옴");
 
         return ResponseEntity.status(200).body(UserInfoResponse.of(200, "회원 정보 조회 성공", user));
     }
@@ -57,8 +59,9 @@ public class UserController {
     public ResponseEntity<? extends BaseResponseBody> deleteUser(@ApiIgnore Authentication authentication) {
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
+        userService.deleteUser(user);
 
-        return ResponseEntity.status(200).body(UserInfoResponse.of(200, "회원 정보 조회 성공", user));
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원 정보 삭제 성공"));
     }
 
     @PutMapping("/nickname")

@@ -1,5 +1,6 @@
 package com.marketganada.db.entity;
 
+import com.marketganada.api.request.ProductInsertRequest;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -70,6 +71,18 @@ public class Product {
         this.description = description;
         this.releaseDate = releaseDate;
         this.releasePrice = releasePrice;
+    }
+
+    public void update(ProductInsertRequest productInsertRequest, CategoryLarge categoryLarge, CategoryMiddle categoryMiddle, CategorySmall categorySmall) {
+        this.categoryLarge = categoryLarge;
+        this.categoryMiddle = categoryMiddle;
+        this.categorySmall = categorySmall;
+        this.productName = productInsertRequest.getProductName();
+        this.productBrand = productInsertRequest.getProductBrand();
+        this.deviceId = productInsertRequest.getDeviceId();
+        this.description = productInsertRequest.getDescription();
+        this.releaseDate = productInsertRequest.getReleaseDate();
+        this.releasePrice = productInsertRequest.getReleasePrice();
     }
 
     @Override
