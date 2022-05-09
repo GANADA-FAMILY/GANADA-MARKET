@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.marketganada.api.request.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +19,14 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @SpringBootTest
-@Transactional
 @AutoConfigureMockMvc
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
 public class AuctionControllerPositiveCases {
     @Autowired
     private MockMvc mockMvc;
@@ -44,11 +39,11 @@ public class AuctionControllerPositiveCases {
     private static AuctionInsertRequest auctionEarphone;
     private static LikeRequest like;
 
-    private static int auctionPhoneId;
-    private static int auctionEarphoneId;
+    private static Long auctionPhoneId;
+    private static Long auctionEarphoneId;
 
-    private static final int TEST_PRODUCT_PHONE_ID = 1;
-    private static final int TEST_PRODUCT_EARPHONE_ID = 1;
+    private static final Long TEST_PRODUCT_PHONE_ID = Long.valueOf(1);
+    private static final Long TEST_PRODUCT_EARPHONE_ID = Long.valueOf(1);
 
     @BeforeAll
     public static void setup() throws Exception {
@@ -63,7 +58,7 @@ public class AuctionControllerPositiveCases {
 		auctionPhone = new AuctionInsertRequest();
 		auctionPhone.setAuctionTitle("sample title");
 		auctionPhone.setAuctionImages(fileList);
-		auctionPhone.setCycle(new Date());
+		auctionPhone.setCycle(1);
 		auctionPhone.setDepreciation(100);
 		auctionPhone.setEndTime(new Date());
 		auctionPhone.setStartPrice(10000);
@@ -72,7 +67,7 @@ public class AuctionControllerPositiveCases {
         auctionEarphone = new AuctionInsertRequest();
         auctionEarphone.setAuctionTitle("sample title");
         auctionEarphone.setAuctionImages(fileList);
-        auctionEarphone.setCycle(new Date());
+        auctionEarphone.setCycle(1);
         auctionEarphone.setDepreciation(100);
         auctionEarphone.setEndTime(new Date());
         auctionEarphone.setStartPrice(10000);
@@ -133,7 +128,7 @@ public class AuctionControllerPositiveCases {
         JSONArray resultArray = tmp.getJSONArray("auctionList");
         tmp = resultArray.getJSONObject(resultArray.length()-1);
 
-        auctionPhoneId = tmp.getInt("auctionId");
+        auctionPhoneId = tmp.getLong("auctionId");
     }
 
     @Test
@@ -149,7 +144,7 @@ public class AuctionControllerPositiveCases {
         JSONArray resultArray = tmp.getJSONArray("auctionList");
         tmp = resultArray.getJSONObject(resultArray.length()-1);
 
-        auctionEarphoneId = tmp.getInt("auctionId");
+        auctionEarphoneId = tmp.getLong("auctionId");
     }
 
     @Test

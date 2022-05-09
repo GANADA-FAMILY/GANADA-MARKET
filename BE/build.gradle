@@ -11,6 +11,10 @@ plugins {
 	id 'jacoco'
 }
 
+test {
+    exclude '**/*'
+}
+
 group = 'com.marketganada'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'

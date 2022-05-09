@@ -70,6 +70,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .access("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
                 .antMatchers("/api/admin/**")
                 .access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/api/product/**")
+                .access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/api/product-get/**")
+                .access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll();
 
         http.oauth2Login()

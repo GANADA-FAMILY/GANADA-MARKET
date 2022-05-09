@@ -68,7 +68,6 @@ public class Auction {
     Set<AuctionImg> auctionImgs = new HashSet<>();
 
     @Builder
-
     public Auction(User user, Product product, String auctionTitle, String description, Date startTime, Date endTime, int startPrice, int cycle, int depreciation, boolean auctionStatus, int likeCnt) {
         this.user = user;
         this.product = product;
