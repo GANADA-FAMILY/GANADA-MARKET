@@ -3,6 +3,7 @@ interface User {
   userNickname: string;
   userPhone: string;
   profileImageUrl: string;
+  grade: string;
 }
 
 export default User;

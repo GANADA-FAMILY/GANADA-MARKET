@@ -32,7 +32,9 @@ function InfoItem({
     if (_type === 'email') {
       const splited = msg.split('@');
       const size = splited[0].length;
-      return `${'*'.repeat(size)}@${splited[1]}`;
+      return `${
+        splited[0].slice(0, 2) + '*'.repeat(size - 3) + splited[0].slice(-1)
+      }@${splited[1]}`;
     }
     if (_type === 'phone') {
       const splited = msg.split('-');

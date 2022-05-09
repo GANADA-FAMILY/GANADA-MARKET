@@ -11,7 +11,7 @@ function MembershipDetail({ user }: MembershipDetailProps) {
     <Molecules>
       <MembershipItem>
         <Text size={16} strong>
-          일반 회원
+          {user.grade}
         </Text>
         <Text color="gray" size={13}>
           회원 등급
