@@ -1,23 +1,35 @@
-package com.marketganada.common.auth;
+package com.marketganada.config.auth;
 
 import com.marketganada.db.entity.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @Getter
-public class GanadaUserDetails implements UserDetails {
+public class GanadaUserDetails implements UserDetails, OAuth2User {
 
     private User user;
+    private Map<String, Object> attributes;
+    private String provider;
 
+    //일반 로그인
     public GanadaUserDetails(User user){
         super();
         this.user = user;
     }
+    //OAuth 로그인
+    public GanadaUserDetails(User user, Map<String, Object> attributes, String provider){
+        this.user = user;
+        this.attributes=attributes;
+        this.provider = provider;
+    }
+
 
     //해당 유저의 권한을 리턴하는 곳
     @Override
@@ -60,5 +72,14 @@ public class GanadaUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+    @Override
+    public String getName() {
+        return null;
     }
 }
