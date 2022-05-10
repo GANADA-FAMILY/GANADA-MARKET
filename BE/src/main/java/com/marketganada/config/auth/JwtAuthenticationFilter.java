@@ -39,6 +39,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 
         if (header == null || !header.startsWith(JwtTokenUtil.TOKEN_PREFIX)) { // Authorization 값이 없거나 Bearer 로 시작하지 않으면
             filterChain.doFilter(request, response);
+            System.out.println("토큰없음");
             return;
         }
         

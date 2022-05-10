@@ -50,6 +50,7 @@ public class Oauth2SuccessHandler implements AuthenticationSuccessHandler {
                 "message", "success",
                 "token", token
         );
+        System.out.println(token);
         response.sendRedirect("http://localhost:3000/oauth/redirect");
         PrintWriter pw = response.getWriter();
         pw.print(new ObjectMapper().writeValueAsString(data));

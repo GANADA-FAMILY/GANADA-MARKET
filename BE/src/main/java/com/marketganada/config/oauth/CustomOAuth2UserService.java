@@ -21,10 +21,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     @Autowired
     private UserRepository userRepository;
 
-    //구글로 부터 받은 userRequest 데이터를 처리하는 함수
-    @Override
-    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 
+        //구글로 부터 받은 userRequest 데이터를 처리하는 함수
+        @Override
+        public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
         //구글 로그인 번호 클릭 -> 구글 로그인 창 -> 구글 로그인 완료 -> code를 리턴 (OAuth-Client 라이브러리)-> AccessToken 요청
         //userRequest 정보 -> loadUser 함수 호출 -> 구글로부터 회원 프로필 받기
