@@ -21,6 +21,7 @@
     "@types/react-slick": "^0.23.8",
     "@types/storybook-react-router": "^1.0.1",
     "antd": "^4.20.1",
+    "axios": "^0.27.2",
     "babel-plugin-emotion": "^11.0.0",
     "classnames": "^2.3.1",
     "cra-template": "1.2.0",

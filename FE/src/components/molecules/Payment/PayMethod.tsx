@@ -22,7 +22,6 @@ function PayMethod({ item, checked, onClick }: Props) {
     </Container>
   );
 }
-
 export default PayMethod;
 
 const dynamicStyle = ({ checked }: Partial<Props>) => {
