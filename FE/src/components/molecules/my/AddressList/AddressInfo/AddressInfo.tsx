@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import Address from 'type/Address';
-import Text from 'components/atoms/my/Text';
+import Text from 'components/atoms/My/Text';
 
 interface AddressInfoProps {
   item: Address;

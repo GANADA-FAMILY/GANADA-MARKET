@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import User from '../../../../type/User';
-import Text from '../../../atoms/my/Text';
-import LinkButton from '../../../atoms/my/LinkButton';
+import Text from '../../../atoms/My/Text';
+import LinkButton from '../../../atoms/My/LinkButton';
 
 interface HomeInfoProps {
   user: User;

@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import TitleBar from 'components/molecules/my/TitleBar';
-import LinkButton from 'components/atoms/my/LinkButton';
-import Text from 'components/atoms/my/Text';
+import TitleBar from 'components/molecules/My/TitleBar';
+import LinkButton from 'components/atoms/My/LinkButton';
+import Text from 'components/atoms/My/Text';
 import MyListBox from './MyListBox';
 
 function MyAddress() {

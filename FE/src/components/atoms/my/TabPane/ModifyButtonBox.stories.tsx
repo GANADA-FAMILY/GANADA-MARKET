@@ -3,7 +3,7 @@ import TabPane from './TabPane';
 
 export default {
   component: TabPane,
-  title: 'atoms/my/TabPane',
+  title: 'atoms/My/TabPane',
 };
 
 const Template: ComponentStory<typeof TabPane> = (args) => (

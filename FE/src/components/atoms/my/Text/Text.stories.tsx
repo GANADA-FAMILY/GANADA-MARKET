@@ -6,7 +6,7 @@ import Text, { TextProps } from './Text';
 
 export default {
   component: Text,
-  title: 'atoms/my/Text',
+  title: 'atoms/My/Text',
   argTypes: {
     color: { control: 'color' },
   },

@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
-import TabPane from 'components/atoms/my/TabPane/TabPane';
-import Tabs from 'components/molecules/my/Tabs';
-import List from 'components/molecules/my/List';
+import TabPane from 'components/atoms/My/TabPane/TabPane';
+import Tabs from 'components/molecules/My/Tabs';
+import List from 'components/molecules/My/List';
 
 function SellBox() {
   return (

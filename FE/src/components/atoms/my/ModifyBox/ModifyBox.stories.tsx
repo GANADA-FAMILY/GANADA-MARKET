@@ -3,7 +3,7 @@ import ModifyBox from './ModifyBox';
 
 export default {
   component: ModifyBox,
-  title: 'atoms/my/ModifyBox',
+  title: 'atoms/My/ModifyBox',
 };
 
 const Template: ComponentStory<typeof ModifyBox> = (args) => (

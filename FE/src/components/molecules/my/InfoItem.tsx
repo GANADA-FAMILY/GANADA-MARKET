@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import ModifyButtonBox from './ModifyButtonBox/ModifyButtonBox';
-import ModifyBox from '../../atoms/my/ModifyBox/ModifyBox';
+import ModifyBox from '../../atoms/My/ModifyBox/ModifyBox';
 
 interface InfoGroupItemProps {
   children?: React.ReactNode;

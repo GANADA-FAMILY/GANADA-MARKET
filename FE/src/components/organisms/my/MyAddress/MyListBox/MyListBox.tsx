@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import Address from 'type/Address';
-import AddressList from 'components/molecules/my/AddressList';
+import AddressList from 'components/molecules/My/AddressList';
 
 interface MyListBoxProps {
   items: Array<Address>;

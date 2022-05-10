@@ -3,7 +3,7 @@ import Item from './Item';
 
 export default {
   component: Item,
-  title: 'atoms/my/Item',
+  title: 'atoms/My/Item',
   argTypes: {
     color: { control: 'color' },
   },

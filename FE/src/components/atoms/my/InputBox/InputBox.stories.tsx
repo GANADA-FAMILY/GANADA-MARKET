@@ -3,7 +3,7 @@ import InputBox from './InputBox';
 
 export default {
   component: InputBox,
-  title: 'atoms/my/InputBox',
+  title: 'atoms/My/InputBox',
 };
 
 const Template: ComponentStory<typeof InputBox> = (args) => (
