@@ -12,25 +12,6 @@ pipeline {
 			}
 	
 		}
-		stage('FEbuild') {
-			steps {
-				script {
-					sh "ls -al"
-					sh "npm install -g yarn"
-					sh "CI=false yarn build"
-				}		
-			}
-		}
-		stage('BEbuild') {
-			steps {
-				script {
-					sh "chmode +x gradlew"
-					sh "./gradlew clean build"
-
-				}
-			}
-
-		}
 			
 		stage('Docker build') {
 			steps {
