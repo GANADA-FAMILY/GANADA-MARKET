@@ -1,9 +1,6 @@
 pipeline {
 	agent any
 	options { skipDefaultCheckout(false) }
-	environment {
-		PATH = "$PATH:/usr/local/bin/docker-compose"
-	}
 
 	stages {
 		stage('Checkout') {
@@ -12,7 +9,7 @@ pipeline {
 			}
 	
 		}
-		
+			
 		stage('Docker build') {
 			steps {
 				script {

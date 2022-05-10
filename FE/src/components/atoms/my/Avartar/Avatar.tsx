@@ -3,17 +3,18 @@ import React from 'react';
 
 interface AvartarProps {
   src: string;
-  size?: string;
+  size?: number;
   alt?: string;
 }
-function Avatar({ src, size = '100', alt = 'avatar', ...rest }: AvartarProps) {
+function Avatar({ size = 100, src, alt = 'avatar', ...props }: AvartarProps) {
   return (
     <Atom
+      className="user_avatar"
       style={{
-        width: `${size}`,
-        height: `${size}`,
+        width: `${size}px`,
+        height: `${size}px`,
       }}
-      {...rest}
+      {...props}
     >
       <AvartarImage src={src} alt={alt} />
     </Atom>
@@ -30,7 +31,7 @@ const AvartarImage = styled.img`
 `;
 
 Avatar.defaultProps = {
-  size: '100',
+  size: 100,
   alt: 'avatar',
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import MyPurchaseContainer from '../components/organisms/my/MyPurchaseContainer';
+import MyPurchaseContainer from '../components/organisms/My/MyPurchaseContainer';
 import MyPageTemplate from '../components/templates/MyPageTemplate';
 
 function MyPurchasePage() {
