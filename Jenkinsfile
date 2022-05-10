@@ -17,8 +17,7 @@ pipeline {
 
 				
 					try {
-						sh 'docker-compose -f /home/ubuntu/complete/S06P31D204
-docker-compose.yml build'
+						sh 'docker-compose -f /home/ubuntu/complete/S06P31D204/docker-compose.yml build'
 					} catch(e) {
 						sh 'echo Dockerfile build Fail!!!'
 					}
@@ -32,9 +31,7 @@ docker-compose.yml build'
 			steps {
 				script {
 					try {
-						sh 'docker-compose -f 
-/home/ubuntu/complete/S06P31D204
-/docker-compose.yml up -d'
+						sh 'docker-compose -f /home/ubuntu/complete/S06P31D204/docker-compose.yml up -d'
 					} catch(e) {
 						sh 'echo Docker-compose Fail!!!'
 					}
