@@ -14,7 +14,7 @@ pipeline {
 		}
 		stage('FEbuild') {
 			steps {
-				scrpt {
+				script {
 					sh "ls -al"
 					sh "yarn install"
 					sh "CI=false yarn build"
@@ -23,8 +23,11 @@ pipeline {
 		}
 		stage('BEbuild') {
 			steps {
-				sh "chmod +x gradlw"
-				sh "./gradlew clean build"
+				script {
+					sh "chmode +x gradlew"
+					sh "./gradlew clean build"
+
+				}
 			}
 
 		}
