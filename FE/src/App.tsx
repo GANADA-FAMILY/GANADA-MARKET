@@ -7,6 +7,7 @@ const MyPage = React.lazy(() => import('./pages/MyPage'));
 const MyPurchasePage = React.lazy(() => import('./pages/MyPurchasePage'));
 const ShopPage = React.lazy(() => import('./pages/ShopPage'));
 const PaymentPage = React.lazy(() => import('./pages/PaymentPage'));
+const Footer = React.lazy(() => import('./components/Footer'));
 const Error404 = React.lazy(() => import('./components/Error404'));
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="*" element={<Error404 />} />
         </Routes>
       </React.Suspense>
+      <Footer />
     </Router>
   );
 }
