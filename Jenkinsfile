@@ -2,7 +2,7 @@ pipeline {
 	agent any
 	options { skipDefaultCheckout(false) }
 	environment {
-		PATH = "$PATH:/usr/local/bin/docker-compose"
+		PATH = "$PATH:/usr/local/bin"
 	}
 
 	stages {
