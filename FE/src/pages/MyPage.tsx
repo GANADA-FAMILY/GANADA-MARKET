@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import MyHomeContainer from '../components/organisms/my/MyHomeContainer';
+// import MyHomeContainer from '../components/organisms/my/MyHomeContainer';
+import MyHome from '../components/organisms/My/MyHome';
 import MyPageTemplate from '../components/templates/MyPageTemplate';
 
 function MyPage() {
   return (
     <MainContainer>
-      <MyPageTemplate element={<MyHomeContainer />} />
+      {/* <MyPageTemplate element={<MyHomeContainer />} /> */}
+      <MyPageTemplate element={<MyHome />} />
     </MainContainer>
   );
 }

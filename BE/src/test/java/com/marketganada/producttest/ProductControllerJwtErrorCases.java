@@ -3,10 +3,7 @@ package com.marketganada.producttest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.marketganada.api.request.*;
 import org.json.JSONObject;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +15,16 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import javax.transaction.Transactional;
-
 @SpringBootTest
-@Transactional
 @AutoConfigureMockMvc
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
 public class ProductControllerJwtErrorCases {
     @Autowired
     private MockMvc mockMvc;
 
     private static ObjectMapper oMapper = new ObjectMapper();
     Logger logger = LoggerFactory.getLogger(ProductControllerPositiveCases.class);
-    private String accessToken;
+    private static String accessToken;
 
     private static ProductInsertRequest product;
     private static CategoryLargeInsertRequest categoryLarge;
@@ -71,7 +65,7 @@ public class ProductControllerJwtErrorCases {
     @Test
     @Order(2)
     void getCategoryLargeListTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/product/category-large-list")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/product-get/category-large-list")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
                 .andExpect(MockMvcResultMatchers.status().isUnauthorized())
                 .andDo(MockMvcResultHandlers.print());
@@ -91,7 +85,7 @@ public class ProductControllerJwtErrorCases {
     @Test
     @Order(4)
     void getCategoryMiddleListTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/product/category-middle-list")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/product-get/category-middle-list")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
                 .andExpect(MockMvcResultMatchers.status().isUnauthorized())
                 .andDo(MockMvcResultHandlers.print());
@@ -111,7 +105,7 @@ public class ProductControllerJwtErrorCases {
     @Test
     @Order(6)
     void getCategorySmallListTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/product/category-small-list")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/product-get/category-small-list")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
                 .andExpect(MockMvcResultMatchers.status().isUnauthorized())
                 .andDo(MockMvcResultHandlers.print());
@@ -131,7 +125,7 @@ public class ProductControllerJwtErrorCases {
     @Test
     @Order(8)
     void getProductListTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/product/product-list")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/product-get/product-list")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
                 .andExpect(MockMvcResultMatchers.status().isUnauthorized())
                 .andDo(MockMvcResultHandlers.print());
@@ -183,8 +177,8 @@ public class ProductControllerJwtErrorCases {
 
     @Test
     @Order(13)
-    void getProductTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/product/"+productId)
+    void getCategoryLargeTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/product-get/category-large/-1")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
                 .andExpect(MockMvcResultMatchers.status().isUnauthorized())
                 .andDo(MockMvcResultHandlers.print());
@@ -192,6 +186,15 @@ public class ProductControllerJwtErrorCases {
 
     @Test
     @Order(14)
+    void getProductTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/product-get/"+productId)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
+                .andExpect(MockMvcResultMatchers.status().isUnauthorized())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    @Order(15)
     void deleteProductTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/product/"+productId)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
@@ -201,7 +204,7 @@ public class ProductControllerJwtErrorCases {
     }
 
     @Test
-    @Order(15)
+    @Order(16)
     void deleteCategoryLargeTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/product/category-large/-1")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
@@ -211,7 +214,7 @@ public class ProductControllerJwtErrorCases {
     }
 
     @Test
-    @Order(16)
+    @Order(17)
     void deleteCategoryMiddleTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/product/category-middle/-1")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
@@ -221,7 +224,7 @@ public class ProductControllerJwtErrorCases {
     }
 
     @Test
-    @Order(17)
+    @Order(18)
     void deleteCategorySmallTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/product/category-small/-1")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)

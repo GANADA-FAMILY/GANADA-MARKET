@@ -1,5 +1,7 @@
 package com.marketganada.db.entity;
 
+import com.marketganada.api.request.CategoryLargeInsertRequest;
+import com.marketganada.api.request.CategoryMiddleInsertRequest;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,6 +40,11 @@ public class CategoryMiddle {
     @Builder
     public CategoryMiddle(String name, CategoryLarge categoryLarge) {
         this.name = name;
+        this.categoryLarge = categoryLarge;
+    }
+
+    public void update(CategoryMiddleInsertRequest categoryMiddleInsertRequest, CategoryLarge categoryLarge) {
+        name = categoryMiddleInsertRequest.getCategoryName();
         this.categoryLarge = categoryLarge;
     }
 

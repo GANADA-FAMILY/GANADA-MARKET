@@ -4,6 +4,8 @@ server:
 
 #DB
 spring:
+  profiles:
+    include: private
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://realganada.cvdtnlvc0pv1.ap-northeast-2.rds.amazonaws.com:3306/ganada?&serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
@@ -25,5 +27,6 @@ jwt:
   secret : GanadaHub98c7WfOzFB6XEQeQj1fzRlVgTxNL8PYh1b1iymZwvqzpMEU7EJkim
   #unit is ms. 1 * 24 * 60 * 60 * 1000 = 1 days
   expiration : 86400000
+
 
 
