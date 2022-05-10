@@ -5,16 +5,13 @@ import SubTitle from '../../atoms/Payment/SubTitle';
 import Logo from '../../atoms/Payment/Logo';
 
 interface Props {
-  checked?: boolean;
-  item?: ItemProps | undefined;
-  onClick: () => void;
+  checked: boolean;
+  item: ItemProps;
+  onClick: React.MouseEventHandler<HTMLElement>;
 }
 interface ItemProps {
   bank: string;
   src: string;
-}
-interface CheckProps {
-  checked: boolean;
 }
 
 function PayMethod({ item, checked, onClick }: Props) {
@@ -24,18 +21,9 @@ function PayMethod({ item, checked, onClick }: Props) {
     </Container>
   );
 }
-
 export default PayMethod;
 
-PayMethod.defaultProps = {
-  checked: false,
-  item: {
-    bank: undefined,
-    src: undefined,
-  },
-};
-
-const dynamicStyle = ({ checked }: Props) => {
+const dynamicStyle = ({ checked }: Partial<Props>) => {
   if (checked) {
     return css`
       border: 1px solid #000;
@@ -47,7 +35,7 @@ const dynamicStyle = ({ checked }: Props) => {
   `;
 };
 
-const Container = styled.div<Props>`
+const Container = styled.div<Partial<Props>>`
   display: inline-flex;
   justify-content: space-between;
   align-items: center;
