@@ -3,7 +3,7 @@ import Title from './Title';
 
 export default {
   component: Title,
-  title: 'my/atoms/Title',
+  title: 'atoms/my/Title',
   argTypes: {
     color: { control: 'color' },
   },
