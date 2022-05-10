@@ -16,7 +16,6 @@ pipeline {
 			steps {
 				script {
 					sh "ls -al"
-					sh "yarn install"
 					sh "CI=false yarn build"
 				}		
 			}
