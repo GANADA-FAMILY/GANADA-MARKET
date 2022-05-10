@@ -1,15 +1,20 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 
-interface ButtonProps {
-  children: React.ReactNode;
+interface LinkButtonProps {
+  children?: React.ReactNode;
   href: string;
+  onClick?: React.MouseEventHandler<HTMLElement>;
 }
 
-function LinkButton({ children, href, ...rest }: ButtonProps) {
+function LinkButton({
+  children = '',
+  href,
+  onClick,
+  ...rest
+}: LinkButtonProps) {
   return (
-    <Atom to={{ pathname: href }} {...rest}>
+    <Atom onClick={onClick} to={{ pathname: href }} {...rest}>
       {children}
     </Atom>
   );
@@ -17,7 +22,6 @@ function LinkButton({ children, href, ...rest }: ButtonProps) {
 
 const Atom = styled(Link)`
   margin-top: 12px;
-  -ms-flex-item-align: start;
   align-self: flex-start;
   height: 36px;
   line-height: 34px;
@@ -36,5 +40,9 @@ const Atom = styled(Link)`
   background-color: #fff;
   text-decoration: none;
 `;
+
+LinkButton.defaultProps = {
+  onClick: () => {},
+};
 
 export default LinkButton;

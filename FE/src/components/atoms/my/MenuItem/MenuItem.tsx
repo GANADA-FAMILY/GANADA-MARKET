@@ -6,7 +6,6 @@ interface MenuItemProps {
   children: React.ReactNode;
   className?: string;
   disabled?: boolean;
-  //   key?: string;
   onClick?: React.MouseEventHandler<HTMLElement>;
   selected?: boolean;
 }
@@ -24,7 +23,9 @@ function MenuItem({
     </Atom>
   );
 }
-const Atom = styled.li``;
+const Atom = styled.li`
+  list-style-type: none;
+`;
 
 MenuItem.defaultProps = {
   className: '',

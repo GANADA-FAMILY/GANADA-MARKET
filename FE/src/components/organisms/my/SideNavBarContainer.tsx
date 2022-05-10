@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import Menu from '../../molecules/my/Menu';
-import MenuItem from '../../atoms/my/MenuItem';
+import MenuItem from '../../atoms/my/MenuItem/MenuItem';
 
 function SideNavBarContainer() {
   const [index, setIndex] = useState(0);
