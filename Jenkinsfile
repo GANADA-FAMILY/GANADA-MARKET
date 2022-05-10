@@ -12,7 +12,23 @@ pipeline {
 			}
 	
 		}
-		
+		stage('FEbuild') {
+			steps {
+				scrpt {
+					sh "ls -al"
+					sh "yarn install"
+					sh "CI=false yarn build"
+				}		
+			}
+		}
+		stage('BEbuild') {
+			steps {
+				sh "chmod +x gradlw"
+				sh "./gradlew clean build"
+			}
+
+		}
+			
 		stage('Docker build') {
 			steps {
 				script {
