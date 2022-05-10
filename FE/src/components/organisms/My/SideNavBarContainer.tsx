@@ -16,7 +16,7 @@ function SideNavBarContainer() {
       </Link>
       <SideNavBar>
         <Menu title="쇼핑 정보">
-          <MenuItem onClick={onClickHandler}>
+          <MenuItem onClick={onClickHandler} className="menu_on">
             <Link to="/my/buying">구매 내역</Link>
           </MenuItem>
           <MenuItem>

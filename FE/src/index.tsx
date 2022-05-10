@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import store from './state/Store';
 import './index.css';
@@ -7,7 +7,7 @@ import Loading from './components/Loading';
 
 const App = lazy(() => import('./App'));
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <Suspense fallback={<Loading />}>
@@ -15,4 +15,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       </Suspense>
     </Provider>
   </React.StrictMode>,
+  document.getElementById('root'),
 );

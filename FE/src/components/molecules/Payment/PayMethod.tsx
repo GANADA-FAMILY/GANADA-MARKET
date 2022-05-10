@@ -20,8 +20,7 @@ interface CheckProps {
 function PayMethod({ item, checked, onClick }: Props) {
   return (
     <Container checked={checked} onClick={onClick}>
-      <SubTitle>{item.bank}</SubTitle>
-      {item.src ? <Logo src={item.src} alt={item.bank} /> : ''}
+      {item !== undefined ? <SubTitle>{item.bank}</SubTitle> : ''}
     </Container>
   );
 }
