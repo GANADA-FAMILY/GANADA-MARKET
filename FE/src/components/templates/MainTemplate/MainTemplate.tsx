@@ -1,5 +1,5 @@
 import React from 'react';
-import Footer from '../../organisms/Main/Footer';
+import Footer from '../../Footer';
 import Main from '../../organisms/Main/Main';
 import Slick from '../../organisms/Main/Slick';
 
@@ -14,7 +14,6 @@ function MainTemplate() {
     <>
       <Slick />
       <Main data={productInfo} />
-      <Footer />
     </>
   );
 }

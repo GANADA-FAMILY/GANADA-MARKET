@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import FlexBox from '../../layouts/Main/FlexBox';
-import GridBox from '../../layouts/Main/GridBox';
-import Text from '../../atoms/Main/Text';
-import LinkTo from '../../atoms/Main/LinkTo';
+import FlexBox from './layouts/Main/FlexBox';
+import GridBox from './layouts/Main/GridBox';
+import Text from './atoms/Main/Text';
+import LinkTo from './atoms/Main/LinkTo';
 
 function Footer() {
   return (

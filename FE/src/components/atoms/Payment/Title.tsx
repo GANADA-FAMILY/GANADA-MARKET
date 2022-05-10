@@ -13,4 +13,7 @@ export default Title;
 
 const Atom = styled.h1`
   font-size: 2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
