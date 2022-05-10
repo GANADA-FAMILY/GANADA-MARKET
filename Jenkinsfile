@@ -16,6 +16,7 @@ pipeline {
 			steps {
 				script {
 					sh "ls -al"
+					sh "npm install -g yarn"
 					sh "CI=false yarn build"
 				}		
 			}
