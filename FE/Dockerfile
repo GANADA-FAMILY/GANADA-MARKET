@@ -12,8 +12,6 @@ RUN npm install --no-cache
 RUN npm install -g react-scripts
 RUN npm install -g react-router-dom
 RUN apk add --no-cache git
-RUN npm install -g yarn
-RUN yarn build
 
 
 COPY . /app
