@@ -4,9 +4,6 @@ import Avatar from './Avatar';
 export default {
   component: Avatar,
   title: 'atoms/My/Avatar',
-  argTypes: {
-    color: { control: 'color' },
-  },
 };
 
 const Template: ComponentStory<typeof Avatar> = (args) => <Avatar {...args} />;

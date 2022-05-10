@@ -4,9 +4,6 @@ import ImageInput from './ImageInput';
 export default {
   component: ImageInput,
   title: 'atoms/my/ImageInput',
-  argTypes: {
-    color: { control: 'color' },
-  },
 };
 
 const Template: ComponentStory<typeof ImageInput> = (args) => (
