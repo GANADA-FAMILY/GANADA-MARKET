@@ -27,6 +27,7 @@ services:
   jenkins:
     container_name: jenkins
     image: jenkins/jenkins
+    user: "${USER_ID}:${GROUP_ID}"
     ports:
       - 8181:8080
     volumes:
