@@ -27,7 +27,8 @@ services:
   jenkins:
     container_name: jenkins
     image: jenkins/jenkins
-    user: "${USER_ID}:${GROUP_ID}"
+    working_dir: /home/ubuntu/storyBook
+    user: "1001"
     ports:
       - 8181:8080
     volumes:
