@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import MyPageTemplate from '../components/templates/MyPageTemplate';
+import MyPageTemplate from '../components/templates/MyPageTemplate/MyPageTemplate';
 // import MyAddressContainer from '../components/organisms/my/MyAddressContainer';
 import MyAddress from '../components/organisms/My/MyAddress';
 

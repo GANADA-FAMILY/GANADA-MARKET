@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import User from 'type/User';
-import Avatar from 'components/atoms/My/Avartar/Avatar';
-import HomeInfo from 'components/molecules/My/HomeInfo/HomeInfo';
-import MembershipDetail from 'components/molecules/My/HomeInfo/Membership';
+import { Avatar } from 'components/atoms/My';
+import { HomeInfo } from 'components/molecules/My';
+import { MembershipDetail } from 'components/molecules/My/HomeInfo';
 
 interface MembershipBoxProps {
   user: User;

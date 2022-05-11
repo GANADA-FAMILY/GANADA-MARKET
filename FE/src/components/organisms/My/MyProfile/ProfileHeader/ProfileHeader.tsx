@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import React, { useRef, useState } from 'react';
 import User from 'type/User';
 import Avatar from 'components/atoms/My/Avartar/Avatar';
 import ImageInput from 'components/atoms/My/ImageInput';

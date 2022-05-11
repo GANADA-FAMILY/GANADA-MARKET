@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 // import MyProfileContainer from '../components/organisms/my/MyProfileContainer';
-import MyPageTemplate from '../components/templates/MyPageTemplate';
+import MyPageTemplate from '../components/templates/MyPageTemplate/MyPageTemplate';
 import MyProfile from '../components/organisms/My/MyProfile';
 
 function MyProfilePage() {

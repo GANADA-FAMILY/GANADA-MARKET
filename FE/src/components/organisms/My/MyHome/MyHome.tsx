@@ -1,9 +1,6 @@
-import React from 'react';
 import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
 import User from 'type/User';
-import TitleBar from 'components/molecules/My/TitleBar';
-import List from 'components/molecules/My/List';
+import { TitleBar, List } from 'components/molecules/My';
 import MembershipBox from './MembershipBox';
 import PurchaseBox from './PurchaseBox';
 import SellBox from './SellBox';
