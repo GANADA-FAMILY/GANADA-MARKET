@@ -28,5 +28,9 @@ jwt:
   #unit is ms. 1 * 24 * 60 * 60 * 1000 = 1 days
   expiration : 86400000
 
+# coolsms
+coolsms:
+  key : NCSWESZZUCID62PO
+  secret : CPX7YPEASONMEFMMTHV95TKHF1HQT8JV
 
 

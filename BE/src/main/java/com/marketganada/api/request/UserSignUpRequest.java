@@ -22,7 +22,7 @@ public class UserSignUpRequest {
     @ApiModelProperty(name = "유저 Nickname", example = "김싸피")
     @NotBlank
     String userNickname;
-    @ApiModelProperty(name = "유저 Phone", example = "010-1234-1234")
+    @ApiModelProperty(name = "유저 Phone", example = "01012341234")
     @NotBlank
     String userPhone;
 }
