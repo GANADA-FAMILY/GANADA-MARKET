@@ -5,7 +5,7 @@ import Menu from '../../molecules/My/Menu';
 import MenuItem from '../../atoms/My/MenuItem/MenuItem';
 
 function SideNavBarContainer() {
-  const [index, setIndex] = useState(0);
+  const [selected, setSelected] = useState(0);
   const onClickHandler = (e: React.MouseEvent<HTMLElement>) => {
     console.log(e);
   };
@@ -16,7 +16,7 @@ function SideNavBarContainer() {
       </Link>
       <SideNavBar>
         <Menu title="쇼핑 정보">
-          <MenuItem onClick={onClickHandler}>
+          <MenuItem onClick={onClickHandler} className="menu_on">
             <Link to="/my/buying">구매 내역</Link>
           </MenuItem>
           <MenuItem>
@@ -89,6 +89,10 @@ const SideNavBar = styled.nav`
     letter-spacing: -0.15px;
     color: rgba(34, 34, 34, 0.5);
     text-decoration: none;
+  }
+  a .menu_on {
+    color: #222;
+    font-weight: 700;
   }
 `;
 

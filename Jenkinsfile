@@ -5,39 +5,21 @@ pipeline {
 	stages {
 		stage('Checkout') {
 			steps {
-				checkout scm	
+				git branch: 'develop',
+				credentialsId: 'scar',
+				url: 'https://lab.ssafy.com/s06-final/S06P31D204.git'
 			}
 	
 		}
 			
-		stage('Docker build') {
+		stage(' build') {
 			steps {
-				script {
+				sh '/BE/gradlew build'
 
-
-				
-					try {
-						sh 'docker-compose -f docker-compose.yml build'
-					} catch(e) {
-						sh 'echo Dockerfile build Fail!!!'
-					}
-
-				}
-				
-			}		
-	
-		}
-		stage('Docker-compose') {
-			steps {
-				script {
-					try {
-						sh 'docker-compose -f docker-compose.yml up -d'
-					} catch(e) {
-						sh 'echo Docker-compose Fail!!!'
-					}
-				}
+		
 			}
 		}
+
 
 	}
 
