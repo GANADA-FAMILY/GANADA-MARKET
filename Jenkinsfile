@@ -14,15 +14,12 @@ pipeline {
 			
 		stage('Docker build') {
 			steps {
-				script {
-
-
-				
+				script {			
 					try {
 						sh 'docker-compose -f down'
 						sh 'docker-compose -f docker-compose.yml build'
 					} catch(e) {
-						sh 'echo Dockerfile build Fail!!!'
+						sh 'echo Dockerfile build Fail!'
 					}
 
 				}
@@ -36,7 +33,7 @@ pipeline {
 					try {
 						sh 'docker-compose -f docker-compose.yml up -d'
 					} catch(e) {
-						sh 'echo Docker-compose Fail!!!'
+						sh 'echo Docker-compose Fail!'
 					}
 				}
 			}
