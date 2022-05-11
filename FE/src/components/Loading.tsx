@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import ReactLoading from 'react-loading';
+// import ReactLoading from 'react-loading';
 import styled from '@emotion/styled';
 
 const LoaderWrap = styled.div`
@@ -13,7 +13,7 @@ const LoaderWrap = styled.div`
 function Loader() {
   return (
     <LoaderWrap>
-      <ReactLoading type="spin" color="#A593E0" />
+      {/* <ReactLoading type="spin" color="#A593E0" /> */}
     </LoaderWrap>
   );
 }

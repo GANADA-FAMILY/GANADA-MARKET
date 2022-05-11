@@ -3,7 +3,7 @@ import ImageInput from './ImageInput';
 
 export default {
   component: ImageInput,
-  title: 'atoms/my/ImageInput',
+  title: 'atoms/My/ImageInput',
 };
 
 const Template: ComponentStory<typeof ImageInput> = (args) => (
@@ -13,5 +13,7 @@ const Template: ComponentStory<typeof ImageInput> = (args) => (
 export const Default = Template.bind({});
 
 Default.args = {
-  onChange: () => {},
+  onChange: () => {
+    return null;
+  },
 };

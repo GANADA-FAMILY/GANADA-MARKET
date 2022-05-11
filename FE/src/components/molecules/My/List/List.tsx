@@ -10,7 +10,7 @@ function List({ items = [] }: ListProps) {
       {items.length > 0 ? (
         <ListArea> </ListArea>
       ) : (
-        <EmptyArea>거래 내역이 없습니다.</EmptyArea>
+        <EmptyArea>해당 목록이 없습니다.</EmptyArea>
       )}
     </Molecule>
   );

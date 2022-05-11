@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import SideNavBarContainer from '../organisms/My/SideNavBarContainer';
+import SideNavBarContainer from '../organisms/My/SideNavBar/SideNavBar';
 
 interface MyPageTemplateProps {
   element: React.ReactNode;

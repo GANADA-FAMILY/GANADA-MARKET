@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
 import React from 'react';
 import { Item } from 'components/atoms/My';
+import Address from 'type/Address';
 import AddressInfo from './AddressInfo';
 import ButtonsBox from './ButtonsBox';
 
 interface AddressListProps {
-  items: Array<any>;
+  items: Array<Address>;
 }
 
 function AddressList({ items, ...rest }: AddressListProps) {

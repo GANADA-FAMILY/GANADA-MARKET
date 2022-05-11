@@ -3,7 +3,7 @@ import ModifyButtonBox from './ModifyButtonBox';
 
 export default {
   component: ModifyButtonBox,
-  title: 'molecules/My/ModifyButtonBox',
+  title: 'molecules/My/InfoItem/ModifyButtonBox',
 };
 
 const Template: ComponentStory<typeof ModifyButtonBox> = (args) => (
