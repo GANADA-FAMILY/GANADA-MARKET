@@ -16,10 +16,9 @@ pipeline {
 			steps {
 				script {			
 					try {
-						sh 'docker-compose -f down'
 						sh 'docker-compose -f docker-compose.yml build'
 					} catch(e) {
-						sh 'echo Dockerfile build Fail!'
+						sh 'echo Dockerfile build Fail!!!'
 					}
 
 				}
