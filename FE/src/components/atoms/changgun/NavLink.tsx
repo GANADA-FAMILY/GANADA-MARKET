@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
 interface StyledLinkProps {
@@ -7,20 +7,21 @@ interface StyledLinkProps {
 
 const activeStyle = ({ $isActive }: StyledLinkProps) => {
   if ($isActive) {
-    return `
+    return css`
       font-weight: 700;
-      text-decoration: underline`;
+      text-decoration: underline;
+    `;
   }
-  return `
+  return css`
     font-weight: 400;
     text-decoration: none;
   `;
 };
 
-const StyledLink = styled(Link)<StyledLinkProps>`
+const NavLink = styled(Link)<StyledLinkProps>`
   color: black;
   font-size: 1.5rem;
   ${activeStyle}
 `;
 
-export default StyledLink;
+export { NavLink };

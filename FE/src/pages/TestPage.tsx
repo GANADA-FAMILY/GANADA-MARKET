@@ -1,16 +1,7 @@
-import StyledLink from '../components/atoms/changgun/NavLink';
+import { FlexibleImage } from '../components/molecules/changgun';
 
 function TestPage() {
-  return (
-    <>
-      <StyledLink to="/" $isActive>
-        hi
-      </StyledLink>
-      <StyledLink to="/my" $isActive>
-        hi
-      </StyledLink>
-    </>
-  );
+  return <FlexibleImage width="5rem" height="5rem" src="./images/Logo.png" />;
 }
 
 export default TestPage;
