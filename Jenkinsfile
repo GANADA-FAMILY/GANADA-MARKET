@@ -33,7 +33,7 @@ pipeline {
 					try {
 						sh 'docker-compose -f docker-compose.yml up -d'
 					} catch(e) {
-						sh 'echo Docker-compose Fail!'
+						sh 'echo Docker-compose Fail'
 					}
 				}
 			}
