@@ -27,10 +27,10 @@ services:
   jenkins:
     container_name: jenkins
     image: jenkins/jenkins
-    working_dir: /home/ubuntu/storyBook
     user: "root"
     ports:
       - 8181:8080
+    privileged: true
     volumes:
       - ./jenkins:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
