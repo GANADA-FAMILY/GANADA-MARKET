@@ -1,9 +1,7 @@
 package com.marketganada.api.service;
 
 import com.marketganada.api.request.AuctionInsertRequest;
-import com.marketganada.api.request.EarphoneListRequest;
 import com.marketganada.api.request.LikeRequest;
-import com.marketganada.api.request.PhoneListRequest;
 import com.marketganada.db.entity.Auction;
 import org.springframework.data.domain.Pageable;
 

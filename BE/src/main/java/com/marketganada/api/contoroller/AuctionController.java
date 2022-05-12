@@ -1,12 +1,11 @@
 package com.marketganada.api.contoroller;
 
 import com.marketganada.api.request.AuctionInsertRequest;
-import com.marketganada.api.request.PhoneListRequest;
 import com.marketganada.api.response.AuctionListResponse;
 import com.marketganada.api.response.BaseResponseBody;
 import com.marketganada.api.service.AuctionService;
 import com.marketganada.api.service.ProductService;
-import com.marketganada.common.auth.GanadaUserDetails;
+import com.marketganada.config.auth.GanadaUserDetails;
 import com.marketganada.db.entity.Auction;
 import com.marketganada.db.entity.User;
 import io.swagger.annotations.*;
