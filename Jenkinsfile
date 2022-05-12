@@ -13,11 +13,14 @@ pipeline {
 		}
 			
 		stage(' build') {
-			steps {
-				sh './BE/gradlew build'
-
+			 steps {
+           			 echo 'Bulid Gradle'
+            			dir ('./BE'){
+                		sh "./gradlew clean build --exclude-task test"
+                
+            			}
+        		  }
 		
-			}
 		}
 
 
