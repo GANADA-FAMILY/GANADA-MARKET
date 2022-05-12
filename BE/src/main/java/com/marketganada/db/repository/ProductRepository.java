@@ -11,23 +11,4 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product,Long>, JpaSpecificationExecutor<Product> {
-    List<Product> findByProductBrandAndProductNameAndCategoryLargeAndCategoryMiddleAndCategorySmall(
-            String productBrand,
-            String productName,
-            CategoryLarge categoryLarge,
-            CategoryMiddle categoryMiddle,
-            CategorySmall categorySmall);
-
-    List<Product> findByProductBrandAndProductNameAndCategoryLargeAndCategoryMiddle(
-            String productBrand,
-            String productName,
-            CategoryLarge categoryLarge,
-            CategoryMiddle categoryMiddle
-    );
-
-    List<Product> findByProductBrandAndProductNameAndCategoryLarge(
-            String productBrand,
-            String productName,
-            CategoryLarge categoryLarge
-    );
 }

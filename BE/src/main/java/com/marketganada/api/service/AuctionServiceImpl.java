@@ -134,11 +134,11 @@ public class AuctionServiceImpl implements AuctionService {
 
         spec = spec.and(ProductSpecification.equalCategoryLargeName("휴대폰"));
 
-        if(brand != "ALL")
+        if(!brand.equals("ALL"))
             spec = spec.and(ProductSpecification.equalProductBrand(brand));
-        if(model != "ALL")
+        if(!model.equals("ALL"))
             spec = spec.and(ProductSpecification.equalProductName(model));
-        if(save != "ALL")
+        if(!save.equals("ALL"))
             spec = spec.and(ProductSpecification.equalCategorySmallName(save));
 
         List<Product> products = productRepository.findAll(spec);
@@ -154,9 +154,9 @@ public class AuctionServiceImpl implements AuctionService {
 
         spec = spec.and(ProductSpecification.equalCategoryLargeName("이어폰"));
 
-        if(brand != "ALL")
+        if(!brand.equals("ALL"))
             spec = spec.and(ProductSpecification.equalProductBrand(brand));
-        if(model != "ALL")
+        if(!model.equals("ALL"))
             spec = spec.and(ProductSpecification.equalProductName(model));
 
         List<Product> products = productRepository.findAll(spec);
