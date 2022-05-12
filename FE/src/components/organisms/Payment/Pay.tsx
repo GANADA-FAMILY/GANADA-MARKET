@@ -6,8 +6,8 @@ import SubTitle from '../../atoms/Payment/SubTitle';
 import PayMethod from '../../molecules/Payment/PayMethod';
 import GrayText from '../../atoms/Payment/GrayText';
 
-interface Props {
-  children: React.ReactNode;
+interface ButtonProps {
+  disabled: boolean;
 }
 
 function Pay() {
@@ -34,7 +34,7 @@ function Pay() {
           );
         })}
       </Wrapper>
-      <Button onClick={onClick}>
+      <Button disabled={select === ''} onClick={onClick}>
         <Text>결제하기</Text>
       </Button>
     </Container>
@@ -55,12 +55,17 @@ const TextWrap = styled.div`
   padding: 1.6rem 0;
 `;
 
-const Button = styled.button`
+const Button = styled.button<ButtonProps>`
   width: 100%;
   height: 5.2rem;
-  background-color: #ebebeb;
   border-radius: 1rem;
   border: none;
+  background-color: #ef6253;
+  cursor: pointer;
+  :disabled {
+    background-color: #ebebeb;
+    cursor: default;
+  }
 `;
 
 const Text = styled.p`

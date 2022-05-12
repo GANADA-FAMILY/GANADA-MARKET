@@ -22,19 +22,6 @@ function PayMethod({ item, checked, onClick }: Props) {
     </Container>
   );
 }
-export default PayMethod;
-
-const dynamicStyle = ({ checked }: Partial<Props>) => {
-  if (checked) {
-    return css`
-      border: 1px solid #000;
-      font-weight: bold;
-    `;
-  }
-  return css`
-    border: 1px solid #ebebeb;
-  `;
-};
 
 const Container = styled.div<Partial<Props>>`
   display: inline-flex;
@@ -47,5 +34,11 @@ const Container = styled.div<Partial<Props>>`
   width: calc(50% - 3px);
   margin: 6px 0 0;
   cursor: pointer;
-  ${dynamicStyle}
+  ${(props) =>
+    props.checked &&
+    css`
+      border: 1px solid #000;
+      font-weight: 700;
+    `}
 `;
+export default PayMethod;
