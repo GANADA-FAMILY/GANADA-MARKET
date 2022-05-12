@@ -36,7 +36,7 @@ public class User {
     @Column(name = "user_pw", columnDefinition = "varchar(100)")
     private String userPw;
 
-    @Column(name = "user_nickname", unique = true, columnDefinition = "varchar(20)")
+    @Column(name = "user_nickname", unique = true, columnDefinition = "varchar(50)")
     private String userNickname;
 
     @Column(name = "user_phone", columnDefinition = "varchar(20)")

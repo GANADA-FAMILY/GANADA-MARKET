@@ -13,6 +13,7 @@ public class UserInfoResponse extends BaseResponseBody{
     String userNickname;
     String userPhone;
     String profileImageUrl;
+    String grade;
 
     public static UserInfoResponse of(Integer statusCode, String message, User user) {
         UserInfoResponse res = new UserInfoResponse();
@@ -23,6 +24,7 @@ public class UserInfoResponse extends BaseResponseBody{
         res.setUserNickname(user.getUserNickname());
         res.setUserPhone(user.getUserPhone());
         res.setProfileImageUrl(user.getProfileImageUrl());
+        res.setGrade(user.getGrade());
 
         return res;
     }

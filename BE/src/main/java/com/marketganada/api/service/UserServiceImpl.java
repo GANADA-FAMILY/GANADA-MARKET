@@ -7,7 +7,7 @@ import com.marketganada.db.entity.User;
 import com.marketganada.db.repository.AddressBookRepository;
 import com.marketganada.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService{
     AddressBookRepository addressBookRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder encodePwd;
 
     @Override
     public String login(UserLoginRequest userLoginRequest) {
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService{
         if(!user.isPresent()){
             return "fail1";
         }
-        if (!passwordEncoder.matches(userLoginRequest.getUserPw(), user.get().getUserPw())) {
+        if (!encodePwd.matches(userLoginRequest.getUserPw(), user.get().getUserPw())) {
             return "fail2";
         }
 
@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService{
 
         User user = new User();
         user.setUserEmail(userSignUpRequest.getUserEmail());
-        user.setUserPw(passwordEncoder.encode(userSignUpRequest.getUserPw()));
+        user.setUserPw(encodePwd.encode(userSignUpRequest.getUserPw()));
         user.setUserNickname(userSignUpRequest.getUserNickname());
         user.setUserPhone(userSignUpRequest.getUserPhone());
         user.setRole("ROLE_USER");
@@ -109,10 +109,10 @@ public class UserServiceImpl implements UserService{
     @Override
     public String updateUserPw(UserPwUpdateRequest userPwUpdateRequest, User user) {
 
-        if (!passwordEncoder.matches(userPwUpdateRequest.getCurrentPw(), user.getUserPw())) {
+        if (!encodePwd.matches(userPwUpdateRequest.getCurrentPw(), user.getUserPw())) {
             return "fail";
         }else{
-            user.setUserPw(passwordEncoder.encode(userPwUpdateRequest.getNewPw()));
+            user.setUserPw(encodePwd.encode(userPwUpdateRequest.getNewPw()));
             userRepository.save(user);
             return "success";
         }
@@ -176,6 +176,11 @@ public class UserServiceImpl implements UserService{
         }
         addressBookRepository.delete(addressBook.get());
         return "success";
+    }
+
+    @Override
+    public List<User> getUserListByUserPhone(String userPhone) {
+        return userRepository.findByUserPhoneAndUserType(userPhone,0);
     }
 
 

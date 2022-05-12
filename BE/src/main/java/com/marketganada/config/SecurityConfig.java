@@ -1,12 +1,15 @@
 package com.marketganada.config;
 
 import com.marketganada.api.service.UserService;
-import com.marketganada.common.auth.GanadaUserDetailService;
-import com.marketganada.common.auth.JwtAuthenticationFilter;
+import com.marketganada.config.auth.GanadaUserDetailService;
+import com.marketganada.config.auth.JwtAuthenticationFilter;
+import com.marketganada.config.oauth.CustomOAuth2UserService;
+import com.marketganada.config.oauth.Oauth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -15,7 +18,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.web.filter.CorsFilter;
 
 @Configuration
@@ -28,21 +31,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     GanadaUserDetailService ganadaUserDetailService;
-
+    @Autowired
+    CustomOAuth2UserService customOAuth2UserService;
+    @Autowired
+    Oauth2SuccessHandler successHandler;
     @Autowired
     private UserService userService;
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    @Autowired
+    private BCryptPasswordEncoder encodePwd;
 
 
     // DAO 기반으로 Authentication Provider를 생성
     @Bean
     DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        daoAuthenticationProvider.setPasswordEncoder(encodePwd);
         daoAuthenticationProvider.setUserDetailsService(this.ganadaUserDetailService);
         return daoAuthenticationProvider;
     }
@@ -73,6 +76,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/product-get/**")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll();
+
+        http.exceptionHandling()
+                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.FORBIDDEN));
+
+        http.oauth2Login()
+                .successHandler(successHandler)
+                .userInfoEndpoint().userService(customOAuth2UserService);
+
     }
 
 }

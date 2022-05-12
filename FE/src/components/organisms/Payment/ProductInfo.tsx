@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Text from '../../atoms/Main/Text';
 import Image from '../../atoms/Main/Image';
+
 interface Props {
   data: object;
 }

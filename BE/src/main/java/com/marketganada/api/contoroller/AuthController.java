@@ -2,18 +2,23 @@ package com.marketganada.api.contoroller;
 
 
 import com.marketganada.api.request.UserLoginRequest;
+import com.marketganada.api.request.UserPwFindRequest;
 import com.marketganada.api.request.UserSignUpRequest;
 import com.marketganada.api.response.BaseResponseBody;
+import com.marketganada.api.response.UserEmailFindResponse;
 import com.marketganada.api.response.UserLoginResponse;
+import com.marketganada.api.service.SmsService;
 import com.marketganada.api.service.UserService;
-import com.marketganada.common.auth.GanadaUserDetails;
-import com.marketganada.common.auth.JwtTokenUtil;
+import com.marketganada.config.auth.JwtTokenUtil;
+import com.marketganada.db.entity.User;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
 
 @Api(value = "인증 API", tags = {"Auth."})
 @RestController
@@ -22,6 +27,8 @@ public class AuthController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private SmsService smsService;
 
     @PostMapping("/login")
     @ApiOperation(value = "로그인", notes = "<strong>아이디</strong>와 <strong>패스워드를</strong> 통해 로그인 한다.")
@@ -45,7 +52,7 @@ public class AuthController {
     @ApiOperation(value = "회원가입", notes = "입력한 회원 정보 를 통해 회원가입 한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공", response = BaseResponseBody.class),
-            @ApiResponse(code = 409, message = "회원가입 실패"),
+            @ApiResponse(code = 409, message = "회원가입 실패(중복)"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<BaseResponseBody> signup(@RequestBody @ApiParam(value = "회원가입 요청 정보", required = true) @Valid UserSignUpRequest userSignUpRequest) {
@@ -80,6 +87,50 @@ public class AuthController {
             return ResponseEntity.status(409).body(BaseResponseBody.of(409,"닉네임 중복"));
         }
         return ResponseEntity.ok(BaseResponseBody.of(200,"닉네임 사용 가능"));
+    }
+
+    //크림은 전화번호가 유니크키 인거 같은데?
+    @GetMapping("/find-email/{userPhone}")
+    @ApiOperation(value = "이메일 찾기", notes = "입력한 전화번호를 통해 이메일을 찾는다.")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "이메일 찾기 성공", response = UserEmailFindResponse.class),
+            @ApiResponse(code = 400, message = "이메일 찾기 실패"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> findUserEmail(@PathVariable("userPhone") String userPhone){
+        List<User> userList = userService.getUserListByUserPhone(userPhone);
+
+        if(userList.size()==0){
+            return ResponseEntity.status(201).body(BaseResponseBody.of(401, "이메일 찾기 실패"));
+        }
+
+        return ResponseEntity.status(201).body(UserEmailFindResponse.of(200, "이메일 찾기 성공", userList));
+    }
+
+
+    @PutMapping("/find-pw")
+    @ApiOperation(value = "비밀번호 찾기", notes = "전화번호와 이메일을 입력받아 비밀번호를 문자로 발송한다.")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "비밀번호 찾기 성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 400, message = "비밀번호 찾기 실패"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> findUserPw( @ApiParam(value = "비밀번호 찾기 요청 정보", required = true)
+                                                                  @Valid @RequestBody UserPwFindRequest userPwFindRequest){
+        Optional<User> user = userService.getUserByUserEmail(userPwFindRequest.getUserEmail());
+        if(user.isPresent()){
+            System.out.println("이메일"+user.get().getUserEmail());
+
+            String result = smsService.sendUserPw(user.get(),userPwFindRequest);
+            if(result.equals("success")){
+                return ResponseEntity.status(201).body(BaseResponseBody.of(201, "비밀번호 찾기 성공"));
+            }else{
+                return ResponseEntity.status(201).body(BaseResponseBody.of(400, "비밀번호 찾기 실패 (번호 X)"));
+            }
+        } else {
+            return ResponseEntity.status(201).body(BaseResponseBody.of(400, "비밀번호 찾기 실패 (이메일 X)"));
+        }
+
     }
 
 }

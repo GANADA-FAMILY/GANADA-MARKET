@@ -14,24 +14,26 @@
     "@testing-library/user-event": "^13.2.1",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.7.13",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
+    "@types/react": "17.0.2",
+    "@types/react-dom": "17.0.2",
     "@types/react-redux": "^7.1.24",
     "@types/react-router-dom": "^5.3.3",
     "@types/react-slick": "^0.23.8",
+    "antd": "^4.20.1",
+    "axios": "^0.27.2",
     "babel-plugin-emotion": "^11.0.0",
     "classnames": "^2.3.1",
     "cra-template": "1.2.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
     "react-loading": "^2.0.3",
     "react-redux": "^8.0.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
-    "react-test-renderer": "^18.0.0",
+    "react-test-renderer": "17.0.2",
     "redux": "^4.1.2",
     "slick-carousel": "^1.8.1",
     "ts-jest": "^27.1.4",
@@ -42,12 +44,24 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
     ]
   },
   "browserslist": {
@@ -63,6 +77,16 @@
     ]
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^6.5.0-beta.7",
+    "@storybook/addon-essentials": "^6.5.0-beta.7",
+    "@storybook/addon-interactions": "^6.5.0-beta.7",
+    "@storybook/addon-links": "^6.5.0-beta.7",
+    "@storybook/builder-webpack5": "^6.5.0-beta.7",
+    "@storybook/manager-webpack5": "^6.5.0-beta.7",
+    "@storybook/node-logger": "^6.5.0-beta.7",
+    "@storybook/preset-create-react-app": "^4.1.0",
+    "@storybook/react": "^6.5.0-beta.7",
+    "@storybook/testing-library": "^0.0.11",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
     "cra-bundle-analyzer": "^0.1.1",
@@ -75,7 +99,9 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint-plugin-storybook": "^0.5.11",
     "eslint-plugin-testing-library": "^5.3.1",
-    "prettier": "^2.6.2"
+    "prettier": "^2.6.2",
+    "webpack": "^5.72.0"
   }
 }
