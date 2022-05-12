@@ -6,6 +6,7 @@ import com.marketganada.common.ProductSpecification;
 import com.marketganada.db.entity.*;
 import com.marketganada.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -70,11 +71,16 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
-    public String deleteAuction(Long auctionId) {
+    public String deleteAuction(Long auctionId, Long userId) {
         Optional<Auction> auction = auctionRepository.findById(auctionId);
-
         if(!auction.isPresent())
             throw new IllegalArgumentException("not found");
+
+        Optional<User> user = userRepository.findById(userId);
+        if(!user.isPresent())
+            throw new IllegalArgumentException("not found");
+        if(user.get().getUserId() != auction.get().getUser().getUserId())
+            return "not owner";
 
         auctionRepository.deleteById(auctionId);
 
@@ -82,21 +88,29 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
-    public String insertAuctionLike(LikeRequest likeRequest, Long userId) {
+    public String insertAuctionLike(Long auctionId, Long userId) {
         Optional<User> user = userRepository.findById(userId);
         if(!user.isPresent())
-            throw new IllegalArgumentException("user not found");
+            throw new IllegalArgumentException("not found");
 
-        Optional<Auction> auction = auctionRepository.findById(likeRequest.getAuctionId());
+        Optional<Auction> auction = auctionRepository.findById(auctionId);
         if(!auction.isPresent())
-            throw new IllegalArgumentException("auction not found");
+            throw new IllegalArgumentException("not found");
 
-        Likes likes = Likes.builder()
+        LikesId likesId = new LikesId();
+        likesId.setUser(userId);
+        likesId.setAuction(auctionId);
+
+        Optional<Likes> likes = likesRepository.findById(likesId);
+        if(likes.isPresent())
+            throw new DuplicateKeyException("already liked");
+
+        Likes insertLikes = Likes.builder()
                 .auction(auction.get())
                 .user(user.get())
                 .build();
 
-        likesRepository.save(likes);
+        likesRepository.save(insertLikes);
 
         Auction target = auction.get();
         target.setLikeCnt(target.getLikeCnt()+1);
@@ -109,15 +123,20 @@ public class AuctionServiceImpl implements AuctionService {
     public String deleteAuctionLike(Long auctionId, Long userId) {
         Optional<User> user = userRepository.findById(userId);
         if(!user.isPresent())
-            throw new IllegalArgumentException("user not found");
+            throw new IllegalArgumentException("not found");
 
         Optional<Auction> auction = auctionRepository.findById(auctionId);
         if(!auction.isPresent())
-            throw new IllegalArgumentException("auction not found");
+            throw new IllegalArgumentException("not found");
 
         LikesId likesId = new LikesId();
-        likesId.setAuction(auctionId);
         likesId.setUser(userId);
+        likesId.setAuction(auctionId);
+
+        Optional<Likes> likes = likesRepository.findById(likesId);
+        if(!likes.isPresent()) {
+            throw new IllegalArgumentException("not liked");
+        }
 
         likesRepository.deleteById(likesId);
 
