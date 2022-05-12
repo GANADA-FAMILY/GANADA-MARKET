@@ -41,13 +41,13 @@ public class CategoryLarge {
         name = categoryLargeInsertRequest.getCategoryName();
     }
 
-    @Override
-    public String toString() {
-        return "CategoryLarge{" +
-                "categoryLargeId=" + categoryLargeId +
-                ", name='" + name + '\'' +
-                ", categoryMiddles=" + categoryMiddles +
-                ", products=" + products +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "CategoryLarge{" +
+//                "categoryLargeId=" + categoryLargeId +
+//                ", name='" + name + '\'' +
+//                ", categoryMiddles=" + categoryMiddles +
+//                ", products=" + products +
+//                '}';
+//    }
 }

@@ -13,15 +13,15 @@ import java.util.List;
 
 @Getter
 @Setter
-@ApiModel("ProductInsertRequest")
+@ApiModel("AuctionInsertRequest")
 public class AuctionInsertRequest {
     @ApiModelProperty(name = "경매 제목")
     @NotBlank
     String auctionTitle;
 
-    @ApiModelProperty(name = "경매 사진")
-    @NotNull
-    List<MultipartFile> auctionImages;
+//    @ApiModelProperty(name = "경매 사진")
+//    @NotNull
+//    List<MultipartFile> auctionImages;
 
     @ApiModelProperty(name = "제품 ID")
     @NotNull
@@ -34,6 +34,10 @@ public class AuctionInsertRequest {
     @ApiModelProperty(name = "감가 주기")
     @NotNull
     int cycle;
+
+    @ApiModelProperty(name = "경매 설명")
+    @NotNull
+    String description;
 
     @ApiModelProperty(name = "감가액")
     @NotNull
