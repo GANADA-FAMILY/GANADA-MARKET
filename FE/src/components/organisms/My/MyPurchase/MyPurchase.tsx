@@ -1,5 +1,5 @@
 function MyPurchase() {
-  return <div>MyPurchaseContainer</div>;
+  return <div>23</div>;
 }
 
 export default MyPurchase;
