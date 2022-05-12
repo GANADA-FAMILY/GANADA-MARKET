@@ -3,6 +3,7 @@ package com.marketganada.db.entity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -13,6 +14,7 @@ import java.util.Set;
 
 @Entity
 @Getter
+@ToString
 @NoArgsConstructor
 @DynamicInsert
 @DynamicUpdate
@@ -80,5 +82,13 @@ public class Auction {
         this.depreciation = depreciation;
         this.auctionStatus = auctionStatus;
         this.likeCnt = likeCnt;
+    }
+
+    public void setLikeCnt(int likeCnt) {
+        this.likeCnt = likeCnt;
+    }
+
+    public int getLikeCnt() {
+        return likeCnt;
     }
 }

@@ -34,7 +34,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-        System.out.println("jwt 핉터");
+        System.out.println("jwt 필터");
         String header = request.getHeader(JwtTokenUtil.HEADER_STRING); // 헤더로 실려오는 Authorization 받기
 
         if (header == null || !header.startsWith(JwtTokenUtil.TOKEN_PREFIX)) { // Authorization 값이 없거나 Bearer 로 시작하지 않으면

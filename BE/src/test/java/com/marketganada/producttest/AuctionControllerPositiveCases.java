@@ -119,7 +119,7 @@ public class AuctionControllerPositiveCases {
     @Order(3)
     void getAuctionPhoneListTest() throws Exception {
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/api/auction/phone?page=1" +
-                                "&sort=id&brand=브랜드&model=모델&save=저장장치")
+                                "&sort=endTime,DESC&brand=브랜드&model=모델&save=저장장치")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());

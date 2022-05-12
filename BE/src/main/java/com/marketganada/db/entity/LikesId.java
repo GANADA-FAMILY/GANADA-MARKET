@@ -1,8 +1,11 @@
 package com.marketganada.db.entity;
 
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@Setter
 public class LikesId implements Serializable {
     private Long user;
     private Long auction;

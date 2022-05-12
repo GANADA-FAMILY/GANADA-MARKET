@@ -85,21 +85,21 @@ public class Product {
         this.releasePrice = productInsertRequest.getReleasePrice();
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "productId=" + productId +
-                ", categoryLarge=" + categoryLarge +
-                ", categoryMiddle=" + categoryMiddle +
-                ", categorySmall=" + categorySmall +
-                ", productName='" + productName + '\'' +
-                ", productBrand='" + productBrand + '\'' +
-                ", deviceId='" + deviceId + '\'' +
-                ", description='" + description + '\'' +
-                ", releaseDate=" + releaseDate +
-                ", releasePrice='" + releasePrice + '\'' +
-                ", auctions=" + auctions +
-                ", productHistories=" + productHistories +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Product{" +
+//                "productId=" + productId +
+//                ", categoryLarge=" + categoryLarge +
+//                ", categoryMiddle=" + categoryMiddle +
+//                ", categorySmall=" + categorySmall +
+//                ", productName='" + productName + '\'' +
+//                ", productBrand='" + productBrand + '\'' +
+//                ", deviceId='" + deviceId + '\'' +
+//                ", description='" + description + '\'' +
+//                ", releaseDate=" + releaseDate +
+//                ", releasePrice='" + releasePrice + '\'' +
+//                ", auctions=" + auctions +
+//                ", productHistories=" + productHistories +
+//                '}';
+//    }
 }
