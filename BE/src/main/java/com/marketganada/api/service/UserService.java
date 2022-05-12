@@ -21,4 +21,5 @@ public interface UserService  {
     List<AddressBook> getAddressBookList(User user);
     String updateAddressBook(AddressBookInsertRequest addressBookInsertRequest, User user, Long addressId);
     String deleteAddressBook(User user, Long addressId);
+    List<User> getUserListByUserPhone(String userPhone);
 }

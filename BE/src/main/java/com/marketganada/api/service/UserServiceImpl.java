@@ -178,5 +178,10 @@ public class UserServiceImpl implements UserService{
         return "success";
     }
 
+    @Override
+    public List<User> getUserListByUserPhone(String userPhone) {
+        return userRepository.findByUserPhoneAndUserType(userPhone,0);
+    }
+
 
 }

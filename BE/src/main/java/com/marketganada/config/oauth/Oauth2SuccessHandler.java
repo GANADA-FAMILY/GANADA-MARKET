@@ -46,8 +46,8 @@ public class Oauth2SuccessHandler implements AuthenticationSuccessHandler {
         response.setContentType("application/json;charset=UTF-8");
 
         Map<String, Object> data = ImmutableMap.of(
-                "status", 200,
                 "message", "success",
+                "statusCode", 200,
                 "token", token
         );
         System.out.println(token);
