@@ -5,9 +5,12 @@ import com.marketganada.api.request.UserBankUpdateRequest;
 import com.marketganada.api.request.UserNicknameUpdateRequest;
 import com.marketganada.api.request.UserPwUpdateRequest;
 import com.marketganada.api.response.*;
+import com.marketganada.api.service.AuctionService;
 import com.marketganada.api.service.UserService;
 import com.marketganada.config.auth.GanadaUserDetails;
 import com.marketganada.db.entity.AddressBook;
+import com.marketganada.db.entity.Auction;
+import com.marketganada.db.entity.Likes;
 import com.marketganada.db.entity.User;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,16 +27,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
+
     @Autowired
     private UserService userService;
 
-//    @ApiOperation("jwt 테스트")
-//    @GetMapping("/test")
-//    public ResponseEntity<? extends BaseResponseBody> testJWT(@ApiIgnore Authentication authentication) {
-//
-//
-//        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "토큰 인증 성공"));
-//    }
+    @Autowired
+    private AuctionService auctionService;
+
 
     @GetMapping
     @ApiOperation(value = "회원 정보 조회", notes = " 토큰을 통해 <strong>회원 정보 조회</strong>를 한다.")
@@ -207,6 +207,20 @@ public class UserController {
         return ResponseEntity.status(201).body(BaseResponseBody.of(200, "주소록 삭제 성공"));
     }
 
+    @GetMapping("/likelist")
+    @ApiOperation(value = "관심상품 리스트 조회", notes = "관심상품 리스트를 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공", response = AddressBookListResponse.class),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponse> getLikeAuctionList(@ApiIgnore Authentication authentication){
+        GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
+        User user = userDetails.getUser();
+
+        List<Likes> likesList = auctionService.getLikeAuctionList(user);
+
+        return ResponseEntity.status(200).body(LikeAuctionListResponse.of(200, "OK",likesList));
+    }
 
 
 }
