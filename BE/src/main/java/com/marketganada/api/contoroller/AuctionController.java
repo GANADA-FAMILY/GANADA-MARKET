@@ -1,6 +1,7 @@
 package com.marketganada.api.contoroller;
 
 import com.marketganada.api.request.AuctionInsertRequest;
+import com.marketganada.api.request.LikeRequest;
 import com.marketganada.api.request.ProductInsertRequest;
 import com.marketganada.api.response.AuctionDetailResponse;
 import com.marketganada.api.response.AuctionListResponse;
@@ -171,7 +172,7 @@ public class AuctionController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<BaseResponseBody> insertAuctionLike(
-            @RequestBody @ApiParam(value = "좋아요를 찍을 경매 ID", required = true) @Valid Long auctionId,
+            @RequestBody @ApiParam(value = "좋아요를 찍을 경매 ID", required = true) @Valid LikeRequest likeRequest,
             @ApiIgnore Authentication authentication
     ) {
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
@@ -179,7 +180,7 @@ public class AuctionController {
 
         String result;
         try {
-            result = auctionService.insertAuctionLike(auctionId,user.getUserId());
+            result = auctionService.insertAuctionLike(likeRequest.getAuctionId(),user.getUserId());
         } catch (Exception e) {
             if(e.getMessage().equals("not found")) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(BaseResponseBody.of(404,"해당 ID의 경매 또는 유저가 존재하지 않습니다."));

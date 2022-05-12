@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ApiModel("ProductInsertRequest")
+@ApiModel("LikeRequest")
 public class LikeRequest {
     @ApiModelProperty(name = "관심상품 타겟 ID")
     Long auctionId;
