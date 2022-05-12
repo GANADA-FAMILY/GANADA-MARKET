@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import React from 'react';
 import { Link } from 'react-router-dom';
 import User from 'type/User';
 import InputBox from 'components/atoms/My/InputBox/InputBox';

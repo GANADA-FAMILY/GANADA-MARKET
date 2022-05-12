@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import ModifyButtonBox from './ModifyButtonBox/ModifyButtonBox';
-import ModifyBox from '../../atoms/My/ModifyBox/ModifyBox';
+import { ModifyBox } from 'components/atoms/My';
+import ModifyButtonBox from '../ModifyButtonBox';
 
 interface InfoGroupItemProps {
   children?: React.ReactNode;
@@ -30,6 +30,9 @@ function InfoItem({
 
   function convert(_type: string, msg: string) {
     if (_type === 'email') {
+      const regEmail =
+        /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+      if (!regEmail.test(msg)) return msg;
       const splited = msg.split('@');
       const size = splited[0].length;
       return `${
@@ -37,10 +40,16 @@ function InfoItem({
       }@${splited[1]}`;
     }
     if (_type === 'phone') {
+      const regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+      if (!regPhone.test(msg)) return msg;
       const splited = msg.split('-');
       return `${splited[0]}-
       ${splited[1][0]}${'*'.repeat(3)}-
       *${splited[2].slice(1, 4)}`;
+    }
+    if (_type === 'password') {
+      if (msg.length === 0) return msg;
+      return '●'.repeat(msg.length);
     }
     return msg;
   }

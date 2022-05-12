@@ -42,7 +42,7 @@ const Atom = styled(Link)`
 `;
 
 LinkButton.defaultProps = {
-  onClick: () => {},
+  onClick: () => null,
 };
 
 export default LinkButton;

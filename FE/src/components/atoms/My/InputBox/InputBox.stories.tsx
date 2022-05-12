@@ -17,3 +17,11 @@ Default.args = {
   type: 'text',
   placeholder: 'placeholder',
 };
+
+export const Password = Template.bind({});
+
+Password.args = {
+  title: '제목없음',
+  type: 'password',
+  placeholder: 'placeholder',
+};

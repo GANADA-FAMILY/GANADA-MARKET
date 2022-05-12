@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import Title from '../../atoms/My/Title/Title';
+import Title from '../../../atoms/My/Title/Title';
 
 interface TitleBarProps {
   title: string;

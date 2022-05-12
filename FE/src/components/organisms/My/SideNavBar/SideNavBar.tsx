@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
-import Menu from '../../molecules/My/Menu';
-import MenuItem from '../../atoms/My/MenuItem/MenuItem';
+import Menu from '../../../molecules/My/Menu';
+import MenuItem from '../../../atoms/My/MenuItem/MenuItem';
 
-function SideNavBarContainer() {
+function SideNavBar() {
   const [selected, setSelected] = useState(0);
   const onClickHandler = (e: React.MouseEvent<HTMLElement>) => {
     console.log(e);
@@ -14,7 +14,7 @@ function SideNavBarContainer() {
       <Link to="/my" onClick={onClickHandler}>
         <SideBarMainTitle>마이 페이지</SideBarMainTitle>
       </Link>
-      <SideNavBar>
+      <Nav>
         <Menu title="쇼핑 정보">
           <MenuItem onClick={onClickHandler} className="menu_on">
             <Link to="/my/buying">구매 내역</Link>
@@ -43,7 +43,7 @@ function SideNavBarContainer() {
             <Link to="/my/point">포인트</Link>
           </MenuItem>
         </Menu>
-      </SideNavBar>
+      </Nav>
     </Container>
   );
 }
@@ -76,7 +76,7 @@ const SideBarMainTitle = styled.h2`
   letter-spacing: -0.15px;
   text-decoration: none;
 `;
-const SideNavBar = styled.nav`
+const Nav = styled.nav`
   div + div {
     margin-top: 40px;
   }
@@ -96,4 +96,4 @@ const SideNavBar = styled.nav`
   }
 `;
 
-export default SideNavBarContainer;
+export default SideNavBar;

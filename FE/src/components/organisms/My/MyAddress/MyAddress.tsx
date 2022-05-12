@@ -12,7 +12,7 @@ function MyAddress() {
         <TitleBar title="주소록" size={24} lineHeight={12} color="black2" />
         <ButtonBox>
           <AddButton href="">
-            <Text size={12} color="gray2">
+            <Text size={12} color="gray2" lineHeight={32}>
               + 새 배송지 추가
             </Text>
           </AddButton>
