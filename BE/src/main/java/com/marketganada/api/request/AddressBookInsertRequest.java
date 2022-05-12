@@ -14,7 +14,7 @@ public class AddressBookInsertRequest {
     @ApiModelProperty(name = "주소지 이름", example = "우리집")
     @NotBlank
     String addressName;
-    @ApiModelProperty(name = "주소지 연락처", example = "010-1234-1234")
+    @ApiModelProperty(name = "주소지 연락처", example = "01012341234")
     @NotBlank
     String addressPhone;
     @ApiModelProperty(name = "우편번호", example = "12345")
