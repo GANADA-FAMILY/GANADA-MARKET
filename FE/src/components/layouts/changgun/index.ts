@@ -1,1 +1,1 @@
-export * from './ImageWrapper';
+export * from './Modal';

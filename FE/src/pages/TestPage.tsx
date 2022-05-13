@@ -1,7 +1,7 @@
-import { FlexibleImage } from '../components/molecules/changgun';
+import { Header } from '../components/organisms/changgun';
 
 function TestPage() {
-  return <FlexibleImage width="5rem" height="5rem" src="./images/Logo.png" />;
+  return <Header />;
 }
 
 export default TestPage;
