@@ -35,14 +35,15 @@ public class AuthController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공", response = UserLoginResponse.class),
             @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "존재하지 않는 아이디"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<UserLoginResponse> login(@RequestBody @ApiParam(value = "로그인 요청 정보", required = true) @Valid UserLoginRequest userLoginRequest) {
         String result = userService.login(userLoginRequest);
         if (result.equals("fail1")) {
-            return ResponseEntity.status(401).body(UserLoginResponse.of(401,"존재하지 않는 아이디 입니다.",null));
+            return ResponseEntity.status(404).body(UserLoginResponse.of(404,"Not Found",null));
         }else if(result.equals("fail2")){
-            return ResponseEntity.status(401).body(UserLoginResponse.of(401,"비밀번호를 확인 해 주세요.",null));
+            return ResponseEntity.status(401).body(UserLoginResponse.of(401,"Unauthorized",null));
         }
 
         return ResponseEntity.ok(UserLoginResponse.of(200,"Success", JwtTokenUtil.getToken(userLoginRequest.getUserEmail())));
@@ -51,17 +52,17 @@ public class AuthController {
     @PostMapping("/signup")
     @ApiOperation(value = "회원가입", notes = "입력한 회원 정보 를 통해 회원가입 한다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 201, message = "성공", response = BaseResponseBody.class),
             @ApiResponse(code = 409, message = "회원가입 실패(중복)"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<BaseResponseBody> signup(@RequestBody @ApiParam(value = "회원가입 요청 정보", required = true) @Valid UserSignUpRequest userSignUpRequest) {
         String result = userService.insertUser(userSignUpRequest);
         if (result.equals("fail")) {
-            return ResponseEntity.status(409).body(BaseResponseBody.of(409,"회원가입 실패"));
+            return ResponseEntity.status(409).body(BaseResponseBody.of(409,"Conflict"));
         }
 
-        return ResponseEntity.ok(BaseResponseBody.of(200,"회원가입 성공"));
+        return ResponseEntity.ok(BaseResponseBody.of(201,"Created"));
     }
 
 //    @ApiOperation("이메일 중복 검사")
@@ -84,27 +85,27 @@ public class AuthController {
     public ResponseEntity<BaseResponseBody> checkDuplicateUserNickName(@PathVariable("userNickname") String userNickname) {
         String result = userService.checkDuplicateUserNickname(userNickname);
         if (result.equals("fail")) {
-            return ResponseEntity.status(409).body(BaseResponseBody.of(409,"닉네임 중복"));
+            return ResponseEntity.status(409).body(BaseResponseBody.of(409,"Conflict"));
         }
-        return ResponseEntity.ok(BaseResponseBody.of(200,"닉네임 사용 가능"));
+        return ResponseEntity.ok(BaseResponseBody.of(200,"OK"));
     }
 
     //크림은 전화번호가 유니크키 인거 같은데?
     @GetMapping("/find-email/{userPhone}")
     @ApiOperation(value = "이메일 찾기", notes = "입력한 전화번호를 통해 이메일을 찾는다.")
     @ApiResponses({
-            @ApiResponse(code = 201, message = "이메일 찾기 성공", response = UserEmailFindResponse.class),
-            @ApiResponse(code = 400, message = "이메일 찾기 실패"),
+            @ApiResponse(code = 200, message = "이메일 찾기 성공", response = UserEmailFindResponse.class),
+            @ApiResponse(code = 404, message = "이메일 찾기 실패"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> findUserEmail(@PathVariable("userPhone") String userPhone){
         List<User> userList = userService.getUserListByUserPhone(userPhone);
 
         if(userList.size()==0){
-            return ResponseEntity.status(201).body(BaseResponseBody.of(401, "이메일 찾기 실패"));
+            return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Not Found"));
         }
 
-        return ResponseEntity.status(201).body(UserEmailFindResponse.of(200, "이메일 찾기 성공", userList));
+        return ResponseEntity.status(200).body(UserEmailFindResponse.of(200, "OK", userList));
     }
 
 
@@ -112,7 +113,8 @@ public class AuthController {
     @ApiOperation(value = "비밀번호 찾기", notes = "전화번호와 이메일을 입력받아 비밀번호를 문자로 발송한다.")
     @ApiResponses({
             @ApiResponse(code = 201, message = "비밀번호 찾기 성공", response = BaseResponseBody.class),
-            @ApiResponse(code = 400, message = "비밀번호 찾기 실패"),
+            @ApiResponse(code = 401, message = "이메일 일치 하는 유저의 전화번호와 같지 않음"),
+            @ApiResponse(code = 404, message = "이메일 일치 하는 유저 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> findUserPw( @ApiParam(value = "비밀번호 찾기 요청 정보", required = true)
@@ -123,12 +125,12 @@ public class AuthController {
 
             String result = smsService.sendUserPw(user.get(),userPwFindRequest);
             if(result.equals("success")){
-                return ResponseEntity.status(201).body(BaseResponseBody.of(201, "비밀번호 찾기 성공"));
+                return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Created"));
             }else{
-                return ResponseEntity.status(201).body(BaseResponseBody.of(400, "비밀번호 찾기 실패 (번호 X)"));
+                return ResponseEntity.status(401).body(BaseResponseBody.of(401, "Unauthorized"));
             }
         } else {
-            return ResponseEntity.status(201).body(BaseResponseBody.of(400, "비밀번호 찾기 실패 (이메일 X)"));
+            return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Not Found"));
         }
 
     }

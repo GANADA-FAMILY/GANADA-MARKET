@@ -13,8 +13,8 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class LikeAuctionListResponse extends BaseResponse{
-
+public class LikeAuctionListResponse extends BaseResponseBody{
+    Map<String,Object> data;
 
     public static LikeAuctionListResponse of(int statusCode, String message, List<Likes> likesList) {
         LikeAuctionListResponse res = new LikeAuctionListResponse();

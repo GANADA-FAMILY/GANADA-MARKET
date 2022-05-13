@@ -38,17 +38,21 @@ public class AddressBook {
     @Column(name = "address_detail", columnDefinition = "varchar(100)")
     private String addressDetail;
 
+    @Column(name = "activate", columnDefinition = "boolean")
+    private boolean activate;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @Builder
-    public AddressBook(String addressName, String addressPhone, String postalCode, String address, String addressDetail, User user) {
+    public AddressBook(String addressName, String addressPhone, String postalCode, String address, String addressDetail, Boolean activate, User user) {
         this.addressName = addressName;
         this.addressPhone = addressPhone;
         this.postalCode = postalCode;
         this.address = address;
         this.addressDetail = addressDetail;
+        this.activate = activate;
         this.user = user;
     }
 }
