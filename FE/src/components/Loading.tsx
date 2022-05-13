@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
-// import ReactLoading from 'react-loading';
 import styled from '@emotion/styled';
+import { keyframes } from '@emotion/react';
 
 const LoaderWrap = styled.div`
   width: 100%;
@@ -10,10 +10,27 @@ const LoaderWrap = styled.div`
   text-align: center;
   align-items: center;
 `;
+
+const spinner = keyframes`
+  from {
+    transform: rotate(0deg);
+  } to {
+    transform: rotate(360deg);
+  }
+`;
+
+const Spinner = styled.div`
+  min-width: 4rem;
+  min-height: 4rem;
+  border: 5px solid black;
+  border-right: 5px solid yellowgreen;
+  border-radius: 50%;
+  animation: ${spinner} 1s linear infinite;
+`;
 function Loader() {
   return (
     <LoaderWrap>
-      {/* <ReactLoading type="spin" color="#A593E0" /> */}
+      <Spinner />
     </LoaderWrap>
   );
 }
