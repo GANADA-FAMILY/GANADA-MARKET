@@ -14,8 +14,6 @@ function GrayText({ children, ...rest }: Props) {
   return <Atom {...styles}>{children}</Atom>;
 }
 
-export default GrayText;
-
 GrayText.defaultProps = {
   fontSize: '1.4rem',
   margin: '0',
@@ -29,3 +27,5 @@ const Atom = styled.p<Props>`
   overflow: hidden;
   text-overflow: ellipsis;
 `;
+
+export default GrayText;
