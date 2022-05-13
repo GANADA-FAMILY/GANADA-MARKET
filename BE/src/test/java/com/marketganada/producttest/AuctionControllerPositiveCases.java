@@ -57,7 +57,7 @@ public class AuctionControllerPositiveCases {
 
 		auctionPhone = new AuctionInsertRequest();
 		auctionPhone.setAuctionTitle("sample title");
-		auctionPhone.setAuctionImages(fileList);
+		//auctionPhone.setAuctionImages(fileList);
 		auctionPhone.setCycle(1);
 		auctionPhone.setDepreciation(100);
 		auctionPhone.setEndTime(new Date());
@@ -66,7 +66,7 @@ public class AuctionControllerPositiveCases {
 
         auctionEarphone = new AuctionInsertRequest();
         auctionEarphone.setAuctionTitle("sample title");
-        auctionEarphone.setAuctionImages(fileList);
+        //auctionEarphone.setAuctionImages(fileList);
         auctionEarphone.setCycle(1);
         auctionEarphone.setDepreciation(100);
         auctionEarphone.setEndTime(new Date());

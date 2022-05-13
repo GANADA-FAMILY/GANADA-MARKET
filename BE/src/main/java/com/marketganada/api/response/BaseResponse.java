@@ -22,6 +22,7 @@ public class BaseResponse<T> {
         this.message = message;
     }
 
+
     public BaseResponse of(Integer statusCode, String message, T data) {
         BaseResponse body = new BaseResponse();
         body.message = message;
@@ -29,5 +30,6 @@ public class BaseResponse<T> {
         body.data = data;
         return body;
     }
+
 
 }

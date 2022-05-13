@@ -138,7 +138,10 @@ public class UserController {
     @PostMapping("/addressbook")
     @ApiOperation(value = "주소록 등록", notes = "주소지 이름, 연락처, 우편번호, 주소, 상세주소를 입력받아 주소록에 저장한다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 201, message = "성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 400, message = "입력 데이터 오류"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 403, message = "권한 없는 유저"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> insertAddressBook(@ApiIgnore Authentication authentication,
@@ -148,7 +151,7 @@ public class UserController {
         User user = userDetails.getUser();
         userService.insertUserAddressBook(addressBookInsertRequest, user);
 
-        return ResponseEntity.status(201).body(BaseResponseBody.of(201, "주소록 등록 성공"));
+        return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Created"));
     }
 
     @GetMapping("/addressbook")
@@ -184,7 +187,7 @@ public class UserController {
         if(res.equals("fail")){
             return ResponseEntity.status(401).body(BaseResponseBody.of(401,"주소록 변경 실패"));
         }
-        return ResponseEntity.status(201).body(BaseResponseBody.of(200, "주소록 수정 성공"));
+        return ResponseEntity.status(201).body(BaseResponseBody.of(200, "Created"));
     }
 
     @DeleteMapping("/addressbook/{addressId}")
@@ -207,13 +210,35 @@ public class UserController {
         return ResponseEntity.status(201).body(BaseResponseBody.of(200, "주소록 삭제 성공"));
     }
 
+    @PutMapping("/represent/{addressId}")
+    @ApiOperation(value = "대표 주소 수정", notes = "입력받은 주소를 대표 주소로 변경한다.")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 400, message = "입력 데이터 오류"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 403, message = "권한 없는 유저"),
+            @ApiResponse(code = 404, message = "리소스 찾을 수 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> updateActivateAddressBook(@ApiIgnore Authentication authentication,
+                                                                        @PathVariable("addressId") Long addressId){
+        GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
+        User user = userDetails.getUser();
+
+        String res = userService.updateActivateAddressBook(user,addressId);
+        if(res.equals("fail")){
+            return ResponseEntity.status(404).body(BaseResponseBody.of(404,"Not Found"));
+        }
+        return ResponseEntity.status(201).body(BaseResponseBody.of(200, "Created"));
+    }
+
     @GetMapping("/likelist")
     @ApiOperation(value = "관심상품 리스트 조회", notes = "관심상품 리스트를 조회한다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "성공", response = AddressBookListResponse.class),
+            @ApiResponse(code = 200, message = "성공", response = LikeAuctionListResponse.class),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponse> getLikeAuctionList(@ApiIgnore Authentication authentication){
+    public ResponseEntity<? extends BaseResponseBody> getLikeAuctionList(@ApiIgnore Authentication authentication){
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
 
