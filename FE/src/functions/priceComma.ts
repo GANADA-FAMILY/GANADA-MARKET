@@ -1,8 +1,4 @@
-interface Props {
-  price: number;
-}
-
-function priceComma({ price }: Props) {
+function priceComma(price: number) {
   /*
   10000 -> 10,000
   */

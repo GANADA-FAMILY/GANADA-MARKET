@@ -19,11 +19,24 @@ function DeliveryInfo() {
   useEffect(() => {
     const token = sessionStorage.getItem('token');
     if (token) {
-      axios.get('/user/addressbook', {
-        headers: {
-          Authorization: `${token}`,
-        },
-      });
+      axios
+        .get('/user/addressbook', {
+          headers: {
+            Authorization: `${token}`,
+          },
+        })
+        .then((res) => {
+          const {
+            addressName,
+            addressPhone,
+            postalCode,
+            address,
+            addressDetail,
+          } = res.data.addressList;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }, []);
 
@@ -37,7 +50,7 @@ function DeliveryInfo() {
         <Dl>
           <Item>
             <Dt>받는 분</Dt>
-            <Dd>헤더1</Dd>
+            <Dd>{}</Dd>
           </Item>
           <Item>
             <Dt>연락처</Dt>

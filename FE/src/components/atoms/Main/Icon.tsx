@@ -4,10 +4,11 @@ import styled from '@emotion/styled';
 interface SVGProps {
   isLike: boolean;
 }
-
+// SVGAtom => IconMolecular
 function Icon({ isLike }: SVGProps) {
   const Like = () => {
     console.log('i love it');
+    // 해당 상품에 대한 찜
   };
   return (
     <Atom>
@@ -27,8 +28,8 @@ function Icon({ isLike }: SVGProps) {
   );
 }
 
-export default Icon;
-
 const Atom = styled.div`
   z-index: 1;
 `;
+
+export default Icon;

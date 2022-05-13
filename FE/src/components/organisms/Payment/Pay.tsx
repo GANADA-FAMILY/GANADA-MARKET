@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import axios from 'axios';
 import Container from '../../layouts/Payment/Container';
 import Title from '../../atoms/Payment/Title';
 import SubTitle from '../../atoms/Payment/SubTitle';
@@ -13,7 +14,27 @@ interface ButtonProps {
 function Pay() {
   const [select, setSelect] = useState('');
   const onClick = () => {
-    console.log('결제하기');
+    const token = sessionStorage.getItem('token');
+    axios
+      .post(
+        '/kakaopay',
+        {
+          userid: 3,
+          price: 13000,
+          productid: 4,
+          productname: '조단',
+        },
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        },
+      )
+      .then((res) => {
+        const nextUrl = res.data.next_redirect_web_url;
+        window.open(nextUrl, 'kakaopay test');
+        console.log(nextUrl);
+      });
   };
   return (
     <Container>
