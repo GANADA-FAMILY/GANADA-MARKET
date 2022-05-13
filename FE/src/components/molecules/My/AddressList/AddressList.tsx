@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 import { Item } from 'components/atoms/My';
-import Address from 'type/Address';
+import Address from 'types/Entity/Address';
 import AddressInfo from './AddressInfo';
 import ButtonsBox from './ButtonsBox';
 
