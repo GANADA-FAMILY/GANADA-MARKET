@@ -55,11 +55,5 @@ const Container = styled.section``;
 const MainTitleBar = styled(TitleBar)`
   padding-bottom: 16px;
 `;
-const UserDetail = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 50px 0 38px;
-  border-bottom: 1px solid #ebebeb;
-  background-color: #fff;
-`;
+
 export default MyProfile;

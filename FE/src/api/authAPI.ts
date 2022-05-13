@@ -29,7 +29,7 @@ function findEmailByPhone(payload: FindPasswordForm) {
   return api.put('/api/auth/find-pw', payload);
 }
 
-const authAction = {
+const authAPI = {
   login,
   signup,
   duplicateNickname,
@@ -37,4 +37,4 @@ const authAction = {
   findEmailByPhone,
 };
 
-export default authAction;
+export default authAPI;

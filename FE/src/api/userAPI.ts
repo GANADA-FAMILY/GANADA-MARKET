@@ -1,6 +1,7 @@
 /* eslint-disable no-irregular-whitespace */
 import { defaultInstance } from 'api';
 import { ACCESS_TOKEN } from 'constants/headers';
+import UserTest from 'types/Entity/UserTest';
 import AddressForm from 'types/Form/AddressForm';
 import BankForm from 'types/Form/BankForm';
 import {
@@ -14,7 +15,8 @@ api.defaults.headers.common.Authorization = ACCESS_TOKEN;
 // 회원정보
 // 내 정보
 function getUser() {
-  return api.get('/user');
+  // responseBody 타입 사용예정
+  return api.get<UserTest>('/user');
 }
 
 // 회원 탈퇴
@@ -62,7 +64,7 @@ function updateBank(payload: BankForm) {
   return api.put('/user/bank', payload);
 }
 
-const userAction = {
+const userAPI = {
   getUser,
   deleteUser,
   updateNickname,
@@ -75,4 +77,4 @@ const userAction = {
   updateBank,
 };
 
-export default userAction;
+export default userAPI;

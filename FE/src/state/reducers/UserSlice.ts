@@ -1,18 +1,19 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import User from 'types/Entity/User';
+import userAction from 'api/userAPI';
+import UserTest from 'types/Entity/UserTest';
 
-const fetchUserByToken = createAsyncThunk('api/user', async () => {
-  const response = { data: {} };
+export const fetchUserByToken = createAsyncThunk('api/user', async () => {
+  const response = await userAction.getUser();
   return response.data;
 });
 
 interface UserState {
-  user: User;
-  loading: 'idle' | 'pending' | 'succeeded' | 'failed';
+  user: UserTest;
+  // loading: 'idle' | 'pending' | 'succeeded' | 'failed';
 }
 const initialState = {
   user: {},
-  loading: 'idle',
+  // loading: 'idle',
 } as UserState;
 
 export const userSlice = createSlice({
@@ -20,11 +21,14 @@ export const userSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    // builder.addCase(fetchUserByToken.fulfilled, (state, action) => {
-    //   return (state.user = action.payload);
-    // });
+    builder.addCase(fetchUserByToken.fulfilled, (state, { payload }) => {
+      console.log(payload);
+      state.user = payload;
+    });
+    builder.addCase(fetchUserByToken.rejected, (state, action) => {
+      // state.error = action.payload ? action.payload.errorMessage : action.error;
+    });
   },
 });
-export { fetchUserByToken };
 
-export default userSlice.reducer;
+export default userSlice;
