@@ -45,9 +45,8 @@ public class UserController {
     public ResponseEntity<? extends BaseResponseBody> getUserInfo(@ApiIgnore Authentication authentication) {
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
-        System.out.println("들어옴");
 
-        return ResponseEntity.status(200).body(UserInfoResponse.of(200, "회원 정보 조회 성공", user));
+        return ResponseEntity.status(200).body(UserInfoResponse.of(200, "OK", user));
     }
 
     @DeleteMapping
@@ -61,13 +60,13 @@ public class UserController {
         User user = userDetails.getUser();
         userService.deleteUser(user);
 
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "회원 정보 삭제 성공"));
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "OK"));
     }
 
     @PutMapping("/nickname")
     @ApiOperation(value = "닉네임 변경", notes = " 입력한 닉네임으로 닉네임을 변경한다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 201, message = "성공", response = BaseResponseBody.class),
             @ApiResponse(code = 409, message = "중복 검사 실패"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
@@ -79,15 +78,15 @@ public class UserController {
 
         String res = userService.updateUserNickname(userNicknameUpdateRequest, user);
         if(res.equals("fail")){
-            return ResponseEntity.status(401).body(BaseResponseBody.of(409,"닉네임 변경 실패"));
+            return ResponseEntity.status(409).body(BaseResponseBody.of(409,"Conflict"));
         }
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "닉네임 변경 성공"));
+        return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Created"));
     }
 
     @PutMapping("/pw")
     @ApiOperation(value = "비밀번호 변경", notes = " 현재 비밀번호와 새 비밀번호를 입력받아 확인하고 비밀번호를 변경한다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 201, message = "성공", response = BaseResponseBody.class),
             @ApiResponse(code = 401, message = "현재 비밀번호 불일치"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
@@ -99,9 +98,9 @@ public class UserController {
 
         String res = userService.updateUserPw(userPwUpdateRequest, user);
         if(res.equals("fail")){
-            return ResponseEntity.status(401).body(BaseResponseBody.of(401,"비밀번호 변경 실패"));
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401,"Unauthorized"));
         }
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "비밀번호 변경 성공"));
+        return ResponseEntity.status(201).body(BaseResponseBody.of(200, "Created"));
     }
 
     @GetMapping("/bank")
@@ -115,12 +114,12 @@ public class UserController {
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
 
-        return ResponseEntity.status(200).body(UserBankResponse.of(200, "정산 계좌 조회 성공",user));
+        return ResponseEntity.status(200).body(UserBankResponse.of(200, "OK",user));
     }
     @PutMapping("/bank")
     @ApiOperation(value = "정산 계좌 등록 및 수정", notes = " 은행명, 계좌번호, 예금주를 입력받아 정산계좌로 등록 및 변경한다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 201, message = "성공", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> updateUserBank(@ApiIgnore Authentication authentication,
@@ -131,7 +130,7 @@ public class UserController {
 
         userService.updateUserBank(userBankUpdateRequest, user);
 
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "정산 계좌 변경 성공"));
+        return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Created"));
     }
 
 
@@ -165,7 +164,7 @@ public class UserController {
         User user = userDetails.getUser();
         List<AddressBook> addressBookList = userService.getAddressBookList(user);
 
-        return ResponseEntity.status(200).body(AddressBookListResponse.of(200, "주소록 조회 성공", addressBookList));
+        return ResponseEntity.status(200).body(AddressBookListResponse.of(200, "OK", addressBookList));
     }
 
     @PutMapping("/addressbook/{addressId}")
@@ -173,6 +172,7 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(code = 201, message = "성공", response = BaseResponseBody.class),
             @ApiResponse(code = 401, message = "주소록 수정 실패"),
+            @ApiResponse(code = 404, message = "리소스 찾을 수 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> updateAddressBook(@ApiIgnore Authentication authentication,
@@ -185,16 +185,17 @@ public class UserController {
         String res = userService.updateAddressBook(addressBookInsertRequest,user,addressId);
 
         if(res.equals("fail")){
-            return ResponseEntity.status(401).body(BaseResponseBody.of(401,"주소록 변경 실패"));
+            return ResponseEntity.status(401).body(BaseResponseBody.of(404,"Not Found"));
         }
-        return ResponseEntity.status(201).body(BaseResponseBody.of(200, "Created"));
+        return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Created"));
     }
 
     @DeleteMapping("/addressbook/{addressId}")
     @ApiOperation(value = "주소록 삭제", notes = "주소지를 삭제한다.")
     @ApiResponses({
-            @ApiResponse(code = 201, message = "성공", response = UserLoginResponse.class),
+            @ApiResponse(code = 200, message = "성공", response = UserLoginResponse.class),
             @ApiResponse(code = 401, message = "주소록 삭제 실패"),
+            @ApiResponse(code = 404, message = "리소스 찾을 수 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> deleteAddressBook(@ApiIgnore Authentication authentication,
@@ -205,9 +206,9 @@ public class UserController {
         String res = userService.deleteAddressBook(user,addressId);
 
         if(res.equals("fail")){
-            return ResponseEntity.status(401).body(BaseResponseBody.of(401,"주소록 삭제 실패"));
+            return ResponseEntity.status(404).body(BaseResponseBody.of(404,"Not Found"));
         }
-        return ResponseEntity.status(201).body(BaseResponseBody.of(200, "주소록 삭제 성공"));
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "OK"));
     }
 
     @PutMapping("/represent/{addressId}")
