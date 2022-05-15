@@ -14,6 +14,7 @@ interface Goods {
   name: string;
   brand: string;
   val: number;
+  isLike: boolean;
 }
 function Main({ data }: Props) {
   const [goods, setGoods] = useState<Goods[]>([]);
