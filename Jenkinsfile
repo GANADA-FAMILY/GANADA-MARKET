@@ -37,8 +37,8 @@ pipeline {
 		stage('ps restart') {
 			agent any
 			steps {
-				sh "docker run -d spring:latest"
-				sh "docker run -d client:latest"
+				sh "docker run -d -p 8080:8080 spring:latest"
+				sh "docker run -d -p 3000:3000 client:latest"
 			}
 
 		}
