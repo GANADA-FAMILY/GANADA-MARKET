@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import TitleBar from 'components/molecules/My/TitleBar';
 import LinkButton from 'components/atoms/My/LinkButton';
 import Text from 'components/atoms/My/Text';
+import { Address } from 'types/Entity';
 import MyListBox from './MyListBox';
 
 function MyAddress() {
@@ -47,7 +48,6 @@ const AddButton = styled(LinkButton)`
 `;
 
 export default MyAddress;
-
 const dummyList = [
   {
     addressId: 1,

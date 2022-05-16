@@ -37,7 +37,7 @@ function MyProfile() {
   };
   return (
     <Container>
-      <MainTitleBar title="프로필 정보" size={29} bordered />
+      <MainTitleBar title="프로필 정보" size={24} bordered />
       <ProfileHeader
         user={user}
         newImage={newImage}

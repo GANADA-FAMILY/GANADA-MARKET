@@ -1,7 +1,8 @@
-import React from 'react';
 import styled from '@emotion/styled';
 import Address from 'types/Entity/Address';
-import AddressList from 'components/molecules/My/AddressList';
+import { AddressInfo, ButtonsBox } from 'components/molecules/My/AddressList';
+import { List } from 'components/molecules/My';
+import { Item } from 'components/atoms/My';
 
 interface MyListBoxProps {
   items: Array<Address>;
@@ -9,14 +10,28 @@ interface MyListBoxProps {
 function MyListBox({ items }: MyListBoxProps) {
   return (
     <div>
-      <StyledMyList items={items} />
+      <StyledMyList dataSoruce={items} renderItem={AddressListItem} />
     </div>
   );
 }
 
-const StyledMyList = styled(AddressList)`
+const StyledMyList = styled(List)`
   padding: 30px 0 29px;
-  /* border-bottom: 2px solid #222; */
+`;
+
+function AddressListItem(item: Address | any, index: number) {
+  return (
+    <StyledItem item={item}>
+      <AddressInfo item={item} />
+      <ButtonsBox item={item} />
+    </StyledItem>
+  );
+}
+
+const StyledItem = styled(Item)`
+  padding: ${(props) => (props.item.activate ? `30px 0 29px` : `17px 0 16px`)};
+  border-bottom: ${(props) =>
+    props.item.activate ? `2px solid #222` : `1px solid #ebebeb`};
 `;
 
 export default MyListBox;

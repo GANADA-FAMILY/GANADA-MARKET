@@ -23,7 +23,7 @@ function MyHome() {
       <SellBox />
       <MyHomeTitle title="관심 상품" size={18} src="/my/wish" />
       <ListArea>
-        <List items={[]} />
+        <List dataSoruce={[]} />
       </ListArea>
     </Container>
   );
