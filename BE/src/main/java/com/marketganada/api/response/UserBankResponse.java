@@ -23,13 +23,20 @@ public class UserBankResponse {
     public static UserBankResponse of(User user) throws Exception {
         UserBankResponse res = new UserBankResponse();
 
-        AES256 aes256 = new AES256();
-        String bankNum = aes256.decrypt(user.getBankNum());
-        StringBuffer sb = new StringBuffer(bankNum);
-        sb.replace(3,10,"*******");
+        res.setBank(user.getBank());
+        res.setBankHolder(user.getBankHolder());
+        if(user.getBankNum()!=null){
+            AES256 aes256 = new AES256();
+            String bankNum = aes256.decrypt(user.getBankNum());
+            StringBuffer sb = new StringBuffer(bankNum);
+            sb.replace(3,10,"*******");
+            res.setBankNum(String.valueOf(sb));
+        }else {
+            res.setBankNum(user.getBankNum());
+        }
+
 
         res.setBank(user.getBank());
-        res.setBankNum(String.valueOf(sb));
         res.setBankHolder(user.getBankHolder());
 
         return res;
