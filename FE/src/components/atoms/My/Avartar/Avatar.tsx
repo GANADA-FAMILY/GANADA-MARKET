@@ -4,16 +4,16 @@ interface AvartarProps {
   src: string;
   size?: number;
   alt?: string;
+  className?: string;
 }
 function Avatar({ size = 100, src, alt = 'avatar', ...props }: AvartarProps) {
   return (
     <Atom
-      className="user_avatar"
+      className={props.className}
       style={{
         width: `${size}px`,
         height: `${size}px`,
       }}
-      {...props}
     >
       <AvartarImage src={src} alt={alt} />
     </Atom>
@@ -32,6 +32,7 @@ const AvartarImage = styled.img`
 Avatar.defaultProps = {
   size: 100,
   alt: 'avatar',
+  className: '',
 };
 
 export default Avatar;

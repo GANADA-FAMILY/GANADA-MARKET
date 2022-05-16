@@ -86,7 +86,8 @@
           "function-declaration"
         ] // 'function-declaration' | 'function-expression' | 'arrow-function'
       }
-    ]
+    ],
+    "no-param-reassign": "off"
   },
   "settings": {
     "import/resolver": {

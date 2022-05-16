@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import User from 'type/User';
+import User from 'types/Entity/User';
 import Avatar from 'components/atoms/My/Avartar/Avatar';
 import ImageInput from 'components/atoms/My/ImageInput';
 import LinkButton from 'components/atoms/My/LinkButton';
