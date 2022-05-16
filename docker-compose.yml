@@ -14,8 +14,8 @@ services:
       context: ./FE
     container_name: client
     restart: "on-failure"
-    expose:
-      - 3000
+    ports:
+      - 3000:3000
     volumes:
       - './FE:/app'
       - '/app/node_modules'
@@ -24,16 +24,6 @@ services:
       - CHOKIDAR_USEPOLLING=true
     stdin_open: true
     tty: true
-  jenkins:
-    container_name: jenkins
-    image: jenkins/jenkins
-    user: "root"
-    ports:
-      - 8181:8080
-    privileged: true
-    volumes:
-      - ./jenkins:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
   spring:
     build:
       context: ./BE

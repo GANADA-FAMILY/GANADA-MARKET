@@ -11,8 +11,15 @@ pipeline {
 			}
 	
 		}
+		stage('ps shutDown') {
+			steps {
+				sh 'docker-compose -f docker-compose.yml down'
+			}
+
+		}
+
 			
-		stage(' build') {
+		stage('build') {
 			 steps {
            			 echo 'Bulid Gradle'
             			dir ('./BE'){
@@ -22,7 +29,14 @@ pipeline {
         		  }
 		
 		}
+		stage('ps restart') {
+			steps {
+				sh 'docker-compose -f docker-compose.yml up -d'
+			}
 
+		}
+
+		
 
 	}
 
