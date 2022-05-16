@@ -1,17 +1,19 @@
 pipeline {
-	agent any
+	agent none
 	options { skipDefaultCheckout(false) }
 
 	stages {
 		stage('Checkout') {
+			agent any
 			steps {
 				checkout scm
 			}
 	
 		}
 		stage('ps stop') {
+			agent any
 			steps {
-				  sh "docker rm -f spring"
+				 sh "docker rm -f spring"
                 	        sh "docker rm -f client"
 
 			}
@@ -20,6 +22,7 @@ pipeline {
 
 			
 		stage('build') {
+			agent any
 			 steps {
            			 echo 'Bulid Gradle'
             				dir ('./BE'){
