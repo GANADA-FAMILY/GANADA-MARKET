@@ -4,7 +4,7 @@ import ButtonsBox from './ButtonsBox';
 
 export default {
   component: ButtonsBox,
-  title: 'molecules/My/AddressList/ButtonsBox',
+  title: 'molecules/My/ButtonsBox',
 };
 
 const Template: ComponentStory<typeof ButtonsBox> = (args) => (

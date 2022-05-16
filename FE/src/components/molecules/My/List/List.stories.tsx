@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { ComponentStory } from '@storybook/react';
 import { Item } from 'components/atoms/My';
 import { Address, Bank } from 'types/Entity';
-import { AddressInfo, ButtonsBox } from '../AddressList';
+import { AddressInfo, ButtonsBox } from 'components/molecules/My';
 import List from './List';
 
 export default {

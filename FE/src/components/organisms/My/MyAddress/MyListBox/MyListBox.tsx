@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import Address from 'types/Entity/Address';
-import { AddressInfo, ButtonsBox } from 'components/molecules/My/AddressList';
-import { List } from 'components/molecules/My';
+import { AddressInfo, ButtonsBox, List } from 'components/molecules/My';
 import { Item } from 'components/atoms/My';
 
 interface MyListBoxProps {
