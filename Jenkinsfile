@@ -11,7 +11,7 @@ pipeline {
 		}
 		stage('ps stop') {
 			steps {
-				sh "docker-compose -f docker-compose.yml down"
+				sh "docker-compose down"
 			}
 
 		}
@@ -21,16 +21,16 @@ pipeline {
 		stage('build') {
 			 steps {
            			 echo 'Bulid Gradle'
-            			dir ('./BE'){
-                		sh "./gradlew clean build --exclude-task test"
+            				dir ('./BE'){
+                				sh "./gradlew clean build --exclude-task test"
                 
-            			}
+            				}
         		  }
 		
 		}
 		stage('ps restart') {
 			steps {
-				sh "docker-compose -f docker-compose.yml up -d"
+				sh "docker-compose -d"
 			}
 
 		}
