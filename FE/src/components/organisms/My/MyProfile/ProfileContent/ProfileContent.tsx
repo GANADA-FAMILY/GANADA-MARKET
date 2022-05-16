@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
-import User from 'type/User';
+import User from 'types/Entity/User';
 import InputBox from 'components/atoms/My/InputBox/InputBox';
 import Title from 'components/atoms/My/Title/Title';
 import InfoGroup from 'components/molecules/My/InfoGroup';

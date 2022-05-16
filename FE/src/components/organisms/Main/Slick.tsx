@@ -18,13 +18,13 @@ function Slick() {
   return (
     <Slider {...settings}>
       <Item>
-        <SlickImage src="./image/abcmart.png" alt="abcmart1" />
+        <SlickImage src="./images/abcmart.png" alt="abcmart1" />
       </Item>
       <Item>
-        <SlickImage src="./image/abcmart2.png" alt="abcmart2" />
+        <SlickImage src="./images/abcmart2.png" alt="abcmart2" />
       </Item>
       <Item>
-        <SlickImage src="./image/comeon.png" alt="comeon" />
+        <SlickImage src="./images/comeon.png" alt="comeon" />
       </Item>
     </Slider>
   );

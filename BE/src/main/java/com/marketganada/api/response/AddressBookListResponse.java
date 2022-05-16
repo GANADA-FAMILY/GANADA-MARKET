@@ -15,10 +15,11 @@ import java.util.Map;
 @Setter
 @ApiModel("AddressBookListResponse")
 public class AddressBookListResponse extends BaseResponseBody{
-    List<Map<String, Object>> addressBookList = new ArrayList<>();
+    Map<String,Object> data;
 
     public static AddressBookListResponse of(Integer statusCode, String message, List<AddressBook> addressBooks){
         AddressBookListResponse res = new AddressBookListResponse();
+        Map<String,Object> data = new HashMap<>();
         List<Map<String, Object>> addressBookList = new ArrayList<>();
 
         res.setStatusCode(statusCode);
@@ -33,7 +34,8 @@ public class AddressBookListResponse extends BaseResponseBody{
             addressInfo.put("addressDetail",addressBooks.get(i).getAddressDetail());
             addressBookList.add(addressInfo);
         }
-        res.setAddressBookList(addressBookList);
+        data.put("addressBookList",addressBookList);
+        res.setData(data);
 
         return res;
     }

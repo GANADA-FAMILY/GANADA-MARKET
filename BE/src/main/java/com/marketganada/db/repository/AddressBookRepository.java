@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface AddressBookRepository extends JpaRepository<AddressBook,Long> {
     List<AddressBook> findByUser(User user);
     Optional<AddressBook> findByAddressIdAndUser(Long addressId, User user);
+    Optional<AddressBook> findByUserAndActivate(User user,boolean activate);
 }

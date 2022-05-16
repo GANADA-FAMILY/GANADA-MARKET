@@ -30,15 +30,12 @@ const Atom = styled(Link)`
   font-size: 12px;
   letter-spacing: -0.06px;
   padding: 0 14px;
-  height: 34px;
   border-radius: 10px;
   display: inline-block;
   cursor: pointer;
   vertical-align: middle;
   text-align: center;
-  color: rgba(34, 34, 34, 0.8);
   background-color: #fff;
-  text-decoration: none;
 `;
 
 LinkButton.defaultProps = {
