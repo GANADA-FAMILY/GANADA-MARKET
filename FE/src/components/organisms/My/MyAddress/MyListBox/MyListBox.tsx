@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import Address from 'type/Address';
+import Address from 'types/Entity/Address';
 import AddressList from 'components/molecules/My/AddressList';
 
 interface MyListBoxProps {
