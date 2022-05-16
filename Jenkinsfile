@@ -23,13 +23,13 @@ pipeline {
            			 echo 'Bulid Gradle'
             				dir ('./BE'){
                 				sh "./gradlew clean build --exclude-task test"
-               					}
+               			}
         		  }
 		
 		}
 		stage('ps restart') {
 			steps {
-				sh "docker-compose up -d"
+				sh "docker-compose up --build -d"
 			}
 
 		}
