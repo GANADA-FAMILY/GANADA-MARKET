@@ -12,7 +12,7 @@ pipeline {
 		stage('ps shutDown') {
 			steps {
 				sh "docker rm -f $(docker ps -a -q)"
-				sh "docker volume rm $(docker volume ls -q)
+				sh "docker volume rm $(docker volume ls -q)"
 			}
 
 		}
