@@ -13,8 +13,8 @@ pipeline {
 		stage('ps stop') {
 			agent any
 			steps {
-				 sh "docker rm -f spring"
-                	        sh "docker rm -f client"
+			 sh "docker rm -f spring"
+                        sh "docker rm -f client"
 
 			}
 		}
