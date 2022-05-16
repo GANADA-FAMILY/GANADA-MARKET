@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import User from '../../../../type/User';
+import User from '../../../../types/Entity/User';
 import Text from '../../../atoms/My/Text';
 import LinkButton from '../../../atoms/My/LinkButton';
 

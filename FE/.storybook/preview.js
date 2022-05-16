@@ -2,7 +2,7 @@ import { BrowserRouter } from 'react-router-dom';
 import 'index.css';
 
 export const decorators = [
-  Story => (
+  (Story) => (
     <BrowserRouter>
       <Story />
     </BrowserRouter>
@@ -18,4 +18,3 @@ export const parameters = {
     },
   },
 };
-
