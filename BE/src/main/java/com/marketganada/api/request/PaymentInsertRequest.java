@@ -1,0 +1,45 @@
+package com.marketganada.api.request;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
+
+@Getter
+@Setter
+@ApiModel("PaymentInsertRequest")
+public class PaymentInsertRequest {
+    @ApiModelProperty(name = "경매 제목")
+    @NotBlank
+    String auctionTitle;
+
+
+
+    @ApiModelProperty(name = "제품 ID")
+    @NotNull
+    Long productId;
+
+    @ApiModelProperty(name = "경매 시작가")
+    @NotNull
+    int startPrice;
+
+    @ApiModelProperty(name = "감가 주기")
+    @NotNull
+    int cycle;
+
+    @ApiModelProperty(name = "경매 설명")
+    @NotNull
+    String description;
+
+    @ApiModelProperty(name = "감가액")
+    @NotNull
+    int depreciation;
+
+    @ApiModelProperty(name = "종료 일시")
+    @NotNull
+    Date endTime;
+}
