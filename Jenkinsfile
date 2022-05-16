@@ -5,9 +5,7 @@ pipeline {
 	stages {
 		stage('Checkout') {
 			steps {
-				git branch: 'develop',
-				credentialsId: 'scarlet',
-				url: 'https://lab.ssafy.com/s06-final/S06P31D204.git'
+				checkout scm
 			}
 	
 		}
