@@ -13,6 +13,7 @@ import com.marketganada.config.auth.JwtTokenUtil;
 import com.marketganada.db.entity.User;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,15 +39,15 @@ public class AuthController {
             @ApiResponse(code = 404, message = "존재하지 않는 아이디"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<UserLoginResponse> login(@RequestBody @ApiParam(value = "로그인 요청 정보", required = true) @Valid UserLoginRequest userLoginRequest) {
+    public ResponseEntity login(@RequestBody @ApiParam(value = "로그인 요청 정보", required = true) @Valid UserLoginRequest userLoginRequest) {
         String result = userService.login(userLoginRequest);
         if (result.equals("fail1")) {
-            return ResponseEntity.status(404).body(UserLoginResponse.of(404,"Not Found",null));
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }else if(result.equals("fail2")){
-            return ResponseEntity.status(401).body(UserLoginResponse.of(401,"Unauthorized",null));
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
-        return ResponseEntity.ok(UserLoginResponse.of(200,"Success", JwtTokenUtil.getToken(userLoginRequest.getUserEmail())));
+        return ResponseEntity.ok(UserLoginResponse.of(JwtTokenUtil.getToken(userLoginRequest.getUserEmail())));
     }
 
     @PostMapping("/signup")
@@ -56,13 +57,14 @@ public class AuthController {
             @ApiResponse(code = 409, message = "회원가입 실패(중복)"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<BaseResponseBody> signup(@RequestBody @ApiParam(value = "회원가입 요청 정보", required = true) @Valid UserSignUpRequest userSignUpRequest) {
+    public ResponseEntity signup(@RequestBody @ApiParam(value = "회원가입 요청 정보", required = true) @Valid UserSignUpRequest userSignUpRequest) {
         String result = userService.insertUser(userSignUpRequest);
         if (result.equals("fail")) {
-            return ResponseEntity.status(409).body(BaseResponseBody.of(409,"Conflict"));
+            return new ResponseEntity(HttpStatus.CONFLICT);
         }
 
-        return ResponseEntity.ok(BaseResponseBody.of(201,"Created"));
+        return new ResponseEntity(HttpStatus.CREATED);
+
     }
 
 //    @ApiOperation("이메일 중복 검사")
@@ -82,12 +84,12 @@ public class AuthController {
             @ApiResponse(code = 409, message = "중복 검사 실패"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<BaseResponseBody> checkDuplicateUserNickName(@PathVariable("userNickname") String userNickname) {
+    public ResponseEntity checkDuplicateUserNickName(@PathVariable("userNickname") String userNickname) {
         String result = userService.checkDuplicateUserNickname(userNickname);
         if (result.equals("fail")) {
-            return ResponseEntity.status(409).body(BaseResponseBody.of(409,"Conflict"));
+            return new ResponseEntity(HttpStatus.CONFLICT);
         }
-        return ResponseEntity.ok(BaseResponseBody.of(200,"OK"));
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     //크림은 전화번호가 유니크키 인거 같은데?
@@ -98,14 +100,15 @@ public class AuthController {
             @ApiResponse(code = 404, message = "이메일 찾기 실패"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> findUserEmail(@PathVariable("userPhone") String userPhone){
+    public ResponseEntity findUserEmail(@PathVariable("userPhone") String userPhone){
         List<User> userList = userService.getUserListByUserPhone(userPhone);
 
         if(userList.size()==0){
-            return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Not Found"));
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
 
-        return ResponseEntity.status(200).body(UserEmailFindResponse.of(200, "OK", userList));
+        return ResponseEntity.ok(UserEmailFindResponse.of(userList));
+
     }
 
 
@@ -117,7 +120,7 @@ public class AuthController {
             @ApiResponse(code = 404, message = "이메일 일치 하는 유저 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> findUserPw( @ApiParam(value = "비밀번호 찾기 요청 정보", required = true)
+    public ResponseEntity findUserPw( @ApiParam(value = "비밀번호 찾기 요청 정보", required = true)
                                                                   @Valid @RequestBody UserPwFindRequest userPwFindRequest){
         Optional<User> user = userService.getUserByUserEmail(userPwFindRequest.getUserEmail());
         if(user.isPresent()){
@@ -125,12 +128,12 @@ public class AuthController {
 
             String result = smsService.sendUserPw(user.get(),userPwFindRequest);
             if(result.equals("success")){
-                return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Created"));
+                return new ResponseEntity(HttpStatus.CREATED);
             }else{
-                return ResponseEntity.status(401).body(BaseResponseBody.of(401, "Unauthorized"));
+                return new ResponseEntity(HttpStatus.UNAUTHORIZED);
             }
         } else {
-            return ResponseEntity.status(404).body(BaseResponseBody.of(404, "Not Found"));
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
 
     }

@@ -13,32 +13,25 @@ import java.util.Map;
 @Getter
 @Setter
 @ApiModel("UserInfoResponse")
-public class UserInfoResponse extends BaseResponseBody{
-    Map<String,Object> data;
-//    String userEmail;
-//    String userNickname;
-//    String userPhone;
-//    String profileImageUrl;
-//    String grade;
+public class UserInfoResponse {
 
-    public static UserInfoResponse of(Integer statusCode, String message, User user) {
+    String userEmail;
+    String userNickname;
+    String userPhone;
+    String profileImageUrl;
+    String grade;
+
+    public static UserInfoResponse of(User user) {
         UserInfoResponse res = new UserInfoResponse();
-        res.setStatusCode(statusCode);
-        res.setMessage(message);
-        Map<String,Object> data = new HashMap<>();
-        Map<String, Object> userInfo = new HashMap<>();
 
         StringBuffer sb = new StringBuffer(user.getUserPhone());
         sb.replace(3,8,"*****");
-
-        userInfo.put("userEmail",user.getUserEmail());
-        userInfo.put("userNickname",user.getUserNickname());
-        userInfo.put("userPhone",String.valueOf(sb));
-        userInfo.put("profileImageUrl",user.getProfileImageUrl());
-        userInfo.put("grade",user.getGrade());
-
-        data.put("userInfo",userInfo);
-        res.setData(data);
+        
+        res.setUserEmail(user.getUserEmail());
+        res.setUserNickname(user.getUserNickname());
+        res.setUserPhone(String.valueOf(sb));
+        res.setProfileImageUrl(user.getProfileImageUrl());
+        res.setGrade(user.getGrade());
 
         return res;
     }
