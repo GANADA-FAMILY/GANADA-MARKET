@@ -9,6 +9,10 @@ pipeline {
 			}
 	
 		}
+		stage('ps stop') {
+			sh "docker rm -f spring"
+			sh "docker rm -f client"
+		}
 
 
 			
@@ -17,13 +21,16 @@ pipeline {
            			 echo 'Bulid Gradle'
             				dir ('./BE'){
                 				sh "./gradlew clean build --exclude-task test"
-               			}
+               				}
+				sh "docker build --tag spring:latest ./BE"
+				sh "docker build --tag client:latest ./FE"
         		  }
 		
 		}
 		stage('ps restart') {
 			steps {
-				sh "docker-compose up -d"
+				sh "docker run -d spring:latest"
+				sh "docker run -d client:latest"
 			}
 
 		}
