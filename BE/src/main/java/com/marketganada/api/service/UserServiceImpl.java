@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService{
         user.setUserPhone(userSignUpRequest.getUserPhone());
         user.setRole("ROLE_USER");
         user.setGrade("일반 회원");
-        user.setProfileImageUrl("기본 이미지 url");
+        user.setProfileImageUrl("https://ganada.s3.ap-northeast-2.amazonaws.com/default.png");
         user.setUserType(0);
         userRepository.save(user);
         return "success";
