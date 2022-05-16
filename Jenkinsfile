@@ -40,7 +40,6 @@ pipeline {
 				sh "docker run -d -p 8080:8080 spring:latest"
 				sh "docker run -d -p 3000:3000 client:latest"
 				sh "docker rmi -f $(docker images -f "dangling=true" -q)"
-
 			}
 
 		}
