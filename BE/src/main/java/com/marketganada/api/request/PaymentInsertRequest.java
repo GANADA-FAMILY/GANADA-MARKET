@@ -13,33 +13,36 @@ import java.util.Date;
 @Setter
 @ApiModel("PaymentInsertRequest")
 public class PaymentInsertRequest {
-    @ApiModelProperty(name = "경매 제목")
+    @ApiModelProperty(name = "경매 번호")
+    @NotNull
+    Long auctionId;
+
+    @ApiModelProperty(name = "가격")
+    @NotNull
+    int price;
+
+    @ApiModelProperty(name = "결제 방법")
     @NotBlank
-    String auctionTitle;
+    String paymentMethod;
 
+    @ApiModelProperty(name = "받는분")
+    @NotBlank
+    String buyerName;
 
-
-    @ApiModelProperty(name = "제품 ID")
+    @ApiModelProperty(name = "연락처")
     @NotNull
-    Long productId;
+    String phone;
 
-    @ApiModelProperty(name = "경매 시작가")
+    @ApiModelProperty(name = "우편번호")
     @NotNull
-    int startPrice;
+    int postalCode;
 
-    @ApiModelProperty(name = "감가 주기")
+    @ApiModelProperty(name = "주소")
     @NotNull
-    int cycle;
+    String address;
 
-    @ApiModelProperty(name = "경매 설명")
+    @ApiModelProperty(name = "상세주소")
     @NotNull
-    String description;
+    String addressDetail;
 
-    @ApiModelProperty(name = "감가액")
-    @NotNull
-    int depreciation;
-
-    @ApiModelProperty(name = "종료 일시")
-    @NotNull
-    Date endTime;
 }
