@@ -27,7 +27,8 @@ pipeline {
                				}
 				sh "docker build --tag spring:latest ./BE"
 				sh "docker build --tag client:latest ./FE"
-        		  }
+        
+		  }
 		
 		}
 		stage('ps restart') {
