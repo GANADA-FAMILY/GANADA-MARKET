@@ -13,8 +13,8 @@ pipeline {
 		stage('ps stop') {
 			agent any
 			steps {
-			 sh "docker rm -f spring"
-                        sh "docker rm -f client"
+			 sh "docker rm -f spring:latest"
+                        sh "docker rm -f client:latest"
 
 			}
 		}
@@ -39,6 +39,8 @@ pipeline {
 			steps {
 				sh "docker run -d -p 8080:8080 spring:latest"
 				sh "docker run -d -p 3000:3000 client:latest"
+				sh "docker rmi -f $(docker images -f "dangling=true" -q)"
+
 			}
 
 		}
