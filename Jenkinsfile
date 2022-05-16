@@ -9,14 +9,6 @@ pipeline {
 			}
 	
 		}
-		stage('ps shutDown') {
-			steps {
-				sh "docker rm -f $(docker ps -a -q)"
-				sh "docker volume rm $(docker volume ls -q)"
-			}
-
-		}
-
 			
 		stage('build') {
 			 steps {
@@ -30,7 +22,7 @@ pipeline {
 		}
 		stage('ps restart') {
 			steps {
-				sh 'docker-compose -f docker-compose.yml up -d'
+				sh 'docker-compose restart'
 			}
 
 		}
