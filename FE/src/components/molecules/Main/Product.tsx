@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Image from '../../atoms/Main/Image';
 import Text from '../../atoms/Main/Text';
 import FlexBox from '../../layouts/Main/FlexBox';
 import Icon from '../../atoms/Main/Icon';
 import Svg from './Svg';
+import { setLikeAuction } from '../../../apis/token';
 
 interface Props {
   info: {
@@ -17,10 +19,21 @@ interface Props {
 }
 
 function Product({ info }: Props) {
+  const [like, setLike] = useState(info.isLike);
+  const navigate = useNavigate();
+  const auctionId = 3;
+  const onLink = () => {
+    navigate(`/datail/${auctionId}`);
+  };
+
+  const onClick = async () => {
+    const response = await setLikeAuction(auctionId, info.isLike);
+    setLike(!like);
+  };
   return (
-    <Molecule>
-      <SVGWrap>
-        <Svg fill={info.isLike ? 'black' : 'none'} />
+    <Molecule onClick={onLink}>
+      <SVGWrap onClick={onClick}>
+        <Svg fill={like ? 'black' : 'none'} />
       </SVGWrap>
       <Image
         src="https://kream-phinf.pstatic.net/MjAyMjA0MjZfMTQ1/MDAxNjUwOTU2MTI0NjIx.sk57ujnGDEJUkSPeA6C9LZhzTPsGroOEzHr8yFt_p44g.b-jtFPBmXvfVDqi3SrdomzDa_sY4HTVw5IJjhwMNddMg.JPEG/a_4eea43a1093a45a8bb684599f7ba5ec5.jpg?type=m_webp"
