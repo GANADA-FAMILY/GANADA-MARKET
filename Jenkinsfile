@@ -21,10 +21,10 @@ pipeline {
 		stage('build') {
 			 steps {
            			 echo 'Bulid Gradle'
-            			dir ('./BE'){
-                		sh "./gradlew clean build --exclude-task test"
+            				dir ('./BE'){
+                				sh "./gradlew clean build --exclude-task test"
                 
-            			}
+            				}
         		  }
 		
 		}
