@@ -10,8 +10,11 @@ pipeline {
 	
 		}
 		stage('ps stop') {
-			sh "docker rm -f spring"
-			sh "docker rm -f client"
+			steps {
+				  sh "docker rm -f spring"
+                	        sh "docker rm -f client"
+
+			}
 		}
 
 
