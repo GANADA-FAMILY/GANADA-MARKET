@@ -29,7 +29,8 @@ pipeline {
 		}
 		stage('ps restart') {
 			steps {
-				sh "docker-compose up --build -d"
+				sh "docker-compose build"
+				sh "docker-compose up -d"
 			}
 
 		}
