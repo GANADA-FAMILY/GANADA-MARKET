@@ -30,9 +30,6 @@ pipeline {
 		stage('ps restart') {
 			steps {
 				sh "docker-compose up --build -d"
-
-
-
 			}
 
 		}
