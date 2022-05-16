@@ -12,8 +12,6 @@ pipeline {
 		stage('ps stop') {
 			steps {
 				sh "docker-compose -f docker-compose.yml down"
-
-
 			}
 
 		}
