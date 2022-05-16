@@ -6,7 +6,7 @@ pipeline {
 		stage('Checkout') {
 			steps {
 				git branch: 'develop',
-				credentialsId: 'scar',
+				credentialsId: 'scarlet',
 				url: 'https://lab.ssafy.com/s06-final/S06P31D204.git'
 			}
 	
