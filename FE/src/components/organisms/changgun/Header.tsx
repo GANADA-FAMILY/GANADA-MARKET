@@ -35,9 +35,9 @@ function Header() {
     <HeaderWrapper>
       <HeaderTop>
         <MenuList>
-          <MenuLink to="/">고객센터</MenuLink>
           <MenuLink to="/">관심상품</MenuLink>
           <MenuLink to="/my">마이페이지</MenuLink>
+          <MenuLink to="/login">로그인</MenuLink>
         </MenuList>
       </HeaderTop>
       <HeaderBottom>

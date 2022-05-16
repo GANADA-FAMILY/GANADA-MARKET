@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { FlexibleImage } from '../../atoms/changgun';
 
 const LogoLayout = styled.div<LogoProps>`
@@ -13,9 +14,11 @@ interface LogoProps {
 
 function Logo({ width, height }: LogoProps) {
   return (
-    <LogoLayout width={width} height={height}>
-      <FlexibleImage src="./images/Logo.png" />
-    </LogoLayout>
+    <Link to="/">
+      <LogoLayout width={width} height={height}>
+        <FlexibleImage src="./images/logo.png" />
+      </LogoLayout>
+    </Link>
   );
 }
 
