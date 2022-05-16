@@ -9,6 +9,12 @@ pipeline {
 			}
 	
 		}
+		stage('ps stop') {
+			sh "docker-compose -f docker-compose.yml down"		
+
+		}
+
+
 			
 		stage('build') {
 			 steps {
@@ -22,7 +28,7 @@ pipeline {
 		}
 		stage('ps restart') {
 			steps {
-				sh 'docker-compose restart'
+				sh "docker-compose -f docker-compose.yml up -d"
 			}
 
 		}
