@@ -6,9 +6,9 @@ interface Product {
   releasePrice: number;
   deviceId: string;
   description: string;
-  categoryLarge: string;
-  categoryMiddle: string;
-  categorySmall: string;
+  categoryLarge: number;
+  categoryMiddle: number;
+  categorySmall: number;
 }
 
 export default Product;

@@ -1,7 +1,7 @@
 /* eslint-disable no-irregular-whitespace */
 import { defaultInstance } from 'api';
 import { ACCESS_TOKEN } from 'constants/headers';
-import UserTest from 'types/Entity/UserTest';
+import { User } from 'types/Entity';
 import AddressForm from 'types/Form/AddressForm';
 import BankForm from 'types/Form/BankForm';
 import {
@@ -16,7 +16,7 @@ api.defaults.headers.common.Authorization = ACCESS_TOKEN;
 // 내 정보
 function getUser() {
   // responseBody 타입 사용예정
-  return api.get<UserTest>('/user');
+  return api.get<User>('/user');
 }
 
 // 회원 탈퇴

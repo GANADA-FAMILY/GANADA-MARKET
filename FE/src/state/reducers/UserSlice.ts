@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import userAction from 'api/userAPI';
-import UserTest from 'types/Entity/UserTest';
+import { User } from 'types/Entity';
 
 export const fetchUserByToken = createAsyncThunk('api/user', async () => {
   const response = await userAction.getUser();
@@ -8,7 +8,7 @@ export const fetchUserByToken = createAsyncThunk('api/user', async () => {
 });
 
 interface UserState {
-  user: UserTest;
+  user: User;
   // loading: 'idle' | 'pending' | 'succeeded' | 'failed';
 }
 const initialState = {

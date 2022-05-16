@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { ComponentStory } from '@storybook/react';
 import { Item } from 'components/atoms/My';
-import { Address, Bank } from 'types/Entity';
+import { Address, Product } from 'types/Entity';
 import { AddressInfo, ButtonsBox } from 'components/molecules/My';
 import List from './List';
 
@@ -11,7 +11,7 @@ export default {
 };
 
 const Template: ComponentStory<typeof List> = (args) => <List {...args} />;
-
+//  default
 const dummyList = [
   {
     addressId: 1,
@@ -68,6 +68,8 @@ Default.args = {
   renderItem: defaultItem,
 };
 
+// address
+
 function AddressListItem(item: Address | any, index: number) {
   return (
     <StyledItem item={item}>
@@ -77,56 +79,63 @@ function AddressListItem(item: Address | any, index: number) {
   );
 }
 
-export const AddressList = Template.bind({});
-AddressList.args = {
-  dataSoruce: dummyList,
-  renderItem: AddressListItem,
-};
-
 const StyledItem = styled(Item)`
   padding: ${(props) => (props.item.activate ? `30px 0 29px` : `17px 0 16px`)};
   border-bottom: ${(props) =>
     props.item.activate ? `2px solid #222` : `1px solid #ebebeb`};
 `;
+export const AddressList = Template.bind({});
 
-const dummyData2 = [
+AddressList.args = {
+  dataSoruce: dummyList,
+  renderItem: AddressListItem,
+};
+
+// wishlist
+const dummyProductList = [
   {
-    bank: '신한',
-    bankNum: '12321131',
-    bankHolder: '홍길동',
+    auctionId: 23,
+    auctionTitle: 'string',
+    endTime: '2022-05-11T04:38:40.000+00:00',
+    status: false,
   },
   {
-    bank: '신한2',
-    bankNum: '123221',
-    bankHolder: '홍길동2',
+    auctionId: 23,
+    auctionTitle: 'string',
+    endTime: '2022-05-11T04:38:40.000+00:00',
+    status: false,
   },
   {
-    bank: '신한3',
-    bankNum: '12332131',
-    bankHolder: '홍길동3',
+    auctionId: 23,
+    auctionTitle: 'string',
+    endTime: '2022-05-11T04:38:40.000+00:00',
+    status: false,
   },
   {
-    bank: '신한4',
-    bankNum: '12322131',
-    bankHolder: '홍길동4',
+    auctionId: 23,
+    auctionTitle: 'string',
+    endTime: '2022-05-11T04:38:40.000+00:00',
+    status: false,
   },
 ];
 
-function BankListItem(item: Bank | any, index: number) {
-  const { bank, bankNum, bankHolder } = item;
-  return (
-    <div>
-      <li key={bank}>
-        <h4>{bank}</h4>
-        <h4>{bankNum}</h4>
-        <h4>{bankHolder}</h4>
-      </li>
-    </div>
-  );
-}
-export const BankList = Template.bind({});
+// function AddressListItem(item: Address | any, index: number) {
+//   return (
+//     <StyledItem item={item}>
+//       <AddressInfo item={item} />
+//       <ButtonsBox item={item} />
+//     </StyledItem>
+//   );
+// }
 
-BankList.args = {
-  dataSoruce: dummyData2,
-  renderItem: BankListItem,
-};
+// const StyledItem = styled(Item)`
+//   padding: ${(props) => (props.item.activate ? `30px 0 29px` : `17px 0 16px`)};
+//   border-bottom: ${(props) =>
+//     props.item.activate ? `2px solid #222` : `1px solid #ebebeb`};
+// `;
+// export const AddressList = Template.bind({});
+
+// AddressList.args = {
+//   dataSoruce: dummyProductList,
+//   renderItem: AddressListItem,
+// };
