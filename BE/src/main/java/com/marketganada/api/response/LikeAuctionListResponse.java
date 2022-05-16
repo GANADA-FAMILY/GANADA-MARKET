@@ -13,16 +13,13 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class LikeAuctionListResponse extends BaseResponseBody{
-    Map<String,Object> data;
+public class LikeAuctionListResponse {
+    List<Map<String, Object>> auctionList;
 
-    public static LikeAuctionListResponse of(int statusCode, String message, List<Likes> likesList) {
+    public static LikeAuctionListResponse of(List<Likes> likesList) {
         LikeAuctionListResponse res = new LikeAuctionListResponse();
-        Map<String,Object> data = new HashMap<>();
-        List<Map<String, Object>> auctionList = new ArrayList<>();
 
-        res.setStatusCode(statusCode);
-        res.setMessage(message);
+        List<Map<String, Object>> auctionList = new ArrayList<>();
 
         for(Likes like : likesList){
             Map<String,Object> auctionInfo = new HashMap<>();
@@ -34,8 +31,7 @@ public class LikeAuctionListResponse extends BaseResponseBody{
             auctionList.add(auctionInfo);
         }
 
-        data.put("auctionList",auctionList);
-        res.setData(data);
+        res.setAuctionList(auctionList);
 
         return res;
     }

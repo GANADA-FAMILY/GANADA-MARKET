@@ -9,14 +9,13 @@ import com.marketganada.api.service.AuctionService;
 import com.marketganada.api.service.UserService;
 import com.marketganada.config.auth.GanadaUserDetails;
 import com.marketganada.db.entity.AddressBook;
-import com.marketganada.db.entity.Auction;
 import com.marketganada.db.entity.Likes;
 import com.marketganada.db.entity.User;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -42,11 +41,11 @@ public class UserController {
             @ApiResponse(code = 401, message = "회원가입 실패"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> getUserInfo(@ApiIgnore Authentication authentication) {
+    public ResponseEntity getUserInfo(@ApiIgnore Authentication authentication) {
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
 
-        return ResponseEntity.status(200).body(UserInfoResponse.of(200, "OK", user));
+        return ResponseEntity.ok(UserInfoResponse.of(user));
     }
 
     @DeleteMapping
@@ -55,12 +54,12 @@ public class UserController {
             @ApiResponse(code = 200, message = "성공", response = UserInfoResponse.class),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> deleteUser(@ApiIgnore Authentication authentication) {
+    public ResponseEntity deleteUser(@ApiIgnore Authentication authentication) {
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
         userService.deleteUser(user);
 
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "OK"));
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PutMapping("/nickname")
@@ -70,7 +69,7 @@ public class UserController {
             @ApiResponse(code = 409, message = "중복 검사 실패"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> updateUserNickname(@ApiIgnore Authentication authentication,
+    public ResponseEntity updateUserNickname(@ApiIgnore Authentication authentication,
                                                                          @ApiParam(value = "변경할 닉네임", required = true) @Valid
                                                                          @RequestBody UserNicknameUpdateRequest userNicknameUpdateRequest) {
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
@@ -78,9 +77,9 @@ public class UserController {
 
         String res = userService.updateUserNickname(userNicknameUpdateRequest, user);
         if(res.equals("fail")){
-            return ResponseEntity.status(409).body(BaseResponseBody.of(409,"Conflict"));
+            return new ResponseEntity(HttpStatus.CONFLICT);
         }
-        return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Created"));
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @PutMapping("/pw")
@@ -90,7 +89,7 @@ public class UserController {
             @ApiResponse(code = 401, message = "현재 비밀번호 불일치"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> updateUserPw(@ApiIgnore Authentication authentication,
+    public ResponseEntity updateUserPw(@ApiIgnore Authentication authentication,
                                                                    @ApiParam(value = "현재 비밀번호, 변경할 비밀번호", required = true) @Valid
                                                                    @RequestBody UserPwUpdateRequest userPwUpdateRequest) {
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
@@ -98,9 +97,9 @@ public class UserController {
 
         String res = userService.updateUserPw(userPwUpdateRequest, user);
         if(res.equals("fail")){
-            return ResponseEntity.status(401).body(BaseResponseBody.of(401,"Unauthorized"));
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
-        return ResponseEntity.status(201).body(BaseResponseBody.of(200, "Created"));
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @GetMapping("/bank")
@@ -109,12 +108,12 @@ public class UserController {
             @ApiResponse(code = 200, message = "성공", response = UserBankResponse.class),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> getUserBank(@ApiIgnore Authentication authentication
+    public ResponseEntity getUserBank(@ApiIgnore Authentication authentication
                                                                      ) throws Exception {
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
 
-        return ResponseEntity.status(200).body(UserBankResponse.of(200, "OK",user));
+        return ResponseEntity.ok(UserBankResponse.of(user));
     }
     @PutMapping("/bank")
     @ApiOperation(value = "정산 계좌 등록 및 수정", notes = " 은행명, 계좌번호, 예금주를 입력받아 정산계좌로 등록 및 변경한다.")
@@ -122,7 +121,7 @@ public class UserController {
             @ApiResponse(code = 201, message = "성공", response = BaseResponseBody.class),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> updateUserBank(@ApiIgnore Authentication authentication,
+    public ResponseEntity updateUserBank(@ApiIgnore Authentication authentication,
                                                                      @ApiParam(value = "정산계좌 등록 및 수정 정보", required = true) @Valid
                                                                      @RequestBody UserBankUpdateRequest userBankUpdateRequest) throws Exception {
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
@@ -130,7 +129,7 @@ public class UserController {
 
         userService.updateUserBank(userBankUpdateRequest, user);
 
-        return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Created"));
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
 
@@ -143,14 +142,14 @@ public class UserController {
             @ApiResponse(code = 403, message = "권한 없는 유저"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> insertAddressBook(@ApiIgnore Authentication authentication,
+    public ResponseEntity insertAddressBook(@ApiIgnore Authentication authentication,
                                                                     @ApiParam(value = "주소록 요청 정보", required = true) @Valid
                                                                     @RequestBody AddressBookInsertRequest addressBookInsertRequest){
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
         userService.insertUserAddressBook(addressBookInsertRequest, user);
 
-        return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Created"));
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @GetMapping("/addressbook")
@@ -159,12 +158,12 @@ public class UserController {
             @ApiResponse(code = 200, message = "성공", response = AddressBookListResponse.class),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> getAddressBook(@ApiIgnore Authentication authentication){
+    public ResponseEntity getAddressBook(@ApiIgnore Authentication authentication){
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
         List<AddressBook> addressBookList = userService.getAddressBookList(user);
 
-        return ResponseEntity.status(200).body(AddressBookListResponse.of(200, "OK", addressBookList));
+        return ResponseEntity.ok(AddressBookListResponse.of(addressBookList));
     }
 
     @PutMapping("/addressbook/{addressId}")
@@ -175,7 +174,7 @@ public class UserController {
             @ApiResponse(code = 404, message = "리소스 찾을 수 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> updateAddressBook(@ApiIgnore Authentication authentication,
+    public ResponseEntity updateAddressBook(@ApiIgnore Authentication authentication,
                                                                         @PathVariable("addressId") Long addressId,
                                                                         @ApiParam(value = "주소록 요청 정보", required = true) @Valid
                                                                         @RequestBody AddressBookInsertRequest addressBookInsertRequest){
@@ -185,9 +184,9 @@ public class UserController {
         String res = userService.updateAddressBook(addressBookInsertRequest,user,addressId);
 
         if(res.equals("fail")){
-            return ResponseEntity.status(401).body(BaseResponseBody.of(404,"Not Found"));
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.status(201).body(BaseResponseBody.of(201, "Created"));
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @DeleteMapping("/addressbook/{addressId}")
@@ -198,7 +197,7 @@ public class UserController {
             @ApiResponse(code = 404, message = "리소스 찾을 수 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> deleteAddressBook(@ApiIgnore Authentication authentication,
+    public ResponseEntity deleteAddressBook(@ApiIgnore Authentication authentication,
                                                                         @PathVariable("addressId") Long addressId){
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
@@ -206,9 +205,9 @@ public class UserController {
         String res = userService.deleteAddressBook(user,addressId);
 
         if(res.equals("fail")){
-            return ResponseEntity.status(404).body(BaseResponseBody.of(404,"Not Found"));
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "OK"));
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PutMapping("/represent/{addressId}")
@@ -221,16 +220,16 @@ public class UserController {
             @ApiResponse(code = 404, message = "리소스 찾을 수 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> updateActivateAddressBook(@ApiIgnore Authentication authentication,
+    public ResponseEntity updateActivateAddressBook(@ApiIgnore Authentication authentication,
                                                                         @PathVariable("addressId") Long addressId){
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
 
         String res = userService.updateActivateAddressBook(user,addressId);
         if(res.equals("fail")){
-            return ResponseEntity.status(404).body(BaseResponseBody.of(404,"Not Found"));
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.status(201).body(BaseResponseBody.of(200, "Created"));
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @GetMapping("/likelist")
@@ -239,13 +238,14 @@ public class UserController {
             @ApiResponse(code = 200, message = "성공", response = LikeAuctionListResponse.class),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> getLikeAuctionList(@ApiIgnore Authentication authentication){
+    public ResponseEntity getLikeAuctionList(@ApiIgnore Authentication authentication){
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
 
         List<Likes> likesList = auctionService.getLikeAuctionList(user);
 
-        return ResponseEntity.status(200).body(LikeAuctionListResponse.of(200, "OK",likesList));
+        return ResponseEntity.ok(LikeAuctionListResponse.of(likesList));
+
     }
 
 
