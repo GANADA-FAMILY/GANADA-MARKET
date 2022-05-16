@@ -3,6 +3,7 @@ import { MenuList, Navigation, Logo } from '../../molecules/changgun';
 import { MenuLink, NavLink } from '../../atoms/changgun';
 import { ReactComponent as SearchIcon } from '../../../assets/svgs/search.svg';
 import { Modal } from '../../layouts/changgun';
+import { Search } from './Search';
 
 const HeaderTop = styled.div`
   display: flex;
@@ -42,9 +43,9 @@ function Header() {
           <NavLink to="/">ABOUT</NavLink>
           <Modal
             trigger={<SearchIcon width="3rem" height="3rem" />}
-            inset="0 0 auto 0"
+            inset="0 0 70% 0"
           >
-            sex
+            <Search />
           </Modal>
         </Navigation>
       </HeaderBottom>

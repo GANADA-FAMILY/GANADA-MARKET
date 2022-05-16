@@ -46,7 +46,9 @@ function Modal({ children, inset, trigger }: ModalProps) {
       </ModalTrigger>
       {showModal && (
         <ModalBackground onClick={() => setShowModal(false)}>
-          <ModalBody inset={inset}>{children}</ModalBody>
+          <ModalBody onClick={(e) => e.stopPropagation()} inset={inset}>
+            {children}
+          </ModalBody>
         </ModalBackground>
       )}
     </>
