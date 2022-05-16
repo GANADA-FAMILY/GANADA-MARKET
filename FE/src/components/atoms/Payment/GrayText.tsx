@@ -3,15 +3,29 @@ import styled from '@emotion/styled';
 
 interface Props {
   children: React.ReactNode;
+  fontSize?: string;
+  margin?: string;
 }
 
-function SubTitle({ children }: Props) {
-  return <Atom>{children}</Atom>;
+function GrayText({ children, ...rest }: Props) {
+  const styles = {
+    ...rest,
+  };
+  return <Atom {...styles}>{children}</Atom>;
 }
 
-export default SubTitle;
+GrayText.defaultProps = {
+  fontSize: '1.4rem',
+  margin: '0',
+};
 
-const Atom = styled.p`
-  font-size: 1.4rem;
+const Atom = styled.p<Props>`
+  font-size: ${(props) => props.fontSize};
+  margin: ${(props) => props.margin};
   color: rgba(34, 34, 34, 0.5);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
+
+export default GrayText;

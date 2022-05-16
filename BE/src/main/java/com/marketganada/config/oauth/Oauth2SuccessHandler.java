@@ -46,10 +46,11 @@ public class Oauth2SuccessHandler implements AuthenticationSuccessHandler {
         response.setContentType("application/json;charset=UTF-8");
 
         Map<String, Object> data = ImmutableMap.of(
-                "status", 200,
                 "message", "success",
+                "statusCode", 200,
                 "token", token
         );
+        System.out.println(token);
         response.sendRedirect("http://localhost:3000/oauth/redirect");
         PrintWriter pw = response.getWriter();
         pw.print(new ObjectMapper().writeValueAsString(data));

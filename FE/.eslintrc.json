@@ -7,7 +7,8 @@
     "plugin:react/recommended",
     "airbnb",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:storybook/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -17,14 +18,21 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "react-hooks", "prettier"],
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "react-hooks",
+    "prettier"
+  ],
   "rules": {
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [".tsx"]
+        "extensions": [
+          ".tsx"
+        ]
       }
     ],
     "import/prefer-default-export": "off",
@@ -36,15 +44,49 @@
         "tsx": "never"
       }
     ],
-    "prettier/prettier": ["error", { "endOfLine": "auto" }],
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "react/jsx-one-expression-per-line": "off",
     "no-use-before-define": "off",
     "react/jsx-props-no-spreading": "off",
     "no-empty-function": "off",
-    "@typescript-eslint/no-empty-function": ["error"],
     "react/jsx-uses-react": "off",
-    "react/react-in-jsx-scope": "off"
+    "@typescript-eslint/no-empty-function": "off",
+    "react/require-default-props": [
+      0,
+      {}
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "**/example/**",
+          "*.tsx",
+          "**/*.test.tsx",
+          "**/*.stories.*",
+          "**/scripts/*.tsx",
+          "**/stories/**/*.tsx",
+          "**/__tests__/**/*.tsx",
+          "**/.storybook/**/*.*"
+        ],
+        "peerDependencies": true
+      }
+    ],
+    "react/react-in-jsx-scope": "off",
+    "react/function-component-definition": [
+      "error",
+      {
+        "namedComponents": [
+          "arrow-function",
+          "function-declaration"
+        ] // 'function-declaration' | 'function-expression' | 'arrow-function'
+      }
+    ]
   },
   "settings": {
     "import/resolver": {

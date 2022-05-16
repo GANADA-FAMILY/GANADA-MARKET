@@ -9,6 +9,7 @@ import com.marketganada.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
@@ -140,6 +141,7 @@ public class UserServiceImpl implements UserService{
                 .postalCode(addressBookInsertRequest.getPostalCode())
                 .address(addressBookInsertRequest.getAddress())
                 .addressDetail(addressBookInsertRequest.getAddressDetail())
+                .activate(false)
                 .user(user).build();
         addressBookRepository.save(addressBook);
     }
@@ -176,6 +178,34 @@ public class UserServiceImpl implements UserService{
         }
         addressBookRepository.delete(addressBook.get());
         return "success";
+    }
+
+    @Override
+    public List<User> getUserListByUserPhone(String userPhone) {
+        return userRepository.findByUserPhoneAndUserType(userPhone,0);
+    }
+
+    @Override
+    @Transactional
+    public String updateActivateAddressBook(User user, Long addressId) {
+        Optional<AddressBook> addressBook = addressBookRepository.findByAddressIdAndUser(addressId,user);
+        if(!addressBook.isPresent()){
+            return "fail";
+        }
+
+        //대표 주소가 있다면 해제
+        Optional<AddressBook> representAddressBook = addressBookRepository.findByUserAndActivate(user,true);
+        if(representAddressBook.isPresent()){
+            representAddressBook.get().setActivate(false);
+            addressBookRepository.save(representAddressBook.get());
+        }
+
+        //대표 주소로 등록
+        addressBook.get().setActivate(true);
+        addressBookRepository.save(addressBook.get());
+
+
+        return "변경성공";
     }
 
 

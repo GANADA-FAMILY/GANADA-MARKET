@@ -23,6 +23,11 @@ const HeaderWrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-color: white;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 10rem;
+  z-index: 10;
 `;
 
 function Header() {
@@ -32,15 +37,14 @@ function Header() {
         <MenuList>
           <MenuLink to="/">고객센터</MenuLink>
           <MenuLink to="/">관심상품</MenuLink>
-          <MenuLink to="/">마이페이지</MenuLink>
+          <MenuLink to="/my">마이페이지</MenuLink>
         </MenuList>
       </HeaderTop>
       <HeaderBottom>
         <Logo width="8rem" height="4rem" />
         <Navigation>
-          <NavLink to="/">STYLE</NavLink>
-          <NavLink to="/">SHOP</NavLink>
-          <NavLink to="/">ABOUT</NavLink>
+          <NavLink to="/shop">SHOP</NavLink>
+          <NavLink to="/about">ABOUT</NavLink>
           <Modal
             trigger={<SearchIcon width="3rem" height="3rem" />}
             inset="0 0 70% 0"

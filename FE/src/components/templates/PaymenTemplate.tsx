@@ -18,7 +18,7 @@ function PaymentTemplate({ data }: Props) {
       <Wrapper>
         <ProductInfo data={data} />
         <DeliveryInfo />
-        <PayInfo />
+        <PayInfo price={13000} />
         <Pay />
       </Wrapper>
     </Container>

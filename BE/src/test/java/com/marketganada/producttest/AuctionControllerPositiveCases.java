@@ -57,7 +57,7 @@ public class AuctionControllerPositiveCases {
 
 		auctionPhone = new AuctionInsertRequest();
 		auctionPhone.setAuctionTitle("sample title");
-		auctionPhone.setAuctionImages(fileList);
+		//auctionPhone.setAuctionImages(fileList);
 		auctionPhone.setCycle(1);
 		auctionPhone.setDepreciation(100);
 		auctionPhone.setEndTime(new Date());
@@ -66,7 +66,7 @@ public class AuctionControllerPositiveCases {
 
         auctionEarphone = new AuctionInsertRequest();
         auctionEarphone.setAuctionTitle("sample title");
-        auctionEarphone.setAuctionImages(fileList);
+        //auctionEarphone.setAuctionImages(fileList);
         auctionEarphone.setCycle(1);
         auctionEarphone.setDepreciation(100);
         auctionEarphone.setEndTime(new Date());
@@ -119,7 +119,7 @@ public class AuctionControllerPositiveCases {
     @Order(3)
     void getAuctionPhoneListTest() throws Exception {
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/api/auction/phone?page=1" +
-                                "&sort=id&brand=브랜드&model=모델&save=저장장치")
+                                "&sort=endTime,DESC&brand=브랜드&model=모델&save=저장장치")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
