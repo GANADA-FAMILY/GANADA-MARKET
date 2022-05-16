@@ -18,9 +18,7 @@ pipeline {
 
 			}
 		}
-
-
-			
+	
 		stage('build') {
 			agent any
 			 steps {
