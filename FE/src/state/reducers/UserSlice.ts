@@ -22,7 +22,6 @@ export const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchUserByToken.fulfilled, (state, { payload }) => {
-      console.log(payload);
       state.user = payload;
     });
     builder.addCase(fetchUserByToken.rejected, (state, action) => {

@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from '@emotion/styled';
 import User from 'types/Entity/User';
 import { Avatar } from 'components/atoms/My';
@@ -12,7 +11,7 @@ function MembershipBox({ user, ...props }: MembershipBoxProps) {
   return (
     <StyeldBox>
       <UserDetail>
-        <Avatar src={user.profileImageUrl} />
+        <StyledAvatar src={user.profileImageUrl} />
         <HomeInfo user={user} />
       </UserDetail>
       <MembershipDetail user={user} />
@@ -35,11 +34,12 @@ const StyeldBox = styled.div`
 `;
 const UserDetail = styled.div`
   display: flex;
-  .user_avatar {
-    position: relative;
-    margin-right: 12px;
-    flex-shrink: 0;
-    margin-right: 15px;
-  }
+`;
+
+const StyledAvatar = styled(Avatar)`
+  position: relative;
+  margin-right: 12px;
+  flex-shrink: 0;
+  margin-right: 15px;
 `;
 export default MembershipBox;

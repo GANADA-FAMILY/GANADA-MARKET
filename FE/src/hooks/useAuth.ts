@@ -6,11 +6,8 @@ export default function useAuth() {
   const dispatch = useRootDispatch();
   const user = useRootSelector((state) => state.user.user);
   const [loading, setLoading] = useState(true);
-  const getData = async () => {
-    const data = await dispatch(fetchUserByToken());
-  };
   useEffect(() => {
-    getData();
+    dispatch(fetchUserByToken());
     setLoading(false);
   }, []);
 
