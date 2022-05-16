@@ -11,7 +11,8 @@ pipeline {
 		}
 		stage('ps shutDown') {
 			steps {
-				sh 'docker-compose -f docker-compose.yml down'
+				sh "docker rm -f $(docker ps -a -q)"
+				sh "docker volume rm $(docker volume ls -q)
 			}
 
 		}
