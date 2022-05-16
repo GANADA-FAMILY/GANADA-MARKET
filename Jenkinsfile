@@ -11,6 +11,7 @@ pipeline {
 		}
 		stage('ps shutDown') {
 			steps {
+				sh 'service docker start'
 				sh 'docker-compose -f docker-compose.yml down'
 			}
 
