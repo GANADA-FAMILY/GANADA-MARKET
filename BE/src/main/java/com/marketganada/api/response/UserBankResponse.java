@@ -14,35 +14,30 @@ import java.util.Map;
 @Getter
 @Setter
 @ApiModel("UserBankResponse")
-public class UserBankResponse extends BaseResponseBody{
-    Map<String,Object> data;
-//    String bank;
-//    String bankNum;
-//    String bankHolder;
+public class UserBankResponse {
 
-    public static UserBankResponse of(Integer statusCode, String message, User user) throws Exception {
+    String bank;
+    String bankNum;
+    String bankHolder;
+
+    public static UserBankResponse of(User user) throws Exception {
         UserBankResponse res = new UserBankResponse();
-        Map<String,Object> data = new HashMap<>();
-        Map<String, Object> bankInfo = new HashMap<>();
 
-        res.setStatusCode(statusCode);
-        res.setMessage(message);
+        res.setBank(user.getBank());
+        res.setBankHolder(user.getBankHolder());
+        if(user.getBankNum()!=null){
+            AES256 aes256 = new AES256();
+            String bankNum = aes256.decrypt(user.getBankNum());
+            StringBuffer sb = new StringBuffer(bankNum);
+            sb.replace(3,10,"*******");
+            res.setBankNum(String.valueOf(sb));
+        }else {
+            res.setBankNum(user.getBankNum());
+        }
 
 
-        AES256 aes256 = new AES256();
-        String bankNum = aes256.decrypt(user.getBankNum());
-        StringBuffer sb = new StringBuffer(bankNum);
-        sb.replace(3,10,"*******");
-
-//        res.setBank(user.getBank());
-//        res.setBankNum(String.valueOf(sb));
-//        res.setBankHolder(user.getBankHolder());
-        bankInfo.put("bank",user.getBank());
-        bankInfo.put("BankNum",String.valueOf(sb));
-        bankInfo.put("BankHolder",user.getBankHolder());
-
-        data.put("bankInfo",bankInfo);
-        res.setData(data);
+        res.setBank(user.getBank());
+        res.setBankHolder(user.getBankHolder());
 
         return res;
     }

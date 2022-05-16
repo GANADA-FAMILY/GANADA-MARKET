@@ -1,5 +1,5 @@
 import { ComponentStory } from '@storybook/react';
-import Address from 'type/Address';
+import Address from 'types/Entity/Address';
 import ButtonsBox from './ButtonsBox';
 
 export default {
