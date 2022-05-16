@@ -9,12 +9,6 @@ pipeline {
 			}
 	
 		}
-		stage('ps stop') {
-			steps {
-				sh "docker-compose down"
-			}
-
-		}
 
 
 			
@@ -29,8 +23,7 @@ pipeline {
 		}
 		stage('ps restart') {
 			steps {
-				sh "docker-compose build"
-				sh "docker-compose up -d"
+				sh "docker-compose up --build -d"
 			}
 
 		}
