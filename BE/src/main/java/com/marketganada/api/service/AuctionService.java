@@ -5,6 +5,7 @@ import com.marketganada.api.request.AuctionInsertRequest;
 import com.marketganada.db.entity.Auction;
 import com.marketganada.db.entity.Likes;
 import com.marketganada.db.entity.User;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +19,7 @@ public interface AuctionService {
     public String deleteAuction(Long auctionId, Long userId);
     public String insertAuctionLike(Long auctionId, Long userId);
     public String deleteAuctionLike(Long auctionId, Long userId);
+    public Page<Auction> getRecentAuctionList(Pageable pageable);
     public List<Auction> getAuctionPhoneList(String brand, String model, String save, Pageable pageable);
     public List<Auction> getAuctionEarphoneList(String brand, String model, Pageable pageable);
     List<Likes> getLikeAuctionList(User user);

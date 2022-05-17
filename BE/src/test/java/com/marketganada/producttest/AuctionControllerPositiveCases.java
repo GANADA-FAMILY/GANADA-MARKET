@@ -47,8 +47,8 @@ public class AuctionControllerPositiveCases {
 
     private static SimpleDateFormat simpleDateFormat;
 
-    private static final Long TEST_PRODUCT_PHONE_ID = Long.valueOf(45);
-    private static final Long TEST_PRODUCT_EARPHONE_ID = Long.valueOf(46);
+    private static final Long TEST_PRODUCT_PHONE_ID = Long.valueOf(21);
+    private static final Long TEST_PRODUCT_EARPHONE_ID = Long.valueOf(23);
 
     @BeforeAll
     public static void setup() throws Exception {
@@ -146,7 +146,7 @@ public class AuctionControllerPositiveCases {
     @Order(3)
     void getAuctionPhoneListTest() throws Exception {
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/api/auction/phone?page=0" +
-                                "&sort=auctionId,DESC&brand=string&model=string&save=edit small")
+                                "&sort=auctionId,DESC&brand=apple&model=아이폰12 미니&save=256GB")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
@@ -162,7 +162,7 @@ public class AuctionControllerPositiveCases {
     @Order(4)
     void getAuctionEarphoneListTest() throws Exception {
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/api/auction/earphone?page=0" +
-                                "&sort=auctionId,DESC&brand=string3&model=string4")
+                                "&sort=auctionId,DESC&brand=SAMSUNG&model=Galaxy Buds")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
@@ -226,14 +226,12 @@ public class AuctionControllerPositiveCases {
                 .andDo(MockMvcResultHandlers.print());
     }
 
-//    @Test
-//    @Order(10)
-//    void test() throws Exception {
-//        mockMvc.perform(MockMvcRequestBuilders.multipart("/api/auction/test")
-//                        .file("files",fileList.get(0).getBytes())
-//                        .file("files",fileList.get(1).getBytes())
-//                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
-//                        .contentType(MediaType.MULTIPART_FORM_DATA))
-//                .andDo(MockMvcResultHandlers.print());
-//    }
+    @Test
+    @Order(10)
+    void getAuctionRecentListTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/auction?page=0")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
 }

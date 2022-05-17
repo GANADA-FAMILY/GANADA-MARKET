@@ -12,13 +12,11 @@ import java.util.List;
 @Getter
 @Setter
 @Transactional
-public class CategoryMiddleListResponse extends BaseResponseBody {
+public class CategoryMiddleListResponse {
     List<CategoryMiddleListResponse.CategoryMiddleList> categoryMiddleList;
 
-    public static CategoryMiddleListResponse of(int statusCode, String message, List<CategoryMiddle> categoryMiddles) {
+    public static CategoryMiddleListResponse from(List<CategoryMiddle> categoryMiddles) {
         CategoryMiddleListResponse res = new CategoryMiddleListResponse();
-        res.setStatusCode(statusCode);
-        res.setMessage(message);
         res.setCategoryMiddleList(new ArrayList<>());
 
         for(CategoryMiddle c : categoryMiddles) {

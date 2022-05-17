@@ -15,13 +15,11 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ProductListResponse extends BaseResponseBody {
+public class ProductListResponse {
     List<ReturnProduct> products;
 
-    public static ProductListResponse of(int statusCode, String message, List<Product> inputProducts) {
+    public static ProductListResponse from(List<Product> inputProducts) {
         ProductListResponse res = new ProductListResponse();
-        res.setStatusCode(statusCode);
-        res.setMessage(message);
         res.setProducts(new ArrayList<>());
 
         for(Product p : inputProducts) {

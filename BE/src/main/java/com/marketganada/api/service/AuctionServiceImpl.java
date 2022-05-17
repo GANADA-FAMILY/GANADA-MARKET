@@ -6,6 +6,7 @@ import com.marketganada.db.entity.*;
 import com.marketganada.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
@@ -75,6 +76,7 @@ public class AuctionServiceImpl implements AuctionService {
         Auction auction = Auction.builder()
                 .user(user.get())
                 .auctionTitle(auctionInsertRequest.getAuctionTitle())
+                .auctionStatus(true)
                 .titleImageUrl(fileNameList.get(0))
                 .endTime(endTime)
                 .product(product.get())
@@ -225,10 +227,17 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
+    public Page<Auction> getRecentAuctionList(Pageable pageable) {
+        Page<Auction> auctions = auctionRepository.findAll(pageable);
+
+        return auctions;
+    }
+
+    @Override
     public List<Auction> getAuctionPhoneList(String brand, String model, String save, Pageable pageable) {
         Specification<Product> spec = (root, query, criteriaBuilder) -> null;
 
-        spec = spec.and(ProductSpecification.equalCategoryLargeName("휴대폰"));
+        spec = spec.and(ProductSpecification.equalCategoryLargeName("스마트폰"));
 
         if(!brand.equals("ALL"))
             spec = spec.and(ProductSpecification.equalProductBrand(brand));

@@ -12,21 +12,20 @@ import java.util.List;
 
 @Getter
 @Setter
-public class AuctionListResponse extends BaseResponseBody {
+public class AuctionListResponse {
     List<Auctions> auctionList;
 
-    public static AuctionListResponse of(int statusCode, String message, List<Auction> auctions) {
+    public static AuctionListResponse of(List<Auction> auctions, List<Boolean> isLikes) {
         AuctionListResponse res = new AuctionListResponse();
-        res.setStatusCode(statusCode);
-        res.setMessage(message);
         res.setAuctionList(new ArrayList<>());
 
         if(auctions == null)
             return res;
 
-        for(Auction a : auctions) {
+        for(int i = 0; i < auctions.size(); i++) {
             res.getAuctionList().add(Auctions.builder()
-                    .auction(a)
+                    .auction(auctions.get(i))
+                    ._isLiked(isLikes.get(i))
                     .build());
         }
 
@@ -45,9 +44,10 @@ public class AuctionListResponse extends BaseResponseBody {
         int cycle;
         int depreciation;
         Date endTime;
+        boolean isLiked;
 
         @Builder
-        public Auctions(Auction auction) {
+        public Auctions(Auction auction, boolean _isLiked) {
             auctionId = auction.getAuctionId();
             titleImageUrl = auction.getTitleImageUrl();
             product = Products.builder().product(auction.getProduct()).build();
@@ -58,6 +58,7 @@ public class AuctionListResponse extends BaseResponseBody {
             depreciation = auction.getDepreciation();
             startTime = auction.getStartTime();
             endTime = auction.getEndTime();
+            isLiked = _isLiked;
         }
     }
 
