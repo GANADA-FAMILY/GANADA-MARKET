@@ -43,7 +43,7 @@ pipeline {
 		}
 		stage('ps restart') {
 			agent any
-				{
+			steps	{
 				sh "docker run --name spring:latest -d -p 8080:8080 now20412041/spring"
 				sh "docker run --name client:latest -d -p 3000:3000 now20412041/client"
 				sh "docker system prune -af --volumes"
