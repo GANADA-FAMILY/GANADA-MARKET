@@ -16,6 +16,8 @@ pipeline {
 			 sh "docker rm -f springContainer"
                          sh "docker rm -f clientContaienr"
 
+
+
 			}
 		}
 		stage('docker image delete') {
@@ -45,6 +47,7 @@ pipeline {
 				sh "docker run --name springContainer -d -p 8080:8080 spring"
 				sh "docker run --name clientContainer -d -p 3000:3000 client"
 			}
+
 
 		}
 
