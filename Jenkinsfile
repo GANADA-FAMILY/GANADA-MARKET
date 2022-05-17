@@ -18,6 +18,13 @@ pipeline {
 
 			}
 		}
+		stage('docker image delete') {
+			agent any
+			steps {
+				sh "docker rmi -f now20412041/spring"
+				sh "docker rmi -f now20412041/client"
+			}
+		}
 	
 		stage('build') {
 			agent any
@@ -36,9 +43,7 @@ pipeline {
 		}
 		stage('ps restart') {
 			agent any
-			steps {
-				sh "docker pull now20412041/spring"
-				sh "docker pull now20412041/client"
+				{
 				sh "docker run --name spring:latest -d -p 8080:8080 now20412041/spring"
 				sh "docker run --name client:latest -d -p 3000:3000 now20412041/client"
 				sh "docker system prune -af --volumes"
