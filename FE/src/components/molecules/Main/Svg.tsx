@@ -15,17 +15,10 @@ function SVG({ fill }: Props) {
     fill,
   };
   return (
-    <SVGWrap>
-      <Icon option={options}>
-        <path d="M1,1 L1,17 L7.5,11 L14,17 L14,1 Z" />
-      </Icon>
-    </SVGWrap>
+    <Icon option={options}>
+      <path d="M1,1 L1,17 L7.5,11 L14,17 L14,1 Z" />
+    </Icon>
   );
 }
 
 export default SVG;
-
-const SVGWrap = styled.div`
-  display: inline;
-  z-index: 1;
-`;

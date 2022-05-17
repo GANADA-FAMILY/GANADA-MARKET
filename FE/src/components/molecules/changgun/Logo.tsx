@@ -16,7 +16,7 @@ function Logo({ width, height }: LogoProps) {
   return (
     <Link to="/">
       <LogoLayout width={width} height={height}>
-        <FlexibleImage src="./images/Logo.png" />
+        <FlexibleImage src="./images/logo.png" />
       </LogoLayout>
     </Link>
   );

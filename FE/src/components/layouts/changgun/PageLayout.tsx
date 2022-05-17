@@ -7,7 +7,7 @@ interface PageLayoutProps {
 }
 
 const Wrapper = styled.div`
-  margin-top: 20rem;
+  margin-top: 10rem;
 `;
 
 function PageLayout({ children }: PageLayoutProps) {

@@ -4,20 +4,14 @@ import GridBox from '../../layouts/Main/GridBox';
 import Text from '../../atoms/Main/Text';
 import Button from '../../atoms/Main/Button';
 import Product from '../../molecules/Main/Product';
+import AuctionList from 'types/Entity/AuctionList';
 
-interface Props {
-  data: Goods[];
+interface AuctionProps {
+  data: AuctionList[];
 }
 
-interface Goods {
-  id: string;
-  name: string;
-  brand: string;
-  val: number;
-  isLike: boolean;
-}
-function Main({ data }: Props) {
-  const [goods, setGoods] = useState<Goods[]>([]);
+function Main({ data }: AuctionProps) {
+  const [goods, setGoods] = useState<AuctionList[]>([]);
   const [noMore, setNoMore] = useState<boolean>(true);
   const moreGoods = () => {
     const dataLen = data.length;
@@ -43,7 +37,7 @@ function Main({ data }: Props) {
         <Text>발매 상품</Text>
         <GridBox columns="repeat(4, 1fr)">
           {goods.map((item) => {
-            return <Product key={item.id} info={item} />;
+            return <Product key={item.auctionId} data={item} />;
           })}
         </GridBox>
         <Button onClick={moreGoods} visible={noMore}>
