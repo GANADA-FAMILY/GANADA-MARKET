@@ -44,7 +44,6 @@ pipeline {
 			steps	{
 				sh "docker run --name springContainer -d -p 8080:8080 spring"
 				sh "docker run --name clientContainer -d -p 3000:3000 client"
-				sh "docker system prune -af --volumes"
 			}
 
 		}
