@@ -1,11 +1,6 @@
-import Address from './Address';
-import User from './User';
-import Product from './Product';
-import Bank from './Bank';
-import ProductHistory from './ProductHistory';
-import Auction from './Auction';
+import UserAPI from './UserAPI';
 
-type Entity = Address | User | Product | Bank | Auction | ProductHistory;
+type Entity = UserAPI;
 
 export default Entity;
-export type { Address, User, Product, Bank, ProductHistory, Auction };
+export type { UserAPI };

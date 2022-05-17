@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 import { ComponentStory } from '@storybook/react';
 import { Item } from 'components/atoms/My';
-import { Address, Product } from 'types/Entity';
 import { AddressInfo, ButtonsBox } from 'components/molecules/My';
+import { Address } from 'types/Entity/UserAPI';
 import List from './List';
 
 export default {
   component: List,
-  title: 'test/List',
+  title: 'molecules/My/List',
 };
 
 const Template: ComponentStory<typeof List> = (args) => <List {...args} />;

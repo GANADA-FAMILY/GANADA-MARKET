@@ -1,7 +1,7 @@
 /* eslint-disable no-irregular-whitespace */
 import { defaultInstance } from 'api';
 import { ACCESS_TOKEN } from 'constants/headers';
-import { User } from 'types/Entity';
+import { User } from 'types/Entity/UserAPI';
 import AddressForm from 'types/Form/AddressForm';
 import BankForm from 'types/Form/BankForm';
 import {

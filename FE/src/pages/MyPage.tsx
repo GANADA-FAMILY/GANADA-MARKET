@@ -7,7 +7,6 @@ import MyPageTemplate from '../components/templates/MyPageTemplate/MyPageTemplat
 function MyPage() {
   return (
     <MainContainer>
-      {/* <MyPageTemplate element={<MyHomeContainer />} /> */}
       <MyPageTemplate element={<MyHome />} />
     </MainContainer>
   );
