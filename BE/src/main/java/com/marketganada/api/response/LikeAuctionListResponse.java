@@ -27,6 +27,7 @@ public class LikeAuctionListResponse {
             auctionInfo.put("auctionTitle",like.getAuction().getAuctionTitle());
             auctionInfo.put("endTime",like.getAuction().getEndTime());
             auctionInfo.put("status",like.getAuction().isAuctionStatus());
+            auctionInfo.put("auctionImg","asdaasdasdasd");
 
             auctionList.add(auctionInfo);
         }
