@@ -1,7 +1,6 @@
 package com.marketganada.api.service;
 
 import com.marketganada.api.request.AuctionInsertRequest;
-import com.marketganada.api.request.LikeRequest;
 import com.marketganada.common.ProductSpecification;
 import com.marketganada.db.entity.*;
 import com.marketganada.db.repository.*;

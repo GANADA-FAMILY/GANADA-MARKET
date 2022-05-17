@@ -22,8 +22,6 @@ spring:
               user-info-uri: https://kapi.kakao.com/v2/user/me
               user_name_attribute: id
 
-<<<<<<< HEAD
-
 cloud:
   aws:
     credentials:
@@ -35,7 +33,7 @@ cloud:
       static: ap-northeast-2
     stack:
       auto: false
-=======
+
 # jwt
 jwt:
   secret : GanadaHub98c7WfOzFB6XEQeQj1fzRlVgTxNL8PYh1b1iymZwvqzpMEU7EJkim
@@ -46,4 +44,3 @@ jwt:
 coolsms:
   key : NCSWESZZUCID62PO
   secret : CPX7YPEASONMEFMMTHV95TKHF1HQT8JV
->>>>>>> 9dc8d27a4593c68cc0b3161dbf72804658f3259b
