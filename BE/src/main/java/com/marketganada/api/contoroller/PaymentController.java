@@ -2,6 +2,7 @@ package com.marketganada.api.contoroller;
 
 import com.marketganada.api.request.KakaoPaySuccessRequest;
 import com.marketganada.api.request.PaymentInsertRequest;
+import com.marketganada.api.request.TrackingNumUpdateRequest;
 import com.marketganada.api.request.UserLoginRequest;
 import com.marketganada.api.response.*;
 import com.marketganada.api.service.KaKaoPayService;
@@ -82,6 +83,55 @@ public class PaymentController {
         paymentService.successPayment(Long.valueOf(kakaoPaySuccessRequest.getOrderId()));
 
         return ResponseEntity.ok(KakaoPaySuccessResponse.of(kakaoPayApprovalVO));
+    }
+
+    @PutMapping("/tracking/{paymentId}")
+    @ApiOperation(value = "운송장 번호 입력", notes = "상태값이 결제완료라면 운송장 번호를 입력받아 상태를 수정한다.")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "성공", response = KakaoPaySuccessResponse.class),
+            @ApiResponse(code = 400, message = "입력 데이터 오류"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 403, message = "권한 없는 유저"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity updateTrackingNum(@ApiIgnore Authentication authentication,
+                                            @PathVariable("paymentId") Long paymentId,
+                                            @Valid @RequestBody TrackingNumUpdateRequest request) {
+        GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
+        User user = userDetails.getUser();
+
+        String res = paymentService.updateTrackingNum(paymentId,request,user);
+        if(res.equals("success")){
+            return new ResponseEntity(HttpStatus.CREATED);
+        }else if(res.equals("Unauthorized")){
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+
+    }
+
+    @PutMapping("/confirm/{paymentId}")
+    @ApiOperation(value = "구매확정", notes = "상태값을 구매를 확정으로 변경하고 상품의 거래기록을 저장한다.")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "성공", response = KakaoPaySuccessResponse.class),
+            @ApiResponse(code = 400, message = "입력 데이터 오류"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 403, message = "권한 없는 유저"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity confirmPayment(@ApiIgnore Authentication authentication,
+                                            @PathVariable("paymentId") Long paymentId) {
+        GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
+        User user = userDetails.getUser();
+
+        String res = paymentService.confirmPayment(paymentId, user);
+        if(res.equals("success")){
+            return new ResponseEntity(HttpStatus.CREATED);
+        }else if(res.equals("Unauthorized")){
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+
     }
 
 }

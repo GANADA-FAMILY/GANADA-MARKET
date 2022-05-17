@@ -29,8 +29,11 @@ public class Payment {
     @Column(name = "status", columnDefinition = "int")
     private int status;
 
-    @Column(name = "tracking_num", columnDefinition = "varchar(20)")
+    @Column(name = "tracking_num", columnDefinition = "varchar(50)")
     private String trackingNum;
+
+    @Column(name = "courier", columnDefinition = "varchar(20)")
+    private String courier;
 
     @Column(name = "payment_method", columnDefinition = "varchar(20)")
     private String paymentMethod;

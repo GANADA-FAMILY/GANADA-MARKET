@@ -2,13 +2,16 @@ package com.marketganada.api.service;
 
 import com.marketganada.api.request.KakaoPaySuccessRequest;
 import com.marketganada.api.request.PaymentInsertRequest;
+import com.marketganada.api.request.TrackingNumUpdateRequest;
 import com.marketganada.common.KakaoPayApprovalVO;
 import com.marketganada.common.KakaoPayReadyVO;
 import com.marketganada.db.entity.Auction;
 import com.marketganada.db.entity.Payment;
+import com.marketganada.db.entity.ProductHistory;
 import com.marketganada.db.entity.User;
 import com.marketganada.db.repository.AuctionRepository;
 import com.marketganada.db.repository.PaymentRepository;
+import com.marketganada.db.repository.ProductHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -31,6 +34,8 @@ public class PaymentServiceImpl implements PaymentService{
     AuctionRepository auctionRepository;
     @Autowired
     PaymentRepository paymentRepository;
+    @Autowired
+    ProductHistoryRepository productHistoryRepository;
 
     private static final String HOST = "https://kapi.kakao.com";
 
@@ -156,5 +161,62 @@ public class PaymentServiceImpl implements PaymentService{
             payment.get().setStatus(1);
             paymentRepository.save(payment.get());
         }
+    }
+
+    @Override
+    public String updateTrackingNum(Long paymentId, TrackingNumUpdateRequest request, User user) {
+
+        Optional<Payment> payment = paymentRepository.findById(paymentId);
+        //존재하지 않는다면
+        if(!payment.isPresent()){
+            System.out.println("존재하지 않음");
+            return "fail";
+        }
+        //입금완료거나 운송장번호 입력 상태라면
+        if(payment.get().getStatus()==1 || payment.get().getStatus()==2){
+            //판매자인 경우에만
+            if(payment.get().getAuction().getUser().getUserId().equals(user.getUserId())){
+                payment.get().setStatus(2);
+                payment.get().setCourier(request.getCourier());
+                payment.get().setTrackingNum(request.getTrackingNum());
+                paymentRepository.save(payment.get());
+                return "success";
+            }else{
+                System.out.println("판매자가 아님");
+                return "Unauthorized";
+            }
+        }
+        return "fail";
+    }
+
+    @Override
+    @Transactional
+    public String confirmPayment(Long paymentId, User user) {
+        Optional<Payment> payment = paymentRepository.findById(paymentId);
+        //존재하지 않는다면
+        if(!payment.isPresent()){
+            System.out.println("존재하지 않음");
+            return "fail";
+        }
+        //운송장번호 입력 상태라면
+        if(payment.get().getStatus()==2){
+            //구매자인 경우에만
+            if(payment.get().getUser().getUserId().equals(user.getUserId())){
+                payment.get().setStatus(3);
+                paymentRepository.save(payment.get());
+                //상품 거래 기록 생성
+                ProductHistory productHistory = ProductHistory.builder()
+                        .historyDate(payment.get().getTradeDate())
+                        .historyPrice(payment.get().getPrice())
+                        .product(payment.get().getAuction().getProduct())
+                        .build();
+                productHistoryRepository.save(productHistory);
+                return "success";
+            }else{
+                System.out.println("구매자가 아님");
+                return "Unauthorized";
+            }
+        }
+        return "fail";
     }
 }
