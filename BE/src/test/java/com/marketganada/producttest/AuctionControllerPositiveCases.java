@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -20,6 +21,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileInputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,6 +37,7 @@ public class AuctionControllerPositiveCases {
     Logger logger = LoggerFactory.getLogger(ProductControllerPositiveCases.class);
     private static String accessToken;
     private static MockMultipartFile mFile;
+    private static List<MultipartFile> fileList;
     private static AuctionInsertRequest auctionPhone;
     private static AuctionInsertRequest auctionEarphone;
     private static LikeRequest like;
@@ -42,8 +45,10 @@ public class AuctionControllerPositiveCases {
     private static Long auctionPhoneId;
     private static Long auctionEarphoneId;
 
-    private static final Long TEST_PRODUCT_PHONE_ID = Long.valueOf(1);
-    private static final Long TEST_PRODUCT_EARPHONE_ID = Long.valueOf(1);
+    private static SimpleDateFormat simpleDateFormat;
+
+    private static final Long TEST_PRODUCT_PHONE_ID = Long.valueOf(45);
+    private static final Long TEST_PRODUCT_EARPHONE_ID = Long.valueOf(46);
 
     @BeforeAll
     public static void setup() throws Exception {
@@ -51,25 +56,33 @@ public class AuctionControllerPositiveCases {
 		String originalFileName = "test.jpg";
 		String fileFullPath = ".\\test.jpg";
 
-		mFile = new MockMultipartFile(name, originalFileName, "image/jpg", new FileInputStream(fileFullPath));
-		List<MultipartFile> fileList = new ArrayList<>();
+		mFile = new MockMultipartFile(name, originalFileName, MediaType.IMAGE_JPEG_VALUE, new FileInputStream(fileFullPath));
+		fileList = new ArrayList<>();
 		fileList.add(mFile);
+
+        name = "file";
+        originalFileName = "서명용.png";
+        fileFullPath = ".\\서명용.png";
+        mFile = new MockMultipartFile(name, originalFileName, MediaType.IMAGE_PNG_VALUE, new FileInputStream(fileFullPath));
+		fileList.add(mFile);
+
+        simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
 
 		auctionPhone = new AuctionInsertRequest();
 		auctionPhone.setAuctionTitle("sample title");
-		auctionPhone.setAuctionImages(fileList);
 		auctionPhone.setCycle(1);
 		auctionPhone.setDepreciation(100);
-		auctionPhone.setEndTime(new Date());
+        auctionPhone.setDescription("sample desc");
+		auctionPhone.setEndTime(simpleDateFormat.format(new Date()));
 		auctionPhone.setStartPrice(10000);
         auctionPhone.setProductId(TEST_PRODUCT_PHONE_ID);
 
         auctionEarphone = new AuctionInsertRequest();
         auctionEarphone.setAuctionTitle("sample title");
-        auctionEarphone.setAuctionImages(fileList);
         auctionEarphone.setCycle(1);
         auctionEarphone.setDepreciation(100);
-        auctionEarphone.setEndTime(new Date());
+        auctionEarphone.setDescription("sample desc");
+        auctionEarphone.setEndTime(simpleDateFormat.format(new Date()));
         auctionEarphone.setStartPrice(10000);
         auctionEarphone.setProductId(TEST_PRODUCT_EARPHONE_ID);
 
@@ -96,10 +109,17 @@ public class AuctionControllerPositiveCases {
     @Test
     @Order(1)
     void insertAuctionPhoneTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/auction")
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/api/auction")
+                        .file("auctionImages",fileList.get(0).getBytes())
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
-                        .contentType("application/json")
-                        .content((new JSONObject(oMapper.writeValueAsString(auctionPhone)).toString())))
+                        .param("auctionTitle", auctionPhone.getAuctionTitle())
+                        .param("description", auctionPhone.getDescription())
+                        .param("productId", String.valueOf(auctionPhone.getProductId()))
+                        .param("endTime", auctionPhone.getEndTime())
+                        .param("depreciation", String.valueOf(auctionPhone.getDepreciation()))
+                        .param("cycle", String.valueOf(auctionPhone.getCycle()))
+                        .param("startPrice", String.valueOf(auctionPhone.getStartPrice()))
+                        .contentType(MediaType.MULTIPART_FORM_DATA_VALUE))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andDo(MockMvcResultHandlers.print());
     }
@@ -107,10 +127,17 @@ public class AuctionControllerPositiveCases {
     @Test
     @Order(2)
     void insertAuctionEarphoneTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/auction")
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/api/auction")
+                        .file("auctionImages",fileList.get(0).getBytes())
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
-                        .contentType("application/json")
-                        .content((new JSONObject(oMapper.writeValueAsString(auctionEarphone)).toString())))
+                        .param("auctionTitle", auctionEarphone.getAuctionTitle())
+                        .param("description", auctionEarphone.getDescription())
+                        .param("productId", String.valueOf(auctionEarphone.getProductId()))
+                        .param("endTime", auctionEarphone.getEndTime())
+                        .param("depreciation", String.valueOf(auctionEarphone.getDepreciation()))
+                        .param("cycle", String.valueOf(auctionEarphone.getCycle()))
+                        .param("startPrice", String.valueOf(auctionEarphone.getStartPrice()))
+                        .contentType(MediaType.MULTIPART_FORM_DATA))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andDo(MockMvcResultHandlers.print());
     }
@@ -118,15 +145,15 @@ public class AuctionControllerPositiveCases {
     @Test
     @Order(3)
     void getAuctionPhoneListTest() throws Exception {
-        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/api/auction/phone?page=1" +
-                                "&sort=endTime,DESC&brand=브랜드&model=모델&save=저장장치")
+        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/api/auction/phone?page=0" +
+                                "&sort=auctionId,DESC&brand=string&model=string&save=edit small")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
 
         JSONObject tmp = new JSONObject(result.andReturn().getResponse().getContentAsString());
         JSONArray resultArray = tmp.getJSONArray("auctionList");
-        tmp = resultArray.getJSONObject(resultArray.length()-1);
+        tmp = resultArray.getJSONObject(0);
 
         auctionPhoneId = tmp.getLong("auctionId");
     }
@@ -134,15 +161,15 @@ public class AuctionControllerPositiveCases {
     @Test
     @Order(4)
     void getAuctionEarphoneListTest() throws Exception {
-        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/api/auction/earphone?page=1" +
-                                "&sort=id&brand=브랜드&model=모델")
+        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/api/auction/earphone?page=0" +
+                                "&sort=auctionId,DESC&brand=string3&model=string4")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
 
         JSONObject tmp = new JSONObject(result.andReturn().getResponse().getContentAsString());
         JSONArray resultArray = tmp.getJSONArray("auctionList");
-        tmp = resultArray.getJSONObject(resultArray.length()-1);
+        tmp = resultArray.getJSONObject(0);
 
         auctionEarphoneId = tmp.getLong("auctionId");
     }
@@ -163,7 +190,7 @@ public class AuctionControllerPositiveCases {
     @Test
     @Order(6)
     void getAuctionDetailTest() throws Exception {
-        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/api/auction/"+auctionPhoneId)
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/auction/"+auctionPhoneId)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
@@ -198,4 +225,15 @@ public class AuctionControllerPositiveCases {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
     }
+
+//    @Test
+//    @Order(10)
+//    void test() throws Exception {
+//        mockMvc.perform(MockMvcRequestBuilders.multipart("/api/auction/test")
+//                        .file("files",fileList.get(0).getBytes())
+//                        .file("files",fileList.get(1).getBytes())
+//                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
+//                        .contentType(MediaType.MULTIPART_FORM_DATA))
+//                .andDo(MockMvcResultHandlers.print());
+//    }
 }

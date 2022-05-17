@@ -21,6 +21,9 @@ public class AuctionListResponse extends BaseResponseBody {
         res.setMessage(message);
         res.setAuctionList(new ArrayList<>());
 
+        if(auctions == null)
+            return res;
+
         for(Auction a : auctions) {
             res.getAuctionList().add(Auctions.builder()
                     .auction(a)
@@ -46,7 +49,7 @@ public class AuctionListResponse extends BaseResponseBody {
         @Builder
         public Auctions(Auction auction) {
             auctionId = auction.getAuctionId();
-            titleImageUrl = auction.getAuctionImgs().toString();
+            titleImageUrl = auction.getTitleImageUrl();
             product = Products.builder().product(auction.getProduct()).build();
             auctionTitle = auction.getAuctionTitle();
             seller = auction.getUser().getUserNickname();

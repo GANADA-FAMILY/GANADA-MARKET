@@ -21,3 +21,16 @@ spring:
               token_uri: https://kauth.kakao.com/oauth/token
               user-info-uri: https://kapi.kakao.com/v2/user/me
               user_name_attribute: id
+
+
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIAWVJX5HQQW6EQ6HHJ
+      secretKey: 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
+    s3:
+      bucket: ganada2
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
