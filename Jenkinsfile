@@ -37,7 +37,8 @@ pipeline {
 				sh "docker build --tag now20412041/client ./FE"
 				sh "docker push now20412041/spring"
 				sh "docker push now20412041/client"
-        
+       
+ 
 		  }
 		
 		}
