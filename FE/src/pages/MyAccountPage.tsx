@@ -1,13 +1,17 @@
-import React from 'react';
 import styled from '@emotion/styled';
-// import MyHomeContainer from '../components/organisms/my/MyHomeContainer';
-import MyHome from '../components/organisms/My/MyHome';
+import MyAccount from 'components/organisms/My/MyAccount/MyAccount';
 import MyPageTemplate from '../components/templates/MyPageTemplate/MyPageTemplate';
 
-function MyPage() {
+const bank = {
+  bank: '신한',
+  bankNum: '110333444444',
+  bankHolder: '홍길동',
+};
+
+function MyAccountPage() {
   return (
     <MainContainer>
-      <MyPageTemplate element={<MyHome />} />
+      <MyPageTemplate element={<MyAccount bank={bank} />} />
     </MainContainer>
   );
 }
@@ -18,4 +22,4 @@ const MainContainer = styled.div`
   max-width: 1280px;
 `;
 
-export default MyPage;
+export default MyAccountPage;

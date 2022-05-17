@@ -10,6 +10,7 @@ interface InfoGroupItemProps {
   value: string;
   submit: React.MouseEventHandler<HTMLElement>;
   modify?: React.MouseEventHandler<HTMLElement>;
+  hiddenModify?: boolean;
 }
 const descType = {
   text: 'desc',
@@ -25,6 +26,7 @@ function InfoItem({
   value,
   submit,
   modify,
+  hiddenModify,
 }: InfoGroupItemProps) {
   const [toggle, setToggle] = useState(false);
 
@@ -58,7 +60,7 @@ function InfoItem({
       <UnitBox toggle={toggle}>
         <h5 className="title">{title}</h5>
         <p className={descType[type]}>{convert(type, value)}</p>
-        {type !== 'email' ? (
+        {!hiddenModify && (
           <button
             type="button"
             className="btn_modify"
@@ -72,17 +74,13 @@ function InfoItem({
           >
             변경
           </button>
-        ) : (
-          ''
         )}
       </UnitBox>
-      {children !== undefined ? (
+      {children !== undefined && (
         <ModifyBox toggle={toggle}>
           {children}
           <ModifyButtonBox cancel={() => setToggle(false)} submit={submit} />
         </ModifyBox>
-      ) : (
-        ''
       )}
     </>
   );
@@ -90,6 +88,7 @@ function InfoItem({
 InfoItem.defaultProps = {
   modify: undefined,
   children: undefined,
+  hiddenModify: false,
 };
 interface ToggleProps {
   toggle: boolean;

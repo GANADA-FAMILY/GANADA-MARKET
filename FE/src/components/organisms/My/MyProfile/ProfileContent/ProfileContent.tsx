@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
-import User from 'types/Entity/User';
 import InputBox from 'components/atoms/My/InputBox/InputBox';
 import Title from 'components/atoms/My/Title/Title';
 import InfoGroup from 'components/molecules/My/InfoGroup';
 import InfoItem from 'components/molecules/My/InfoItem';
+import { User } from 'types/Entity/UserAPI';
 
 interface ProfileContentProps {
   user: User;
@@ -22,6 +22,7 @@ function ProfileContent({ user }: ProfileContentProps) {
           type="email"
           submit={submitUserInfo}
           value={user.userEmail}
+          hiddenModify
         />
         <InfoItem
           title="비밀번호"

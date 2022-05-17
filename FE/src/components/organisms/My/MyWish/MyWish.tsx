@@ -4,7 +4,7 @@ import { TitleBar } from 'components/molecules/My';
 function MyWish() {
   return (
     <section>
-      <MainTitleBar title="관심 상품" size={29} bordered />
+      <MainTitleBar title="관심 상품" size={24} bordered />
     </section>
   );
 }

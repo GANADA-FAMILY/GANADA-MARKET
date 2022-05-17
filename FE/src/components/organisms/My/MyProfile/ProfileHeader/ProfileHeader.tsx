@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
-import User from 'types/Entity/User';
 import Avatar from 'components/atoms/My/Avartar/Avatar';
 import ImageInput from 'components/atoms/My/ImageInput';
 import LinkButton from 'components/atoms/My/LinkButton';
 import Text from 'components/atoms/My/Text';
+import { User } from 'types/Entity/UserAPI';
 
 interface ProfileHeaderProps {
   user: User;

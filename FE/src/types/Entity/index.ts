@@ -1,9 +1,6 @@
-import Address from './Address';
-import User from './User';
-import Product from './Product';
-import Bank from './Bank';
+import UserAPI from './UserAPI';
 
-type Entity = Address | User | Product | Bank;
+type Entity = UserAPI;
 
 export default Entity;
-export type { Address, User, Product, Bank };
+export type { UserAPI };

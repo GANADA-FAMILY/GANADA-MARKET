@@ -47,7 +47,6 @@ const AddButton = styled(LinkButton)`
 `;
 
 export default MyAddress;
-
 const dummyList = [
   {
     addressId: 1,
