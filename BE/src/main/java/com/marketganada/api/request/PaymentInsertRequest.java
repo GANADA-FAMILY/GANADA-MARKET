@@ -30,19 +30,19 @@ public class PaymentInsertRequest {
     String buyerName;
 
     @ApiModelProperty(name = "연락처")
-    @NotNull
+    @NotBlank
     String phone;
 
     @ApiModelProperty(name = "우편번호")
-    @NotNull
-    int postalCode;
+    @NotBlank
+    String postalCode;
 
     @ApiModelProperty(name = "주소")
-    @NotNull
+    @NotBlank
     String address;
 
     @ApiModelProperty(name = "상세주소")
-    @NotNull
+    @NotBlank
     String addressDetail;
 
 }
