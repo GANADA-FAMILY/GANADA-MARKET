@@ -36,6 +36,9 @@ public class Auction {
     @Column(name = "title", columnDefinition = "varchar(50)")
     private String auctionTitle;
 
+    @Column(name = "title_image_url", columnDefinition = "varchar(500)")
+    private String titleImageUrl;
+
     @Column(name = "description", columnDefinition = "varchar(500)")
     private String description;
 
@@ -70,10 +73,11 @@ public class Auction {
     Set<AuctionImg> auctionImgs = new HashSet<>();
 
     @Builder
-    public Auction(User user, Product product, String auctionTitle, String description, Date startTime, Date endTime, int startPrice, int cycle, int depreciation, boolean auctionStatus, int likeCnt) {
+    public Auction(User user, Product product, String auctionTitle, String titleImageUrl, String description, Date startTime, Date endTime, int startPrice, int cycle, int depreciation, boolean auctionStatus, int likeCnt) {
         this.user = user;
         this.product = product;
         this.auctionTitle = auctionTitle;
+        this.titleImageUrl = titleImageUrl;
         this.description = description;
         this.startTime = startTime;
         this.endTime = endTime;

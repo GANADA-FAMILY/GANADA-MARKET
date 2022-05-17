@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class ProductDetailResponse extends BaseResponseBody {
+public class ProductDetailResponse {
     String productName;
     String productBrand;
     Date releaseDate;
@@ -19,10 +19,8 @@ public class ProductDetailResponse extends BaseResponseBody {
     String categoryMiddle;
     String categorySmall;
 
-    public static ProductDetailResponse of(int statusCode, String message, Product product) {
+    public static ProductDetailResponse from(Product product) {
         ProductDetailResponse res = new ProductDetailResponse();
-        res.setStatusCode(statusCode);
-        res.setMessage(message);
 
         if(product != null) {
             res.setProductName(product.getProductName());

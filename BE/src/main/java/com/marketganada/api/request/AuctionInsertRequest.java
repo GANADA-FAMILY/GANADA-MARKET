@@ -4,12 +4,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter
@@ -18,10 +15,6 @@ public class AuctionInsertRequest {
     @ApiModelProperty(name = "경매 제목")
     @NotBlank
     String auctionTitle;
-
-//    @ApiModelProperty(name = "경매 사진")
-//    @NotNull
-//    List<MultipartFile> auctionImages;
 
     @ApiModelProperty(name = "제품 ID")
     @NotNull
@@ -43,7 +36,7 @@ public class AuctionInsertRequest {
     @NotNull
     int depreciation;
 
-    @ApiModelProperty(name = "종료 일시")
-    @NotNull
-    Date endTime;
+    @ApiModelProperty(name = "종료 일시", example = "yyyy.MM.dd HH:mm:ss")
+    @NotBlank
+    String endTime;
 }

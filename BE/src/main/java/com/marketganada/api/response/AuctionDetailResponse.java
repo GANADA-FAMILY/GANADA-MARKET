@@ -1,12 +1,14 @@
 package com.marketganada.api.response;
 
 import com.marketganada.db.entity.Auction;
+import com.marketganada.db.entity.AuctionImg;
 import com.marketganada.db.entity.Product;
 import com.marketganada.db.entity.ProductHistory;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,14 +16,17 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class AuctionDetailResponse extends BaseResponseBody {
+public class AuctionDetailResponse {
     Auctions auction;
 
-    public static AuctionDetailResponse of(int statusCode, String message, Auction auction) {
+    public static AuctionDetailResponse of(Auction auction, boolean isLiked, boolean isMine) {
         AuctionDetailResponse res = new AuctionDetailResponse();
-        res.setStatusCode(statusCode);
-        res.setMessage(message);
-        res.setAuction(Auctions.builder().auction(auction).build());
+        if(auction != null)
+            res.setAuction(Auctions.builder()
+                    .auction(auction)
+                    ._isLiked(isLiked)
+                    ._isMine(isMine)
+                    .build());
 
         return res;
     }
@@ -29,9 +34,9 @@ public class AuctionDetailResponse extends BaseResponseBody {
     @Getter
     static class Auctions {
         Long auctionId;
-        String auctionImgs;
+        List<String> auctionImgs;
         Products product;
-        ProductHistories productHistory;
+        List<ProductHistories> productHistory;
         String auctionTitle;
         String auctionDesc;
         String seller;
@@ -48,9 +53,7 @@ public class AuctionDetailResponse extends BaseResponseBody {
         @Builder
         public Auctions(Auction auction, Boolean _isLiked, Boolean _isMine) {
             auctionId = auction.getAuctionId();
-            auctionImgs = auction.getAuctionImgs().toString();
             product = Products.builder().product(auction.getProduct()).build();
-            productHistory = ProductHistories.builder().product(auction.getProduct()).build();
             auctionTitle = auction.getAuctionTitle();
             auctionDesc = auction.getDescription();
             seller = auction.getUser().getUserNickname();
@@ -63,6 +66,16 @@ public class AuctionDetailResponse extends BaseResponseBody {
             isLiked = _isLiked;
             isMine = _isMine;
             likeCnt = auction.getLikeCnt();
+
+            auctionImgs = new ArrayList<>();
+            for(AuctionImg a : auction.getAuctionImgs()) {
+                auctionImgs.add(a.getImgUrl());
+            }
+
+            productHistory = new ArrayList<>();
+            for(ProductHistory p : auction.getProduct().getProductHistories()) {
+                productHistory.add(ProductHistories.builder().productHistory(p).build());
+            }
         }
     }
 
@@ -87,7 +100,9 @@ public class AuctionDetailResponse extends BaseResponseBody {
         int historyPrice;
 
         @Builder
-        public ProductHistories(Product product) {
+        public ProductHistories(ProductHistory productHistory) {
+            historyDate = productHistory.getHistoryDate();
+            historyPrice = productHistory.getHistoryPrice();
         }
     }
 }

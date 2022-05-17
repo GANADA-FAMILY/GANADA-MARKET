@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -39,6 +40,7 @@ public class AuctionControllerNegativeCases {
         auction = new AuctionInsertRequest();
 
         like = new LikeRequest();
+        like.setAuctionId(Long.valueOf(-1));
     }
 
     @Test
@@ -61,10 +63,10 @@ public class AuctionControllerNegativeCases {
     @Test
     @Order(1)
     void insertAuctionTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/auction")
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/api/auction")
+                        .file("auctionImages",null)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
-                        .contentType("application/json")
-                        .content((new JSONObject(oMapper.writeValueAsString(auction)).toString())))
+                        .contentType(MediaType.MULTIPART_FORM_DATA_VALUE))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andDo(MockMvcResultHandlers.print());
     }
@@ -96,7 +98,7 @@ public class AuctionControllerNegativeCases {
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
                         .contentType("application/json")
                         .content((new JSONObject(oMapper.writeValueAsString(like)).toString())))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andDo(MockMvcResultHandlers.print());
     }
 

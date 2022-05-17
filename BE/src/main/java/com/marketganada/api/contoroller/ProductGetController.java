@@ -40,7 +40,7 @@ public class ProductGetController {
         List<Product> products;
         products = productService.getProductList();
 
-        return ResponseEntity.ok(ProductListResponse.of(200,"success",products));
+        return ResponseEntity.ok(ProductListResponse.from(products));
     }
 
     @GetMapping("/{productId}")
@@ -58,14 +58,14 @@ public class ProductGetController {
             product = productService.getProductById(productId);
         } catch (Exception e) {
             if(e.getMessage().equals("not found")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ProductDetailResponse.of(404,"해당 ID의 제품이 존재하지 않습니다.",null));
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
             else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ProductDetailResponse.of(500,"내부 서버 오류",null));
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             }
         }
 
-        return ResponseEntity.ok(ProductDetailResponse.of(200,"success",product));
+        return ResponseEntity.ok(ProductDetailResponse.from(product));
     }
 
     @GetMapping("/category-large/{categoryLargeId}")
@@ -83,14 +83,14 @@ public class ProductGetController {
             categoryLarge = productService.getCategoryLargeById(categoryLargeId);
         } catch (Exception e) {
             if(e.getMessage().equals("not found")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(CategoryLargeResponse.of(404,"해당 ID의 대분류가 존재하지 않습니다.",null));
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
             else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(CategoryLargeResponse.of(500,"내부 서버 오류",null));
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             }
         }
 
-        return ResponseEntity.ok(CategoryLargeResponse.of(200,"success",categoryLarge));
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/category-large-list")
@@ -106,7 +106,7 @@ public class ProductGetController {
         List<CategoryLarge> categoryLarges;
         categoryLarges = productService.getCategoryLargeList();
 
-        return ResponseEntity.ok(CategoryLargeListResponse.of(200,"success",categoryLarges));
+        return ResponseEntity.ok(CategoryLargeListResponse.from(categoryLarges));
     }
 
     @GetMapping("/category-middle-list")
@@ -122,7 +122,7 @@ public class ProductGetController {
         List<CategoryMiddle> categoryMiddles;
         categoryMiddles = productService.getCategoryMiddleList();
 
-        return ResponseEntity.ok(CategoryMiddleListResponse.of(200,"success",categoryMiddles));
+        return ResponseEntity.ok(CategoryMiddleListResponse.from(categoryMiddles));
     }
 
     @GetMapping("/category-small-list")
@@ -138,6 +138,6 @@ public class ProductGetController {
         List<CategorySmall> categorySmalls;
         categorySmalls = productService.getCategorySmallList();
 
-        return ResponseEntity.ok(CategorySmallListResponse.of(200,"success",categorySmalls));
+        return ResponseEntity.ok(CategorySmallListResponse.from(categorySmalls));
     }
 }

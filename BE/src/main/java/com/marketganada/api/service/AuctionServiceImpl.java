@@ -1,18 +1,22 @@
 package com.marketganada.api.service;
 
 import com.marketganada.api.request.AuctionInsertRequest;
-import com.marketganada.api.request.LikeRequest;
 import com.marketganada.common.ProductSpecification;
 import com.marketganada.db.entity.*;
 import com.marketganada.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
-import java.util.Optional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service("AuctionService")
 public class AuctionServiceImpl implements AuctionService {
@@ -23,7 +27,12 @@ public class AuctionServiceImpl implements AuctionService {
     AuctionRepository auctionRepository;
 
     @Autowired
+    AuctionImgRepository auctionImgRepository;
+
+    @Autowired
     ProductRepository productRepository;
+    @Autowired
+    ProductHistoryRepository productHistoryRepository;
 
     @Autowired
     LikesRepository likesRepository;
@@ -35,20 +44,41 @@ public class AuctionServiceImpl implements AuctionService {
     @Autowired
     CategorySmallRepository categorySmallRepository;
 
+    @Autowired
+    S3Service s3Service;
+
     @Override
-    public String insertAuction(AuctionInsertRequest auctionInsertRequest, Long userId) {
+    public String insertAuction(AuctionInsertRequest auctionInsertRequest, List<MultipartFile> auctionImages, Long userId) {
         Optional<User> user = userRepository.findById(userId);
         if(!user.isPresent())
-            throw new IllegalArgumentException("user not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"user not found");
 
         Optional<Product> product = productRepository.findById(auctionInsertRequest.getProductId());
         if(!product.isPresent())
-            throw new IllegalArgumentException("product not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"product not found");
+
+        List<String> fileNameList;
+        try {
+            fileNameList = s3Service.uploadFileList(auctionImages);
+        } catch (ResponseStatusException e) {
+            throw e;
+        }
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+        Date endTime;
+
+        try {
+            endTime = simpleDateFormat.parse(auctionInsertRequest.getEndTime());
+        } catch (ParseException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"parsing error");
+        }
 
         Auction auction = Auction.builder()
                 .user(user.get())
                 .auctionTitle(auctionInsertRequest.getAuctionTitle())
-                .endTime(auctionInsertRequest.getEndTime())
+                .auctionStatus(true)
+                .titleImageUrl(fileNameList.get(0))
+                .endTime(endTime)
                 .product(product.get())
                 .startPrice(auctionInsertRequest.getStartPrice())
                 .description(auctionInsertRequest.getDescription())
@@ -56,6 +86,18 @@ public class AuctionServiceImpl implements AuctionService {
                 .depreciation(auctionInsertRequest.getDepreciation())
                 .build();
         auctionRepository.save(auction);
+
+        List<AuctionImg> auctionImgs = new ArrayList<>();
+        for(String f : fileNameList) {
+            auctionImgs.add(AuctionImg.builder()
+                    .imgUrl(f)
+                    .auction(auction)
+                    .build());
+        }
+
+        for(AuctionImg a : auctionImgs) {
+            auctionImgRepository.save(a);
+        }
 
         return "success";
     }
@@ -71,6 +113,35 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
+    public boolean isThisAuctionMine(Auction auction, Long userId) {
+        Optional<User> user = userRepository.findById(userId);
+        if(!user.isPresent())
+            throw new IllegalArgumentException("not found");
+
+        if(auction.getUser().getUserId() != userId)
+            return false;
+        else
+            return true;
+    }
+
+    @Override
+    public boolean isThisAuctionLiked(Auction auction, Long userId) {
+        Optional<User> user = userRepository.findById(userId);
+        if(!user.isPresent())
+            throw new IllegalArgumentException("not found");
+
+        LikesId likesId = new LikesId();
+        likesId.setUser(userId);
+        likesId.setAuction(auction.getAuctionId());
+
+        Optional<Likes> likes = likesRepository.findById(likesId);
+        if(!likes.isPresent())
+            return false;
+        else
+            return true;
+    }
+
+    @Override
     public String deleteAuction(Long auctionId, Long userId) {
         Optional<Auction> auction = auctionRepository.findById(auctionId);
         if(!auction.isPresent())
@@ -81,6 +152,14 @@ public class AuctionServiceImpl implements AuctionService {
             throw new IllegalArgumentException("not found");
         if(user.get().getUserId() != auction.get().getUser().getUserId())
             return "not owner";
+
+        List<AuctionImg> auctionImgs = auctionImgRepository.findByAuction(auction.get());
+
+        for(AuctionImg a : auctionImgs) {
+            String url = a.getImgUrl();
+            String name = url.substring(url.lastIndexOf("/")+1, url.length());
+            s3Service.deleteFile(name);
+        }
 
         auctionRepository.deleteById(auctionId);
 
@@ -148,10 +227,17 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
+    public Page<Auction> getRecentAuctionList(Pageable pageable) {
+        Page<Auction> auctions = auctionRepository.findAll(pageable);
+
+        return auctions;
+    }
+
+    @Override
     public List<Auction> getAuctionPhoneList(String brand, String model, String save, Pageable pageable) {
         Specification<Product> spec = (root, query, criteriaBuilder) -> null;
 
-        spec = spec.and(ProductSpecification.equalCategoryLargeName("휴대폰"));
+        spec = spec.and(ProductSpecification.equalCategoryLargeName("스마트폰"));
 
         if(!brand.equals("ALL"))
             spec = spec.and(ProductSpecification.equalProductBrand(brand));
@@ -161,6 +247,8 @@ public class AuctionServiceImpl implements AuctionService {
             spec = spec.and(ProductSpecification.equalCategorySmallName(save));
 
         List<Product> products = productRepository.findAll(spec);
+        if(products.size() < 1)
+            throw new NoSuchElementException("products not found");
 
         List<Auction> auctions = auctionRepository.findByProductIn(products, pageable);
 
@@ -179,6 +267,8 @@ public class AuctionServiceImpl implements AuctionService {
             spec = spec.and(ProductSpecification.equalProductName(model));
 
         List<Product> products = productRepository.findAll(spec);
+        if(products.size() < 1)
+            throw new NoSuchElementException("products not found");
 
         List<Auction> auctions = auctionRepository.findByProductIn(products, pageable);
 

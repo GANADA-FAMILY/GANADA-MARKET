@@ -11,13 +11,11 @@ import java.util.List;
 
 @Getter
 @Setter
-public class CategorySmallListResponse extends BaseResponseBody {
+public class CategorySmallListResponse {
     List<CategorySmallListResponse.CategorySmallList> categorySmallList;
 
-    public static CategorySmallListResponse of(int statusCode, String message, List<CategorySmall> categorySmalls) {
+    public static CategorySmallListResponse from(List<CategorySmall> categorySmalls) {
         CategorySmallListResponse res = new CategorySmallListResponse();
-        res.setStatusCode(statusCode);
-        res.setMessage(message);
         res.setCategorySmallList(new ArrayList<>());
 
         for(CategorySmall c : categorySmalls) {

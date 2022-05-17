@@ -13,14 +13,12 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class CategoryLargeResponse extends BaseResponseBody {
+public class CategoryLargeResponse {
     String categoryLargeName;
     List<CategoryMiddleList> categoryMiddleList;
 
-    public static CategoryLargeResponse of(int statusCode, String message, CategoryLarge categoryLarge) {
+    public static CategoryLargeResponse of(CategoryLarge categoryLarge) {
         CategoryLargeResponse res = new CategoryLargeResponse();
-        res.setStatusCode(statusCode);
-        res.setMessage(message);
 
         if(categoryLarge != null) {
             res.setCategoryLargeName(categoryLarge.getName());
