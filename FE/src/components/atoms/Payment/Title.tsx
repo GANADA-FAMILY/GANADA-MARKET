@@ -3,13 +3,16 @@ import styled from '@emotion/styled';
 
 interface Props {
   children: React.ReactNode;
+  className?: string;
 }
 
-function Title({ children }: Props) {
-  return <Atom>{children}</Atom>;
+function Title({ children, className }: Props) {
+  return <Atom className={className}>{children}</Atom>;
 }
 
-export default Title;
+Title.defaultProps = {
+  className: '',
+};
 
 const Atom = styled.h1`
   font-size: 2rem;
@@ -17,3 +20,5 @@ const Atom = styled.h1`
   overflow: hidden;
   text-overflow: ellipsis;
 `;
+
+export default Title;

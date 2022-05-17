@@ -266,4 +266,11 @@ public class AuctionServiceImpl implements AuctionService {
 
         return auctions;
     }
+
+    @Override
+    public List<Likes> getLikeAuctionList(User user) {
+
+        List<Likes> likeAuctionList = likesRepository.findByUser(user);
+        return likeAuctionList;
+    }
 }

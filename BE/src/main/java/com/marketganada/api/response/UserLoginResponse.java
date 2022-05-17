@@ -16,15 +16,15 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserLoginResponse extends BaseResponseBody{
+public class UserLoginResponse {
     String token;
 
-    public static UserLoginResponse of(Integer statusCode, String message, String accessToken) {
+    public static UserLoginResponse of(String accessToken) {
         UserLoginResponse res = new UserLoginResponse();
-        res.setStatusCode(statusCode);
-        res.setMessage(message);
+
         res.setToken(accessToken);
 
         return res;
     }
+
 }

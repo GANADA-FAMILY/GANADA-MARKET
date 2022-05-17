@@ -24,15 +24,6 @@ spring:
       max-file-size: 100MB
       max-request-size: 100MB
 
-# jwt
-jwt:
-  secret : GanadaHub98c7WfOzFB6XEQeQj1fzRlVgTxNL8PYh1b1iymZwvqzpMEU7EJkim
-  #unit is ms. 1 * 24 * 60 * 60 * 1000 = 1 days
-  expiration : 86400000
 
-# coolsms
-coolsms:
-  key : NCSWESZZUCID62PO
-  secret : CPX7YPEASONMEFMMTHV95TKHF1HQT8JV
 
 

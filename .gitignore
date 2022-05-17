@@ -1,3 +1,4 @@
-/jenkins
+/build
 /web
+.env
 

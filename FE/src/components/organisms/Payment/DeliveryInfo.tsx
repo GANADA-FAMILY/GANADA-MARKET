@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
-import Text from '../../atoms/Main/Text';
+import axios from 'axios';
 import Button from '../../atoms/Main/Button';
 import Container from '../../layouts/Payment/Container';
 import Title from '../../atoms/Payment/Title';
@@ -9,7 +9,37 @@ interface Props {
   children: React.ReactNode;
 }
 
+axios.defaults.baseURL =
+  'http://jk-f3f2784a195fe7eb.elb.ap-northeast-2.amazonaws.com:8080/swagger-ui/#/';
 function DeliveryInfo() {
+  const [adress, setAdress] = useState({
+    adress: '',
+  });
+  // 배송정보 가져오기
+  useEffect(() => {
+    const token = sessionStorage.getItem('token');
+    if (token) {
+      axios
+        .get('/user/addressbook', {
+          headers: {
+            Authorization: `${token}`,
+          },
+        })
+        .then((res) => {
+          const {
+            addressName,
+            addressPhone,
+            postalCode,
+            address,
+            addressDetail,
+          } = res.data.addressList;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
+
   const ChangeAdd = () => {
     console.log('주소변경');
   };
@@ -20,7 +50,7 @@ function DeliveryInfo() {
         <Dl>
           <Item>
             <Dt>받는 분</Dt>
-            <Dd>헤더1</Dd>
+            <Dd>{}</Dd>
           </Item>
           <Item>
             <Dt>연락처</Dt>

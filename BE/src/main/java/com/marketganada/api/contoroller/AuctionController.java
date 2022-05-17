@@ -2,6 +2,10 @@ package com.marketganada.api.contoroller;
 
 import com.marketganada.api.request.AuctionInsertRequest;
 import com.marketganada.api.request.LikeRequest;
+<<<<<<< HEAD
+=======
+import com.marketganada.api.request.ProductInsertRequest;
+>>>>>>> 9dc8d27a4593c68cc0b3161dbf72804658f3259b
 import com.marketganada.api.response.AuctionDetailResponse;
 import com.marketganada.api.response.AuctionListResponse;
 import com.marketganada.api.response.BaseResponseBody;
@@ -212,7 +216,11 @@ public class AuctionController {
 
         String result;
         try {
+<<<<<<< HEAD
             result = auctionService.insertAuctionLike(likeRequest.getAuctionId(), user.getUserId());
+=======
+            result = auctionService.insertAuctionLike(likeRequest.getAuctionId(),user.getUserId());
+>>>>>>> 9dc8d27a4593c68cc0b3161dbf72804658f3259b
         } catch (Exception e) {
             if(e.getMessage().equals("not found")) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(BaseResponseBody.of(404,"해당 ID의 경매 또는 유저가 존재하지 않습니다."));

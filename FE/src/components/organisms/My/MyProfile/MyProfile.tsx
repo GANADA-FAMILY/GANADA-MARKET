@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
-import User from 'type/User';
+import User from 'types/Entity/User';
 import TitleBar from 'components/molecules/My/TitleBar';
 import ProfileHeader from './ProfileHeader';
 import ProfileContent from './ProfileContent';
@@ -55,11 +55,5 @@ const Container = styled.section``;
 const MainTitleBar = styled(TitleBar)`
   padding-bottom: 16px;
 `;
-const UserDetail = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 50px 0 38px;
-  border-bottom: 1px solid #ebebeb;
-  background-color: #fff;
-`;
+
 export default MyProfile;
