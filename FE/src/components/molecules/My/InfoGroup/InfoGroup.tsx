@@ -3,11 +3,12 @@ import React from 'react';
 
 interface InfoGroupProps {
   children: React.ReactNode;
-  title: string;
+  title?: string;
+  className?: string;
 }
-function InfoGroup({ children, title }: InfoGroupProps) {
+function InfoGroup({ children, title = '', ...props }: InfoGroupProps) {
   return (
-    <Molecules>
+    <Molecules className={props.className}>
       <GroupTitle>{title}</GroupTitle>
       {children}
     </Molecules>

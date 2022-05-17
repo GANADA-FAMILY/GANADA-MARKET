@@ -3,7 +3,7 @@ import AddressInfo from './AddressInfo';
 
 export default {
   component: AddressInfo,
-  title: 'molecules/My/AddressList/AddressInfo',
+  title: 'molecules/My/AddressInfo',
 };
 
 const Template: ComponentStory<typeof AddressInfo> = (args) => (

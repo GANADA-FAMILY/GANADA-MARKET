@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Text } from 'components/atoms/My';
-import User from 'types/Entity/User';
+import { User } from 'types/Entity/UserAPI';
 
 interface MembershipDetailProps {
   user: User;

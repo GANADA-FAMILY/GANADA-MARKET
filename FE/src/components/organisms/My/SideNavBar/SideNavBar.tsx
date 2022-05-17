@@ -33,15 +33,15 @@ function SideNavBar() {
           <MenuItem>
             <Link to="/my/address">주소록</Link>
           </MenuItem>
-          <MenuItem>
+          {/* <MenuItem>
             <Link to="/my/payment">결제 정보</Link>
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem>
             <Link to="/my/account">판매 정산 계좌</Link>
           </MenuItem>
-          <MenuItem>
+          {/* <MenuItem>
             <Link to="/my/point">포인트</Link>
-          </MenuItem>
+          </MenuItem> */}
         </Menu>
       </Nav>
     </Container>

@@ -42,7 +42,7 @@ function PurchaseBox() {
         </TabPane>
       </Tabs>
       <ListArea>
-        <List items={[]} />
+        <List dataSoruce={[]} />
       </ListArea>
     </StyledBox>
   );

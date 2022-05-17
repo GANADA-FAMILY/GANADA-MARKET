@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
 import { LinkButton } from 'components/atoms/My';
-import Address from 'types/Entity/Address';
+import Address from 'types/Entity/UserAPI/Address';
 
 interface ButtonBoxProps {
   item: Address;
