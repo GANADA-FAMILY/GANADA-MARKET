@@ -21,8 +21,8 @@ pipeline {
 		stage('docker image delete') {
 			agent any
 			steps {
-				sh "docker rmi -f now20412041/spring"
-				sh "docker rmi -f now20412041/client"
+				sh "docker rmi -f spring"
+				sh "docker rmi -f client"
 			}
 		}
 	
@@ -33,8 +33,8 @@ pipeline {
             				dir ('./BE'){
                 				sh "./gradlew clean build --exclude-task test"
                				}
-				sh "docker build --tag spring:latest ./BE"
-				sh "docker build --tag client:latest ./FE"
+				sh "docker build --tag spring ./BE"
+				sh "docker build --tag client ./FE"
  
 		  }
 		
