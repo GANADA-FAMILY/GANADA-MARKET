@@ -14,7 +14,7 @@ pipeline {
 			agent any
 			steps {
 			 sh "docker rm -f springContainer"
-                         sh "docker rm -f clientContaienr"
+                         sh "docker rm -f clientContainer"
 
 
 
