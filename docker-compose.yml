@@ -23,5 +23,5 @@ services:
     ports:
       - 8080:8080
     restart: always
-    environment:
-      env_file: .env
+    env_file: 
+      - .env
