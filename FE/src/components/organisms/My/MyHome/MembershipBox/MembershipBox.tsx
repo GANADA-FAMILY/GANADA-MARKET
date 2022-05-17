@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import User from 'types/Entity/User';
 import { Avatar } from 'components/atoms/My';
 import { HomeInfo } from 'components/molecules/My';
 import { MembershipDetail } from 'components/molecules/My/HomeInfo';
+import { User } from 'types/Entity/UserAPI';
 
 interface MembershipBoxProps {
   user: User;

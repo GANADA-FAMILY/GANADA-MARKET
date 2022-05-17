@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import User from 'types/Entity/User';
 import { TitleBar, List } from 'components/molecules/My';
+import { User } from 'types/Entity/UserAPI';
 import MembershipBox from './MembershipBox';
 import PurchaseBox from './PurchaseBox';
 import SellBox from './SellBox';

@@ -1,7 +1,7 @@
-/* eslint-disable no-irregular-whitespace */
 import { defaultInstance } from 'api';
 import { ACCESS_TOKEN } from 'constants/headers';
-import { User } from 'types/Entity/UserAPI';
+import { ProductHistory, User } from 'types/Entity/UserAPI';
+import Wish from 'types/Entity/UserAPI/Wish';
 import AddressForm from 'types/Form/AddressForm';
 import BankForm from 'types/Form/BankForm';
 import {
@@ -64,6 +64,17 @@ function updateBank(payload: BankForm) {
   return api.put('/user/bank', payload);
 }
 
+function getSalesHistory() {
+  return api.get<ProductHistory>('/user/sales-history');
+}
+
+function getOrderHistory() {
+  return api.get<ProductHistory>('/user/order-history');
+}
+function getWishList() {
+  return api.get<Wish>('/user/likelist');
+}
+
 const userAPI = {
   getUser,
   deleteUser,
@@ -75,6 +86,9 @@ const userAPI = {
   updateAddressbook,
   getBank,
   updateBank,
+  getSalesHistory,
+  getOrderHistory,
+  getWishList,
 };
 
 export default userAPI;

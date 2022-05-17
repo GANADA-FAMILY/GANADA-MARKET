@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
-import User from 'types/Entity/User';
 import TitleBar from 'components/molecules/My/TitleBar';
+import { User } from 'types/Entity/UserAPI';
 import ProfileHeader from './ProfileHeader';
 import ProfileContent from './ProfileContent';
 

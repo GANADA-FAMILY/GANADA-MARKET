@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import userAction from 'api/userAPI';
-import { User } from 'types/Entity';
+import { User } from 'types/Entity/UserAPI';
 
 export const fetchUserByToken = createAsyncThunk('api/user', async () => {
   const response = await userAction.getUser();
