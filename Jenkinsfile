@@ -13,8 +13,8 @@ pipeline {
 		stage('ps stop') {
 			agent any
 			steps {
-			 sh "docker rm -f spring"
-                         sh "docker rm -f client"
+			 sh "docker rm -f springContainer"
+                         sh "docker rm -f clientContaienr"
 
 			}
 		}
@@ -42,8 +42,8 @@ pipeline {
 		stage('ps restart') {
 			agent any
 			steps	{
-				sh "docker run --name spring -d -p 8080:8080 spring:latest"
-				sh "docker run --name client -d -p 3000:3000 client:latest"
+				sh "docker run --name springContainer -d -p 8080:8080 spring"
+				sh "docker run --name clientContainer -d -p 3000:3000 client"
 				sh "docker system prune -af --volumes"
 			}
 
