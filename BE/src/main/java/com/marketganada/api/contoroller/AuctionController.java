@@ -68,7 +68,7 @@ public class AuctionController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping
+    @GetMapping("/recent")
     @ApiOperation(value = "최근 경매 목록 조회", notes = "DB에 등록된 최근 경매 정보를 리스트업하여 조회한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공", response = AuctionListResponse.class),
@@ -79,24 +79,28 @@ public class AuctionController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<AuctionListResponse> getRecentList(
-            @PageableDefault(size = 16, sort = "endTime", direction = Sort.Direction.DESC) Pageable pageable,
+            @PageableDefault(size = 16, sort = "auctionId", direction = Sort.Direction.DESC) Pageable pageable,
             @ApiIgnore Authentication authentication
     ) {
-        GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
-        User user = userDetails.getUser();
+        User user = null;
+        if(authentication != null) {
+            GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
+            user = userDetails.getUser();
+        }
 
         Page<Auction> auctions;
-        List<Boolean> isLikes;
-        isLikes = new ArrayList<>();
+        List<Boolean> isLikes = new ArrayList<>();
 
         try {
             auctions = auctionService.getRecentAuctionList(pageable);
 
-            for(Auction a : auctions) {
-                if(auctionService.isThisAuctionLiked(a, user.getUserId()))
-                    isLikes.add(true);
-                else
-                    isLikes.add(false);
+            if(user != null) {
+                for (Auction a : auctions) {
+                    if (auctionService.isThisAuctionLiked(a, user.getUserId()))
+                        isLikes.add(true);
+                    else
+                        isLikes.add(false);
+                }
             }
         } catch (Exception e) {
             if(e.getMessage().equals("products not found"))
@@ -122,24 +126,28 @@ public class AuctionController {
             @RequestParam(value = "brand", defaultValue = "ALL") String brand,
             @RequestParam(value = "model", defaultValue = "ALL") String model,
             @RequestParam(value = "save", defaultValue = "ALL") String save,
-            @PageableDefault(size = 16) Pageable pageable,
+            @PageableDefault(size = 16, sort = "endTime", direction = Sort.Direction.DESC) Pageable pageable,
             @ApiIgnore Authentication authentication
     ) {
-        GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
-        User user = userDetails.getUser();
+        User user = null;
+        if(authentication != null) {
+            GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
+            user = userDetails.getUser();
+        }
 
         List<Auction> auctions;
-        List<Boolean> isLikes;
-        isLikes = new ArrayList<>();
+        List<Boolean> isLikes = new ArrayList<>();
 
         try {
             auctions = auctionService.getAuctionPhoneList(brand, model, save, pageable);
 
-            for(Auction a : auctions) {
-                if(auctionService.isThisAuctionLiked(a, user.getUserId()))
-                    isLikes.add(true);
-                else
-                    isLikes.add(false);
+            if(user != null) {
+                for (Auction a : auctions) {
+                    if (auctionService.isThisAuctionLiked(a, user.getUserId()))
+                        isLikes.add(true);
+                    else
+                        isLikes.add(false);
+                }
             }
         } catch (Exception e) {
             if(e.getMessage().equals("products not found"))
@@ -163,24 +171,28 @@ public class AuctionController {
     public ResponseEntity<AuctionListResponse> getEarphoneList(
             @RequestParam(value = "brand", defaultValue = "ALL") String brand,
             @RequestParam(value = "model", defaultValue = "ALL") String model,
-            @PageableDefault(size = 16) Pageable pageable,
+            @PageableDefault(size = 16, sort = "endTime", direction = Sort.Direction.DESC) Pageable pageable,
             @ApiIgnore Authentication authentication
     ) {
-        GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
-        User user = userDetails.getUser();
+        User user = null;
+        if(authentication != null) {
+            GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
+            user = userDetails.getUser();
+        }
 
         List<Auction> auctions;
-        List<Boolean> isLikes;
-        isLikes = new ArrayList<>();
+        List<Boolean> isLikes = new ArrayList<>();
 
         try {
             auctions = auctionService.getAuctionEarphoneList(brand, model, pageable);
 
-            for(Auction a : auctions) {
-                if(auctionService.isThisAuctionLiked(a, user.getUserId()))
-                    isLikes.add(true);
-                else
-                    isLikes.add(false);
+            if(user != null) {
+                for (Auction a : auctions) {
+                    if (auctionService.isThisAuctionLiked(a, user.getUserId()))
+                        isLikes.add(true);
+                    else
+                        isLikes.add(false);
+                }
             }
         } catch (Exception e) {
             if(e.getMessage().equals("products not found"))
@@ -205,16 +217,22 @@ public class AuctionController {
             @PathVariable Long auctionId,
             @ApiIgnore Authentication authentication
     ) {
-        GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
-        User user = userDetails.getUser();
+        User user = null;
+        if(authentication != null) {
+            GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
+            user = userDetails.getUser();
+        }
 
         Auction auction;
-        boolean isLiked,isMine;
+        boolean isLiked = false,isMine = false;
 
         try {
             auction = auctionService.getAuctionById(auctionId);
-            isLiked = auctionService.isThisAuctionLiked(auction,user.getUserId());
-            isMine = auctionService.isThisAuctionMine(auction,user.getUserId());
+
+            if(user != null) {
+                isLiked = auctionService.isThisAuctionLiked(auction, user.getUserId());
+                isMine = auctionService.isThisAuctionMine(auction, user.getUserId());
+            }
         } catch (Exception e) {
             if(e.getMessage().equals("not found")) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -240,6 +258,10 @@ public class AuctionController {
             @PathVariable Long auctionId,
             @ApiIgnore Authentication authentication
     ) {
+        if(authentication == null) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
 
@@ -259,7 +281,6 @@ public class AuctionController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             }
         }
-
 
         return ResponseEntity.ok().build();
     }
@@ -330,7 +351,6 @@ public class AuctionController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             }
         }
-
 
         return ResponseEntity.ok().build();
     }
