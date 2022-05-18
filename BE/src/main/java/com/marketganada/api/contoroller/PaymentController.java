@@ -46,7 +46,6 @@ public class PaymentController {
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
 
-
         String res = paymentService.insertPayment(paymentInsertRequest, user);
         if(res.equals("conflict")){
             return new ResponseEntity(HttpStatus.CONFLICT);
