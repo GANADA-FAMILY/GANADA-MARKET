@@ -50,7 +50,10 @@ public class UserController {
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
 
-        return ResponseEntity.ok(UserInfoResponse.of(user));
+        List<Payment> orderHistory = paymentService.getOrderHistory(user);
+        List<Payment> salesHistory = paymentService.getSalesHistory(user);
+
+        return ResponseEntity.ok(UserInfoResponse.of(user,orderHistory,salesHistory));
     }
 
     @DeleteMapping
@@ -291,7 +294,6 @@ public class UserController {
         for(Payment payment : paymentList){
             System.out.println(payment.getPaymentId());
         }
-//        return new ResponseEntity(HttpStatus.OK);
         return ResponseEntity.ok(OrderHistoryResponse.of(paymentList));
 
     }
