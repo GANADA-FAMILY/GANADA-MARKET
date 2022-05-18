@@ -1,7 +1,11 @@
 import styled from '@emotion/styled';
 import { TitleBar } from 'components/molecules/My';
+import Wish from 'types/Entity/UserAPI/Wish';
 
-function MyWish() {
+interface MyWishProps {
+  items: Wish[] | any;
+}
+function MyWish({ items }: MyWishProps) {
   return (
     <section>
       <MainTitleBar title="관심 상품" size={24} bordered />

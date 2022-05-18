@@ -1,12 +1,24 @@
 import styled from '@emotion/styled';
+import React from 'react';
 
 interface InputBoxProps {
   title: string;
   type: string;
   placeholder: string;
   value?: string;
+  name?: string;
+  // onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
-function InputBox({ title, type, placeholder, value = '' }: InputBoxProps) {
+function InputBox({
+  title,
+  type,
+  placeholder,
+  value = '',
+  name = '',
+  onChange = () => null,
+  ...props
+}: InputBoxProps) {
   return (
     <Atom>
       <h6 className="input_title">{title}</h6>
@@ -16,6 +28,8 @@ function InputBox({ title, type, placeholder, value = '' }: InputBoxProps) {
           className="input_text"
           placeholder={placeholder}
           value={value}
+          onChange={onChange}
+          name={name}
         />
       </div>
     </Atom>

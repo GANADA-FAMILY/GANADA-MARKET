@@ -1,9 +1,10 @@
 interface ProductHistory {
+  auctionId: number;
   productName: string;
   productBrand: string;
   tradeDate: string;
-  price: string;
-  status: string;
+  price: number;
+  status: number;
   trackingNum: string;
 }
 

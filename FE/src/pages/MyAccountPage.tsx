@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 import MyAccount from 'components/organisms/My/MyAccount/MyAccount';
+import { Bank } from 'types/Entity/UserAPI';
 import MyPageTemplate from '../components/templates/MyPageTemplate/MyPageTemplate';
 
-const bank = {
+const bank: Bank = {
   bank: '신한',
   bankNum: '110333444444',
   bankHolder: '홍길동',
