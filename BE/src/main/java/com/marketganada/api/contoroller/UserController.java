@@ -6,11 +6,12 @@ import com.marketganada.api.request.UserNicknameUpdateRequest;
 import com.marketganada.api.request.UserPwUpdateRequest;
 import com.marketganada.api.response.*;
 import com.marketganada.api.service.AuctionService;
-import com.marketganada.api.service.S3Service;
+import com.marketganada.api.service.PaymentService;
 import com.marketganada.api.service.UserService;
 import com.marketganada.config.auth.GanadaUserDetails;
 import com.marketganada.db.entity.AddressBook;
 import com.marketganada.db.entity.Likes;
+import com.marketganada.db.entity.Payment;
 import com.marketganada.db.entity.User;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,9 @@ public class UserController {
 
     @Autowired
     private AuctionService auctionService;
+
+    @Autowired
+    private PaymentService paymentService;
 
 
     @GetMapping
@@ -274,6 +278,51 @@ public class UserController {
         return ResponseEntity.ok(LikeAuctionListResponse.of(likesList));
 
     }
+
+    @GetMapping("/sales-history")
+    @ApiOperation(value = "판매내역 조회", notes = "판매내역을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공", response = LikeAuctionListResponse.class),
+            @ApiResponse(code = 403, message = "권한 없는 유저"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity getSalesHistory(@ApiIgnore Authentication authentication){
+        GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
+        User user = userDetails.getUser();
+
+        List<Payment> paymentList = paymentService.getSalesHistory(user);
+
+        for(Payment payment : paymentList){
+            System.out.println(payment.getPaymentId());
+        }
+
+        return ResponseEntity.ok(SalesHistoryResponse.of(paymentList));
+
+    }
+
+
+    @GetMapping("/order-history")
+    @ApiOperation(value = "구매내역 조회", notes = "구매내역을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공", response = LikeAuctionListResponse.class),
+            @ApiResponse(code = 403, message = "권한 없는 유저"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity getOrderHistory(@ApiIgnore Authentication authentication){
+        GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
+        User user = userDetails.getUser();
+
+        List<Payment> paymentList = paymentService.getOrderHistory(user);
+
+        for(Payment payment : paymentList){
+            System.out.println(payment.getPaymentId());
+        }
+//        return new ResponseEntity(HttpStatus.OK);
+        return ResponseEntity.ok(OrderHistoryResponse.of(paymentList));
+
+    }
+
+
 
 
 }

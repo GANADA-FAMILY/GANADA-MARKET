@@ -1,9 +1,6 @@
 package com.marketganada.db.entity;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -14,6 +11,7 @@ import java.util.Set;
 
 @Entity
 @Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @DynamicInsert
