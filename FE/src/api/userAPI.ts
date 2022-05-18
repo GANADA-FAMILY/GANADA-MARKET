@@ -10,8 +10,9 @@ import {
 } from 'types/Form/UserForm';
 
 const api = defaultInstance();
-api.defaults.headers.common.Authorization = ACCESS_TOKEN;
-
+// api.defaults.headers.common.Authorization = ACCESS_TOKEN;
+api.defaults.headers.common.Authorization =
+  'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxcmVzMzQwM0Bzc2FmeS5jb20iLCJpc3MiOiJnYW5hZGFtYXJrZXQuY29tIiwiZXhwIjoxNjUyOTcyNDU2LCJpYXQiOjE2NTI4ODYwNTZ9.0JUakXnNkyrrS686zDu_qlfc6AukZ4hmcnRAFKOgXBBLPuoTRLl1ewo35KlN0BEF1qJ6gUV_mgFOVKm_6XU0jg';
 // 회원정보
 // 내 정보
 function getUser() {

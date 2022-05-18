@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { priceComma } from 'functions';
-import AuctionList from 'types/Entity/AuctionList';
+import AuctionList from 'types/Entity/MainAPI/AuctionList';
 import auctionAPI from 'api/auctionAPI';
 import Image from '../../atoms/Main/Image';
 import Text from '../../atoms/Main/Text';

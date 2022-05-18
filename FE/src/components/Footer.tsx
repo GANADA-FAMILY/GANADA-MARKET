@@ -16,8 +16,8 @@ function Footer() {
           <Wrap>
             {FooterData.copyright.map((item) => {
               return (
-                <StyledLi>
-                  <Text key={item}>{item}</Text>
+                <StyledLi key={item}>
+                  <Text>{item}</Text>
                 </StyledLi>
               );
             })}
@@ -39,7 +39,11 @@ function Footer() {
         <FlexBox>
           <LinkBox>
             {FooterData.link.map((item) => {
-              return <LinkTo to="#">{item}</LinkTo>;
+              return (
+                <LinkTo to="#" key={item}>
+                  {item}
+                </LinkTo>
+              );
             })}
           </LinkBox>
           {FooterData.info.map((item) => {

@@ -13,6 +13,7 @@ const MyProfilePage = React.lazy(() => import('./pages/MyProfilePage'));
 const MyAddressPage = React.lazy(() => import('./pages/MyAddressPage'));
 const MyWishPage = React.lazy(() => import('./pages/MyWishPage'));
 const MyAccountPage = React.lazy(() => import('./pages/MyAccountPage'));
+const PayResultPage = React.lazy(() => import('./pages/PayResultPage'));
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="/my/account" element={<MyAccountPage />} />
             <Route path="/shop/:product" element={<ShopPage />} />
             <Route path="/payment/:auctionId" element={<PaymentPage />} />
+            <Route path="/payment/result/:result" element={<PayResultPage />} />
             <Route path="*" element={<Error404 />} />
           </Routes>
         </React.Suspense>
