@@ -32,6 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.TimeZone;
 
 @Service
 public class PaymentServiceImpl implements PaymentService{
@@ -52,38 +53,32 @@ public class PaymentServiceImpl implements PaymentService{
         Optional<Auction> auction = auctionRepository.findById(paymentInsertRequest.getAuctionId());
 
         if(auction.isPresent()){
-//            String from = "2013-04-08 10:10:10";
-//
-//            SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//
-//            try {
-//                Date to = transFormat.parse(from);
-//                System.out.println(to);
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-//
-//
-//            Date currentTime = new Date(); //현재 날짜
-//            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//            String oTime  = simpleDateFormat.format ( currentTime ); //현재 날짜 (String)
-//            System.out.println(oTime);
-//            Date currentDate; //현재 날짜 ( 형변환 )
-//            try {
-//                 currentDate =  simpleDateFormat.parse( oTime );
-//            } catch (ParseException e) {
-//                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"parsing error");
-//            }
-//            System.out.println("현재시간"+currentDate);
-//            System.out.println("종료시간"+auction.get().getEndTime());
-//
-//            //시간이 지나버린 경매
-//            if(currentDate.before(auction.get().getEndTime())){
-//                System.out.println("타임오버");
-//                auction.get().setAuctionStatus(false);
-//                auctionRepository.save(auction.get());
-//                return "fail";
-//            }
+            Date curDate = new Date(); //현재 날짜
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+
+            try {
+                curDate =  simpleDateFormat.parse(simpleDateFormat.format(curDate));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println("현재시간"+curDate);
+            Date endTime = auction.get().getEndTime();
+            try {
+                endTime = simpleDateFormat.parse(simpleDateFormat.format(endTime));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            System.out.println("종료시간"+endTime);
+
+            //시간이 지나버린 경매
+            if(endTime.before(curDate)){
+                System.out.println("타임오버");
+                auction.get().setAuctionStatus(false);
+                auctionRepository.save(auction.get());
+                return "fail";
+            }
             //결제가 진행중인 경매
             Optional<Payment> checkPayment = paymentRepository.findByUserAndAuction(user, auction.get());
             if(checkPayment.isPresent()){
