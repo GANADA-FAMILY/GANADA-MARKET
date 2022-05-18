@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
-import Address from 'types/Entity/Address';
+import Address from 'types/Entity/UserAPI/Address';
 import userAPI from '../../../api/userAPI';
 import Button from '../../atoms/Main/Button';
 import Container from '../../layouts/Payment/Container';
