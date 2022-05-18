@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
+import userAPI from 'api/userAPI';
 import { InputBox, LinkButton, Title, Text, Button } from 'components/atoms/My';
 import { InfoGroup, TitleBar } from 'components/molecules/My';
-import { useAuth, useForm } from 'hooks';
+import { useForm } from 'hooks';
 import { Bank } from 'types/Entity/UserAPI';
 import BankBox from './BankBox';
 
@@ -10,12 +11,7 @@ interface MyAccountProps {
 }
 function MyAccount({ bank }: MyAccountProps) {
   const onSubmit = () => {
-    console.log(values);
-  };
-  const initalState: Bank = {
-    bank: '',
-    bankNum: '',
-    bankHolder: '',
+    userAPI.updateBank(values);
   };
   const validate = (form: Bank) => {
     if (
@@ -28,10 +24,11 @@ function MyAccount({ bank }: MyAccountProps) {
   };
 
   const [values, errors, isLoading, handleChange, handleSubmit] = useForm({
-    initalState,
+    initalState: { bank: '', bankNum: '', bankHolder: '' },
     onSubmit,
     validate,
   });
+
   return (
     <section>
       <MainTitleBar title="정산 계좌 등록" size={24} />
@@ -90,9 +87,5 @@ const StyledButtonBox = styled.div`
 const BankForm = styled.form`
   width: 480px;
 `;
-
-// const styledButton = styled.button`
-//   color: black;
-// `;
 
 export default MyAccount;

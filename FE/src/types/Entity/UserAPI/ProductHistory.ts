@@ -4,7 +4,8 @@ interface ProductHistory {
   productBrand: string;
   tradeDate: string;
   price: number;
-  status: number;
+  status: 0 | 1 | 2 | 3;
+  courier: string;
   trackingNum: string;
 }
 

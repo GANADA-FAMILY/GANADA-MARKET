@@ -4,6 +4,7 @@ import { User } from 'types/Entity/UserAPI';
 
 export const fetchUserByToken = createAsyncThunk('api/user', async () => {
   const response = await userAction.getUser();
+  console.log(response.data);
   return response.data;
 });
 

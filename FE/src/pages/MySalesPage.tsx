@@ -11,6 +11,7 @@ const items: ProductHistory[] = [
     tradeDate: '2022-01-31',
     price: 890000,
     status: 0,
+    courier: '우체국',
     trackingNum: 'string',
   },
   {
@@ -20,6 +21,7 @@ const items: ProductHistory[] = [
     tradeDate: '2022-01-31',
     price: 890000,
     status: 1,
+    courier: '우체국',
     trackingNum: 'string',
   },
   {
@@ -29,6 +31,7 @@ const items: ProductHistory[] = [
     tradeDate: '2022-01-31',
     price: 890000,
     status: 0,
+    courier: '우체국',
     trackingNum: 'string',
   },
   {
@@ -38,6 +41,7 @@ const items: ProductHistory[] = [
     tradeDate: '2022-01-31',
     price: 1000000,
     status: 1,
+    courier: '로젠',
     trackingNum: 'string',
   },
 ];

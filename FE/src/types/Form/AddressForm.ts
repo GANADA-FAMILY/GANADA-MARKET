@@ -5,4 +5,9 @@ export default interface AddressForm {
   address: string;
   addressDetail: string;
   activate: boolean;
+  params?: AddressFormParams;
+}
+
+interface AddressFormParams {
+  addressId: number;
 }

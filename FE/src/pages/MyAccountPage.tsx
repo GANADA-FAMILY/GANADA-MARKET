@@ -1,22 +1,23 @@
 import styled from '@emotion/styled';
+import userAPI from 'api/userAPI';
 import MyAccount from 'components/organisms/My/MyAccount/MyAccount';
-import { useAuth } from 'hooks';
+import { useAuth, useFetch } from 'hooks';
 import { Bank } from 'types/Entity/UserAPI';
 import MyPageTemplate from '../components/templates/MyPageTemplate/MyPageTemplate';
 
-const bank: Bank = {
-  bank: '신한',
-  bankNum: '110333444444',
-  bankHolder: '홍길동',
-};
+// const bank: Bank = {
+//   bank: '신한',
+//   bankNum: '110333444444',
+//   bankHolder: '홍길동',
+// };
 
 function MyAccountPage() {
   const { user, loading, dispatch } = useAuth();
-  console.log(user);
+  const [bank, error, isLoading] = useFetch({ api: userAPI.getBank });
 
   return (
     <MainContainer>
-      <MyPageTemplate element={<MyAccount bank={bank} />} />
+      {!loading && <MyPageTemplate element={<MyAccount bank={bank} />} />}
     </MainContainer>
   );
 }
