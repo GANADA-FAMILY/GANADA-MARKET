@@ -33,15 +33,15 @@ function Button({
 
 const Atom = styled.button<ButtonProps>`
   border-radius: 10px;
-  color: ${theme.color.white};
   border: none;
   align-items: center;
+  background-color: ${theme.color.black2};
   font-weight: ${theme.fontWeight.solid};
   display: inline-block;
   cursor: pointer;
   vertical-align: middle;
   text-align: center;
-  background-color: ${theme.color.black2};
+  color: ${theme.color.white};
   &.small {
     line-height: 3.8rem;
     font-size: 1.2rem;

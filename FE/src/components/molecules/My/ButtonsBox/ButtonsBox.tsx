@@ -5,6 +5,7 @@ import Address from 'types/Entity/UserAPI/Address';
 
 interface ButtonBoxProps {
   item: Address;
+  onClick?: React.MouseEvent<HTMLLinkElement>;
 }
 function ButtonsBox({ ...props }: ButtonBoxProps) {
   return (
