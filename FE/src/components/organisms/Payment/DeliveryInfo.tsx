@@ -6,19 +6,15 @@ import Button from '../../atoms/Main/Button';
 import Container from '../../layouts/Payment/Container';
 import Title from '../../atoms/Payment/Title';
 
-function DeliveryInfo() {
+interface Props {
+  data: Address;
+}
+
+function DeliveryInfo({ data }: Props) {
   const [adress, setAdress] = useState<Address>();
   useEffect(() => {
-    userAPI
-      .getAddressbook()
-      .then((res) => {
-        setAdress(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
+    setAdress(data);
+  }, [data]);
   const ChangeAdd = () => {
     window.alert('구현중입니다.');
   };

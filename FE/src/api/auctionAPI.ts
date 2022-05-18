@@ -7,21 +7,28 @@ api.defaults.headers.common.Authorization = ACCESS_TOKEN;
 // 관심상품 등록
 
 function likeAuction(auctionId: number) {
-  return api.post('/like', auctionId);
+  return api.post('/auction/like', { auctionId });
 }
 
 function unlikeAuction(param: number) {
-  return api.delete(`/like/${param}`);
+  return api.delete(`/auction/like/${param}`);
 }
 
 function justDropAuction() {
-  return api.get('/auction/recent');
+  return api.get('/auction', {
+    params: { page: 0 },
+  });
+}
+
+function detailAuction(auctionId: string | undefined) {
+  return api.get(`auction/${auctionId}`);
 }
 
 const auctionAPI = {
   likeAuction,
   unlikeAuction,
   justDropAuction,
+  detailAuction,
 };
 
 export default auctionAPI;

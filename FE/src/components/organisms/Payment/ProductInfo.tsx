@@ -4,7 +4,12 @@ import Text from '../../atoms/Main/Text';
 import Image from '../../atoms/Main/Image';
 
 interface Props {
-  data: object;
+  data: {
+    productBrand: string;
+    productName: string;
+    releaseDate: string;
+    recentPrice: number;
+  };
 }
 
 function ProductInfo({ data }: Props) {
@@ -14,9 +19,8 @@ function ProductInfo({ data }: Props) {
         <Image src="./image/abcmart.png" alt="dunk" height="8rem" />
       </ImageWrapper>
       <Wrap>
-        <Text>제품명</Text>
-        <Text>이름</Text>
-        <Text>설명</Text>
+        <Text>{data.productBrand}</Text>
+        <Text>{data.productName}</Text>
       </Wrap>
     </Container>
   );

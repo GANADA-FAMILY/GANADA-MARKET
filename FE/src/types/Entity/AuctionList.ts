@@ -1,17 +1,18 @@
 interface AuctionList {
   auctionId: number;
+  auctionTitle: string;
   titleImageUrl: string;
   product: {
     productName: string;
     productBrand: string;
   };
-  auctionTitle: string;
   seller: string;
   startTime: string;
   startPrice: number;
   cycle: string;
   depreciation: number;
   endTime: string;
+  liked: boolean;
 }
 
 export default AuctionList;

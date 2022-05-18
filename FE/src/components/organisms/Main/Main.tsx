@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
+import AuctionList from 'types/Entity/AuctionList';
 import GridBox from '../../layouts/Main/GridBox';
 import Text from '../../atoms/Main/Text';
 import Button from '../../atoms/Main/Button';
 import Product from '../../molecules/Main/Product';
-import AuctionList from 'types/Entity/AuctionList';
 
 interface AuctionProps {
   data: AuctionList[];
@@ -26,10 +26,10 @@ function Main({ data }: AuctionProps) {
     }
   };
   useEffect(() => {
-    if (goods.length === 0) {
+    if (data) {
       setGoods(data.slice(0, 4));
     }
-  }, []);
+  }, [data]);
   return (
     <Container>
       <ProWrap>

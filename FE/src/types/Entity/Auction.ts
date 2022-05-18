@@ -1,18 +1,19 @@
 interface Auction {
+  auctionId: number;
+  auctionImgs: number[];
   product: {
     productBrand: string;
     productName: string;
     releaseDate: string;
     recentPrice: number;
   };
-  productHistory: [];
-  seller: string;
-  auctionId: number;
-  auctionImgs: string[];
+  productHistory: string[];
+  auctionTitle: string;
   auctionDesc: string;
+  seller: string;
   startTime: string;
   startPrice: number;
-  cycle: string;
+  cycle: number;
   depreciation: number;
   endTime: string;
   auctionStatus: boolean;

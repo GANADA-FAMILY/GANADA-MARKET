@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
+import { priceComma } from 'functions';
 import AuctionList from 'types/Entity/AuctionList';
 import auctionAPI from 'api/auctionAPI';
 import Image from '../../atoms/Main/Image';
 import Text from '../../atoms/Main/Text';
 import FlexBox from '../../layouts/Main/FlexBox';
-import Icon from '../../atoms/Main/Icon';
 import Svg from './Svg';
 
 interface Props {
@@ -24,11 +24,12 @@ function Product({ data }: Props) {
     startPrice,
     cycle,
     depreciation,
+    liked,
   } = data;
-  const [like, setLike] = useState<boolean>(true);
+  const [like, setLike] = useState<boolean>(liked);
   const navigate = useNavigate();
   const onLink = () => {
-    navigate(`/product/${auctionId}`);
+    navigate(`/auction/${auctionId}`);
   };
 
   const onClick = async (e: React.MouseEvent<HTMLElement>) => {
@@ -43,6 +44,7 @@ function Product({ data }: Props) {
           console.log(err);
         });
     } else {
+      console.log(data.auctionId);
       auctionAPI
         .likeAuction(data.auctionId)
         .then(() => {
@@ -56,12 +58,12 @@ function Product({ data }: Props) {
   return (
     <Molecule onClick={onLink}>
       <SVGWrap onClick={onClick}>
-        <Svg fill={like ? 'black' : 'none'} />
+        <Svg fill={like ? 'black' : '#ebebeb'} />
       </SVGWrap>
       <Image src={titleImageUrl} alt={product.productName} />
       <FlexBox>
         <Title>{auctionTitle}</Title>
-        <Text>{startPrice}원</Text>
+        <Text>{priceComma(startPrice)}원</Text>
         <Descript>즉시구매가</Descript>
       </FlexBox>
     </Molecule>
