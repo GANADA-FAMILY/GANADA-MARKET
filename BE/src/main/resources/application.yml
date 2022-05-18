@@ -8,7 +8,7 @@ spring:
     include: private
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://realganada.cvdtnlvc0pv1.ap-northeast-2.rds.amazonaws.com:3306/ganada?&serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://realganada.cvdtnlvc0pv1.ap-northeast-2.rds.amazonaws.com:3306/ganada?&serverTimezone=Asia/Seoul&useUnicode=true&characterEncoding=utf8
     username: realganada
     password: realganada
   jpa:

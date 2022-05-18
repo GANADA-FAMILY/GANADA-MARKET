@@ -15,6 +15,7 @@ import com.marketganada.db.repository.ProductHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,11 +23,16 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.TimeZone;
 
 @Service
 public class PaymentServiceImpl implements PaymentService{
@@ -47,6 +53,33 @@ public class PaymentServiceImpl implements PaymentService{
         Optional<Auction> auction = auctionRepository.findById(paymentInsertRequest.getAuctionId());
 
         if(auction.isPresent()){
+            Date curDate = new Date(); //현재 날짜
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+
+            try {
+                curDate =  simpleDateFormat.parse(simpleDateFormat.format(curDate));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println("현재시간"+curDate);
+            Date endTime = auction.get().getEndTime();
+            try {
+                endTime = simpleDateFormat.parse(simpleDateFormat.format(endTime));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            System.out.println("종료시간"+endTime);
+
+            //시간이 지나버린 경매
+            if(endTime.before(curDate)){
+                System.out.println("타임오버");
+                auction.get().setAuctionStatus(false);
+                auctionRepository.save(auction.get());
+                return "fail";
+            }
+            //결제가 진행중인 경매
             Optional<Payment> checkPayment = paymentRepository.findByUserAndAuction(user, auction.get());
             if(checkPayment.isPresent()){
                 System.out.println("중복");

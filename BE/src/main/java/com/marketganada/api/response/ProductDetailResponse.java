@@ -1,5 +1,6 @@
 package com.marketganada.api.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.marketganada.db.entity.Product;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import java.util.Date;
 public class ProductDetailResponse {
     String productName;
     String productBrand;
+    @JsonFormat(timezone = "Asia/Seoul")
     Date releaseDate;
     int releasePrice;
     String deviceId;

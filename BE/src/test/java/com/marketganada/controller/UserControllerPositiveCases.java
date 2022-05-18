@@ -49,7 +49,7 @@ public class UserControllerPositiveCases {
     @Order(2)
     void tokenTest() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/user/test")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/user")
                 .header(HttpHeaders.AUTHORIZATION,"Bearer "+accessToken))
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                 .andDo(MockMvcResultHandlers.print());
