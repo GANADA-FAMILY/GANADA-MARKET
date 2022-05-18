@@ -1,68 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
-import axios from 'axios';
+import Address from 'types/Entity/UserAPI/Address';
+import userAPI from '../../../api/userAPI';
 import Button from '../../atoms/Main/Button';
 import Container from '../../layouts/Payment/Container';
 import Title from '../../atoms/Payment/Title';
 
 interface Props {
-  children: React.ReactNode;
+  data: Address;
 }
 
-axios.defaults.baseURL =
-  'http://jk-f3f2784a195fe7eb.elb.ap-northeast-2.amazonaws.com:8080/swagger-ui/#/';
-function DeliveryInfo() {
-  const [adress, setAdress] = useState({
-    adress: '',
-  });
-  // 배송정보 가져오기
+function DeliveryInfo({ data }: Props) {
+  const [adress, setAdress] = useState<Address>();
   useEffect(() => {
-    const token = sessionStorage.getItem('token');
-    if (token) {
-      axios
-        .get('/user/addressbook', {
-          headers: {
-            Authorization: `${token}`,
-          },
-        })
-        .then((res) => {
-          const {
-            addressName,
-            addressPhone,
-            postalCode,
-            address,
-            addressDetail,
-          } = res.data.addressList;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, []);
-
+    setAdress(data);
+  }, [data]);
   const ChangeAdd = () => {
-    console.log('주소변경');
+    window.alert('구현중입니다.');
   };
   return (
     <Container>
       <Title>배송주소</Title>
-      <Wrapper>
-        <Dl>
-          <Item>
-            <Dt>받는 분</Dt>
-            <Dd>{}</Dd>
-          </Item>
-          <Item>
-            <Dt>연락처</Dt>
-            <Dd>데이터</Dd>
-          </Item>
-          <Item>
-            <Dt>배송 주소</Dt>
-            <Dd>데이터</Dd>
-          </Item>
-        </Dl>
-        <Button onClick={ChangeAdd}>변경</Button>
-      </Wrapper>
+      {adress && (
+        <Wrapper>
+          <Dl>
+            <Item>
+              <Dt>받는 분</Dt>
+              <Dd>{adress.addressName}</Dd>
+            </Item>
+            <Item>
+              <Dt>연락처</Dt>
+              <Dd>{adress.addressPhone}</Dd>
+            </Item>
+            <Item>
+              <Dt>배송 주소</Dt>
+              <Dd>{adress.addressDetail}</Dd>
+            </Item>
+          </Dl>
+          <Button onClick={ChangeAdd}>변경</Button>
+        </Wrapper>
+      )}
     </Container>
   );
 }

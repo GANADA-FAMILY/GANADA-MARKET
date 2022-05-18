@@ -1,18 +1,21 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { StringMap } from 'ts-jest';
 
 interface TextProps {
   children: React.ReactNode;
   fontSize?: string;
   color?: string;
   fontWeight?: string;
+  className?: string;
 }
 
-function Text({ children, fontSize, color, fontWeight }: TextProps) {
+function Text({ children, fontSize, color, fontWeight, className }: TextProps) {
   const styles = {
     color,
     fontSize,
     fontWeight,
+    className,
   };
   return <Atom {...styles}>{children}</Atom>;
 }

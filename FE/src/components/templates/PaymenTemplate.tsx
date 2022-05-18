@@ -1,23 +1,23 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import Address from 'types/Entity/UserAPI/Address';
+import Auction from 'types/Entity/Auction';
 import Pay from '../organisms/Payment/Pay';
 import DeliveryInfo from '../organisms/Payment/DeliveryInfo';
 import ProductInfo from '../organisms/Payment/ProductInfo';
 import PayInfo from '../organisms/Payment/PayInfo';
 
 interface Props {
-  data: {
-    id: number;
-    name: string;
-  };
+  auction: Auction;
+  delivery: Address;
 }
 
-function PaymentTemplate({ data }: Props) {
+function PaymentTemplate({ auction, delivery }: Props) {
   return (
     <Container>
       <Wrapper>
-        <ProductInfo data={data} />
-        <DeliveryInfo />
+        <ProductInfo data={auction.product} />
+        <DeliveryInfo data={delivery} />
         <PayInfo price={13000} />
         <Pay />
       </Wrapper>

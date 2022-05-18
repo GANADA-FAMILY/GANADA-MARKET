@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
-@ApiModel("CategoryLargeInsertRequest")
+@ApiModel("CategorySmallInsertRequest")
 public class CategorySmallInsertRequest {
     @ApiModelProperty(name = "중분류 ID")
     @NotNull(message = "상위 중분류 ID값을 입력해주세요.")

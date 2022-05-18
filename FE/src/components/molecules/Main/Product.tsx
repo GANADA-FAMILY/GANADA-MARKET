@@ -1,32 +1,69 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
+import { priceComma } from 'functions';
+import AuctionList from 'types/Entity/AuctionList';
+import auctionAPI from 'api/auctionAPI';
 import Image from '../../atoms/Main/Image';
 import Text from '../../atoms/Main/Text';
 import FlexBox from '../../layouts/Main/FlexBox';
-import Icon from '../../atoms/Main/Icon';
+import Svg from './Svg';
 
 interface Props {
-  info: {
-    id: string;
-    name: string;
-    brand: string;
-    val: number;
-  };
+  data: AuctionList;
 }
 
-function Product({ info }: Props) {
+function Product({ data }: Props) {
+  const {
+    auctionId,
+    auctionTitle,
+    titleImageUrl,
+    product,
+    seller,
+    startTime,
+    startPrice,
+    cycle,
+    depreciation,
+    liked,
+  } = data;
+  const [like, setLike] = useState<boolean>(liked);
+  const navigate = useNavigate();
+  const onLink = () => {
+    navigate(`/auction/${auctionId}`);
+  };
+
+  const onClick = async (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    if (like) {
+      auctionAPI
+        .unlikeAuction(data.auctionId)
+        .then(() => {
+          setLike(!like);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      console.log(data.auctionId);
+      auctionAPI
+        .likeAuction(data.auctionId)
+        .then(() => {
+          setLike(!like);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
   return (
-    <Molecule>
-      <SVG>
-        <Icon isLike={false} />
-      </SVG>
-      <Image
-        src="https://kream-phinf.pstatic.net/MjAyMjA0MjZfMTQ1/MDAxNjUwOTU2MTI0NjIx.sk57ujnGDEJUkSPeA6C9LZhzTPsGroOEzHr8yFt_p44g.b-jtFPBmXvfVDqi3SrdomzDa_sY4HTVw5IJjhwMNddMg.JPEG/a_4eea43a1093a45a8bb684599f7ba5ec5.jpg?type=m_webp"
-        alt="조던"
-      />
+    <Molecule onClick={onLink}>
+      <SVGWrap onClick={onClick}>
+        <Svg fill={like ? 'black' : '#ebebeb'} />
+      </SVGWrap>
+      <Image src={titleImageUrl} alt={product.productName} />
       <FlexBox>
-        <Title>{info.id}</Title>
-        <Text>{info.val}원</Text>
+        <Title>{auctionTitle}</Title>
+        <Text>{priceComma(startPrice)}원</Text>
         <Descript>즉시구매가</Descript>
       </FlexBox>
     </Molecule>
@@ -54,8 +91,10 @@ const Descript = styled(Text)`
   color: grey;
 `;
 
-const SVG = styled.div`
+const SVGWrap = styled.div`
   position: absolute;
+  display: inline;
   top: 1rem;
   right: 2.2rem;
+  z-index: 1;
 `;
