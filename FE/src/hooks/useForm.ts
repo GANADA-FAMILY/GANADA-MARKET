@@ -5,7 +5,11 @@ interface useFormProps {
   onSubmit: () => void;
   validate: (form: any) => boolean;
 }
-function useForm({ initalState, onSubmit, validate }: useFormProps) {
+export default function useForm({
+  initalState,
+  onSubmit,
+  validate,
+}: useFormProps) {
   const [values, setState] = useState(initalState);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +20,7 @@ function useForm({ initalState, onSubmit, validate }: useFormProps) {
   };
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
-    event.preventDefault();
+    // event.preventDefault();
     setErrors(validate(values));
   };
   const onChangeLoading = async () => {
@@ -33,4 +37,3 @@ function useForm({ initalState, onSubmit, validate }: useFormProps) {
 
   return [values, errors, isLoading, handleChange, handleSubmit];
 }
-export default useForm;

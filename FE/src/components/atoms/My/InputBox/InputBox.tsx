@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
+import theme from 'styles/theme';
 
 interface InputBoxProps {
   title: string;
@@ -17,7 +18,6 @@ function InputBox({
   value = '',
   name = '',
   onChange = () => null,
-  ...props
 }: InputBoxProps) {
   return (
     <Atom>
@@ -55,11 +55,13 @@ const Atom = styled.div`
     border: 0;
     resize: none;
     border-radius: 0;
-    -webkit-appearance: none;
     background-color: rgba(0, 0, 0, 0);
     line-height: 22px;
-    border-bottom: 1px solid #ebebeb;
+    border-bottom: 1px solid ${theme.color.white2};
     width: 100%;
+    &:focus {
+      border-bottom: 1px solid ${theme.color.black2};
+    }
   }
 `;
 

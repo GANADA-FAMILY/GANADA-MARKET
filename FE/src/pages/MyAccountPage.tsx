@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import MyAccount from 'components/organisms/My/MyAccount/MyAccount';
+import { useAuth } from 'hooks';
 import { Bank } from 'types/Entity/UserAPI';
 import MyPageTemplate from '../components/templates/MyPageTemplate/MyPageTemplate';
 
@@ -10,6 +11,9 @@ const bank: Bank = {
 };
 
 function MyAccountPage() {
+  const { user, loading, dispatch } = useAuth();
+  console.log(user);
+
   return (
     <MainContainer>
       <MyPageTemplate element={<MyAccount bank={bank} />} />

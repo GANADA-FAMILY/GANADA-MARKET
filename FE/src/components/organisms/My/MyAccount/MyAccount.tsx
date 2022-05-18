@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import { InputBox, LinkButton, Title, Text } from 'components/atoms/My';
+import { InputBox, LinkButton, Title, Text, Button } from 'components/atoms/My';
 import { InfoGroup, TitleBar } from 'components/molecules/My';
-import useForm from 'hooks/useForm';
+import { useAuth, useForm } from 'hooks';
 import { Bank } from 'types/Entity/UserAPI';
 import BankBox from './BankBox';
 
@@ -63,13 +63,13 @@ function MyAccount({ bank }: MyAccountProps) {
             name="bankHolder"
           />
           <StyledButtonBox>
-            <button
+            <Button
               type="submit"
               onClick={onSubmit}
               disabled={!validate(values)}
             >
               변경하기
-            </button>
+            </Button>
           </StyledButtonBox>
         </StyledInfoGroup>
       </BankForm>
@@ -90,5 +90,9 @@ const StyledButtonBox = styled.div`
 const BankForm = styled.form`
   width: 480px;
 `;
+
+// const styledButton = styled.button`
+//   color: black;
+// `;
 
 export default MyAccount;
