@@ -13,8 +13,10 @@ const user: User = {
   profileImageUrl: 'https://kream.co.kr/_nuxt/img/blank_profile.4347742.png',
   grade: '일반 회원',
 };
-
-function MyProfile() {
+interface MyProfileProps {
+  item: User;
+}
+function MyProfile({ item }: MyProfileProps) {
   const [newImage, setNewImage] = useState('');
   const [imageUrl, setImageUrl] = useState(user.profileImageUrl);
   const imageRef = useRef<HTMLInputElement>(null);
@@ -39,13 +41,13 @@ function MyProfile() {
     <Container>
       <MainTitleBar title="프로필 정보" size={24} bordered />
       <ProfileHeader
-        user={user}
+        user={item}
         newImage={newImage}
         forwardedRef={imageRef}
         onChangeImage={onChangeImageHandler}
         onClickImage={onClickImageHandler}
       />
-      <ProfileContent user={user} />
+      <ProfileContent user={item} />
     </Container>
   );
 }
