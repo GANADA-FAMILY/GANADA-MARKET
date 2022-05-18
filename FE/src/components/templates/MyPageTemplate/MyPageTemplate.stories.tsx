@@ -19,7 +19,7 @@ const Template: ComponentStory<typeof MyPageTemplate> = (args) => (
 export const MyAddressCase = Template.bind({});
 
 MyAddressCase.args = {
-  element: <MyAddress />,
+  element: <MyAddress items={[]} />,
 };
 export const MyHomeCase = Template.bind({});
 
@@ -29,7 +29,18 @@ MyHomeCase.args = {
 export const MyProfileCase = Template.bind({});
 
 MyProfileCase.args = {
-  element: <MyProfile />,
+  element: (
+    <MyProfile
+      item={{
+        userEmail: 'zxc123@naver.com',
+        userNickname: 'zxc123',
+        userPhone: '010-3333-4444',
+        profileImageUrl:
+          'https://kream.co.kr/_nuxt/img/blank_profile.4347742.png',
+        grade: '일반 회원',
+      }}
+    />
+  ),
 };
 export const MyPurchaseCase = Template.bind({});
 
