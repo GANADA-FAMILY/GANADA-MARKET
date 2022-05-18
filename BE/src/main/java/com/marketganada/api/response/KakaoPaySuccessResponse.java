@@ -1,5 +1,6 @@
 package com.marketganada.api.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.marketganada.common.KakaoPayApprovalVO;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import java.util.Date;
 @Setter
 @ApiModel("KakaoPaySuccessResponse")
 public class KakaoPaySuccessResponse {
-
+    @JsonFormat(timezone = "Asia/Seoul")
     Date created_at;
     String item_name;
     Integer quantity;

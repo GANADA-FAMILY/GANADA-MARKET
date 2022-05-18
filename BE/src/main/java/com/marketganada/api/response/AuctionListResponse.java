@@ -1,5 +1,6 @@
 package com.marketganada.api.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.marketganada.db.entity.Auction;
 import com.marketganada.db.entity.Product;
 import lombok.Builder;
@@ -39,10 +40,12 @@ public class AuctionListResponse {
         Products product;
         String auctionTitle;
         String seller;
+        @JsonFormat(timezone = "Asia/Seoul")
         Date startTime;
         int startPrice;
         int cycle;
         int depreciation;
+        @JsonFormat(timezone = "Asia/Seoul")
         Date endTime;
         boolean isLiked;
 

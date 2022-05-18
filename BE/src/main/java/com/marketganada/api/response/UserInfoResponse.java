@@ -1,5 +1,6 @@
 package com.marketganada.api.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.marketganada.db.entity.Payment;
 import com.marketganada.db.entity.User;
 import io.swagger.annotations.ApiModel;
@@ -21,7 +22,9 @@ public class UserInfoResponse {
     String userPhone;
     String profileImageUrl;
     String grade;
+    @JsonFormat(timezone = "Asia/Seoul")
     List<Map<String, Object>> orderHistory;
+    @JsonFormat(timezone = "Asia/Seoul")
     List<Map<String, Object>> salesHistory;
 
     public static UserInfoResponse of(User user, List<Payment> orderList, List<Payment> salesList) {
