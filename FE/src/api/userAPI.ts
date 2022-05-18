@@ -1,6 +1,6 @@
 import { defaultInstance } from 'api';
 import { ACCESS_TOKEN } from 'constants/headers';
-import { ProductHistory, User } from 'types/Entity/UserAPI';
+import { ProductHistory } from 'types/Entity/UserAPI';
 import Wish from 'types/Entity/UserAPI/Wish';
 import AddressForm from 'types/Form/AddressForm';
 import BankForm from 'types/Form/BankForm';
