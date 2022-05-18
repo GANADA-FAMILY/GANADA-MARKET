@@ -3,6 +3,7 @@ package com.marketganada.api.service;
 import com.marketganada.api.request.*;
 import com.marketganada.db.entity.AddressBook;
 import com.marketganada.db.entity.User;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,4 +24,5 @@ public interface UserService  {
     String deleteAddressBook(User user, Long addressId);
     List<User> getUserListByUserPhone(String userPhone);
     String updateActivateAddressBook(User user, Long addressId);
+    String updateUserProfileImage(User user, MultipartFile profileImage);
 }

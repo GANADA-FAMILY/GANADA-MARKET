@@ -10,8 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +27,9 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     AddressBookRepository addressBookRepository;
+
+    @Autowired
+    S3Service s3Service;
 
     @Autowired
     private BCryptPasswordEncoder encodePwd;
@@ -67,6 +73,10 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void deleteUser(User user) {
+        String profileImageUrl = user.getProfileImageUrl();
+        String profileImageName = profileImageUrl.substring(profileImageUrl.lastIndexOf("/")+1, profileImageUrl.length());
+
+        s3Service.deleteFile(profileImageName);
         userRepository.delete(user);
     }
 
@@ -208,5 +218,27 @@ public class UserServiceImpl implements UserService{
         return "변경성공";
     }
 
+    @Override
+    public String updateUserProfileImage(User user, MultipartFile profileImage) {
+        List<MultipartFile> profileImageForInput = new ArrayList<>();
+        profileImageForInput.add(profileImage);
 
+        List<String> profileImageUrl;
+
+        try {
+            profileImageUrl = s3Service.uploadFileList(profileImageForInput);
+        } catch (ResponseStatusException e) {
+            throw e;
+        }
+
+        String beforeUrl = user.getProfileImageUrl();
+        String beforeName = beforeUrl.substring(beforeUrl.lastIndexOf("/")+1, beforeUrl.length());
+
+        user.setProfileImageUrl(profileImageUrl.get(0));
+        userRepository.save(user);
+
+        s3Service.deleteFile(beforeName);
+
+        return "success";
+    }
 }
