@@ -16,6 +16,7 @@ const MyAccountPage = React.lazy(() => import('./pages/MyAccountPage'));
 const MySalesPage = React.lazy(() => import('./pages/MySalesPage'));
 
 function App() {
+  console.log(process.env.REACT_APP_API_URL);
   return (
     <Router>
       <PageLayout>
