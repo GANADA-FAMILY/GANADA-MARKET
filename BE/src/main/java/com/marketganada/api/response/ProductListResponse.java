@@ -1,5 +1,6 @@
 package com.marketganada.api.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.marketganada.db.entity.CategoryLarge;
 import com.marketganada.db.entity.CategoryMiddle;
 import com.marketganada.db.entity.CategorySmall;
@@ -41,6 +42,7 @@ public class ProductListResponse {
         private String productBrand;
         private String deviceId;
         private String description;
+        @JsonFormat(timezone = "Asia/Seoul")
         private Date releaseDate;
         private int releasePrice;
 

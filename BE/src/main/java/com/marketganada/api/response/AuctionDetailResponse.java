@@ -1,5 +1,6 @@
 package com.marketganada.api.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.marketganada.db.entity.Auction;
 import com.marketganada.db.entity.AuctionImg;
 import com.marketganada.db.entity.Product;
@@ -27,6 +28,9 @@ public class AuctionDetailResponse {
                     ._isLiked(isLiked)
                     ._isMine(isMine)
                     .build());
+        Date testDate = res.getAuction().getStartTime();
+        System.out.println("옥션디테일 : "+ res.getAuction().getStartTime());
+        System.out.println("testDate : "+ testDate);
 
         return res;
     }
@@ -40,10 +44,12 @@ public class AuctionDetailResponse {
         String auctionTitle;
         String auctionDesc;
         String seller;
+        @JsonFormat(timezone = "Asia/Seoul")
         Date startTime;
         int startPrice;
         int cycle;
         int depreciation;
+        @JsonFormat(timezone = "Asia/Seoul")
         Date endTime;
         Boolean auctionStatus;
         Boolean isLiked;
@@ -83,6 +89,7 @@ public class AuctionDetailResponse {
     static class Products {
         String productName;
         String productBrand;
+        String productModel;
         Date releaseDate;
         int recentPrice;
 
@@ -91,6 +98,7 @@ public class AuctionDetailResponse {
             productName = product.getProductName();
             productBrand = product.getProductBrand();
             releaseDate = product.getReleaseDate();
+            productModel = product.getDeviceId();
         }
     }
 

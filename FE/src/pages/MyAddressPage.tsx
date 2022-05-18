@@ -1,13 +1,24 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import { useFetch } from 'hooks';
+import userAPI from 'api/userAPI';
+import { Address } from 'types/Entity/UserAPI';
 import MyPageTemplate from '../components/templates/MyPageTemplate/MyPageTemplate';
-// import MyAddressContainer from '../components/organisms/my/MyAddressContainer';
 import MyAddress from '../components/organisms/My/MyAddress';
 
+interface addressBookListProps {
+  addressBookList: Array<Address>;
+}
+
 function MyAddressPage() {
+  const [items, error, isLoading] = useFetch<null, addressBookListProps>({
+    api: userAPI.getAddressbook,
+  });
+
   return (
     <MainContainer>
-      <MyPageTemplate element={<MyAddress />} />
+      {items !== undefined && (
+        <MyPageTemplate element={<MyAddress items={items.addressBookList} />} />
+      )}
     </MainContainer>
   );
 }

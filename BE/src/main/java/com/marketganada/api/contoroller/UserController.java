@@ -6,17 +6,22 @@ import com.marketganada.api.request.UserNicknameUpdateRequest;
 import com.marketganada.api.request.UserPwUpdateRequest;
 import com.marketganada.api.response.*;
 import com.marketganada.api.service.AuctionService;
+import com.marketganada.api.service.PaymentService;
 import com.marketganada.api.service.UserService;
 import com.marketganada.config.auth.GanadaUserDetails;
 import com.marketganada.db.entity.AddressBook;
 import com.marketganada.db.entity.Likes;
+import com.marketganada.db.entity.Payment;
 import com.marketganada.db.entity.User;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
@@ -33,6 +38,9 @@ public class UserController {
     @Autowired
     private AuctionService auctionService;
 
+    @Autowired
+    private PaymentService paymentService;
+
 
     @GetMapping
     @ApiOperation(value = "회원 정보 조회", notes = " 토큰을 통해 <strong>회원 정보 조회</strong>를 한다.")
@@ -45,7 +53,10 @@ public class UserController {
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
 
-        return ResponseEntity.ok(UserInfoResponse.of(user));
+        List<Payment> orderHistory = paymentService.getOrderHistory(user);
+        List<Payment> salesHistory = paymentService.getSalesHistory(user);
+
+        return ResponseEntity.ok(UserInfoResponse.of(user,orderHistory,salesHistory));
     }
 
     @DeleteMapping
@@ -79,6 +90,29 @@ public class UserController {
         if(res.equals("fail")){
             return new ResponseEntity(HttpStatus.CONFLICT);
         }
+        return new ResponseEntity(HttpStatus.CREATED);
+    }
+
+    @PutMapping(path = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ApiOperation(value = "프로필 이미지 변경", notes = " 입력한 사진으로 프로필 사진을 변경한다.")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity updateUserProfileImage(@ApiIgnore Authentication authentication,
+                                                 @RequestPart(value = "profileImage", required = false)
+                                                 MultipartFile profileImage) {
+        GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
+        User user = userDetails.getUser();
+
+        String res;
+
+        try {
+            res = userService.updateUserProfileImage(user, profileImage);
+        } catch (ResponseStatusException e) {
+            return new ResponseEntity(e.getStatus());
+        }
+
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
@@ -247,6 +281,50 @@ public class UserController {
         return ResponseEntity.ok(LikeAuctionListResponse.of(likesList));
 
     }
+
+    @GetMapping("/sales-history")
+    @ApiOperation(value = "판매내역 조회", notes = "판매내역을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공", response = LikeAuctionListResponse.class),
+            @ApiResponse(code = 403, message = "권한 없는 유저"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity getSalesHistory(@ApiIgnore Authentication authentication){
+        GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
+        User user = userDetails.getUser();
+
+        List<Payment> paymentList = paymentService.getSalesHistory(user);
+
+        for(Payment payment : paymentList){
+            System.out.println(payment.getPaymentId());
+        }
+
+        return ResponseEntity.ok(SalesHistoryResponse.of(paymentList));
+
+    }
+
+
+    @GetMapping("/order-history")
+    @ApiOperation(value = "구매내역 조회", notes = "구매내역을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공", response = LikeAuctionListResponse.class),
+            @ApiResponse(code = 403, message = "권한 없는 유저"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity getOrderHistory(@ApiIgnore Authentication authentication){
+        GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
+        User user = userDetails.getUser();
+
+        List<Payment> paymentList = paymentService.getOrderHistory(user);
+
+        for(Payment payment : paymentList){
+            System.out.println(payment.getPaymentId());
+        }
+        return ResponseEntity.ok(OrderHistoryResponse.of(paymentList));
+
+    }
+
+
 
 
 }

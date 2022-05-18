@@ -16,6 +16,8 @@ pipeline {
 			 sh "docker rm -f springContainer"
                          sh "docker rm -f clientContainer"
 
+
+
 			}
 		}
 		stage('docker image delete') {

@@ -73,7 +73,7 @@ public class AuctionControllerPositiveCases {
 		auctionPhone.setCycle(1);
 		auctionPhone.setDepreciation(100);
         auctionPhone.setDescription("sample desc");
-		auctionPhone.setEndTime(simpleDateFormat.format(new Date()));
+		auctionPhone.setEndTime("2032.07.00 00:00:00");
 		auctionPhone.setStartPrice(10000);
         auctionPhone.setProductId(TEST_PRODUCT_PHONE_ID);
 
@@ -82,7 +82,7 @@ public class AuctionControllerPositiveCases {
         auctionEarphone.setCycle(1);
         auctionEarphone.setDepreciation(100);
         auctionEarphone.setDescription("sample desc");
-        auctionEarphone.setEndTime(simpleDateFormat.format(new Date()));
+        auctionEarphone.setEndTime("2032.07.00 00:00:00");
         auctionEarphone.setStartPrice(10000);
         auctionEarphone.setProductId(TEST_PRODUCT_EARPHONE_ID);
 
@@ -159,6 +159,16 @@ public class AuctionControllerPositiveCases {
     }
 
     @Test
+    @Order(3)
+    void getAuctionPhoneAllListTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/auction/phone?page=0" +
+                                "&sort=auctionId,DESC")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
     @Order(4)
     void getAuctionEarphoneListTest() throws Exception {
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/api/auction/earphone?page=0" +
@@ -172,6 +182,16 @@ public class AuctionControllerPositiveCases {
         tmp = resultArray.getJSONObject(0);
 
         auctionEarphoneId = tmp.getLong("auctionId");
+    }
+
+    @Test
+    @Order(4)
+    void getAuctionEarphoneAllListTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/auction/earphone?page=0" +
+                                "&sort=auctionId,DESC")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
     }
 
     @Test

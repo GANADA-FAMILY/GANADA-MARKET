@@ -3,6 +3,7 @@ type KeyType = {
 };
 const color: KeyType = {
   white: '#FFFFFF',
+  white2: '#ebebeb',
   black: '#000000',
   black2: '#222222',
   gray: '#22222280',
@@ -13,6 +14,7 @@ const color: KeyType = {
 };
 
 const fontWeight: KeyType = {
+  solid: '600',
   bold: '700',
 };
 const theme = {

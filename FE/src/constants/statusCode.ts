@@ -1,5 +1,6 @@
 const STATUS = Object.freeze({
   OK: 200,
+  CREATED: 201,
   UNAUTHORIZED: 401,
   NOTFOUND: 404,
   FORBIDDEN: 403,

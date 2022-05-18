@@ -6,7 +6,10 @@ import com.marketganada.api.request.PaymentInsertRequest;
 import com.marketganada.api.request.TrackingNumUpdateRequest;
 import com.marketganada.common.KakaoPayApprovalVO;
 import com.marketganada.common.KakaoPayReadyVO;
+import com.marketganada.db.entity.Payment;
 import com.marketganada.db.entity.User;
+
+import java.util.List;
 
 public interface PaymentService {
     String insertPayment(PaymentInsertRequest paymentInsertRequest, User user);
@@ -15,4 +18,7 @@ public interface PaymentService {
     void successPayment(Long paymentId);
     String updateTrackingNum(Long paymentId,TrackingNumUpdateRequest request, User user);
     String confirmPayment(Long paymentId, User user);
+
+    List<Payment> getOrderHistory(User user);
+    List<Payment> getSalesHistory(User user);
 }

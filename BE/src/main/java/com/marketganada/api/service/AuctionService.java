@@ -23,4 +23,5 @@ public interface AuctionService {
     public List<Auction> getAuctionPhoneList(String brand, String model, String save, Pageable pageable);
     public List<Auction> getAuctionEarphoneList(String brand, String model, Pageable pageable);
     List<Likes> getLikeAuctionList(User user);
+    Long getAuctionCnt(String category, String brand, String model, String save);
 }
