@@ -131,9 +131,9 @@ public class PaymentServiceImpl implements PaymentService{
         params.add("quantity", "1");
         params.add("total_amount", String.valueOf(paymentInsertRequest.getPrice()));
         params.add("tax_free_amount", "0");
-        params.add("approval_url", "http://localhost:5500/kakaoPaySuccess.html");
-        params.add("cancel_url", "http://localhost:5500/kakaoPayCancel.html");
-        params.add("fail_url", "http://localhost:5500/kakaoPaySuccessFail.html");
+        params.add("approval_url", "http://localhost:3000/payment/result/approve");
+        params.add("cancel_url", "http://localhost:3000/payment/result/cancel");
+        params.add("fail_url", "http://localhost:3000/payment/result/fail");
 
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
 
