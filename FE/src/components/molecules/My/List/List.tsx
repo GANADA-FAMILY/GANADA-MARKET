@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import Entity from 'types/Entity';
 
-interface TestListProps {
+interface ListProps {
   dataSoruce: Entity[];
   // rowKey?: ((item: T) => React.Key) | keyof T;
   renderItem?: (item: Entity, index: number) => React.ReactNode;
@@ -12,7 +12,7 @@ function List({
   dataSoruce = [],
   renderItem = () => null,
   ...props
-}: TestListProps) {
+}: ListProps) {
   const myList = dataSoruce.map((item, index) => renderItem(item, index));
   return (
     <Molecule className={props.className}>
