@@ -7,11 +7,11 @@ interface LinkProps {
 }
 
 interface StyledLinkProps {
-  isActive: boolean;
+  $isActive: boolean;
 }
 
-const activeStyle = ({ isActive }: StyledLinkProps) => {
-  if (isActive) {
+const activeStyle = ({ $isActive }: StyledLinkProps) => {
+  if ($isActive) {
     return css`
       font-weight: 700;
       border-bottom: 2px solid black;
@@ -35,7 +35,7 @@ function NavLink({ to, children }: LinkProps) {
   const { pathname } = useLocation();
 
   return (
-    <StyledLink isActive={pathname === to} to={to}>
+    <StyledLink $isActive={pathname === to} to={to}>
       {children}
     </StyledLink>
   );
