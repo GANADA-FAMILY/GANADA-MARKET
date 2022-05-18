@@ -83,6 +83,7 @@ public class AuctionDetailResponse {
     static class Products {
         String productName;
         String productBrand;
+        String productModel;
         Date releaseDate;
         int recentPrice;
 
@@ -91,6 +92,7 @@ public class AuctionDetailResponse {
             productName = product.getProductName();
             productBrand = product.getProductBrand();
             releaseDate = product.getReleaseDate();
+            productModel = product.getDeviceId();
         }
     }
 

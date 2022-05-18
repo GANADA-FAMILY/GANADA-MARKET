@@ -2,6 +2,7 @@ package com.marketganada.api.service;
 
 import com.marketganada.api.request.AuctionInsertRequest;
 import com.marketganada.common.ProductSpecification;
+import com.marketganada.common.AuctionSpecification;
 import com.marketganada.db.entity.*;
 import com.marketganada.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -236,7 +237,6 @@ public class AuctionServiceImpl implements AuctionService {
     @Override
     public List<Auction> getAuctionPhoneList(String brand, String model, String save, Pageable pageable) {
         Specification<Product> spec = (root, query, criteriaBuilder) -> null;
-
         spec = spec.and(ProductSpecification.equalCategoryLargeName("스마트폰"));
 
         if(!brand.equals("ALL"))
@@ -250,7 +250,12 @@ public class AuctionServiceImpl implements AuctionService {
         if(products.size() < 1)
             throw new NoSuchElementException("products not found");
 
-        List<Auction> auctions = auctionRepository.findByProductIn(products, pageable);
+        Specification<Auction> auctionSpec = (root, query, criteriaBuilder) -> null;
+        auctionSpec = auctionSpec.and(AuctionSpecification.isAuctionStatus())
+                .and(AuctionSpecification.greaterThanEndTime(new Date()))
+                .and(AuctionSpecification.inProduct(products));
+
+        List<Auction> auctions = auctionRepository.findAll(auctionSpec, pageable).toList();
 
         return auctions;
     }
@@ -270,7 +275,12 @@ public class AuctionServiceImpl implements AuctionService {
         if(products.size() < 1)
             throw new NoSuchElementException("products not found");
 
-        List<Auction> auctions = auctionRepository.findByProductIn(products, pageable);
+        Specification<Auction> auctionSpec = (root, query, criteriaBuilder) -> null;
+        auctionSpec = auctionSpec.and(AuctionSpecification.isAuctionStatus())
+                .and(AuctionSpecification.greaterThanEndTime(new Date()))
+                .and(AuctionSpecification.inProduct(products));
+
+        List<Auction> auctions = auctionRepository.findAll(auctionSpec, pageable).toList();
 
         return auctions;
     }
@@ -280,5 +290,32 @@ public class AuctionServiceImpl implements AuctionService {
 
         List<Likes> likeAuctionList = likesRepository.findByUser(user);
         return likeAuctionList;
+    }
+
+    @Override
+    public Long getAuctionCnt(String category, String brand, String model, String save) {
+        Specification<Product> spec = (root, query, criteriaBuilder) -> null;
+
+        if(!category.equals("ALL"))
+            spec = spec.and(ProductSpecification.equalCategoryLargeName(category));
+        if(!brand.equals("ALL"))
+            spec = spec.and(ProductSpecification.equalProductBrand(brand));
+        if(!model.equals("ALL"))
+            spec = spec.and(ProductSpecification.equalProductName(model));
+        if(!save.equals("ALL"))
+            spec = spec.and(ProductSpecification.equalCategorySmallName(save));
+
+        List<Product> products = productRepository.findAll(spec);
+        if(products.size() < 1)
+            throw new NoSuchElementException("products not found");
+
+        Specification<Auction> auctionSpec = (root, query, criteriaBuilder) -> null;
+        auctionSpec = auctionSpec.and(AuctionSpecification.isAuctionStatus())
+                .and(AuctionSpecification.greaterThanEndTime(new Date()))
+                .and(AuctionSpecification.inProduct(products));
+
+        Long auctionCnt = auctionRepository.count(auctionSpec);
+
+        return auctionCnt;
     }
 }

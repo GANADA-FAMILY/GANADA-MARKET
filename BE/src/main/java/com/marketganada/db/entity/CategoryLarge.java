@@ -40,14 +40,4 @@ public class CategoryLarge {
     public void update(CategoryLargeInsertRequest categoryLargeInsertRequest) {
         name = categoryLargeInsertRequest.getCategoryName();
     }
-
-//    @Override
-//    public String toString() {
-//        return "CategoryLarge{" +
-//                "categoryLargeId=" + categoryLargeId +
-//                ", name='" + name + '\'' +
-//                ", categoryMiddles=" + categoryMiddles +
-//                ", products=" + products +
-//                '}';
-//    }
 }
