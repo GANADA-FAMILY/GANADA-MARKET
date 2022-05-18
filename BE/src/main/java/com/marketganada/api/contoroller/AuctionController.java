@@ -104,12 +104,14 @@ public class AuctionController {
             }
         } catch (Exception e) {
             if(e.getMessage().equals("products not found"))
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(AuctionListResponse.of(null,null));
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(AuctionListResponse.of(null,null,null));
             else
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(AuctionListResponse.of(null,null));
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(AuctionListResponse.of(null,null,null));
         }
 
-        return ResponseEntity.ok(AuctionListResponse.of(auctions.toList(),isLikes));
+        Long auctionCnt = auctionService.getAuctionCnt("ALL","ALL","ALL","ALL");
+
+        return ResponseEntity.ok(AuctionListResponse.of(auctions.toList(),isLikes,auctionCnt));
     }
 
     @GetMapping("/phone")
@@ -151,12 +153,16 @@ public class AuctionController {
             }
         } catch (Exception e) {
             if(e.getMessage().equals("products not found"))
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(AuctionListResponse.of(null,null));
-            else
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(AuctionListResponse.of(null,null));
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(AuctionListResponse.of(null,null, null));
+            else {
+                e.printStackTrace();
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(AuctionListResponse.of(null, null, null));
+            }
         }
 
-        return ResponseEntity.ok(AuctionListResponse.of(auctions,isLikes));
+        Long auctionCnt = auctionService.getAuctionCnt("스마트폰",brand,model,save);
+
+        return ResponseEntity.ok(AuctionListResponse.of(auctions,isLikes,auctionCnt));
     }
 
     @GetMapping("/earphone")
@@ -196,12 +202,14 @@ public class AuctionController {
             }
         } catch (Exception e) {
             if(e.getMessage().equals("products not found"))
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(AuctionListResponse.of(null,null));
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(AuctionListResponse.of(null,null,null));
             else
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(AuctionListResponse.of(null,null));
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(AuctionListResponse.of(null,null,null));
         }
 
-        return ResponseEntity.ok(AuctionListResponse.of(auctions,isLikes));
+        Long auctionCnt = auctionService.getAuctionCnt("이어폰",brand,model,"ALL");
+
+        return ResponseEntity.ok(AuctionListResponse.of(auctions,isLikes,auctionCnt));
     }
 
     @GetMapping("/{auctionId}")
