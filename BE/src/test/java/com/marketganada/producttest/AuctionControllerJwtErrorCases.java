@@ -115,4 +115,13 @@ public class AuctionControllerJwtErrorCases {
                 .andExpect(MockMvcResultMatchers.status().isUnauthorized())
                 .andDo(MockMvcResultHandlers.print());
     }
+
+    @Test
+    @Order(18)
+    void getAuctionRecentListTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/auction?page=0")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
+                .andExpect(MockMvcResultMatchers.status().isUnauthorized())
+                .andDo(MockMvcResultHandlers.print());
+    }
 }

@@ -25,7 +25,7 @@ public class AuctionListResponse {
         for(int i = 0; i < auctions.size(); i++) {
             res.getAuctionList().add(Auctions.builder()
                     .auction(auctions.get(i))
-                    ._isLiked(isLikes.get(i))
+                    ._isLiked(isLikes.size() > i ? isLikes.get(i) : false)
                     .build());
         }
 

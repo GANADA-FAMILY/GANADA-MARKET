@@ -229,7 +229,7 @@ public class AuctionControllerPositiveCases {
     @Test
     @Order(10)
     void getAuctionRecentListTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/auction?page=0")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/auction/recent?page=0")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
