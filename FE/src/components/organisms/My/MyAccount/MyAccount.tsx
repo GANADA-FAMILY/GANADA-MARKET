@@ -27,13 +27,11 @@ function MyAccount({ bank }: MyAccountProps) {
     return false;
   };
 
-  const [values, errors, isLoading, handleChange, handleSubmit] = useForm<Bank>(
-    {
-      initalState,
-      onSubmit,
-      validate,
-    },
-  );
+  const [values, errors, isLoading, handleChange, handleSubmit] = useForm({
+    initalState,
+    onSubmit,
+    validate,
+  });
   return (
     <section>
       <MainTitleBar title="정산 계좌 등록" size={24} />

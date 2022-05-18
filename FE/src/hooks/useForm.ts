@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 
-interface useFormProps<T> {
+interface useFormProps {
   initalState: any;
   onSubmit: () => void;
   validate: (form: any) => boolean;
 }
-function useForm<T>({ initalState, onSubmit, validate }: useFormProps<T>) {
+function useForm({ initalState, onSubmit, validate }: useFormProps) {
   const [values, setState] = useState(initalState);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
