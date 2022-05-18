@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Address } from 'types/Entity';
+import Address from 'types/Entity/UserAPI/Address';
 import Auction from 'types/Entity/Auction';
 import Pay from '../organisms/Payment/Pay';
 import DeliveryInfo from '../organisms/Payment/DeliveryInfo';

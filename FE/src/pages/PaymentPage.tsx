@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
-import { Address } from 'types/Entity';
+import Address from 'types/Entity/UserAPI/Address';
 import Auction from 'types/Entity/Auction';
 import userAPI from 'api/userAPI';
 import auctionAPI from 'api/auctionAPI';
