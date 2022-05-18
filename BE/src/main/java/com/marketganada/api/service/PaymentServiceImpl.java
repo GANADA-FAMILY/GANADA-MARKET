@@ -25,6 +25,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -40,6 +41,7 @@ public class PaymentServiceImpl implements PaymentService{
     private static final String HOST = "https://kapi.kakao.com";
 
     @Override
+    @Transactional
     public String insertPayment(PaymentInsertRequest paymentInsertRequest, User user) {
         String res = "";
         Optional<Auction> auction = auctionRepository.findById(paymentInsertRequest.getAuctionId());
@@ -64,6 +66,8 @@ public class PaymentServiceImpl implements PaymentService{
                     .build();
             paymentRepository.save(payment);
             res = String.valueOf(payment.getPaymentId());
+            auction.get().setAuctionStatus(false);
+            auctionRepository.save(auction.get());
         }else{
             System.out.println("없는경매");
             return "fail";
@@ -104,6 +108,7 @@ public class PaymentServiceImpl implements PaymentService{
             KakaoPayReadyVO kakaoPayReadyVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/ready"), body, KakaoPayReadyVO.class);
             System.out.println(kakaoPayReadyVO.getNext_redirect_pc_url());
             System.out.println(kakaoPayReadyVO.getTid());
+            System.out.println(payment.getPaymentId());
 
             return kakaoPayReadyVO;
 
@@ -219,4 +224,19 @@ public class PaymentServiceImpl implements PaymentService{
         }
         return "fail";
     }
+
+    @Override
+    public List<Payment> getOrderHistory(User user) {
+        List<Payment> orderHistory = paymentRepository.findByUser(user);
+        return orderHistory;
+    }
+
+    @Override
+    public List<Payment> getSalesHistory(User user) {
+        List<Payment> salesHistory = paymentRepository.selectSalesHistory(user.getUserId());
+
+        return salesHistory;
+    }
+
+
 }
