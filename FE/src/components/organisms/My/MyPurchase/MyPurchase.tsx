@@ -2,9 +2,8 @@ import userAPI from 'api/userAPI';
 import { useAuth, useFetch } from 'hooks';
 
 function MyPurchase() {
-  const { user, loading, dispatch } = useAuth();
+  const { user, loading } = useAuth();
   const [data, error, isLoading] = useFetch({ api: userAPI.getBank });
-  // const [data, errors, isLoading] = useFetch({ api: userAPI.getUser });
   const getMyInfo = async () => {
     const res = await userAPI.getUser();
     console.log(res);

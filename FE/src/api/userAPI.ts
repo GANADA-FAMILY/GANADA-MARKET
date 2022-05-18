@@ -1,7 +1,5 @@
 import { defaultInstance } from 'api';
 import { ACCESS_TOKEN } from 'constants/headers';
-import { ProductHistory } from 'types/Entity/UserAPI';
-import Wish from 'types/Entity/UserAPI/Wish';
 import AddressForm from 'types/Form/AddressForm';
 import BankForm from 'types/Form/BankForm';
 import Payload from 'types/Form/Payload';
@@ -27,12 +25,12 @@ function deleteUser() {
 
 // 닉네임 변경
 // function updateNickname(payload: UserUpdateNicknameForm) {
-function updateNickname(payload?: Payload<UserUpdateNicknameForm>) {
+function updateNickname(payload: Payload<UserUpdateNicknameForm>) {
   return api.put('/user/nickname', payload);
 }
 // 비밀번호 변경
 // function updatePassword(payload: UserUpdatePasswordForm) {
-function updatePassword(payload?: Payload<UserUpdatePasswordForm>) {
+function updatePassword(payload: Payload<UserUpdatePasswordForm>) {
   return api.put('/user/pw', payload);
 }
 
@@ -44,7 +42,7 @@ function getAddressbook() {
 
 // 주소록 등록
 // function createAddressbook(payload: AddressForm) {
-function createAddressbook(payload?: Payload<AddressForm>) {
+function createAddressbook(payload: Payload<AddressForm>) {
   return api.post('/user/addressbook', payload);
 }
 
@@ -56,8 +54,8 @@ function deleteAddressbook() {
 
 // 주소록 수정
 // function updateAddressbook(payload: AddressForm, param: string) {
-function updateAddressbook(payload: Payload<AddressForm>) {
-  return api.put(`/user/addressbook/:${payload.params.addressId}`, payload);
+function updateAddressbook(payload: Payload<AddressForm>, pathValue: string) {
+  return api.put(`/user/addressbook/:${pathValue}`, payload);
 }
 
 // 계좌 정보
@@ -67,22 +65,22 @@ function getBank() {
 }
 // 정산 계좌 등록 및 수정
 // function updateBank(payload: BankForm) {
-function updateBank(payload?: Payload<BankForm>) {
+function updateBank(payload: Payload<BankForm>) {
   return api.put('/user/bank', payload);
 }
 
 // function getSalesHistory() {
-function getSalesHistory() {
-  return api.get<ProductHistory>('/user/sales-history');
+function getSalesHistory(params?: string) {
+  return api.get(`/user/sales-history?${params}`);
 }
 
 // function getOrderHistory() {
-function getOrderHistory() {
-  return api.get<ProductHistory>('/user/order-history');
+function getOrderHistory(params?: string) {
+  return api.get(`/user/order-history?${params}`);
 }
 // function getWishList() {
-function getWishList() {
-  return api.get<Wish>('/user/likelist');
+function getWishList(params?: string) {
+  return api.get(`/user/likelist?${params}`);
 }
 
 const userAPI = {

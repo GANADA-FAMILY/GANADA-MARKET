@@ -1,3 +1,4 @@
+/* eslint-disable no-irregular-whitespace */
 import { defaultInstance } from 'api';
 import {
   DuplicateNicknameForm,
@@ -21,14 +22,15 @@ function signup(payload: Payload<SignupForm>) {
 }
 
 // 닉네임 중복 검사
-function duplicateNickname(payload: Payload<DuplicateNicknameForm>) {
-  // eslint-disable-next-line no-irregular-whitespace
-  return api.get(`/auth​/duplicate-nickname​/${payload.userNickname}`);
+// function duplicateNickname(payload: Payload<DuplicateNicknameForm>) {
+function duplicateNickname(pathValue: string) {
+  return api.get(`/auth​/duplicate-nickname​/${pathValue}`);
 }
 
 // 이메일 찾기(휴대폰 번호로)
-function findPassword(payload: Payload<FindEmailForm>) {
-  return api.get(`/api/auth/find-email/${payload.userPhone}`);
+// function findPassword(payload: Payload<FindEmailForm>) {
+function findPassword(pathValue: string) {
+  return api.get(`/api/auth/find-email/${pathValue}`);
 }
 
 // 비밀번호 찾기(이메일, 휴대폰번호)
