@@ -8,6 +8,7 @@ import ModifyBox from './ModifyBox';
 import TabPane from './TabPane';
 import Text from './Text';
 import Title from './Title';
+import Button from './Button';
 
 export {
   Avatar,
@@ -20,4 +21,5 @@ export {
   TabPane,
   Text,
   Title,
+  Button,
 };

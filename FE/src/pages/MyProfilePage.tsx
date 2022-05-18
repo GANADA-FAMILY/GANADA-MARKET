@@ -1,14 +1,16 @@
 import React from 'react';
 import styled from '@emotion/styled';
-// import MyProfileContainer from '../components/organisms/my/MyProfileContainer';
+import { useAuth } from 'hooks';
 import MyPageTemplate from '../components/templates/MyPageTemplate/MyPageTemplate';
 import MyProfile from '../components/organisms/My/MyProfile';
 
 function MyProfilePage() {
+  const { user, loading, dispatch } = useAuth();
   return (
     <MainContainer>
-      {/* <MyPageTemplate element={<MyProfileContainer />} /> */}
-      <MyPageTemplate element={<MyProfile />} />
+      {user !== undefined && (
+        <MyPageTemplate element={<MyProfile item={user} />} />
+      )}
     </MainContainer>
   );
 }
