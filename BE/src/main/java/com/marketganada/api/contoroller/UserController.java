@@ -16,9 +16,12 @@ import com.marketganada.db.entity.User;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
@@ -84,6 +87,29 @@ public class UserController {
         if(res.equals("fail")){
             return new ResponseEntity(HttpStatus.CONFLICT);
         }
+        return new ResponseEntity(HttpStatus.CREATED);
+    }
+
+    @PutMapping(path = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ApiOperation(value = "프로필 이미지 변경", notes = " 입력한 사진으로 프로필 사진을 변경한다.")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity updateUserProfileImage(@ApiIgnore Authentication authentication,
+                                                 @RequestPart(value = "profileImage", required = false)
+                                                 MultipartFile profileImage) {
+        GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
+        User user = userDetails.getUser();
+
+        String res;
+
+        try {
+            res = userService.updateUserProfileImage(user, profileImage);
+        } catch (ResponseStatusException e) {
+            return new ResponseEntity(e.getStatus());
+        }
+
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
