@@ -28,7 +28,7 @@ function App() {
             <Route path="/my/wish" element={<MyWishPage />} />
             <Route path="/my/account" element={<MyAccountPage />} />
             <Route path="/shop/:product" element={<ShopPage />} />
-            <Route path="/payment" element={<PaymentPage />} />
+            <Route path="/payment/:auctionId" element={<PaymentPage />} />
             <Route path="*" element={<Error404 />} />
           </Routes>
         </React.Suspense>

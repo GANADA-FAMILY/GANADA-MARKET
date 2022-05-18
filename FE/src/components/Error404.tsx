@@ -11,7 +11,7 @@ function Error404() {
 
 const Container = styled.div`
   display: table;
-  height: calc(100vh - 25rem);
+  height: calc(100vh - 35rem);
   width: 100%;
 `;
 
