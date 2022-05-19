@@ -1,4 +1,4 @@
-package com.marketganada.api.contoroller;
+package com.marketganada.api.controller;
 
 
 import com.marketganada.api.request.UserLoginRequest;

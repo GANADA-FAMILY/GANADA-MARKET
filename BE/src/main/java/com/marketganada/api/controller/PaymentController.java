@@ -1,23 +1,19 @@
-package com.marketganada.api.contoroller;
+package com.marketganada.api.controller;
 
 import com.marketganada.api.request.KakaoPaySuccessRequest;
 import com.marketganada.api.request.PaymentInsertRequest;
 import com.marketganada.api.request.TrackingNumUpdateRequest;
-import com.marketganada.api.request.UserLoginRequest;
 import com.marketganada.api.response.*;
-import com.marketganada.api.service.KaKaoPayService;
 import com.marketganada.api.service.PaymentService;
 import com.marketganada.common.KakaoPayApprovalVO;
 import com.marketganada.common.KakaoPayReadyVO;
 import com.marketganada.config.auth.GanadaUserDetails;
-import com.marketganada.config.auth.JwtTokenUtil;
 import com.marketganada.db.entity.User;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
