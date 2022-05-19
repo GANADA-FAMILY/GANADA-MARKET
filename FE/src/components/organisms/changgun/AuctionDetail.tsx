@@ -50,8 +50,7 @@ function AuctionDetail({ data }: AuctionDetailProps) {
   const [isLiked, setIsLiked] = useState(data.auction.isLiked);
   // const [isLiked, setIsLiked] = useState(true);
   const [price, setPrice] = useState(0);
-  const { startPrice, startTime, endTime, cycle, depreciation, product } =
-    data.auction;
+  const { startPrice, startTime, cycle, depreciation, product } = data.auction;
   const { productModel, releaseDate, releasePrice } = product;
   const [timeZone, setTimeZone] = useState<'1개월' | '3개월' | '6개월' | '1년'>(
     '1개월',
@@ -77,7 +76,7 @@ function AuctionDetail({ data }: AuctionDetailProps) {
           setIsLiked((previous) => !previous);
         })
         .catch((err) => {
-          console.log(err);
+          alert(err);
         });
     } else {
       auctionAPI
@@ -86,7 +85,7 @@ function AuctionDetail({ data }: AuctionDetailProps) {
           setIsLiked((previous) => !previous);
         })
         .catch((err) => {
-          console.log(err);
+          alert(err);
         });
     }
   };
@@ -99,12 +98,9 @@ function AuctionDetail({ data }: AuctionDetailProps) {
         dateDiffInHours(today, new Date(startTime)) * cycle * depreciation,
     );
 
-    // 38 * 1 *
     const nextCycleTime =
       (currentCycle(new Date(startTime), cycle) + 1) * cycle * MS_IN_HOUR +
       Number(new Date(startTime));
-
-    console.log(Math.floor((Number(nextCycleTime) - Number(today)) / 1000));
 
     setTimer(Math.floor((Number(nextCycleTime) - Number(today)) / 1000));
   }, []);
@@ -120,7 +116,6 @@ function AuctionDetail({ data }: AuctionDetailProps) {
         <ButtonGroup>
           <Button
             onClick={() => {
-              console.log(price);
               navigate(`/payment/${data.auction.auctionId}`, {
                 state: { paymentPrice: price },
               });
