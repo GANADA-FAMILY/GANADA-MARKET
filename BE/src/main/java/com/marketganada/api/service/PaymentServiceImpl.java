@@ -132,7 +132,7 @@ public class PaymentServiceImpl implements PaymentService{
         params.add("total_amount", String.valueOf(paymentInsertRequest.getPrice()));
         params.add("tax_free_amount", "0");
         params.add("approval_url", "http://localhost:3000/payment/result/approve");
-        params.add("cancel_url", "http://localhost:3000/payment/result/cancel");
+        params.add("cancel_url", "http://localhost:3000/payment/result/fail");
         params.add("fail_url", "http://localhost:3000/payment/result/fail");
 
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
