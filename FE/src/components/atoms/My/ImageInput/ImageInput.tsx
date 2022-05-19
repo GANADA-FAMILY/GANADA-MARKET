@@ -2,15 +2,15 @@ import styled from '@emotion/styled';
 
 interface ImageInputProps {
   onChange: React.ChangeEventHandler<HTMLInputElement>;
-  value: string;
+  // value: string;
   forwardedRef: React.RefObject<HTMLInputElement>;
 }
-function ImageInput({ onChange, value, forwardedRef }: ImageInputProps) {
+function ImageInput({ onChange, forwardedRef }: ImageInputProps) {
   return (
     <Atom
       type="file"
       accept="image/jpeg,image/png"
-      value={value}
+      // value={value}
       onChange={onChange}
       hidden
       ref={forwardedRef}

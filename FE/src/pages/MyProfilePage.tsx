@@ -5,12 +5,11 @@ import MyPageTemplate from '../components/templates/MyPageTemplate/MyPageTemplat
 import MyProfile from '../components/organisms/My/MyProfile';
 
 function MyProfilePage() {
-  const { user, loading, dispatch } = useAuth();
+  const { user, loading } = useAuth();
+
   return (
     <MainContainer>
-      {user !== undefined && (
-        <MyPageTemplate element={<MyProfile item={user} />} />
-      )}
+      {user !== undefined && <MyPageTemplate element={<MyProfile />} />}
     </MainContainer>
   );
 }

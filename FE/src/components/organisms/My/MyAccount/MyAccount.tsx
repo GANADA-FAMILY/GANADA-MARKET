@@ -11,7 +11,7 @@ interface MyAccountProps {
 }
 function MyAccount({ bank }: MyAccountProps) {
   const onSubmit = () => {
-    userAPI.updateBank(values);
+    userAPI.updateBank({ formData: values });
   };
   const validate = (form: Bank) => {
     if (

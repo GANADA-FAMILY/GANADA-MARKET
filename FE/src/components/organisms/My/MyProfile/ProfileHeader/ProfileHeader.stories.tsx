@@ -7,9 +7,7 @@ export default {
   title: 'organisms/My/MyProfile/ProfileHeader',
 };
 
-const Template: ComponentStory<typeof ProfileHeader> = (args) => (
-  <ProfileHeader {...args} />
-);
+const Template: ComponentStory<typeof ProfileHeader> = () => <ProfileHeader />;
 
 export const Default = Template.bind({});
 
@@ -20,9 +18,7 @@ Default.args = {
     userPhone: '010-3333-4444',
     profileImageUrl: 'https://kream.co.kr/_nuxt/img/blank_profile.4347742.png',
     grade: '일반 회원',
+    orderHistory: [],
+    salesHistory: [],
   },
-  onClickImage: () => null,
-  onChangeImage: () => null,
-  newImage: '',
-  // forwardedRef: useRef<HTMLInputElement>(null),
 };

@@ -2,14 +2,44 @@ import styled from '@emotion/styled';
 import TitleBar from 'components/molecules/My/TitleBar';
 import LinkButton from 'components/atoms/My/LinkButton';
 import Text from 'components/atoms/My/Text';
-import { Address } from 'types/Entity/UserAPI';
+import { useRootDispatch, useRootSelector } from 'state/Hooks';
+import {
+  deleteAddressbook,
+  updateRepresentAddressbook,
+} from 'state/reducers/AddressSlice';
 import MyListBox from './MyListBox';
 
-interface MyAddressProps {
-  items: Address[];
-}
-function MyAddress({ items }: MyAddressProps) {
-  console.log(items);
+function MyAddress() {
+  const items = useRootSelector((state) => state.addressbook.addressbook);
+  const dispatch = useRootDispatch();
+
+  const modifyHandler = (id: string) => {
+    // dispatch(()=>)
+  };
+  const activateHandler = (id: string) => {
+    dispatch(() => updateRepresentAddressbook(id));
+  };
+  const deleteHandler = (id: string) => {
+    dispatch(() => deleteAddressbook(id));
+  };
+
+  const onClickHandler = (e: any) => {
+    const names = e.target.name.split('-');
+    console.log(names[1]);
+    switch (names[1]) {
+      case 'modify':
+        modifyHandler(names[0]);
+        break;
+      case 'active':
+        activateHandler(names[0]);
+        break;
+      case 'delete':
+        deleteHandler(names[0]);
+        break;
+      default:
+        console.log('오류!');
+    }
+  };
   return (
     <Container>
       <TitleContent>
@@ -22,7 +52,7 @@ function MyAddress({ items }: MyAddressProps) {
           </AddButton>
         </ButtonBox>
       </TitleContent>
-      <MyListBox items={items} />
+      <MyListBox items={items} onClick={onClickHandler} />
     </Container>
   );
 }
