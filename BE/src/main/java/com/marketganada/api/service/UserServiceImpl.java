@@ -159,9 +159,6 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<AddressBook> getAddressBookList(User user) {
         List<AddressBook> addressBookList = addressBookRepository.findByUser(user);
-        for(AddressBook addressBook : addressBookList){
-            System.out.println(addressBook.getAddressName());
-        }
         return addressBookList;
     }
 

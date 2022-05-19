@@ -32,8 +32,6 @@ public class LikeAuctionListResponse {
             e.printStackTrace();
         }
         long curDateTime = curDate.getTime();
-        System.out.println("현재시간 : " + curDate);
-//        System.out.println("현재시간 : " + curDateTime);
 
         for(Likes like : likesList){
             Map<String,Object> auctionInfo = new HashMap<>();
@@ -44,7 +42,7 @@ public class LikeAuctionListResponse {
             auctionInfo.put("auctionImg",like.getAuction().getTitleImageUrl());
 
             Date reqDate = like.getAuction().getStartTime();
-            System.out.println("요청시간 전: "+ reqDate);
+
             try {
                 reqDate = dateFormat.parse(dateFormat.format(reqDate));
             } catch (ParseException e) {
@@ -53,10 +51,7 @@ public class LikeAuctionListResponse {
             long reqDateTime = reqDate.getTime();
 
             long time = (curDateTime - reqDateTime) / (60000*24);
-            System.out.println("요청시간 후 : " + reqDate);
-//            System.out.println("요청시간 : " + reqDateTime);
-            System.out.println("경과시간 : " + time);
-            System.out.println("그냥 : " + like.getAuction().getStartTime());
+
             //현재가격 = 시작가 - (감가 * ((현재시간 - 시작시간)  / 사이클)  )
             //                          190000                    - (      5000                           *         ((23시 - 01시) / 사이클)) )
             Long currentPrice = like.getAuction().getStartPrice() - ( like.getAuction().getDepreciation() * ( ( time )/like.getAuction().getCycle() ) );

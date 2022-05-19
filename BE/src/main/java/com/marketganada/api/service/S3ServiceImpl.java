@@ -38,9 +38,9 @@ public class S3ServiceImpl implements S3Service {
             objectMetadata.setContentType(file.getContentType());
 
             try(InputStream inputStream = file.getInputStream()) {
-                System.out.println(bucket);
-                System.out.println(fileName+" "+file.getOriginalFilename()+" 2 "+file.getContentType()+" 2 "+file.getSize());
-                System.out.println(objectMetadata.getContentType()+" 1 "+objectMetadata.getContentLength());
+//                System.out.println(bucket);
+//                System.out.println(fileName+" "+file.getOriginalFilename()+" 2 "+file.getContentType()+" 2 "+file.getSize());
+//                System.out.println(objectMetadata.getContentType()+" 1 "+objectMetadata.getContentLength());
                 amazonS3Client.putObject(new PutObjectRequest(bucket,fileName,inputStream,objectMetadata)
                         .withCannedAcl(CannedAccessControlList.PublicRead));
             } catch (IOException e) {

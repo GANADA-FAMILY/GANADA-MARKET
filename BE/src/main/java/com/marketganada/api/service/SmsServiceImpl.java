@@ -42,7 +42,7 @@ public class SmsServiceImpl implements SmsService{
     @Override
     public String sendUserPw(User user, UserPwFindRequest userPwFindRequest) {
         if(user.getUserPhone().equals(userPwFindRequest.getUserPhone())){
-            System.out.println("번호 똑같");
+
             //새 비밀번호 생성, 변경
             String tempPw = getRamdomNumber(10);
             user.setUserPw(encodePwd.encode(tempPw));

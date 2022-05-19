@@ -27,9 +27,6 @@ public class AuctionDetailResponse {
                     ._isMine(isMine)
                     ._recentPrice(recentPrice)
                     .build());
-        Date testDate = res.getAuction().getStartTime();
-        System.out.println("옥션디테일 : "+ res.getAuction().getStartTime());
-        System.out.println("testDate : "+ testDate);
 
         return res;
     }
