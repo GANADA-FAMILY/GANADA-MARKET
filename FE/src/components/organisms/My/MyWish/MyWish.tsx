@@ -33,7 +33,6 @@ function WishItem(
   const dispatch = useRootDispatch();
   const purchaseHandler = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.stopPropagation();
-    // console.log(123);
   };
   const deleteHandler = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();

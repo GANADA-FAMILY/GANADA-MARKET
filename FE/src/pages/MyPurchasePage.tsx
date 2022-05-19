@@ -1,12 +1,23 @@
-import React from 'react';
 import styled from '@emotion/styled';
-import MyPurchaseContainer from '../components/organisms/My/MyPurchase/MyPurchase';
-import MyPageTemplate from '../components/templates/MyPageTemplate/MyPageTemplate';
+import MyPurchase from 'components/organisms/My/MyPurchase/MyPurchase';
+import MyPageTemplate from 'components/templates/MyPageTemplate/MyPageTemplate';
+import { useEffect } from 'react';
+import { useRootDispatch, useRootSelector } from 'state/Hooks';
+import { getOrderHistory } from 'state/reducers/OrderHistorySlice';
 
 function MyPurchasePage() {
+  const dispatch = useRootDispatch();
+  const orderHistory = useRootSelector(
+    (state) => state.orderHistory.orderHistory,
+  );
+  useEffect(() => {
+    dispatch(getOrderHistory());
+  }, []);
   return (
     <MainContainer>
-      <MyPageTemplate element={<MyPurchaseContainer />} />
+      {orderHistory !== undefined && (
+        <MyPageTemplate element={<MyPurchase orderHistory={orderHistory} />} />
+      )}
     </MainContainer>
   );
 }

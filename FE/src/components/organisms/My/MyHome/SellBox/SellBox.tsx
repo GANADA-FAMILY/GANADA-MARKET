@@ -19,7 +19,7 @@ function SellBox() {
         <TabPane>
           <TabLink to="/my/selling">
             <TabBox>
-              <TabTitle>입찰 중</TabTitle>
+              <TabTitle>입금 대기</TabTitle>
               <TabCount>0</TabCount>
             </TabBox>
           </TabLink>
@@ -27,7 +27,15 @@ function SellBox() {
         <TabPane>
           <TabLink to="/my/selling">
             <TabBox>
-              <TabTitle>진행 중</TabTitle>
+              <TabTitle>입금 완료</TabTitle>
+              <TabCount>0</TabCount>
+            </TabBox>
+          </TabLink>
+        </TabPane>
+        <TabPane>
+          <TabLink to="/my/selling">
+            <TabBox>
+              <TabTitle>배송 중</TabTitle>
               <TabCount>0</TabCount>
             </TabBox>
           </TabLink>

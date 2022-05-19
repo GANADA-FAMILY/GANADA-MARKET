@@ -5,6 +5,10 @@ import Bank from './Bank';
 import ProductHistory from './ProductHistory';
 import Auction from './Auction';
 import Wish from './Wish';
+import Sales from './Sales';
+import Selling from './Selling';
+import SalesHistory from './SalesHistory';
+import OrderHistory from './OrderHIstory';
 
 type UserAPI =
   | Address
@@ -13,7 +17,23 @@ type UserAPI =
   | Bank
   | Auction
   | ProductHistory
-  | Wish;
+  | Wish
+  | Selling
+  | Sales
+  | SalesHistory
+  | OrderHistory;
 
 export default UserAPI;
-export type { Address, User, Product, Bank, Auction, ProductHistory, Wish };
+export type {
+  Address,
+  User,
+  Product,
+  Bank,
+  Auction,
+  ProductHistory,
+  Wish,
+  Selling,
+  Sales,
+  SalesHistory,
+  OrderHistory,
+};

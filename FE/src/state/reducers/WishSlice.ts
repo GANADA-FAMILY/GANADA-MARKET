@@ -26,26 +26,17 @@ const initialState = {
 export const WishSlice = createSlice({
   name: 'wishes',
   initialState,
-  reducers: {
-    // changeCurrentPassword: (state, action: PayloadAction<string>) => {
-    //   state.passwordForm.currentPw = action.payload;
-    // },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getWishList.fulfilled, (state, { payload }) => {
-      console.log(payload);
       state.wishList = payload;
     });
     builder.addCase(getWishList.rejected, (state, { payload }) => {
       console.log('오류!');
     });
     builder.addCase(deleteWish.fulfilled, (state, { payload }) => {
-      console.log(payload);
       state.wishList = payload;
     });
-    // builder.addCase(updateNickname.rejected, (state, action) => {
-    //   state.nickNameForm.userNickname = '';
-    // });
   },
 });
 

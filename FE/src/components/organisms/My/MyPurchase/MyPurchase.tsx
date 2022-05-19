@@ -1,31 +1,21 @@
-import userAPI from 'api/userAPI';
-import { useAuth, useFetch } from 'hooks';
+import { TitleBar } from 'components/molecules/My';
+import styled from 'styled-components';
+import { OrderHistory } from 'types/Entity/UserAPI';
+import PurchaseTab from './PurchaseTab';
 
-function MyPurchase() {
-  const { user, loading } = useAuth();
-  const [data, error, isLoading] = useFetch({ api: userAPI.getBank });
-  const getMyInfo = async () => {
-    const res = await userAPI.getUser();
-    console.log(res);
-  };
-
-  console.log(data);
+interface MyPurchaseProps {
+  orderHistory: OrderHistory[];
+}
+function MyPurchase({ orderHistory }: MyPurchaseProps) {
   return (
-    <div>
-      {!loading && !isLoading && (
-        <>
-          <div>{JSON.stringify(user)}</div>
-          <div>{loading}</div>
-          <button type="button" onClick={getMyInfo}>
-            가져오기
-          </button>
-
-          <h1>{process.env.REACT_APP_API_URL}</h1>
-          <p>{localStorage.getItem('token')}</p>
-        </>
-      )}
-    </div>
+    <Container>
+      <MainTitleBar title="구매 내역" size={24} />
+      <PurchaseTab />
+    </Container>
   );
 }
-
+const Container = styled.section``;
+const MainTitleBar = styled(TitleBar)`
+  padding-bottom: 16px;
+`;
 export default MyPurchase;
