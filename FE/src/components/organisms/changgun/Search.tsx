@@ -27,9 +27,9 @@ function Search() {
         <SearchBar />
         <RecentSearchList />
         <CategoryList>
-          <CategoryItem name="맥북" imgSrc="./images/macbook.jpg" />
-          <CategoryItem name="에어팟" imgSrc="./images/airpod.jpg" />
-          <CategoryItem name="버즈" imgSrc="./images/galaxybuds.jpg" />
+          <CategoryItem name="맥북" imgSrc="/images/macbook.jpg" />
+          <CategoryItem name="에어팟" imgSrc="/images/airpod.jpg" />
+          <CategoryItem name="버즈" imgSrc="/images/galaxybuds.jpg" />
         </CategoryList>
       </Inner>
     </Wrapper>

@@ -1,7 +1,5 @@
-import { Header } from '../components/organisms/changgun';
-
 function TestPage() {
-  return <Header />;
+  return <div>simple page</div>;
 }
 
 export default TestPage;
