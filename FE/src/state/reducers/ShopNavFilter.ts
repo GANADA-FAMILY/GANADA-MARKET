@@ -7,7 +7,7 @@ type ShopNavFilterType = {
 };
 
 const initialState: ShopNavFilterType = {
-  filter: { name: 'endTime' },
+  filter: { name: 'endTime,asc' },
 };
 
 export const ShopFilterSlice = createSlice({

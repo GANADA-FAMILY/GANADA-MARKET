@@ -24,4 +24,7 @@ public interface AuctionService {
     public Page<Auction> getAuctionEarphoneList(List<String> brand, List<String> model, Pageable pageable);
     List<Likes> getLikeAuctionList(User user);
     Long getAuctionCnt(String category, List<String> brand, List<String> model, List<String> save);
+
+    List<Auction> getTrueAuctionListByUser(User user);
+
 }

@@ -14,7 +14,7 @@ public interface PaymentRepository extends JpaRepository<Payment,Long> {
     Optional<Payment> findByAuction(Auction auction);
     List<Payment> findByUser(User user);
 
-    @Query(value = "select * from payment where auction_id = (select auction_id from auction where user_id= ?1)", nativeQuery = true)
+    @Query(value = "select * from payment where auction_id = any(select auction_id from auction where user_id= ?1)", nativeQuery = true)
     List<Payment> selectSalesHistory(Long userId);
 
 }

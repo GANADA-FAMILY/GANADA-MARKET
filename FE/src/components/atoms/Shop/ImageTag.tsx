@@ -6,12 +6,13 @@ import BlockContainer from '../../layouts/Shop/BlockContainer';
 
 interface PropsType {
   url: string;
+  auctionId: number;
 }
 
-function ImageTag({ url }: PropsType) {
+function ImageTag({ url, auctionId }: PropsType) {
   const route = Router();
   const linkDetail = () => {
-    route.push('/');
+    route.push(`/auction/${auctionId}`);
   };
 
   const StyledImage = styled.div`
@@ -20,13 +21,13 @@ function ImageTag({ url }: PropsType) {
     background-position: center;
     background-repeat: no-repeat;
     height: 100%;
-    background-size: 74.5342%;
+    background-size: 62.5342%;
     width: 100%;
     border-radius: 8px;
     transition: all ease-in-out 300ms;
     padding-top: 100%;
     &:hover {
-      transform: scale(1.2);
+      transform: scale(1.1);
     }
   `;
   return (
@@ -43,6 +44,7 @@ const imageWrapperStyle = {
   height: '333px',
   position: 'relative',
   backgroundColor: '#fff',
+  border: '1px solid	#D3D3D3',
 };
 
 export default ImageTag;

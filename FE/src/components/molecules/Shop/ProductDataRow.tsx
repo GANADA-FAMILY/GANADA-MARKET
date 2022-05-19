@@ -80,7 +80,8 @@ const flexContainer = {
 
 const filterStyle = {
   fontSize: '1.3rem',
-  marginRight: '1.2rem',
+  padding: '0.3rem',
+  marginLeft: '1rem',
 };
 
 const filterTilte = {
@@ -89,16 +90,18 @@ const filterTilte = {
 };
 
 const titleBlockContainer = {
-  height: '100%',
+  height: 'auto',
   borderRight: '1px solid #ecedf1',
   backgroundColor: '#f9f9f9',
-  width: '15rem',
-  padding: '0.8rem',
+  width: '20rem',
+  padding: '1rem',
 };
 
 const filterBlockContainer = {
   height: '100%',
-  padding: '0.8rem',
+  width: '100%',
+  padding: '1rem',
+  lineHeight: '300%',
 };
 
 export default ProductDataRow;
