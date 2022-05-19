@@ -1,5 +1,7 @@
+import { InputWithLabel } from 'components/molecules/changgun';
+
 function TestPage() {
-  return <div>simple page</div>;
+  return <InputWithLabel labelName="이메일 주소" />;
 }
 
 export default TestPage;

@@ -5,3 +5,5 @@ export * from './SearchInput';
 export * from './Text';
 export * from './CategoryItem';
 export * from './Button';
+export * from './Input';
+export * from './Label';
