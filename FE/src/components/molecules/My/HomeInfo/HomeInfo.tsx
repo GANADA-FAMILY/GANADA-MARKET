@@ -18,9 +18,9 @@ function HomeInfo({ user }: HomeInfoProps) {
           {user.userEmail}
         </Text>
         <LinkButton href="/my/profile">프로필 수정</LinkButton>
-        <LinkButton href={`/social/users/${user.userNickname}`}>
+        {/* <LinkButton href={`/social/users/${user.userNickname}`}>
           내 스타일
-        </LinkButton>
+        </LinkButton> */}
       </InfoBox>
     </Molecules>
   );

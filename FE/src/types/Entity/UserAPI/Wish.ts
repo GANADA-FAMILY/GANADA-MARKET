@@ -1,7 +1,7 @@
 interface Wish {
   auctionId: number;
   auctionTitle: string;
-  auctionPrice: number;
+  currentPrice: number;
   endTime: string;
   status: boolean;
   auctionImg: string;
