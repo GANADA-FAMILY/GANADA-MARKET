@@ -6,13 +6,10 @@ import MyProfile from '../components/organisms/My/MyProfile';
 
 function MyProfilePage() {
   const { user, loading } = useAuth();
-  console.log(user);
 
   return (
     <MainContainer>
-      {user !== undefined && (
-        <MyPageTemplate element={<MyProfile item={user} />} />
-      )}
+      {user !== undefined && <MyPageTemplate element={<MyProfile />} />}
     </MainContainer>
   );
 }

@@ -1,14 +1,17 @@
-import { defaultInstance } from 'api';
+import { defaultInstance, multipartInstance } from 'api';
 import { ACCESS_TOKEN } from 'constants/headers';
 import AddressForm from 'types/Form/AddressForm';
 import BankForm from 'types/Form/BankForm';
 import Payload from 'types/Form/Payload';
 import {
+  UserImageForm,
   UserUpdateNicknameForm,
   UserUpdatePasswordForm,
 } from 'types/Form/UserForm';
 
 const api = defaultInstance();
+const imgApi = multipartInstance();
+
 api.defaults.headers.common.Authorization = ACCESS_TOKEN;
 
 // 회원정보
@@ -64,23 +67,24 @@ function getBank() {
   return api.get('/user/bank');
 }
 // 정산 계좌 등록 및 수정
-// function updateBank(payload: BankForm) {
 function updateBank(payload: Payload<BankForm>) {
   return api.put('/user/bank', payload.formData);
 }
 
-// function getSalesHistory() {
 function getSalesHistory(params?: string) {
   return api.get(`/user/sales-history?${params}`);
 }
 
-// function getOrderHistory() {
 function getOrderHistory(params?: string) {
   return api.get(`/user/order-history?${params}`);
 }
-// function getWishList() {
 function getWishList(params?: string) {
   return api.get(`/user/likelist?${params}`);
+}
+// 프로필 이미지 변경
+function updateProfileImage(payload: FormData) {
+  console.log(123123213);
+  return imgApi.put('/user/image', payload);
 }
 
 const userAPI = {
@@ -97,6 +101,7 @@ const userAPI = {
   getSalesHistory,
   getOrderHistory,
   getWishList,
+  updateProfileImage,
 };
 
 export default userAPI;

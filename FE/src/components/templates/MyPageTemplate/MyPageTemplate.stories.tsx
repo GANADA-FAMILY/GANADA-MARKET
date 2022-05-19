@@ -29,18 +29,7 @@ MyHomeCase.args = {
 export const MyProfileCase = Template.bind({});
 
 MyProfileCase.args = {
-  element: (
-    <MyProfile
-      item={{
-        userEmail: 'zxc123@naver.com',
-        userNickname: 'zxc123',
-        userPhone: '010-3333-4444',
-        profileImageUrl:
-          'https://kream.co.kr/_nuxt/img/blank_profile.4347742.png',
-        grade: '일반 회원',
-      }}
-    />
-  ),
+  element: <MyProfile />,
 };
 export const MyPurchaseCase = Template.bind({});
 

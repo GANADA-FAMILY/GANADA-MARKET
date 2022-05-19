@@ -6,8 +6,8 @@ export default {
   title: 'organisms/My/MyProfile/ProfileContent',
 };
 
-const Template: ComponentStory<typeof ProfileContent> = (args) => (
-  <ProfileContent {...args} />
+const Template: ComponentStory<typeof ProfileContent> = () => (
+  <ProfileContent />
 );
 
 export const Default = Template.bind({});
@@ -19,5 +19,7 @@ Default.args = {
     userPhone: '010-3333-4444',
     profileImageUrl: 'https://kream.co.kr/_nuxt/img/blank_profile.4347742.png',
     grade: '일반 회원',
+    orderHistory: [],
+    salesHistory: [],
   },
 };

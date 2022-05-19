@@ -5,7 +5,7 @@ import Title from 'components/atoms/My/Title/Title';
 import InfoGroup from 'components/molecules/My/InfoGroup';
 import InfoItem from 'components/molecules/My/InfoItem';
 import { User } from 'types/Entity/UserAPI';
-import { useForm } from 'hooks';
+import { useAuth, useForm } from 'hooks';
 import { REG } from 'constants/reg';
 import userAPI from 'api/userAPI';
 import { useRootDispatch, useRootSelector } from 'state/Hooks';
@@ -17,12 +17,8 @@ import {
   updatePassword,
 } from 'state/reducers/UserSlice';
 
-interface ProfileContentProps {
-  user: User;
-}
-
-function ProfileContent({ user }: ProfileContentProps) {
-  const dispatch = useRootDispatch();
+function ProfileContent() {
+  const { user, loading, dispatch } = useAuth();
   const newNicknameForm = useRootSelector((state) => state.user.nickNameForm);
   const newPasswordForm = useRootSelector((state) => state.user.passwordForm);
 

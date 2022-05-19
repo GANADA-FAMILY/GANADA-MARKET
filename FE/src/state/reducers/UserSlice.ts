@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import authAPI from 'api/authAPI';
 import userAction from 'api/userAPI';
 import { User } from 'types/Entity/UserAPI';
-import { DuplicateNicknameForm } from 'types/Form/AuthForm';
 import Payload from 'types/Form/Payload';
 import {
   UserUpdateNicknameForm,
@@ -30,6 +28,15 @@ export const updatePassword = createAsyncThunk(
     console.log(payload);
     await userAction.updatePassword(payload);
     return payload.formData?.newPw;
+  },
+);
+
+export const updateProfileImage = createAsyncThunk(
+  'api/user/image',
+  async (payload: FormData) => {
+    const response = await userAction.updateProfileImage(payload);
+    console.log(response.data.profileImageUrl);
+    return response.data.profileImageUrl;
   },
 );
 
@@ -79,6 +86,12 @@ export const userSlice = createSlice({
     });
     builder.addCase(updateNickname.rejected, (state, action) => {
       state.nickNameForm.userNickname = '';
+    });
+    builder.addCase(updateProfileImage.fulfilled, (state, action) => {
+      state.user.profileImageUrl = action.payload;
+    });
+    builder.addCase(updateProfileImage.rejected, (state, action) => {
+      console.log('오류!');
     });
   },
 });

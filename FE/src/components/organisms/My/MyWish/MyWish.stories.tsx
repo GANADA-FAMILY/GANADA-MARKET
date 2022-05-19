@@ -17,6 +17,7 @@ const items: Wish[] = [
     auctionTitle: 'string',
     endTime: '2022-05-11T04:38:40.000+00:00',
     status: false,
+    auctionPrice: 3000000,
     auctionImg:
       'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/iphone-12-family-select-2021?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1617135051000',
   },
@@ -25,6 +26,7 @@ const items: Wish[] = [
     auctionTitle: 'string',
     endTime: '2022-05-11T04:38:40.000+00:00',
     status: true,
+    auctionPrice: 3000000,
     auctionImg:
       'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/iphone-12-family-select-2021?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1617135051000',
   },
@@ -33,6 +35,7 @@ const items: Wish[] = [
     auctionTitle: 'string',
     endTime: '2022-05-11T04:38:40.000+00:00',
     status: false,
+    auctionPrice: 3000000,
     auctionImg:
       'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/iphone-12-family-select-2021?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1617135051000',
   },
@@ -41,6 +44,7 @@ const items: Wish[] = [
     auctionTitle: 'string',
     endTime: '2022-05-11T04:38:40.000+00:00',
     status: true,
+    auctionPrice: 3000000,
     auctionImg:
       'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/iphone-12-family-select-2021?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1617135051000',
   },
@@ -49,6 +53,7 @@ const items: Wish[] = [
     auctionTitle: 'string',
     endTime: '2022-05-11T04:38:40.000+00:00',
     status: true,
+    auctionPrice: 3000000,
     auctionImg:
       'https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/iphone-12-family-select-2021?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1617135051000',
   },

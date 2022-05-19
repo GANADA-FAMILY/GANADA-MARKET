@@ -14,3 +14,7 @@ export interface UserUpdatePasswordForm {
   currentPw: string;
   newPw: string;
 }
+
+export interface UserImageForm {
+  profileImage: FormData;
+}

@@ -6,9 +6,7 @@ export default {
   title: 'organisms/My/MyProfile',
 };
 
-const Template: ComponentStory<typeof MyProfile> = (args) => (
-  <MyProfile {...args} />
-);
+const Template: ComponentStory<typeof MyProfile> = () => <MyProfile />;
 
 export const Default = Template.bind({});
 

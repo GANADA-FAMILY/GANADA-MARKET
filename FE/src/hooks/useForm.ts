@@ -19,9 +19,9 @@ export default function useForm({
   };
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
-    // event.preventDefault();
     setErrors(validate(values));
     setIsLoading(true);
+    // event.preventDefault();
   };
   const onChangeLoading = async () => {
     if (isLoading) {
