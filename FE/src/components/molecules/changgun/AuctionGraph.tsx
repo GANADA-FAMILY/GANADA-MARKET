@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
-import { newData } from './AuctionGraphData';
+import { FetchedDataType, graphDataConverter } from '../../../functions';
 
 Chart.register(...registerables);
 

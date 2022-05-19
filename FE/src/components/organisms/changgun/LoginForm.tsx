@@ -38,6 +38,7 @@ function LoginForm() {
         />
         <InputWithLabel labelName="비밀번호" />
         <Button
+          padding="1.2rem"
           isActive={false}
           styles="color: #fff; font-size: 1.6rem; font-weight: 600"
           activeStyle="color: #fff; background-color: black"
@@ -46,11 +47,11 @@ function LoginForm() {
         </Button>
       </FormGroup>
       <HelperMenu>
-        <MenuLink to="/">아이디 찾기</MenuLink>
-        <Text> | </Text>
-        <MenuLink to="/">비밀번호 찾기</MenuLink>
-        <Text> | </Text>
-        <MenuLink to="/">회원가입</MenuLink>
+        <MenuLink to="/findid">아이디 찾기</MenuLink>
+        <Text size="xsmall"> | </Text>
+        <MenuLink to="/findpw">비밀번호 찾기</MenuLink>
+        <Text size="xsmall"> | </Text>
+        <MenuLink to="/signup">회원가입</MenuLink>
       </HelperMenu>
     </Wrapper>
   );
