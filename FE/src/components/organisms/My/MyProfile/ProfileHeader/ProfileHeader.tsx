@@ -21,9 +21,7 @@ function ProfileHeader() {
     e.preventDefault();
     imageRef.current?.click();
   };
-  const onClickDelete = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-  };
+
   return (
     <StyledBox>
       {!loading && <ProfileAvatar src={user.profileImageUrl} />}
@@ -35,9 +33,6 @@ function ProfileHeader() {
           <LinkButton onClick={onClickImage} href="/">
             이미지 변경
           </LinkButton>
-          {/* <LinkButton onClick={onClickDelete} href="/">
-            삭제
-          </LinkButton> */}
         </ProfileButtonBox>
         <ImageInput onChange={onChangeImage} forwardedRef={imageRef} />
       </ProfileDetail>

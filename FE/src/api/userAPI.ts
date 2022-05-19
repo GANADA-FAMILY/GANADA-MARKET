@@ -89,6 +89,10 @@ function updateProfileImage(payload: FormData) {
   return imgApi.put('/user/image', payload);
 }
 
+function deleteWish(pathValue: string) {
+  return api.delete(`auction/like/${pathValue}`);
+}
+
 const userAPI = {
   getUser,
   deleteUser,
@@ -105,6 +109,7 @@ const userAPI = {
   getOrderHistory,
   getWishList,
   updateProfileImage,
+  deleteWish,
 };
 
 export default userAPI;

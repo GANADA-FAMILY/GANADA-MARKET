@@ -7,11 +7,16 @@ Chart.register(...registerables);
 
 interface AuctionGraphProps {
   timeZone: '1개월' | '3개월' | '6개월' | '1년';
+  productHistory: FetchedDataType[];
 }
 
-function AuctionGraph({ timeZone }: AuctionGraphProps) {
-  const [entireHistory, setEntireHistory] = useState(newData);
-  const [shownHistory, setShownHistory] = useState(newData);
+function AuctionGraph({ timeZone, productHistory }: AuctionGraphProps) {
+  const [entireHistory, setEntireHistory] = useState(
+    graphDataConverter(productHistory),
+  );
+  const [shownHistory, setShownHistory] = useState(
+    graphDataConverter(productHistory),
+  );
 
   const MS_PER_DAY = 1000 * 60 * 60 * 24;
 

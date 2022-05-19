@@ -37,9 +37,8 @@ const UserDetail = styled.div`
 `;
 
 const StyledAvatar = styled(Avatar)`
-  position: relative;
-  margin-right: 12px;
-  flex-shrink: 0;
   margin-right: 15px;
+  flex: none;
+  overflow: hidden;
 `;
 export default MembershipBox;
