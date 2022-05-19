@@ -51,7 +51,6 @@ public class AuctionListResponse {
         @JsonFormat(timezone = "Asia/Seoul")
         Date endTime;
         boolean isLiked;
-        boolean auctionStatus;
 
         @Builder
         public Auctions(Auction auction, boolean _isLiked, int cnt) {
@@ -66,7 +65,6 @@ public class AuctionListResponse {
             depreciation = auction.getDepreciation();
             startTime = auction.getStartTime();
             endTime = auction.getEndTime();
-            auctionStatus = auction.isAuctionStatus();
             isLiked = _isLiked;
         }
     }

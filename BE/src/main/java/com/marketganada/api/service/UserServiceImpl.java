@@ -239,6 +239,6 @@ public class UserServiceImpl implements UserService{
 
         s3Service.deleteFile(beforeName);
 
-        return "success";
+        return user.getProfileImageUrl();
     }
 }

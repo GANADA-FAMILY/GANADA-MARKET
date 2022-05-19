@@ -10,6 +10,7 @@ import com.marketganada.api.service.ProductService;
 import com.marketganada.api.service.S3Service;
 import com.marketganada.config.auth.GanadaUserDetails;
 import com.marketganada.db.entity.Auction;
+import com.marketganada.db.entity.Product;
 import com.marketganada.db.entity.User;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +40,6 @@ public class AuctionController {
 
     @Autowired
     ProductService productService;
-
-    @Autowired
-    S3Service s3Service;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ApiOperation(value = "경매 정보 등록", notes = "DB에 등록할 경매 정보를 입력한다.")
@@ -233,6 +231,7 @@ public class AuctionController {
 
         Auction auction;
         boolean isLiked = false,isMine = false;
+        int recentPrice;
 
         try {
             auction = auctionService.getAuctionById(auctionId);
@@ -241,16 +240,20 @@ public class AuctionController {
                 isLiked = auctionService.isThisAuctionLiked(auction, user.getUserId());
                 isMine = auctionService.isThisAuctionMine(auction, user.getUserId());
             }
+
+            Product product = auction.getProduct();
+            recentPrice = productService.getRecentPrice(product);
         } catch (Exception e) {
             if(e.getMessage().equals("not found")) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
             else {
+                e.printStackTrace();
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             }
         }
 
-        return ResponseEntity.ok(AuctionDetailResponse.of(auction,isLiked,isMine));
+        return ResponseEntity.ok(AuctionDetailResponse.of(auction,isLiked,isMine,recentPrice));
     }
 
     @DeleteMapping("/{auctionId}")

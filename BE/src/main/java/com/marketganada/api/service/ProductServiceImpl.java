@@ -1,12 +1,10 @@
 package com.marketganada.api.service;
 
 import com.marketganada.api.request.*;
-import com.marketganada.db.entity.CategoryLarge;
-import com.marketganada.db.entity.CategoryMiddle;
-import com.marketganada.db.entity.CategorySmall;
-import com.marketganada.db.entity.Product;
+import com.marketganada.db.entity.*;
 import com.marketganada.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -274,5 +272,17 @@ public class ProductServiceImpl implements ProductService {
 
         categorySmallRepository.deleteById(categorySmallId);
         return "success";
+    }
+
+    @Override
+    public int getRecentPrice(Product product) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "historyId");
+        int recentPrice = 0;
+        List<ProductHistory> productHistory = productHistoryRepository.findByProduct(product,sort);
+
+        if(productHistory.size() > 0)
+            recentPrice = productHistory.get(0).getHistoryPrice();
+
+        return recentPrice;
     }
 }

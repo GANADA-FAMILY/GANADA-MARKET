@@ -17,7 +17,7 @@ public class CategoryLargeResponse {
     String categoryLargeName;
     List<CategoryMiddleList> categoryMiddleList;
 
-    public static CategoryLargeResponse of(CategoryLarge categoryLarge) {
+    public static CategoryLargeResponse from(CategoryLarge categoryLarge) {
         CategoryLargeResponse res = new CategoryLargeResponse();
 
         if(categoryLarge != null) {
