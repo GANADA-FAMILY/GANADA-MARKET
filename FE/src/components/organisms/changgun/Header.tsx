@@ -43,7 +43,7 @@ function Header() {
       <HeaderBottom>
         <Logo width="8rem" height="4rem" />
         <Navigation>
-          <NavLink to="/shop">SHOP</NavLink>
+          <NavLink to="/shop/phone">SHOP</NavLink>
           <NavLink to="/about">ABOUT</NavLink>
           <Modal
             trigger={<SearchIcon width="3rem" height="3rem" />}

@@ -1,17 +1,26 @@
 import React from 'react';
-import { DataType } from '../../organisms/Shop/ResultList';
 import ImageTag from '../../atoms/Shop/ImageTag';
 import FlexContainer from '../../layouts/Shop/FlexContainer';
 import ImageData from '../../atoms/Shop/ImageData';
+import Auction from '../../../types/Entity/ShopAPI/Auction';
 
 interface PropType {
-  data: DataType;
   idx: number;
+  data: Auction;
+  onLike: (auctionId: number, trigger: boolean) => void;
 }
 
-function ResultItem({ data, idx }: PropType) {
-  const { url, brand, date, model, price, product } = data;
-
+function ResultItem({ onLike, data, idx }: PropType) {
+  const {
+    titleImageUrl,
+    auctionTitle,
+    product,
+    startPrice,
+    startTime,
+    cycle,
+    liked,
+    auctionId,
+  } = data;
   const style = {
     flexDirection: 'column',
     height: '574.094px',
@@ -22,13 +31,15 @@ function ResultItem({ data, idx }: PropType) {
   };
   return (
     <FlexContainer {...style}>
-      <ImageTag url={url} />
+      <ImageTag url={titleImageUrl} />
       <ImageData
-        product={product}
-        brand={brand}
-        date={date}
-        model={model}
-        price={price}
+        product={product.productName}
+        title={auctionTitle}
+        brand={product.productBrand}
+        model={product.productModel}
+        auctionId={auctionId}
+        isLike={liked}
+        onLike={onLike}
       />
     </FlexContainer>
   );

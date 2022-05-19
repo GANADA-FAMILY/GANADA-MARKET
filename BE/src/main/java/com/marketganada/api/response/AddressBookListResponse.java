@@ -31,6 +31,7 @@ public class AddressBookListResponse {
             addressInfo.put("postalCode",addressBooks.get(i).getPostalCode());
             addressInfo.put("address",addressBooks.get(i).getAddress());
             addressInfo.put("addressDetail",addressBooks.get(i).getAddressDetail());
+            addressInfo.put("activate",addressBooks.get(i).isActivate());
             addressBookList.add(addressInfo);
         }
         res.setAddressBookList(addressBookList);

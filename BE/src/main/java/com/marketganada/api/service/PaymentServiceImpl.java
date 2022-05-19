@@ -15,7 +15,6 @@ import com.marketganada.db.repository.ProductHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,16 +22,12 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.TimeZone;
+import java.util.*;
 
 @Service
 public class PaymentServiceImpl implements PaymentService{
@@ -47,9 +42,12 @@ public class PaymentServiceImpl implements PaymentService{
     private static final String HOST = "https://kapi.kakao.com";
 
     @Override
-    @Transactional
-    public String insertPayment(PaymentInsertRequest paymentInsertRequest, User user) {
-        String res = "";
+    public Map<String,Object> insertPayment(PaymentInsertRequest paymentInsertRequest, User user) {
+        Map<String,Object> result = new HashMap<>();
+        String insert  = "success";
+        Long paymentId = null;
+        KakaoPayReadyVO kakaoPayReadyVO = new KakaoPayReadyVO();
+
         Optional<Auction> auction = auctionRepository.findById(paymentInsertRequest.getAuctionId());
 
         if(auction.isPresent()){
@@ -77,35 +75,49 @@ public class PaymentServiceImpl implements PaymentService{
                 System.out.println("타임오버");
                 auction.get().setAuctionStatus(false);
                 auctionRepository.save(auction.get());
-                return "fail";
+
+                insert = "fail";
+
             }
             //결제가 진행중인 경매
             Optional<Payment> checkPayment = paymentRepository.findByUserAndAuction(user, auction.get());
             if(checkPayment.isPresent()){
                 System.out.println("중복");
-                return "conflict";
+                insert = "conflict";
+
             }
-            Payment payment = Payment.builder()
-                    .price(paymentInsertRequest.getPrice())
-                    .status(0)
-                    .paymentMethod(paymentInsertRequest.getPaymentMethod())
-                    .buyerName(paymentInsertRequest.getBuyerName())
-                    .phone(paymentInsertRequest.getPhone())
-                    .postalCode(paymentInsertRequest.getPostalCode())
-                    .address(paymentInsertRequest.getAddress())
-                    .addressDetail(paymentInsertRequest.getAddressDetail())
-                    .user(user)
-                    .auction(auction.get())
-                    .build();
-            paymentRepository.save(payment);
-            res = String.valueOf(payment.getPaymentId());
-            auction.get().setAuctionStatus(false);
-            auctionRepository.save(auction.get());
+            if(insert.equals("success")){
+                Payment payment = Payment.builder()
+                        .price(paymentInsertRequest.getPrice())
+                        .status(0)
+                        .paymentMethod(paymentInsertRequest.getPaymentMethod())
+                        .buyerName(paymentInsertRequest.getBuyerName())
+                        .phone(paymentInsertRequest.getPhone())
+                        .postalCode(paymentInsertRequest.getPostalCode())
+                        .address(paymentInsertRequest.getAddress())
+                        .addressDetail(paymentInsertRequest.getAddressDetail())
+                        .user(user)
+                        .auction(auction.get())
+                        .build();
+                paymentRepository.save(payment);
+                paymentId = payment.getPaymentId();
+                auction.get().setAuctionStatus(false);
+                auctionRepository.save(auction.get());
+                kakaoPayReadyVO = kakaoPayReady(paymentInsertRequest,user);
+                System.out.println(kakaoPayReadyVO.getNext_redirect_pc_url());
+            }
+
         }else{
             System.out.println("없는경매");
-            return "fail";
+            insert = "fail";
+
         }
-        return res;
+
+
+        result.put("insert",insert);
+        result.put("paymentId",paymentId);
+
+        return result;
     }
 
     @Override
@@ -132,7 +144,7 @@ public class PaymentServiceImpl implements PaymentService{
         params.add("total_amount", String.valueOf(paymentInsertRequest.getPrice()));
         params.add("tax_free_amount", "0");
         params.add("approval_url", "http://localhost:3000/payment/result/approve");
-        params.add("cancel_url", "http://localhost:3000/payment/result/cancel");
+        params.add("cancel_url", "http://localhost:3000/payment/result/fail");
         params.add("fail_url", "http://localhost:3000/payment/result/fail");
 
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
@@ -228,7 +240,6 @@ public class PaymentServiceImpl implements PaymentService{
     }
 
     @Override
-    @Transactional
     public String confirmPayment(Long paymentId, User user) {
         Optional<Payment> payment = paymentRepository.findById(paymentId);
         //존재하지 않는다면
