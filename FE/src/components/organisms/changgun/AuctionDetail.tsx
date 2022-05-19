@@ -92,9 +92,11 @@ function AuctionDetail({ data }: AuctionDetailProps) {
   useEffect(() => {
     // 타이머를 이용하여 price 설정
     const today = new Date();
+
     setPrice(
       startPrice -
-        dateDiffInHours(today, new Date(startTime)) * cycle * depreciation,
+        Math.floor(dateDiffInHours(today, new Date(startTime)) / cycle) *
+          depreciation,
     );
 
     const nextCycleTime =

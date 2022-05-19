@@ -15,8 +15,6 @@ const Wrapper = styled.div`
 `;
 
 function AuctionTemplate({ data }: AuctionTemplateProps) {
-  console.log(data);
-
   return (
     <Wrapper>
       <AuctionSummary
