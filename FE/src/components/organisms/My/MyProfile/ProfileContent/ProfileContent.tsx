@@ -4,10 +4,8 @@ import InputBox from 'components/atoms/My/InputBox/InputBox';
 import Title from 'components/atoms/My/Title/Title';
 import InfoGroup from 'components/molecules/My/InfoGroup';
 import InfoItem from 'components/molecules/My/InfoItem';
-import { User } from 'types/Entity/UserAPI';
 import { useAuth, useForm } from 'hooks';
-import userAPI from 'api/userAPI';
-import { useRootDispatch, useRootSelector } from 'state/Hooks';
+import { useRootSelector } from 'state/Hooks';
 import {
   changeCurrentPassword,
   changeNewPassword,
