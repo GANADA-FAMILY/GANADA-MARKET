@@ -2,14 +2,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import { ShopFilterSlice } from './reducers/ShopNavFilter';
 import { ShopDataFilterSlice } from './reducers/ShopDataFilter';
 import UserSlice from './reducers/UserSlice';
-import addressbookSlice from './reducers/AddressSlice';
+import AddressbookSlice from './reducers/AddressSlice';
 
 const Store = configureStore({
   reducer: {
     ShopNavFilter: ShopFilterSlice.reducer,
     ShopDataFilter: ShopDataFilterSlice.reducer,
     user: UserSlice.reducer,
-    addressbook: addressbookSlice.reducer,
+    addressbook: AddressbookSlice.reducer,
   },
 });
 

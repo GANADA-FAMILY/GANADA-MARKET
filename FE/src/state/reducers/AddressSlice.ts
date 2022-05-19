@@ -38,7 +38,7 @@ const initialState = {
   addressbook: [],
 } as AddressbookState;
 
-export const addressbookSlice = createSlice({
+export const AddressbookSlice = createSlice({
   name: 'addressbook',
   initialState,
   reducers: {},
@@ -56,4 +56,4 @@ export const addressbookSlice = createSlice({
   },
 });
 
-export default addressbookSlice;
+export default AddressbookSlice;
