@@ -1,38 +1,31 @@
 import styled from '@emotion/styled';
-import TitleBar from 'components/molecules/My/TitleBar';
-import LinkButton from 'components/atoms/My/LinkButton';
-import Text from 'components/atoms/My/Text';
+import theme from 'styles/theme';
+import { Button } from 'components/atoms/My';
 import { useRootDispatch, useRootSelector } from 'state/Hooks';
 import {
   deleteAddressbook,
-  getAddressbook,
   updateRepresentAddressbook,
-} from 'state/reducers/AddressSlice';
-import { useEffect } from 'react';
+} from 'state/reducers/AddressbookSlice';
+import { Modal, TitleBar } from 'components/molecules/My';
+import { useState } from 'react';
 import MyListBox from './MyListBox';
+import AddressFormBox from './AddressFormBox';
 
 function MyAddress() {
   const items = useRootSelector((state) => state.addressbook.addressbook);
   const dispatch = useRootDispatch();
-
-  const modifyHandler = (id: string) => {
-    // dispatch(()=>)
+  const [visible, setVisible] = useState<boolean>(false);
+  const onShowHandler = () => {
+    setVisible(true);
   };
-  const activateHandler = (id: string) => {
-    dispatch(() => updateRepresentAddressbook(id));
-  };
-  const deleteHandler = (id: string) => {
-    dispatch(() => deleteAddressbook(id));
+  const onCloseHandler = () => {
+    setVisible(false);
   };
 
   const onClickHandler = async (e: any) => {
     if (e.target.name === undefined) return;
     const names = e.target.name.split('-');
-    console.log(names[1]);
     switch (names[1]) {
-      case 'modify':
-        await modifyHandler(names[0]);
-        break;
       case 'active':
         dispatch(updateRepresentAddressbook(names[0]));
         break;
@@ -48,14 +41,25 @@ function MyAddress() {
       <TitleContent>
         <TitleBar title="주소록" size={24} lineHeight={12} color="black2" />
         <ButtonBox>
-          <AddButton href="">
-            <Text size={12} color="gray2" lineHeight={32}>
-              + 새 배송지 추가
-            </Text>
+          <AddButton type="button" onClick={onShowHandler} size="small">
+            + 새 배송지 추가
           </AddButton>
         </ButtonBox>
       </TitleContent>
       <MyListBox items={items} onClick={onClickHandler} />
+      <Modal onClose={onShowHandler} visible={visible} title="새 주소 추가">
+        <AddressFormBox
+          onCancel={onCloseHandler}
+          initialForm={{
+            addressName: '',
+            addressPhone: '',
+            postalCode: '',
+            address: '',
+            addressDetail: '',
+            activate: false,
+          }}
+        />
+      </Modal>
     </Container>
   );
 }
@@ -72,15 +76,16 @@ const ButtonBox = styled.div`
   padding-left: 30px;
   flex-shrink: 0;
 `;
-const AddButton = styled(LinkButton)`
+const AddButton = styled(Button)`
   margin-right: 0;
   padding: 0 14px;
   line-height: 32px;
-  border-radius: 10px;
   border: 1px solid #222;
   letter-spacing: -0.06px;
-  text-decoration: none;
   margin-top: 0;
+  background-color: ${theme.color.white};
+  color: ${theme.color.gray2};
+  font-size: 1.2rem;
 `;
 
 export default MyAddress;
