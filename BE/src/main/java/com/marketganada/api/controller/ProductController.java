@@ -6,7 +6,6 @@ import com.marketganada.api.request.CategorySmallInsertRequest;
 import com.marketganada.api.request.ProductInsertRequest;
 import com.marketganada.api.response.*;
 import com.marketganada.api.service.ProductService;
-import com.marketganada.db.entity.CategoryMiddle;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Api(value = "상품정보 관리 API", tags = {"Product."})
 @RestController
@@ -56,7 +54,7 @@ public class ProductController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity productUpdate(@RequestBody @ApiParam(value = "수정할 제품 정보", required = true) @Valid ProductInsertRequest productInsertRequest,
-                                                          @PathVariable Long productId) {
+                                        @PathVariable Long productId) {
         String result;
 
         try {
@@ -206,22 +204,6 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
-    @GetMapping("/category-middle-list")
-    @ApiOperation(value = "중분류 목록 조회", notes = "DB에 등록된 중분류 정보를 리스트업하여 조회한다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공", response = CategoryMiddleListResponse.class),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 403, message = "권한 없는 유저"),
-            @ApiResponse(code = 404, message = "존재하지 않는 ID"),
-            @ApiResponse(code = 500, message = "서버 오류")
-    })
-    public ResponseEntity<CategoryMiddleListResponse> getCategoryMiddleList() {
-        List<CategoryMiddle> categoryMiddles;
-        categoryMiddles = productService.getCategoryMiddleList();
-
-        return ResponseEntity.ok(CategoryMiddleListResponse.from(categoryMiddles));
     }
 
     @PutMapping("/category-middle/{categoryMiddleId}")

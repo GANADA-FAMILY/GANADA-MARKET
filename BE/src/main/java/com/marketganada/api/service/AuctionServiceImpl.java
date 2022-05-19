@@ -2,6 +2,7 @@ package com.marketganada.api.service;
 
 import com.marketganada.api.request.AuctionInsertRequest;
 import com.marketganada.common.ProductSpecification;
+import com.marketganada.common.AuctionSpecification;
 import com.marketganada.db.entity.*;
 import com.marketganada.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,10 +49,7 @@ public class AuctionServiceImpl implements AuctionService {
     S3Service s3Service;
 
     @Override
-    public String insertAuction(AuctionInsertRequest auctionInsertRequest, List<MultipartFile> auctionImages, Long userId) {
-        Optional<User> user = userRepository.findById(userId);
-        if(!user.isPresent())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"user not found");
+    public String insertAuction(AuctionInsertRequest auctionInsertRequest, List<MultipartFile> auctionImages, User user) {
 
         Optional<Product> product = productRepository.findById(auctionInsertRequest.getProductId());
         if(!product.isPresent())
@@ -74,7 +72,7 @@ public class AuctionServiceImpl implements AuctionService {
         }
 
         Auction auction = Auction.builder()
-                .user(user.get())
+                .user(user)
                 .auctionTitle(auctionInsertRequest.getAuctionTitle())
                 .auctionStatus(true)
                 .titleImageUrl(fileNameList.get(0))
@@ -113,25 +111,17 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
-    public boolean isThisAuctionMine(Auction auction, Long userId) {
-        Optional<User> user = userRepository.findById(userId);
-        if(!user.isPresent())
-            throw new IllegalArgumentException("not found");
-
-        if(auction.getUser().getUserId() != userId)
+    public boolean isThisAuctionMine(Auction auction, User user) {
+        if(auction.getUser().getUserId() != user.getUserId())
             return false;
         else
             return true;
     }
 
     @Override
-    public boolean isThisAuctionLiked(Auction auction, Long userId) {
-        Optional<User> user = userRepository.findById(userId);
-        if(!user.isPresent())
-            throw new IllegalArgumentException("not found");
-
+    public boolean isThisAuctionLiked(Auction auction, User user) {
         LikesId likesId = new LikesId();
-        likesId.setUser(userId);
+        likesId.setUser(user.getUserId());
         likesId.setAuction(auction.getAuctionId());
 
         Optional<Likes> likes = likesRepository.findById(likesId);
@@ -142,15 +132,12 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
-    public String deleteAuction(Long auctionId, Long userId) {
+    public String deleteAuction(Long auctionId, User user) {
         Optional<Auction> auction = auctionRepository.findById(auctionId);
         if(!auction.isPresent())
             throw new IllegalArgumentException("not found");
 
-        Optional<User> user = userRepository.findById(userId);
-        if(!user.isPresent())
-            throw new IllegalArgumentException("not found");
-        if(user.get().getUserId() != auction.get().getUser().getUserId())
+        if(user.getUserId() != auction.get().getUser().getUserId())
             return "not owner";
 
         List<AuctionImg> auctionImgs = auctionImgRepository.findByAuction(auction.get());
@@ -167,17 +154,13 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
-    public String insertAuctionLike(Long auctionId, Long userId) {
-        Optional<User> user = userRepository.findById(userId);
-        if(!user.isPresent())
-            throw new IllegalArgumentException("not found");
-
+    public String insertAuctionLike(Long auctionId, User user) {
         Optional<Auction> auction = auctionRepository.findById(auctionId);
         if(!auction.isPresent())
             throw new IllegalArgumentException("not found");
 
         LikesId likesId = new LikesId();
-        likesId.setUser(userId);
+        likesId.setUser(user.getUserId());
         likesId.setAuction(auctionId);
 
         Optional<Likes> likes = likesRepository.findById(likesId);
@@ -186,7 +169,7 @@ public class AuctionServiceImpl implements AuctionService {
 
         Likes insertLikes = Likes.builder()
                 .auction(auction.get())
-                .user(user.get())
+                .user(user)
                 .build();
 
         likesRepository.save(insertLikes);
@@ -199,17 +182,13 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
-    public String deleteAuctionLike(Long auctionId, Long userId) {
-        Optional<User> user = userRepository.findById(userId);
-        if(!user.isPresent())
-            throw new IllegalArgumentException("not found");
-
+    public String deleteAuctionLike(Long auctionId, User user) {
         Optional<Auction> auction = auctionRepository.findById(auctionId);
         if(!auction.isPresent())
             throw new IllegalArgumentException("not found");
 
         LikesId likesId = new LikesId();
-        likesId.setUser(userId);
+        likesId.setUser(user.getUserId());
         likesId.setAuction(auctionId);
 
         Optional<Likes> likes = likesRepository.findById(likesId);
@@ -234,9 +213,8 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
-    public List<Auction> getAuctionPhoneList(String brand, String model, String save, Pageable pageable) {
+    public Page<Auction> getAuctionPhoneList(String brand, String model, String save, Pageable pageable) {
         Specification<Product> spec = (root, query, criteriaBuilder) -> null;
-
         spec = spec.and(ProductSpecification.equalCategoryLargeName("스마트폰"));
 
         if(!brand.equals("ALL"))
@@ -250,13 +228,18 @@ public class AuctionServiceImpl implements AuctionService {
         if(products.size() < 1)
             throw new NoSuchElementException("products not found");
 
-        List<Auction> auctions = auctionRepository.findByProductIn(products, pageable);
+        Specification<Auction> auctionSpec = (root, query, criteriaBuilder) -> null;
+        auctionSpec = auctionSpec.and(AuctionSpecification.isAuctionStatus())
+                .and(AuctionSpecification.greaterThanEndTime(new Date()))
+                .and(AuctionSpecification.inProduct(products));
+
+        Page<Auction> auctions = auctionRepository.findAll(auctionSpec, pageable);
 
         return auctions;
     }
 
     @Override
-    public List<Auction> getAuctionEarphoneList(String brand, String model, Pageable pageable) {
+    public Page<Auction> getAuctionEarphoneList(String brand, String model, Pageable pageable) {
         Specification<Product> spec = (root, query, criteriaBuilder) -> null;
 
         spec = spec.and(ProductSpecification.equalCategoryLargeName("이어폰"));
@@ -270,7 +253,12 @@ public class AuctionServiceImpl implements AuctionService {
         if(products.size() < 1)
             throw new NoSuchElementException("products not found");
 
-        List<Auction> auctions = auctionRepository.findByProductIn(products, pageable);
+        Specification<Auction> auctionSpec = (root, query, criteriaBuilder) -> null;
+        auctionSpec = auctionSpec.and(AuctionSpecification.isAuctionStatus())
+                .and(AuctionSpecification.greaterThanEndTime(new Date()))
+                .and(AuctionSpecification.inProduct(products));
+
+        Page<Auction> auctions = auctionRepository.findAll(auctionSpec, pageable);
 
         return auctions;
     }
@@ -280,5 +268,32 @@ public class AuctionServiceImpl implements AuctionService {
 
         List<Likes> likeAuctionList = likesRepository.findByUser(user);
         return likeAuctionList;
+    }
+
+    @Override
+    public Long getAuctionCnt(String category, String brand, String model, String save) {
+        Specification<Product> spec = (root, query, criteriaBuilder) -> null;
+
+        if(!category.equals("ALL"))
+            spec = spec.and(ProductSpecification.equalCategoryLargeName(category));
+        if(!brand.equals("ALL"))
+            spec = spec.and(ProductSpecification.equalProductBrand(brand));
+        if(!model.equals("ALL"))
+            spec = spec.and(ProductSpecification.equalProductName(model));
+        if(!save.equals("ALL"))
+            spec = spec.and(ProductSpecification.equalCategorySmallName(save));
+
+        List<Product> products = productRepository.findAll(spec);
+        if(products.size() < 1)
+            throw new NoSuchElementException("products not found");
+
+        Specification<Auction> auctionSpec = (root, query, criteriaBuilder) -> null;
+        auctionSpec = auctionSpec.and(AuctionSpecification.isAuctionStatus())
+                .and(AuctionSpecification.greaterThanEndTime(new Date()))
+                .and(AuctionSpecification.inProduct(products));
+
+        Long auctionCnt = auctionRepository.count(auctionSpec);
+
+        return auctionCnt;
     }
 }

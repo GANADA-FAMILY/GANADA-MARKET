@@ -1,4 +1,4 @@
-package com.marketganada.api.controller;
+package com.marketganada.api.contoroller;
 
 import com.marketganada.api.request.AuctionInsertRequest;
 import com.marketganada.api.request.LikeRequest;
@@ -6,9 +6,9 @@ import com.marketganada.api.response.AuctionDetailResponse;
 import com.marketganada.api.response.AuctionListResponse;
 import com.marketganada.api.service.AuctionService;
 import com.marketganada.api.service.ProductService;
-import com.marketganada.api.service.S3Service;
 import com.marketganada.config.auth.GanadaUserDetails;
 import com.marketganada.db.entity.Auction;
+import com.marketganada.db.entity.Product;
 import com.marketganada.db.entity.User;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +39,6 @@ public class AuctionController {
     @Autowired
     ProductService productService;
 
-    @Autowired
-    S3Service s3Service;
-
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ApiOperation(value = "경매 정보 등록", notes = "DB에 등록할 경매 정보를 입력한다.")
     @ApiResponses({
@@ -59,7 +56,7 @@ public class AuctionController {
         User user = userDetails.getUser();
 
         try {
-            auctionService.insertAuction(auctionInsertRequest, auctionImages, user.getUserId());
+            auctionService.insertAuction(auctionInsertRequest, auctionImages, user);
         } catch (ResponseStatusException e) {
             return ResponseEntity.status(e.getStatus()).build();
         }
@@ -95,7 +92,7 @@ public class AuctionController {
 
             if(user != null) {
                 for (Auction a : auctions) {
-                    if (auctionService.isThisAuctionLiked(a, user.getUserId()))
+                    if (auctionService.isThisAuctionLiked(a, user))
                         isLikes.add(true);
                     else
                         isLikes.add(false);
@@ -103,12 +100,14 @@ public class AuctionController {
             }
         } catch (Exception e) {
             if(e.getMessage().equals("products not found"))
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(AuctionListResponse.of(null,null));
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(AuctionListResponse.of(null,null,null,false));
             else
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(AuctionListResponse.of(null,null));
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(AuctionListResponse.of(null,null,null,false));
         }
 
-        return ResponseEntity.ok(AuctionListResponse.of(auctions.toList(),isLikes));
+        Long auctionCnt = auctionService.getAuctionCnt("ALL","ALL","ALL","ALL");
+
+        return ResponseEntity.ok(AuctionListResponse.of(auctions.toList(),isLikes,auctionCnt,auctions.isLast()));
     }
 
     @GetMapping("/phone")
@@ -134,7 +133,7 @@ public class AuctionController {
             user = userDetails.getUser();
         }
 
-        List<Auction> auctions;
+        Page<Auction> auctions;
         List<Boolean> isLikes = new ArrayList<>();
 
         try {
@@ -142,7 +141,7 @@ public class AuctionController {
 
             if(user != null) {
                 for (Auction a : auctions) {
-                    if (auctionService.isThisAuctionLiked(a, user.getUserId()))
+                    if (auctionService.isThisAuctionLiked(a, user))
                         isLikes.add(true);
                     else
                         isLikes.add(false);
@@ -150,12 +149,16 @@ public class AuctionController {
             }
         } catch (Exception e) {
             if(e.getMessage().equals("products not found"))
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(AuctionListResponse.of(null,null));
-            else
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(AuctionListResponse.of(null,null));
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(AuctionListResponse.of(null,null, null,false));
+            else {
+                e.printStackTrace();
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(AuctionListResponse.of(null,null, null,false));
+            }
         }
 
-        return ResponseEntity.ok(AuctionListResponse.of(auctions,isLikes));
+        Long auctionCnt = auctionService.getAuctionCnt("스마트폰",brand,model,save);
+
+        return ResponseEntity.ok(AuctionListResponse.of(auctions.toList(),isLikes,auctionCnt,auctions.isLast()));
     }
 
     @GetMapping("/earphone")
@@ -179,7 +182,7 @@ public class AuctionController {
             user = userDetails.getUser();
         }
 
-        List<Auction> auctions;
+        Page<Auction> auctions;
         List<Boolean> isLikes = new ArrayList<>();
 
         try {
@@ -187,7 +190,7 @@ public class AuctionController {
 
             if(user != null) {
                 for (Auction a : auctions) {
-                    if (auctionService.isThisAuctionLiked(a, user.getUserId()))
+                    if (auctionService.isThisAuctionLiked(a, user))
                         isLikes.add(true);
                     else
                         isLikes.add(false);
@@ -195,12 +198,14 @@ public class AuctionController {
             }
         } catch (Exception e) {
             if(e.getMessage().equals("products not found"))
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(AuctionListResponse.of(null,null));
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(AuctionListResponse.of(null,null,null,false));
             else
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(AuctionListResponse.of(null,null));
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(AuctionListResponse.of(null,null,null,false));
         }
 
-        return ResponseEntity.ok(AuctionListResponse.of(auctions,isLikes));
+        Long auctionCnt = auctionService.getAuctionCnt("이어폰",brand,model,"ALL");
+
+        return ResponseEntity.ok(AuctionListResponse.of(auctions.toList(),isLikes,auctionCnt,auctions.isLast()));
     }
 
     @GetMapping("/{auctionId}")
@@ -224,24 +229,29 @@ public class AuctionController {
 
         Auction auction;
         boolean isLiked = false,isMine = false;
+        int recentPrice;
 
         try {
             auction = auctionService.getAuctionById(auctionId);
 
             if(user != null) {
-                isLiked = auctionService.isThisAuctionLiked(auction, user.getUserId());
-                isMine = auctionService.isThisAuctionMine(auction, user.getUserId());
+                isLiked = auctionService.isThisAuctionLiked(auction, user);
+                isMine = auctionService.isThisAuctionMine(auction, user);
             }
+
+            Product product = auction.getProduct();
+            recentPrice = productService.getRecentPrice(product);
         } catch (Exception e) {
             if(e.getMessage().equals("not found")) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
             else {
+                e.printStackTrace();
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             }
         }
 
-        return ResponseEntity.ok(AuctionDetailResponse.of(auction,isLiked,isMine));
+        return ResponseEntity.ok(AuctionDetailResponse.of(auction,isLiked,isMine,recentPrice));
     }
 
     @DeleteMapping("/{auctionId}")
@@ -266,7 +276,7 @@ public class AuctionController {
 
         String result;
         try {
-            result = auctionService.deleteAuction(auctionId, user.getUserId());
+            result = auctionService.deleteAuction(auctionId, user);
 
             if(result.equals("not owner"))
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -303,7 +313,7 @@ public class AuctionController {
 
         String result;
         try {
-            result = auctionService.insertAuctionLike(likeRequest.getAuctionId(), user.getUserId());
+            result = auctionService.insertAuctionLike(likeRequest.getAuctionId(), user);
         } catch (Exception e) {
             if(e.getMessage().equals("not found")) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -338,7 +348,7 @@ public class AuctionController {
 
         String result;
         try {
-            result = auctionService.deleteAuctionLike(auctionId, user.getUserId());
+            result = auctionService.deleteAuctionLike(auctionId, user);
         } catch (Exception e) {
             if(e.getMessage().equals("not liked")) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

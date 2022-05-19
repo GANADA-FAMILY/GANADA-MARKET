@@ -6,7 +6,7 @@ import { setNavFilter } from '../../../state/reducers/ShopNavFilter';
 import { useRootSelector } from '../../../state/Hooks';
 
 function ButtonFilter() {
-  const [property, setProperty] = useState('time');
+  const [property, setProperty] = useState('sort=endTime');
 
   // 리덕스로 값 바꾸자
   // 변수로 태그 하나 Depth가 길어지니 전역으로 관리하기
@@ -21,9 +21,9 @@ function ButtonFilter() {
   return (
     <FlexContainer {...style}>
       <LinkTag
-        isClick={property === 'time'}
+        isClick={property === 'sort=endTime'}
         onClick={() => {
-          ClickEvent('time');
+          ClickEvent('endTime');
         }}
         virtualAfter
         hoverColor
@@ -31,9 +31,9 @@ function ButtonFilter() {
         남은 시간순
       </LinkTag>
       <LinkTag
-        isClick={property === 'recommend'}
+        isClick={property === 'sort=likeCnt'}
         onClick={() => {
-          ClickEvent('recommend');
+          ClickEvent('likeCnt');
         }}
         virtualAfter
         hoverColor
@@ -41,9 +41,9 @@ function ButtonFilter() {
         추천
       </LinkTag>
       <LinkTag
-        isClick={property === 'lowPrice'}
+        isClick={property === 'sort=startPrice,asc'}
         onClick={() => {
-          ClickEvent('lowPrice');
+          ClickEvent('startPrice,asc');
         }}
         virtualAfter
         hoverColor
@@ -51,9 +51,9 @@ function ButtonFilter() {
         낮은가격순
       </LinkTag>
       <LinkTag
-        isClick={property === 'highPrice'}
+        isClick={property === 'sort=startPrice,desc'}
         onClick={() => {
-          ClickEvent('highPrice');
+          ClickEvent('startPrice,desc');
         }}
         hoverColor
       >

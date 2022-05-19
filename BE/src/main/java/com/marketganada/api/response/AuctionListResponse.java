@@ -14,10 +14,14 @@ import java.util.List;
 @Getter
 @Setter
 public class AuctionListResponse {
+    Long auctionCnt;
+    boolean isLast;
     List<Auctions> auctionList;
 
-    public static AuctionListResponse of(List<Auction> auctions, List<Boolean> isLikes) {
+    public static AuctionListResponse of(List<Auction> auctions, List<Boolean> isLikes, Long cnt, boolean isLast) {
         AuctionListResponse res = new AuctionListResponse();
+        res.setAuctionCnt(cnt);
+        res.setLast(isLast);
         res.setAuctionList(new ArrayList<>());
 
         if(auctions == null)
@@ -39,6 +43,7 @@ public class AuctionListResponse {
         String titleImageUrl;
         Products product;
         String auctionTitle;
+        String auctionDesc;
         String seller;
         @JsonFormat(timezone = "Asia/Seoul")
         Date startTime;
@@ -50,11 +55,12 @@ public class AuctionListResponse {
         boolean isLiked;
 
         @Builder
-        public Auctions(Auction auction, boolean _isLiked) {
+        public Auctions(Auction auction, boolean _isLiked, int cnt) {
             auctionId = auction.getAuctionId();
             titleImageUrl = auction.getTitleImageUrl();
             product = Products.builder().product(auction.getProduct()).build();
             auctionTitle = auction.getAuctionTitle();
+            auctionDesc = auction.getDescription();
             seller = auction.getUser().getUserNickname();
             startPrice = auction.getStartPrice();
             cycle = auction.getCycle();
@@ -69,11 +75,13 @@ public class AuctionListResponse {
     static class Products {
         String productName;
         String productBrand;
+        String productModel;
 
         @Builder
         public Products(Product product) {
             productName = product.getProductName();
             productBrand = product.getProductBrand();
+            productModel = product.getDeviceId();
         }
     }
 }

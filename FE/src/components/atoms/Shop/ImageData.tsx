@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import { priceComma } from 'functions';
+import Svg from 'components/molecules/Main/Svg';
+import { priceComma } from '../../../functions/priceComma';
 import TextTag from './TextTag';
 import FlexContainer from '../../layouts/Shop/FlexContainer';
 import useSetTime from '../../../hooks/useSetTime';
@@ -10,19 +11,48 @@ import BlockContainer from '../../layouts/Shop/BlockContainer';
 
 interface PropsData {
   brand: string;
-  date: string;
-  price: number;
-  model: string;
+  date?: string;
+  price?: number;
+  model?: string;
   product: string;
+  onLike: (auctionId: number, trigger: boolean) => void;
+  isLike?: boolean;
+  auctionId?: number;
+  title: string;
 }
 
-function ImageData({ product, brand, date, price, model }: PropsData) {
+interface svgProps {
+  onClick: (e: MouseEvent) => void;
+}
+
+function ImageData({
+  product,
+  brand,
+  title,
+  // date,
+  // price,
+  model,
+  isLike,
+  onLike,
+  auctionId,
+}: PropsData) {
   const router = Router();
   const clickEvent = () => {
-    router.push('/');
+    router.push('/productDetail');
   };
   const time = useSetTime(100);
-  const priceToString = priceComma(price).concat('원');
+  const [likeState, setLikeState] = useState(isLike);
+  // const priceToString = priceComma(price).concat('원');
+
+  const setLike = () => {
+    if (likeState && auctionId) {
+      setLikeState((prev) => !prev);
+      onLike(auctionId, false);
+    } else if (auctionId) {
+      setLikeState((prev) => !prev);
+      onLike(auctionId, true);
+    }
+  };
 
   return (
     <FlexContainer {...containerStyle}>
@@ -38,11 +68,17 @@ function ImageData({ product, brand, date, price, model }: PropsData) {
       </BlockContainer>
 
       <BlockContainer {...modelContainer}>
+        <TextTag {...basicFontStyle}>{title}</TextTag>
+      </BlockContainer>
+      <BlockContainer {...modelContainer}>
         <TextTag {...basicFontStyle}>{model}</TextTag>
       </BlockContainer>
-      <BlockContainer>
+      {/* <BlockContainer>
         <TextTag {...basicFontStyle}>{priceToString}</TextTag>
-      </BlockContainer>
+      </BlockContainer> */}
+      <SVGWrap onClick={setLike}>
+        <Svg fill={likeState ? 'black' : '#ebebeb'} />
+      </SVGWrap>
       <BlockContainer {...timeContainStyle}>
         <TextTag>남은 시간 : </TextTag>
         <TextTag {...timeStyle}>{time}</TextTag>
@@ -60,6 +96,12 @@ const timeContainStyle = {
   fontSize: '2rem',
   marginTop: '2rem',
 };
+const SVGWrap = styled.div<svgProps>`
+  margin-top: 1rem;
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 const timeStyle = {
   color: '#FB2929',
@@ -84,6 +126,7 @@ const modelFontStyle = {
 
 const modelContainer = {
   marginBottom: '1rem',
+  marginTop: '1rem',
 };
 
 const brandContainer = {

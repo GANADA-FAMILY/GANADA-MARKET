@@ -90,7 +90,7 @@ public class ProductGetController {
             }
         }
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(CategoryLargeResponse.from(categoryLarge));
     }
 
     @GetMapping("/category-large-list")

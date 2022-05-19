@@ -14,3 +14,11 @@ export interface SignupForm {
   userNickname: string;
   userPhone: string;
 }
+
+export interface DuplicateNicknameForm {
+  userNickname: string;
+}
+
+export interface FindEmailForm {
+  userPhone: string;
+}

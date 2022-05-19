@@ -47,15 +47,4 @@ public class CategoryMiddle {
         name = categoryMiddleInsertRequest.getCategoryName();
         this.categoryLarge = categoryLarge;
     }
-
-    @Override
-    public String toString() {
-        return "CategoryMiddle{" +
-                "categoryMiddleId=" + categoryMiddleId +
-                ", name='" + name + '\'' +
-                ", categoryLarge=" + categoryLarge +
-                ", categorySmalls=" + categorySmalls +
-                ", products=" + products +
-                '}';
-    }
 }

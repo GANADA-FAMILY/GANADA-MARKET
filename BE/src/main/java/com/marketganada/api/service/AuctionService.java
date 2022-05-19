@@ -12,15 +12,16 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface AuctionService {
-    public String insertAuction(AuctionInsertRequest auctionInsertRequest, List<MultipartFile> auctionImages, Long userId);
+    public String insertAuction(AuctionInsertRequest auctionInsertRequest, List<MultipartFile> auctionImages, User user);
     public Auction getAuctionById(Long auctionId);
-    public boolean isThisAuctionMine(Auction auction, Long userId);
-    public boolean isThisAuctionLiked(Auction auction, Long userId);
-    public String deleteAuction(Long auctionId, Long userId);
-    public String insertAuctionLike(Long auctionId, Long userId);
-    public String deleteAuctionLike(Long auctionId, Long userId);
+    public boolean isThisAuctionMine(Auction auction, User user);
+    public boolean isThisAuctionLiked(Auction auction, User user);
+    public String deleteAuction(Long auctionId, User user);
+    public String insertAuctionLike(Long auctionId, User user);
+    public String deleteAuctionLike(Long auctionId, User user);
     public Page<Auction> getRecentAuctionList(Pageable pageable);
-    public List<Auction> getAuctionPhoneList(String brand, String model, String save, Pageable pageable);
-    public List<Auction> getAuctionEarphoneList(String brand, String model, Pageable pageable);
+    public Page<Auction> getAuctionPhoneList(String brand, String model, String save, Pageable pageable);
+    public Page<Auction> getAuctionEarphoneList(String brand, String model, Pageable pageable);
     List<Likes> getLikeAuctionList(User user);
+    Long getAuctionCnt(String category, String brand, String model, String save);
 }
