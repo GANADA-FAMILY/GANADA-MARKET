@@ -7,6 +7,7 @@ const Wrapper = styled.div`
   border-right: 1px solid #efefef;
   padding-right: 2rem;
   margin-right: 2rem;
+  row-gap: 3rem;
 `;
 
 const ImgContainer = styled.div``;

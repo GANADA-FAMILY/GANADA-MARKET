@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 import { Logo, InputWithLabel } from 'components/molecules/changgun';
-import { Button, MenuLink, Text } from 'components/atoms/changgun';
+import {
+  Button,
+  MenuLink,
+  Text,
+  FlexibleImage,
+} from 'components/atoms/changgun';
 
 const Wrapper = styled.div`
   display: flex;
@@ -25,6 +30,31 @@ const HelperMenu = styled.section`
   align-items: center;
 `;
 
+const SocialButtonGroup = styled.section`
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+`;
+
+const SocialButtonInner = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+`;
+
+const SocialIconBox = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+`;
+
 function LoginForm() {
   return (
     <Wrapper>
@@ -38,9 +68,9 @@ function LoginForm() {
         />
         <InputWithLabel labelName="비밀번호" />
         <Button
-          padding="1.2rem"
           isActive={false}
-          styles="color: #fff; font-size: 1.6rem; font-weight: 600"
+          padding="1.2rem"
+          additionalStyles="color: #fff; font-size: 1.6rem; font-weight: 600"
           activeStyle="color: #fff; background-color: black"
         >
           로그인
@@ -53,6 +83,38 @@ function LoginForm() {
         <Text size="xsmall"> | </Text>
         <MenuLink to="/signup">회원가입</MenuLink>
       </HelperMenu>
+      <SocialButtonGroup>
+        <Button
+          isActive
+          additionalStyles="border: 1px solid #efefef; border-radius: 1rem;"
+          backgroundColor="#fff"
+          padding="1.2rem"
+        >
+          <SocialButtonInner>
+            <SocialIconBox>
+              <FlexibleImage src="/images/googleIcon.png" />
+            </SocialIconBox>
+            <Text bold size="small">
+              구글 로그인
+            </Text>
+          </SocialButtonInner>
+        </Button>
+        <Button
+          isActive
+          additionalStyles="border: 1px solid #efefef; border-radius: 1rem;"
+          backgroundColor="#fff"
+          padding="1.2rem"
+        >
+          <SocialButtonInner>
+            <SocialIconBox>
+              <FlexibleImage src="/images/kakaoIcon.png" />
+            </SocialIconBox>
+            <Text bold size="small">
+              카카오 로그인
+            </Text>
+          </SocialButtonInner>
+        </Button>
+      </SocialButtonGroup>
     </Wrapper>
   );
 }
