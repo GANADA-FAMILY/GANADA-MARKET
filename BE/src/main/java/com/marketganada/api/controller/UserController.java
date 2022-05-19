@@ -9,10 +9,7 @@ import com.marketganada.api.service.AuctionService;
 import com.marketganada.api.service.PaymentService;
 import com.marketganada.api.service.UserService;
 import com.marketganada.config.auth.GanadaUserDetails;
-import com.marketganada.db.entity.AddressBook;
-import com.marketganada.db.entity.Likes;
-import com.marketganada.db.entity.Payment;
-import com.marketganada.db.entity.User;
+import com.marketganada.db.entity.*;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -55,8 +52,9 @@ public class UserController {
 
         List<Payment> orderHistory = paymentService.getOrderHistory(user);
         List<Payment> salesHistory = paymentService.getSalesHistory(user);
+        List<Auction> selling = auctionService.getTrueAuctionListByUser(user);
 
-        return ResponseEntity.ok(UserInfoResponse.of(user,orderHistory,salesHistory));
+        return ResponseEntity.ok(UserInfoResponse.of(user,orderHistory,salesHistory,selling));
     }
 
     @DeleteMapping
