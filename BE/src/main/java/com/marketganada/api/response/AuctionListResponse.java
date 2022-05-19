@@ -73,15 +73,19 @@ public class AuctionListResponse {
 
     @Getter
     static class Products {
+        Long productId;
         String productName;
         String productBrand;
         String productModel;
+        String description;
 
         @Builder
         public Products(Product product) {
+            productId = product.getProductId();
             productName = product.getProductName();
             productBrand = product.getProductBrand();
             productModel = product.getDeviceId();
+            description = product.getDescription();
         }
     }
 }
