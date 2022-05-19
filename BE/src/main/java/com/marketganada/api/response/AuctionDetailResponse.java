@@ -18,18 +18,14 @@ import java.util.List;
 public class AuctionDetailResponse {
     Auctions auction;
 
-    public static AuctionDetailResponse of(Auction auction, boolean isLiked, boolean isMine, int recentPrice) {
+    public static AuctionDetailResponse of(Auction auction, boolean isLiked, boolean isMine) {
         AuctionDetailResponse res = new AuctionDetailResponse();
         if(auction != null)
             res.setAuction(Auctions.builder()
                     .auction(auction)
                     ._isLiked(isLiked)
                     ._isMine(isMine)
-                    ._recentPrice(recentPrice)
                     .build());
-        Date testDate = res.getAuction().getStartTime();
-        System.out.println("옥션디테일 : "+ res.getAuction().getStartTime());
-        System.out.println("testDate : "+ testDate);
 
         return res;
     }
@@ -56,9 +52,9 @@ public class AuctionDetailResponse {
         int likeCnt;
 
         @Builder
-        public Auctions(Auction auction, Boolean _isLiked, Boolean _isMine, int _recentPrice) {
+        public Auctions(Auction auction, Boolean _isLiked, Boolean _isMine) {
             auctionId = auction.getAuctionId();
-            product = Products.builder().product(auction.getProduct())._recentPrice(_recentPrice).build();
+            product = Products.builder().product(auction.getProduct()).build();
             auctionTitle = auction.getAuctionTitle();
             auctionDesc = auction.getDescription();
             seller = auction.getUser().getUserNickname();
@@ -91,15 +87,15 @@ public class AuctionDetailResponse {
         String productModel;
         @JsonFormat(timezone = "Asia/Seoul")
         Date releaseDate;
-        int recentPrice;
+        int releasePrice;
 
         @Builder
-        public Products(Product product, int _recentPrice) {
+        public Products(Product product) {
             productName = product.getProductName();
             productBrand = product.getProductBrand();
             releaseDate = product.getReleaseDate();
             productModel = product.getDeviceId();
-            recentPrice = _recentPrice;
+            releasePrice = product.getReleasePrice();
         }
     }
 

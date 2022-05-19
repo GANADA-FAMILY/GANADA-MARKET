@@ -61,27 +61,27 @@ public class PaymentServiceImpl implements PaymentService{
                 e.printStackTrace();
             }
 
-            System.out.println("현재시간"+curDate);
+
             Date endTime = auction.get().getEndTime();
             try {
                 endTime = simpleDateFormat.parse(simpleDateFormat.format(endTime));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            System.out.println("종료시간"+endTime);
+
 
             //시간이 지나버린 경매
             if(endTime.before(curDate)){
                 auction.get().setAuctionStatus(false);
                 auctionRepository.save(auction.get());
-                System.out.println("타임오버");
+;
                 insert = "fail";
 
             }
             //결제가 진행중인 경매
             Optional<Payment> checkPayment = paymentRepository.findByUserAndAuction(user, auction.get());
             if(checkPayment.isPresent()){
-                System.out.println("중복");
+
                 insert = "conflict";
 
             }
@@ -104,11 +104,11 @@ public class PaymentServiceImpl implements PaymentService{
                 auctionRepository.save(auction.get());
                 kakaoPayReadyVO = kakaoPayReady(paymentInsertRequest,user);
                 result.put("kakaoPayReady",kakaoPayReadyVO);
-                System.out.println(kakaoPayReadyVO.getNext_redirect_pc_url());
+
             }
 
         }else{
-            System.out.println("없는경매");
+
             insert = "fail";
 
         }
@@ -151,9 +151,9 @@ public class PaymentServiceImpl implements PaymentService{
 
         try {
             KakaoPayReadyVO kakaoPayReadyVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/ready"), body, KakaoPayReadyVO.class);
-            System.out.println(kakaoPayReadyVO.getNext_redirect_pc_url());
-            System.out.println(kakaoPayReadyVO.getTid());
-            System.out.println(payment.getPaymentId());
+//            System.out.println(kakaoPayReadyVO.getNext_redirect_pc_url());
+//            System.out.println(kakaoPayReadyVO.getTid());
+//            System.out.println(payment.getPaymentId());
 
             return kakaoPayReadyVO;
 
@@ -219,7 +219,7 @@ public class PaymentServiceImpl implements PaymentService{
         Optional<Payment> payment = paymentRepository.findById(paymentId);
         //존재하지 않는다면
         if(!payment.isPresent()){
-            System.out.println("존재하지 않음");
+
             return "fail";
         }
         //입금완료거나 운송장번호 입력 상태라면
@@ -232,7 +232,7 @@ public class PaymentServiceImpl implements PaymentService{
                 paymentRepository.save(payment.get());
                 return "success";
             }else{
-                System.out.println("판매자가 아님");
+
                 return "Unauthorized";
             }
         }
@@ -244,7 +244,7 @@ public class PaymentServiceImpl implements PaymentService{
         Optional<Payment> payment = paymentRepository.findById(paymentId);
         //존재하지 않는다면
         if(!payment.isPresent()){
-            System.out.println("존재하지 않음");
+
             return "fail";
         }
         //운송장번호 입력 상태라면
@@ -262,7 +262,7 @@ public class PaymentServiceImpl implements PaymentService{
                 productHistoryRepository.save(productHistory);
                 return "success";
             }else{
-                System.out.println("구매자가 아님");
+
                 return "Unauthorized";
             }
         }
