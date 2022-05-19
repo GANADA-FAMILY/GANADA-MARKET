@@ -6,7 +6,6 @@ import com.marketganada.common.AuctionSpecification;
 import com.marketganada.db.entity.*;
 import com.marketganada.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -213,16 +212,16 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
-    public Page<Auction> getAuctionPhoneList(String brand, String model, String save, Pageable pageable) {
+    public Page<Auction> getAuctionPhoneList(List<String> brand, List<String> model, List<String> save, Pageable pageable) {
         Specification<Product> spec = (root, query, criteriaBuilder) -> null;
         spec = spec.and(ProductSpecification.equalCategoryLargeName("스마트폰"));
 
-        if(!brand.equals("ALL"))
-            spec = spec.and(ProductSpecification.equalProductBrand(brand));
-        if(!model.equals("ALL"))
-            spec = spec.and(ProductSpecification.equalProductName(model));
-        if(!save.equals("ALL"))
-            spec = spec.and(ProductSpecification.equalCategorySmallName(save));
+        if(!brand.get(0).equals("ALL"))
+            spec = spec.and(ProductSpecification.equalProductBrands(brand));
+        if(!model.get(0).equals("ALL"))
+            spec = spec.and(ProductSpecification.equalProductNames(model));
+        if(!save.get(0).equals("ALL"))
+            spec = spec.and(ProductSpecification.equalCategorySmallNames(save));
 
         List<Product> products = productRepository.findAll(spec);
         if(products.size() < 1)
@@ -239,15 +238,15 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
-    public Page<Auction> getAuctionEarphoneList(String brand, String model, Pageable pageable) {
+    public Page<Auction> getAuctionEarphoneList(List<String> brand, List<String> model, Pageable pageable) {
         Specification<Product> spec = (root, query, criteriaBuilder) -> null;
 
         spec = spec.and(ProductSpecification.equalCategoryLargeName("이어폰"));
 
-        if(!brand.equals("ALL"))
-            spec = spec.and(ProductSpecification.equalProductBrand(brand));
-        if(!model.equals("ALL"))
-            spec = spec.and(ProductSpecification.equalProductName(model));
+        if(!brand.get(0).equals("ALL"))
+            spec = spec.and(ProductSpecification.equalProductBrands(brand));
+        if(!model.get(0).equals("ALL"))
+            spec = spec.and(ProductSpecification.equalProductNames(model));
 
         List<Product> products = productRepository.findAll(spec);
         if(products.size() < 1)
@@ -271,17 +270,17 @@ public class AuctionServiceImpl implements AuctionService {
     }
 
     @Override
-    public Long getAuctionCnt(String category, String brand, String model, String save) {
+    public Long getAuctionCnt(String category, List<String> brand, List<String> model, List<String> save) {
         Specification<Product> spec = (root, query, criteriaBuilder) -> null;
 
         if(!category.equals("ALL"))
             spec = spec.and(ProductSpecification.equalCategoryLargeName(category));
-        if(!brand.equals("ALL"))
-            spec = spec.and(ProductSpecification.equalProductBrand(brand));
-        if(!model.equals("ALL"))
-            spec = spec.and(ProductSpecification.equalProductName(model));
-        if(!save.equals("ALL"))
-            spec = spec.and(ProductSpecification.equalCategorySmallName(save));
+        if(!brand.get(0).equals("ALL"))
+            spec = spec.and(ProductSpecification.equalProductBrands(brand));
+        if(!model.get(0).equals("ALL"))
+            spec = spec.and(ProductSpecification.equalProductNames(model));
+        if(!save.get(0).equals("ALL"))
+            spec = spec.and(ProductSpecification.equalCategorySmallNames(save));
 
         List<Product> products = productRepository.findAll(spec);
         if(products.size() < 1)

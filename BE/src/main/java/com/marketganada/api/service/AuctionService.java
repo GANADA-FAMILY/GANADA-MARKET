@@ -20,8 +20,8 @@ public interface AuctionService {
     public String insertAuctionLike(Long auctionId, User user);
     public String deleteAuctionLike(Long auctionId, User user);
     public Page<Auction> getRecentAuctionList(Pageable pageable);
-    public Page<Auction> getAuctionPhoneList(String brand, String model, String save, Pageable pageable);
-    public Page<Auction> getAuctionEarphoneList(String brand, String model, Pageable pageable);
+    public Page<Auction> getAuctionPhoneList(List<String> brand, List<String> model, List<String> save, Pageable pageable);
+    public Page<Auction> getAuctionEarphoneList(List<String> brand, List<String> model, Pageable pageable);
     List<Likes> getLikeAuctionList(User user);
-    Long getAuctionCnt(String category, String brand, String model, String save);
+    Long getAuctionCnt(String category, List<String> brand, List<String> model, List<String> save);
 }

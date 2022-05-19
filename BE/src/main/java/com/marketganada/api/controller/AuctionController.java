@@ -102,7 +102,10 @@ public class AuctionController {
             return ResponseEntity.status(e.getStatus()).build();
         }
 
-        Long auctionCnt = auctionService.getAuctionCnt("ALL","ALL","ALL","ALL");
+        List<String> allList = new ArrayList<>();
+        allList.add("ALL");
+
+        Long auctionCnt = auctionService.getAuctionCnt("ALL",allList,allList,allList);
 
         return ResponseEntity.ok(AuctionListResponse.of(auctions.toList(),isLikes,auctionCnt,auctions.isLast()));
     }
@@ -118,9 +121,9 @@ public class AuctionController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<AuctionListResponse> getPhoneList(
-            @RequestParam(value = "brand", defaultValue = "ALL") String brand,
-            @RequestParam(value = "model", defaultValue = "ALL") String model,
-            @RequestParam(value = "save", defaultValue = "ALL") String save,
+            @RequestParam(value = "brand", defaultValue = "ALL") List<String> brand,
+            @RequestParam(value = "model", defaultValue = "ALL") List<String> model,
+            @RequestParam(value = "save", defaultValue = "ALL") List<String> save,
             @PageableDefault(size = 16, sort = "endTime", direction = Sort.Direction.DESC) Pageable pageable,
             @ApiIgnore Authentication authentication
     ) {
@@ -163,8 +166,8 @@ public class AuctionController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<AuctionListResponse> getEarphoneList(
-            @RequestParam(value = "brand", defaultValue = "ALL") String brand,
-            @RequestParam(value = "model", defaultValue = "ALL") String model,
+            @RequestParam(value = "brand", defaultValue = "ALL") List<String> brand,
+            @RequestParam(value = "model", defaultValue = "ALL") List<String> model,
             @PageableDefault(size = 16, sort = "endTime", direction = Sort.Direction.DESC) Pageable pageable,
             @ApiIgnore Authentication authentication
     ) {
@@ -192,7 +195,10 @@ public class AuctionController {
             return ResponseEntity.status(e.getStatus()).build();
         }
 
-        Long auctionCnt = auctionService.getAuctionCnt("이어폰",brand,model,"ALL");
+        List<String> allList = new ArrayList<>();
+        allList.add("ALL");
+
+        Long auctionCnt = auctionService.getAuctionCnt("이어폰",brand,model,allList);
 
         return ResponseEntity.ok(AuctionListResponse.of(auctions.toList(),isLikes,auctionCnt,auctions.isLast()));
     }
