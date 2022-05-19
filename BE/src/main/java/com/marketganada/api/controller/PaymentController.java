@@ -48,15 +48,18 @@ public class PaymentController {
             Map<String,Object> res = paymentService.insertPayment(paymentInsertRequest, user);
             String insert = (String) res.get("insert");
             String paymentId = String.valueOf(res.get("paymentId"));
-            KakaoPayReadyVO kakaoPayReadyVO = (KakaoPayReadyVO) res.get("kakaoPayReadyVO");
+            KakaoPayReadyVO kakaoPayReadyVO = (KakaoPayReadyVO) res.get("kakaoPayReady");
 
             if(insert.equals("conflict")){
+                System.out.println("중복");
                 return new ResponseEntity(HttpStatus.CONFLICT);
             }else if(insert.equals("fail")){
+                System.out.println("페일");
                 return new ResponseEntity(HttpStatus.BAD_REQUEST);
             }
 
             if (kakaoPayReadyVO == null || kakaoPayReadyVO.getNext_redirect_pc_url().equals("")) {
+                System.out.println("널or빈값");
                 return new ResponseEntity(HttpStatus.BAD_REQUEST);
             }
             return ResponseEntity.ok(PaymentInsertResponse.of(kakaoPayReadyVO, paymentId));
