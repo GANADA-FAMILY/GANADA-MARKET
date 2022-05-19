@@ -14,12 +14,14 @@ import java.util.List;
 @Getter
 @Setter
 public class AuctionListResponse {
-    List<Auctions> auctionList;
     Long auctionCnt;
+    boolean isLast;
+    List<Auctions> auctionList;
 
-    public static AuctionListResponse of(List<Auction> auctions, List<Boolean> isLikes, Long cnt) {
+    public static AuctionListResponse of(List<Auction> auctions, List<Boolean> isLikes, Long cnt, boolean isLast) {
         AuctionListResponse res = new AuctionListResponse();
         res.setAuctionCnt(cnt);
+        res.setLast(isLast);
         res.setAuctionList(new ArrayList<>());
 
         if(auctions == null)
