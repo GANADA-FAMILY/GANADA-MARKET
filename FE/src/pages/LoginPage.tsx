@@ -1,5 +1,7 @@
+import { LoginTemplate } from 'components/templates';
+
 function LoginPage() {
-  return <div>Login</div>;
+  return <LoginTemplate />;
 }
 
 export default LoginPage;
