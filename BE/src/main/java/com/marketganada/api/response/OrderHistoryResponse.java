@@ -1,5 +1,6 @@
 package com.marketganada.api.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.marketganada.db.entity.Payment;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import java.util.Map;
 @Getter
 @Setter
 public class OrderHistoryResponse {
+    @JsonFormat(timezone = "Asia/Seoul")
     List<Map<String, Object>> orderHistory;
 
     public static OrderHistoryResponse  of(List<Payment> paymentList) {

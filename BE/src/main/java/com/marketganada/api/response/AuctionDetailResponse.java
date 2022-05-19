@@ -27,6 +27,9 @@ public class AuctionDetailResponse {
                     ._isMine(isMine)
                     ._recentPrice(recentPrice)
                     .build());
+        Date testDate = res.getAuction().getStartTime();
+        System.out.println("옥션디테일 : "+ res.getAuction().getStartTime());
+        System.out.println("testDate : "+ testDate);
 
         return res;
     }
@@ -40,10 +43,12 @@ public class AuctionDetailResponse {
         String auctionTitle;
         String auctionDesc;
         String seller;
+        @JsonFormat(timezone = "Asia/Seoul")
         Date startTime;
         int startPrice;
         int cycle;
         int depreciation;
+        @JsonFormat(timezone = "Asia/Seoul")
         Date endTime;
         Boolean auctionStatus;
         Boolean isLiked;
