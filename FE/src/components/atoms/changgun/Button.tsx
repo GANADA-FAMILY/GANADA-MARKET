@@ -7,7 +7,17 @@ interface ButtonProps {
   isActive?: boolean;
   activeStyle?: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  styles?: string;
 }
+
+const additionalStyles = ({ styles }: ButtonProps) => {
+  if (styles) {
+    return css`
+      ${styles}
+    `;
+  }
+  return '';
+};
 
 const applyActiveStyle = ({ isActive, activeStyle }: ButtonProps) => {
   if (isActive) {
@@ -24,6 +34,7 @@ Button.defaultProps = {
   isActive: false,
   activeStyle: '',
   onClick: () => null,
+  styles: '',
 };
 
 const StyledButton = styled.button<ButtonProps>`
@@ -31,6 +42,7 @@ const StyledButton = styled.button<ButtonProps>`
   border-radius: 0.5rem;
   background-color: ${(p) => p.backgroundColor};
   padding: ${(p) => p.padding};
+  ${additionalStyles}
   ${applyActiveStyle}
 `;
 
@@ -41,6 +53,7 @@ function Button({
   backgroundColor,
   padding,
   onClick,
+  styles,
 }: ButtonProps) {
   return (
     <StyledButton
@@ -49,6 +62,7 @@ function Button({
       isActive={isActive}
       padding={padding}
       backgroundColor={backgroundColor}
+      styles={styles}
     >
       {children}
     </StyledButton>
