@@ -46,7 +46,7 @@ public class PaymentServiceImpl implements PaymentService{
         Map<String,Object> result = new HashMap<>();
         String insert  = "success";
         Long paymentId = null;
-        KakaoPayReadyVO kakaoPayReadyVO = new KakaoPayReadyVO();
+        KakaoPayReadyVO kakaoPayReadyVO = null;
 
         Optional<Auction> auction = auctionRepository.findById(paymentInsertRequest.getAuctionId());
 
@@ -72,10 +72,9 @@ public class PaymentServiceImpl implements PaymentService{
 
             //시간이 지나버린 경매
             if(endTime.before(curDate)){
-                System.out.println("타임오버");
                 auction.get().setAuctionStatus(false);
                 auctionRepository.save(auction.get());
-
+                System.out.println("타임오버");
                 insert = "fail";
 
             }
@@ -104,6 +103,7 @@ public class PaymentServiceImpl implements PaymentService{
                 auction.get().setAuctionStatus(false);
                 auctionRepository.save(auction.get());
                 kakaoPayReadyVO = kakaoPayReady(paymentInsertRequest,user);
+                result.put("kakaoPayReady",kakaoPayReadyVO);
                 System.out.println(kakaoPayReadyVO.getNext_redirect_pc_url());
             }
 
