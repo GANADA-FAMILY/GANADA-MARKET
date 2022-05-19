@@ -229,7 +229,7 @@ public class AuctionController {
 
         Auction auction;
         boolean isLiked = false,isMine = false;
-        int recentPrice;
+//        int recentPrice;
 
         try {
             auction = auctionService.getAuctionById(auctionId);
@@ -240,7 +240,7 @@ public class AuctionController {
             }
 
             Product product = auction.getProduct();
-            recentPrice = productService.getRecentPrice(product);
+//            recentPrice = productService.getRecentPrice(product);
         } catch (Exception e) {
             if(e.getMessage().equals("not found")) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -251,7 +251,7 @@ public class AuctionController {
             }
         }
 
-        return ResponseEntity.ok(AuctionDetailResponse.of(auction,isLiked,isMine,recentPrice));
+        return ResponseEntity.ok(AuctionDetailResponse.of(auction,isLiked,isMine));
     }
 
     @DeleteMapping("/{auctionId}")
