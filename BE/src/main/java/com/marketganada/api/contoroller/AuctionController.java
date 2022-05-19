@@ -98,11 +98,8 @@ public class AuctionController {
                         isLikes.add(false);
                 }
             }
-        } catch (Exception e) {
-            if(e.getMessage().equals("products not found"))
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(AuctionListResponse.of(null,null,null,false));
-            else
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(AuctionListResponse.of(null,null,null,false));
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatus()).build();
         }
 
         Long auctionCnt = auctionService.getAuctionCnt("ALL","ALL","ALL","ALL");
@@ -147,13 +144,8 @@ public class AuctionController {
                         isLikes.add(false);
                 }
             }
-        } catch (Exception e) {
-            if(e.getMessage().equals("products not found"))
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(AuctionListResponse.of(null,null, null,false));
-            else {
-                e.printStackTrace();
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(AuctionListResponse.of(null,null, null,false));
-            }
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatus()).build();
         }
 
         Long auctionCnt = auctionService.getAuctionCnt("스마트폰",brand,model,save);
@@ -196,11 +188,8 @@ public class AuctionController {
                         isLikes.add(false);
                 }
             }
-        } catch (Exception e) {
-            if(e.getMessage().equals("products not found"))
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(AuctionListResponse.of(null,null,null,false));
-            else
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(AuctionListResponse.of(null,null,null,false));
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatus()).build();
         }
 
         Long auctionCnt = auctionService.getAuctionCnt("이어폰",brand,model,"ALL");
@@ -241,14 +230,8 @@ public class AuctionController {
 
             Product product = auction.getProduct();
             recentPrice = productService.getRecentPrice(product);
-        } catch (Exception e) {
-            if(e.getMessage().equals("not found")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-            else {
-                e.printStackTrace();
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            }
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatus()).build();
         }
 
         return ResponseEntity.ok(AuctionDetailResponse.of(auction,isLiked,isMine,recentPrice));
@@ -280,15 +263,8 @@ public class AuctionController {
 
             if(result.equals("not owner"))
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-            else if(!result.equals("success"))
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        } catch (Exception e) {
-            if(e.getMessage().equals("not found")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-            else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            }
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatus()).build();
         }
 
         return ResponseEntity.ok().build();
@@ -311,19 +287,10 @@ public class AuctionController {
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
 
-        String result;
         try {
-            result = auctionService.insertAuctionLike(likeRequest.getAuctionId(), user);
-        } catch (Exception e) {
-            if(e.getMessage().equals("not found")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-            else if(e.getMessage().equals("already liked")) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).build();
-            }
-            else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            }
+            auctionService.insertAuctionLike(likeRequest.getAuctionId(), user);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatus()).build();
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -346,19 +313,10 @@ public class AuctionController {
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
 
-        String result;
         try {
-            result = auctionService.deleteAuctionLike(auctionId, user);
-        } catch (Exception e) {
-            if(e.getMessage().equals("not liked")) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-            }
-            else if(e.getMessage().equals("not found")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-            else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            }
+            auctionService.deleteAuctionLike(auctionId, user);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatus()).build();
         }
 
         return ResponseEntity.ok().build();

@@ -5,7 +5,9 @@ import com.marketganada.db.entity.*;
 import com.marketganada.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,8 +34,8 @@ public class ProductServiceImpl implements ProductService {
             categoryLarge = getCategoryLargeById(productInsertRequest.getCategoryLarge());
             categoryMiddle = getCategoryMiddleById(productInsertRequest.getCategoryMiddle());
             categorySmall = getCategorySmallById(productInsertRequest.getCategorySmall());
-        } catch (IllegalArgumentException e) {
-            return "Category Error";
+        } catch (ResponseStatusException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
         Product product = Product.builder()
@@ -57,7 +59,7 @@ public class ProductServiceImpl implements ProductService {
         Optional<Product> product = productRepository.findById(productId);
 
         if(!product.isPresent())
-            throw new IllegalArgumentException("not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
         return product.get();
     }
@@ -73,7 +75,7 @@ public class ProductServiceImpl implements ProductService {
         Optional<Product> product = productRepository.findById(productId);
 
         if(!product.isPresent())
-            throw new IllegalArgumentException("not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
         CategoryLarge categoryLarge;
         CategoryMiddle categoryMiddle;
@@ -82,8 +84,8 @@ public class ProductServiceImpl implements ProductService {
             categoryLarge = getCategoryLargeById(productInsertRequest.getCategoryLarge());
             categoryMiddle = getCategoryMiddleById(productInsertRequest.getCategoryMiddle());
             categorySmall = getCategorySmallById(productInsertRequest.getCategorySmall());
-        } catch (IllegalArgumentException e) {
-            return "Category Error";
+        } catch (ResponseStatusException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
         product.get().update(productInsertRequest, categoryLarge, categoryMiddle, categorySmall);
@@ -97,7 +99,7 @@ public class ProductServiceImpl implements ProductService {
         Optional<Product> product = productRepository.findById(productId);
 
         if(!product.isPresent())
-            throw new IllegalArgumentException("not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
         productRepository.deleteById(productId);
         return "success";
@@ -118,7 +120,7 @@ public class ProductServiceImpl implements ProductService {
         Optional<CategoryLarge> categoryLarge = categoryLargeRepository.findById(categoryLargeId);
 
         if(!categoryLarge.isPresent())
-            throw new IllegalArgumentException("not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
         return categoryLarge.get();
     }
@@ -134,7 +136,7 @@ public class ProductServiceImpl implements ProductService {
         Optional<CategoryLarge> categoryLarge = categoryLargeRepository.findById(categoryLargeId);
 
         if(!categoryLarge.isPresent())
-            throw new IllegalArgumentException("not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
         categoryLarge.get().update(categoryLargeInsertRequest);
         categoryLargeRepository.save(categoryLarge.get());
@@ -147,7 +149,7 @@ public class ProductServiceImpl implements ProductService {
         Optional<CategoryLarge> categoryLarge = categoryLargeRepository.findById(categoryLargeId);
 
         if(!categoryLarge.isPresent())
-            throw new IllegalArgumentException("not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
         categoryLargeRepository.deleteById(categoryLargeId);
         return "success";
@@ -158,7 +160,7 @@ public class ProductServiceImpl implements ProductService {
         Optional<CategoryLarge> categoryLarge = categoryLargeRepository.findById(categoryMiddleInsertRequest.getCategoryLargeId());
 
         if(!categoryLarge.isPresent())
-            throw new IllegalArgumentException("category large doesn't exist");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
         CategoryMiddle categoryMiddle = CategoryMiddle.builder()
                 .name(categoryMiddleInsertRequest.getCategoryName())
@@ -174,7 +176,7 @@ public class ProductServiceImpl implements ProductService {
         Optional<CategoryMiddle> categoryMiddle = categoryMiddleRepository.findById(categoryMiddleId);
 
         if(!categoryMiddle.isPresent())
-            throw new IllegalArgumentException("not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
         return categoryMiddle.get();
     }
@@ -192,10 +194,10 @@ public class ProductServiceImpl implements ProductService {
         Optional<CategoryLarge> categoryLarge = categoryLargeRepository.findById(categoryMiddleInsertRequest.getCategoryLargeId());
 
         if(!categoryMiddle.isPresent())
-            throw new IllegalArgumentException("not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
         if(!categoryLarge.isPresent())
-            throw new IllegalArgumentException("Category Large doesn't exist!");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
         categoryMiddle.get().update(categoryMiddleInsertRequest, categoryLarge.get());
         categoryMiddleRepository.save(categoryMiddle.get());
@@ -208,7 +210,7 @@ public class ProductServiceImpl implements ProductService {
         Optional<CategoryMiddle> categoryMiddle = categoryMiddleRepository.findById(categoryMiddleId);
 
         if(!categoryMiddle.isPresent())
-            throw new IllegalArgumentException("not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
         categoryMiddleRepository.deleteById(categoryMiddleId);
         return "success";
@@ -219,7 +221,7 @@ public class ProductServiceImpl implements ProductService {
         Optional<CategoryMiddle> categoryMiddle = categoryMiddleRepository.findById(categorySmallInsertRequest.getCategoryMiddleId());
 
         if(!categoryMiddle.isPresent())
-            throw new IllegalArgumentException("category middle doesn't exist");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
         CategorySmall categorySmall = CategorySmall.builder()
                 .name(categorySmallInsertRequest.getCategoryName())
@@ -235,7 +237,7 @@ public class ProductServiceImpl implements ProductService {
         Optional<CategorySmall> categorySmall = categorySmallRepository.findById(categorySmallId);
 
         if(!categorySmall.isPresent())
-            throw new IllegalArgumentException("not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
         return categorySmall.get();
     }
@@ -252,10 +254,10 @@ public class ProductServiceImpl implements ProductService {
         Optional<CategoryMiddle> categoryMiddle = categoryMiddleRepository.findById(categorySmallInsertRequest.getCategoryMiddleId());
 
         if(!categorySmall.isPresent())
-            throw new IllegalArgumentException("not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
         if(!categoryMiddle.isPresent())
-            throw new IllegalArgumentException("Category Middle doesn't exist!");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
         categorySmall.get().update(categorySmallInsertRequest, categoryMiddle.get());
         categorySmallRepository.save(categorySmall.get());
@@ -268,7 +270,7 @@ public class ProductServiceImpl implements ProductService {
         Optional<CategorySmall> categorySmall = categorySmallRepository.findById(categorySmallId);
 
         if(!categorySmall.isPresent())
-            throw new IllegalArgumentException("not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
         categorySmallRepository.deleteById(categorySmallId);
         return "success";

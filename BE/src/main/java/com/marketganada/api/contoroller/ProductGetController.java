@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -56,13 +57,8 @@ public class ProductGetController {
         Product product;
         try {
             product = productService.getProductById(productId);
-        } catch (Exception e) {
-            if(e.getMessage().equals("not found")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-            else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            }
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatus()).build();
         }
 
         return ResponseEntity.ok(ProductDetailResponse.from(product));
@@ -81,13 +77,8 @@ public class ProductGetController {
         CategoryLarge categoryLarge;
         try {
             categoryLarge = productService.getCategoryLargeById(categoryLargeId);
-        } catch (Exception e) {
-            if(e.getMessage().equals("not found")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-            else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            }
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatus()).build();
         }
 
         return ResponseEntity.ok(CategoryLargeResponse.from(categoryLarge));
