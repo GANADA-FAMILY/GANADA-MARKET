@@ -5,8 +5,10 @@ import Text from 'components/atoms/My/Text';
 import { useRootDispatch, useRootSelector } from 'state/Hooks';
 import {
   deleteAddressbook,
+  getAddressbook,
   updateRepresentAddressbook,
 } from 'state/reducers/AddressSlice';
+import { useEffect } from 'react';
 import MyListBox from './MyListBox';
 
 function MyAddress() {
@@ -23,18 +25,19 @@ function MyAddress() {
     dispatch(() => deleteAddressbook(id));
   };
 
-  const onClickHandler = (e: any) => {
+  const onClickHandler = async (e: any) => {
+    if (e.target.name === undefined) return;
     const names = e.target.name.split('-');
     console.log(names[1]);
     switch (names[1]) {
       case 'modify':
-        modifyHandler(names[0]);
+        await modifyHandler(names[0]);
         break;
       case 'active':
-        activateHandler(names[0]);
+        dispatch(updateRepresentAddressbook(names[0]));
         break;
       case 'delete':
-        deleteHandler(names[0]);
+        dispatch(deleteAddressbook(names[0]));
         break;
       default:
         console.log('오류!');
@@ -81,41 +84,3 @@ const AddButton = styled(LinkButton)`
 `;
 
 export default MyAddress;
-const dummyList = [
-  {
-    addressId: 1,
-    addressName: '홍길동',
-    addressPhone: '010-3333-3333',
-    postalCode: '434343',
-    address: '경북 영주시 풍기읍 대동로 23',
-    addressDetail: '삼성빌',
-    activate: true,
-  },
-  {
-    addressId: 2,
-    addressName: '홍길동',
-    addressPhone: '010-3333-3333',
-    postalCode: '424343',
-    address: '경북 영주시 풍기읍 대동로 123',
-    addressDetail: '이성빌',
-    activate: false,
-  },
-  {
-    addressId: 3,
-    addressName: '고길동',
-    addressPhone: '010-3333-3333',
-    postalCode: '434343',
-    address: '경북 영주시 풍기읍 대동로 1323',
-    addressDetail: '사성빌',
-    activate: false,
-  },
-  {
-    addressId: 4,
-    addressName: '홍길동',
-    addressPhone: '010-3333-3333',
-    postalCode: '434343',
-    address: '경북 영주시 풍기읍 대동로 1323',
-    addressDetail: '삼성빌',
-    activate: false,
-  },
-];

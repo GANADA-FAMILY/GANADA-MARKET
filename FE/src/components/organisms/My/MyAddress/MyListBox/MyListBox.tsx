@@ -7,9 +7,6 @@ import React from 'react';
 interface MyListBoxProps {
   items: Array<Address>;
   onClick?: React.MouseEventHandler<HTMLElement>;
-  // onActivate?: React.MouseEventHandler<HTMLAnchorElement>;
-  // onModify?: React.MouseEventHandler<HTMLAnchorElement>;
-  // onDelete?: React.MouseEventHandler<HTMLAnchorElement>;
 }
 function MyListBox({ items, onClick }: MyListBoxProps) {
   return (

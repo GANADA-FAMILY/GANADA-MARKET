@@ -58,10 +58,10 @@ function deleteAddressbook(pathValue: string) {
 // 주소록 수정
 // function updateAddressbook(payload: AddressForm, param: string) {
 function updateAddressbook(payload: Payload<AddressForm>, pathValue: string) {
-  return api.put(`/user/addressbook/:${pathValue}`, payload.formData);
+  return api.put(`/user/addressbook/${pathValue}`, payload.formData);
 }
 function updateRepresentAddressbook(pathValue: string) {
-  return api.put(`/user/addressbook/represent/:${pathValue}`);
+  return api.put(`/user/represent/${pathValue}`);
 }
 
 // 계좌 정보

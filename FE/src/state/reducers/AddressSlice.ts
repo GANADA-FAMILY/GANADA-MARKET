@@ -7,6 +7,7 @@ export const getAddressbook = createAsyncThunk(
   async () => {
     const response = await userAPI.getAddressbook();
     console.log(response.data);
+    // response.data.addressBookList.map;
     return response.data.addressBookList;
   },
 );
@@ -14,8 +15,8 @@ export const getAddressbook = createAsyncThunk(
 export const deleteAddressbook = createAsyncThunk(
   'api/user/addressbook/:addressId',
   async (payload: string) => {
-    const response = await userAPI.deleteAddressbook(payload);
-    console.log(response.data);
+    await userAPI.deleteAddressbook(payload);
+    const response = await userAPI.getAddressbook();
     return response.data.addressBookList;
   },
 );
@@ -23,9 +24,8 @@ export const deleteAddressbook = createAsyncThunk(
 export const updateRepresentAddressbook = createAsyncThunk(
   'api/user/addressbook/represent/:addressId',
   async (payload: string) => {
-    console.log(payload);
-    const response = await userAPI.updateRepresentAddressbook(payload);
-    console.log(response.data);
+    await userAPI.updateRepresentAddressbook(payload);
+    const response = await userAPI.getAddressbook();
     return response.data.addressBookList;
   },
 );
@@ -51,8 +51,15 @@ export const AddressbookSlice = createSlice({
     });
     builder.addCase(deleteAddressbook.fulfilled, (state, { payload }) => {
       console.log('삭제 성공!');
-      // state.addressbook = payload;
+      state.addressbook = payload;
     });
+    builder.addCase(
+      updateRepresentAddressbook.fulfilled,
+      (state, { payload }) => {
+        console.log('변경 성공!');
+        state.addressbook = payload;
+      },
+    );
   },
 });
 
