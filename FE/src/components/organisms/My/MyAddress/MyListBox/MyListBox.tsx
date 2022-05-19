@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import { AddressInfo, ButtonsBox, List } from 'components/molecules/My';
 import { Item } from 'components/atoms/My';
 import { Address } from 'types/Entity/UserAPI';
-import React from 'react';
 
 interface MyListBoxProps {
   items: Array<Address>;

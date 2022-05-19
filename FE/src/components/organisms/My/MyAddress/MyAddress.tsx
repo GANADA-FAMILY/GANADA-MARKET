@@ -4,9 +4,8 @@ import { Button } from 'components/atoms/My';
 import { useRootDispatch, useRootSelector } from 'state/Hooks';
 import {
   deleteAddressbook,
-  getAddressbook,
   updateRepresentAddressbook,
-} from 'state/reducers/AddressSlice';
+} from 'state/reducers/AddressbookSlice';
 import { Modal, TitleBar } from 'components/molecules/My';
 import { useState } from 'react';
 import MyListBox from './MyListBox';
@@ -15,32 +14,18 @@ import AddressFormBox from './AddressFormBox';
 function MyAddress() {
   const items = useRootSelector((state) => state.addressbook.addressbook);
   const dispatch = useRootDispatch();
-  const [isModalVisible, setIsVisible] = useState<boolean>(false);
-  const showHandler = () => {
-    setIsVisible(true);
+  const [visible, setVisible] = useState<boolean>(false);
+  const onShowHandler = () => {
+    setVisible(true);
   };
   const onCloseHandler = () => {
-    setIsVisible(false);
-    console.log(123);
-  };
-  const modifyHandler = (id: string) => {
-    // dispatch(()=>)
-  };
-  const activateHandler = (id: string) => {
-    dispatch(() => updateRepresentAddressbook(id));
-  };
-  const deleteHandler = (id: string) => {
-    dispatch(() => deleteAddressbook(id));
+    setVisible(false);
   };
 
   const onClickHandler = async (e: any) => {
     if (e.target.name === undefined) return;
     const names = e.target.name.split('-');
-    console.log(names[1]);
     switch (names[1]) {
-      case 'modify':
-        showHandler();
-        break;
       case 'active':
         dispatch(updateRepresentAddressbook(names[0]));
         break;
@@ -56,19 +41,14 @@ function MyAddress() {
       <TitleContent>
         <TitleBar title="주소록" size={24} lineHeight={12} color="black2" />
         <ButtonBox>
-          <AddButton type="button" onClick={showHandler} size="small">
+          <AddButton type="button" onClick={onShowHandler} size="small">
             + 새 배송지 추가
           </AddButton>
         </ButtonBox>
       </TitleContent>
       <MyListBox items={items} onClick={onClickHandler} />
-      <Modal
-        onClose={onCloseHandler}
-        visible={isModalVisible}
-        title="새 주소 추가"
-      >
+      <Modal onClose={onShowHandler} visible={visible} title="새 주소 추가">
         <AddressFormBox
-          type="CREATE"
           onCancel={onCloseHandler}
           initialForm={{
             addressName: '',

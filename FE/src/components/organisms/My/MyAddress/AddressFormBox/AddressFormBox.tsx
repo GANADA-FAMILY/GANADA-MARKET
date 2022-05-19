@@ -5,23 +5,19 @@ import AddressForm from 'types/Form/AddressForm';
 import theme from 'styles/theme';
 import { Button, InputBox, Text } from 'components/atoms/My';
 import { InfoGroup } from 'components/molecules/My';
+import { useRootDispatch } from 'state/Hooks';
+import { getAddressbook } from 'state/reducers/AddressbookSlice';
 
 interface AddressFormBoxProps {
   initialForm: AddressForm;
-  type: 'CREATE' | 'UPDATE';
-  addressId?: number;
   onCancel: () => void;
 }
-function AddressFormBox({
-  initialForm,
-  type,
-  addressId,
-  onCancel,
-}: AddressFormBoxProps) {
-  const onSubmit = () => {
-    if (type === 'CREATE') userAPI.createAddressbook({ formData: values });
-    if (type === 'UPDATE')
-      userAPI.updateAddressbook({ formData: values }, `${addressId}`);
+function AddressFormBox({ initialForm, onCancel }: AddressFormBoxProps) {
+  const dispatch = useRootDispatch();
+  const onSubmit = async () => {
+    await userAPI.createAddressbook({ formData: values });
+    await dispatch(getAddressbook());
+    onCancel();
   };
   const validate = (form: AddressForm) => {
     if (

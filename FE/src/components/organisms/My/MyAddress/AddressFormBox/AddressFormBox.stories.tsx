@@ -21,7 +21,6 @@ CreateForm.args = {
     addressDetail: '',
     activate: false,
   },
-  type: 'CREATE',
 };
 
 export const UpdateForm = Template.bind({});
@@ -35,5 +34,4 @@ UpdateForm.args = {
     addressDetail: '123',
     activate: false,
   },
-  type: 'UPDATE',
 };

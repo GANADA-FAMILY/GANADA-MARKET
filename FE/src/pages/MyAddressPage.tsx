@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useEffect } from 'react';
 import { useRootDispatch, useRootSelector } from 'state/Hooks';
-import { getAddressbook } from 'state/reducers/AddressSlice';
+import { getAddressbook } from 'state/reducers/AddressbookSlice';
 import MyAddress from '../components/organisms/My/MyAddress';
 import MyPageTemplate from '../components/templates/MyPageTemplate/MyPageTemplate';
 

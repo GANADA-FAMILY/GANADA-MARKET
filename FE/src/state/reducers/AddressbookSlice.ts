@@ -7,7 +7,6 @@ export const getAddressbook = createAsyncThunk(
   async () => {
     const response = await userAPI.getAddressbook();
     console.log(response.data);
-    // response.data.addressBookList.map;
     return response.data.addressBookList;
   },
 );
