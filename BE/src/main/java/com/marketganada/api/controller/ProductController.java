@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 
@@ -31,14 +32,11 @@ public class ProductController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity productInsert(@RequestBody @ApiParam(value = "입력할 제품 정보", required = true) @Valid ProductInsertRequest productInsertRequest) {
-        String result = productService.insertProductInfo(productInsertRequest);
-
-        if(result.equals("Category Error")) {
-            return ResponseEntity.badRequest().build();
+        try {
+            productService.insertProductInfo(productInsertRequest);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatus()).build();
         }
-
-        else if(!result.equals("success"))
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -54,25 +52,12 @@ public class ProductController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity productUpdate(@RequestBody @ApiParam(value = "수정할 제품 정보", required = true) @Valid ProductInsertRequest productInsertRequest,
-                                        @PathVariable Long productId) {
-        String result;
-
+                                                          @PathVariable Long productId) {
         try {
-            result = productService.updateProduct(productInsertRequest, productId);
-        } catch (Exception e) {
-            if(e.getMessage().equals("not found")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-            else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            }
+            productService.updateProduct(productInsertRequest, productId);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatus()).build();
         }
-
-        if(result.equals("Category Error")) {
-            return ResponseEntity.badRequest().build();
-        }
-        else if(!result.equals("success"))
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -87,20 +72,11 @@ public class ProductController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity productDelete(@PathVariable Long productId) {
-        String result;
         try {
-            result = productService.deleteProductById(productId);
-        } catch (Exception e) {
-            if(e.getMessage().equals("not found")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-            else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            }
+            productService.deleteProductById(productId);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatus()).build();
         }
-
-        if(!result.equals("success"))
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 
         return ResponseEntity.ok().build();
     }
@@ -117,10 +93,7 @@ public class ProductController {
     public ResponseEntity categoryLargeInsert(
             @RequestBody @ApiParam(value = "입력할 대분류 정보", required = true) @Valid CategoryLargeInsertRequest categoryLargeInsertRequest
     ) {
-        String result = productService.insertCategoryLarge(categoryLargeInsertRequest);
-
-        if(!result.equals("success"))
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        productService.insertCategoryLarge(categoryLargeInsertRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -139,21 +112,11 @@ public class ProductController {
             @RequestBody @ApiParam(value = "수정할 대분류 정보", required = true) @Valid CategoryLargeInsertRequest categoryLargeInsertRequest,
             @PathVariable Long categoryLargeId
     ) {
-        String result;
-
         try {
-            result = productService.updateCategoryLarge(categoryLargeInsertRequest, categoryLargeId);
-        } catch (Exception e) {
-            if(e.getMessage().equals("not found")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-            else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            }
+            productService.updateCategoryLarge(categoryLargeInsertRequest, categoryLargeId);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatus()).build();
         }
-
-        if(!result.equals("success"))
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -168,20 +131,11 @@ public class ProductController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<BaseResponseBody> categoryLargeDelete(@PathVariable Long categoryLargeId) {
-        String result;
         try {
-            result = productService.deleteCategoryLarge(categoryLargeId);
-        } catch (Exception e) {
-            if(e.getMessage().equals("not found")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-            else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            }
+            productService.deleteCategoryLarge(categoryLargeId);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatus()).build();
         }
-
-        if(!result.equals("success"))
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 
         return ResponseEntity.ok().build();
     }
@@ -193,15 +147,17 @@ public class ProductController {
             @ApiResponse(code = 400, message = "입력 데이터 오류"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 403, message = "권한 없는 유저"),
+            @ApiResponse(code = 404, message = "존재하지 않는 대분류"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity categoryMiddleInsert(
             @RequestBody @ApiParam(value = "입력할 중분류 정보", required = true) @Valid CategoryMiddleInsertRequest categoryMiddleInsertRequest
     ) {
-        String result = productService.insertCategoryMiddle(categoryMiddleInsertRequest);
-
-        if(!result.equals("success"))
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        try {
+            productService.insertCategoryMiddle(categoryMiddleInsertRequest);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatus()).build();
+        }
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -213,28 +169,18 @@ public class ProductController {
             @ApiResponse(code = 400, message = "입력 데이터 오류"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 403, message = "권한 없는 유저"),
-            @ApiResponse(code = 404, message = "존재하지 않는 ID"),
+            @ApiResponse(code = 404, message = "존재하지 않는 대분류"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity categoryMiddleUpdate(
             @RequestBody @ApiParam(value = "수정할 중분류 정보", required = true) @Valid CategoryMiddleInsertRequest categoryMiddleInsertRequest,
             @PathVariable Long categoryMiddleId
     ) {
-        String result;
-
         try {
-            result = productService.updateCategoryMiddle(categoryMiddleInsertRequest, categoryMiddleId);
-        } catch (Exception e) {
-            if(e.getMessage().equals("not found")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-            else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            }
+            productService.updateCategoryMiddle(categoryMiddleInsertRequest, categoryMiddleId);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatus()).build();
         }
-
-        if(!result.equals("success"))
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -249,20 +195,11 @@ public class ProductController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity categoryMiddleDelete(@PathVariable Long categoryMiddleId) {
-        String result;
         try {
-            result = productService.deleteCategoryMiddle(categoryMiddleId);
-        } catch (Exception e) {
-            if(e.getMessage().equals("not found")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-            else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            }
+            productService.deleteCategoryMiddle(categoryMiddleId);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatus()).build();
         }
-
-        if(!result.equals("success"))
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 
         return ResponseEntity.ok().build();
     }
@@ -274,15 +211,17 @@ public class ProductController {
             @ApiResponse(code = 400, message = "입력 데이터 오류"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 403, message = "권한 없는 유저"),
+            @ApiResponse(code = 404, message = "존재하지 않는 중분류"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity categorySmallInsert(
             @RequestBody @ApiParam(value = "입력할 소분류 정보", required = true) @Valid CategorySmallInsertRequest categorySmallInsertRequest
     ) {
-        String result = productService.insertCategorySmall(categorySmallInsertRequest);
-
-        if(!result.equals("success"))
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        try {
+            productService.insertCategorySmall(categorySmallInsertRequest);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatus()).build();
+        }
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -294,28 +233,18 @@ public class ProductController {
             @ApiResponse(code = 400, message = "입력 데이터 오류"),
             @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 403, message = "권한 없는 유저"),
-            @ApiResponse(code = 404, message = "존재하지 않는 ID"),
+            @ApiResponse(code = 404, message = "존재하지 않는 중분류"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity categorySmallUpdate(
             @RequestBody @ApiParam(value = "수정할 소분류 정보", required = true) @Valid CategorySmallInsertRequest categorySmallInsertRequest,
             @PathVariable Long categorySmallId
     ) {
-        String result;
-
         try {
-            result = productService.updateCategorySmall(categorySmallInsertRequest, categorySmallId);
-        } catch (Exception e) {
-            if(e.getMessage().equals("not found")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-            else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            }
+            productService.updateCategorySmall(categorySmallInsertRequest, categorySmallId);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatus()).build();
         }
-
-        if(!result.equals("success"))
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -330,20 +259,11 @@ public class ProductController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity categorySmallDelete(@PathVariable Long categorySmallId) {
-        String result;
         try {
-            result = productService.deleteCategorySmall(categorySmallId);
-        } catch (Exception e) {
-            if(e.getMessage().equals("not found")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-            else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            }
+            productService.deleteCategorySmall(categorySmallId);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatus()).build();
         }
-
-        if(!result.equals("success"))
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 
         return ResponseEntity.ok().build();
     }

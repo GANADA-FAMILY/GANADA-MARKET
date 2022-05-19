@@ -13,11 +13,17 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -29,13 +35,28 @@ public class AuctionControllerNegativeCases {
     private static ObjectMapper oMapper = new ObjectMapper();
     Logger logger = LoggerFactory.getLogger(ProductControllerPositiveCases.class);
     private static String accessToken;
+    private static MockMultipartFile mFile;
+    private static List<MultipartFile> fileList;
     private static AuctionInsertRequest auction;
     private static LikeRequest like;
 
     private static final int TEST_AUCTION_ID = -1;
 
     @BeforeAll
-    public static void setup() {
+    public static void setup() throws Exception {
+        String name = "file";
+        String originalFileName = "test.jpg";
+        String fileFullPath = ".\\test.jpg";
+
+        mFile = new MockMultipartFile(name, originalFileName, MediaType.IMAGE_JPEG_VALUE, new FileInputStream(fileFullPath));
+        fileList = new ArrayList<>();
+        fileList.add(mFile);
+
+        name = "file";
+        originalFileName = "서명용.png";
+        fileFullPath = ".\\서명용.png";
+        mFile = new MockMultipartFile(name, originalFileName, MediaType.IMAGE_PNG_VALUE, new FileInputStream(fileFullPath));
+        fileList.add(mFile);
 
         auction = new AuctionInsertRequest();
 
@@ -64,7 +85,14 @@ public class AuctionControllerNegativeCases {
     @Order(1)
     void insertAuctionTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.multipart("/api/auction")
-                        .file("auctionImages",null)
+                        .file("auctionImages",fileList.get(0).getBytes())
+                        .param("productId","-1")
+                        .param("auctionTitle", "test")
+                        .param("description", "test")
+                        .param("endTime", "2000-01-01 10:00:00")
+                        .param("depreciation", "1")
+                        .param("cycle", "1")
+                        .param("startPrice", "1")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
                         .contentType(MediaType.MULTIPART_FORM_DATA_VALUE))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
@@ -77,7 +105,7 @@ public class AuctionControllerNegativeCases {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/auction/phone?page=-1" +
                                 "&sort=id&brand=브랜드&model=모델&save=저장장치")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -87,7 +115,7 @@ public class AuctionControllerNegativeCases {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/auction/earphone?page=-1" +
                                 "&sort=id&brand=브랜드&model=모델")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -128,6 +156,25 @@ public class AuctionControllerNegativeCases {
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
                         .contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    @Order(8)
+    void deleteAuctionNotLoginTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/auction/"+TEST_AUCTION_ID)
+                        .contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.status().isForbidden())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    @Order(9)
+    void deleteAuctionNotOwnerTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/auction/30")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
+                        .contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.status().isForbidden())
                 .andDo(MockMvcResultHandlers.print());
     }
 }
