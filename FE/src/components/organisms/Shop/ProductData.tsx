@@ -4,28 +4,61 @@ import ProductDataRow from '../../molecules/Shop/ProductDataRow';
 import { setShopDataFilter } from '../../../state/reducers/ShopDataFilter';
 import BlockContainer from '../../layouts/Shop/BlockContainer';
 
-interface ProductDataT {
-  initialData: any;
+interface propsType {
+  product: string;
 }
 export interface StateType {
   [key: string]: string[];
 }
 
-function ProductData() {
-  // 여기서 필터 리스트를 setState 해서 주자
-  const [basicFilter, _] = useState<StateType>({
+function ProductData({ product }: propsType) {
+  const [basicFilter, setBasicFilter] = useState<StateType>({
     브랜드: ['Apple', '삼성'],
     모델: [
-      'iPhone 13',
-      'iPhone 13 Pro',
-      'iPhone 13 Pro Max',
-      'iPhone 13 mini',
-      'iPhone SE',
+      '아이폰 SE2',
+      '아이폰11',
+      '아이폰11 프로',
+      '아이폰11 프로 맥스',
+      '아이폰12 미니',
+      '아이폰12',
+      '아이폰12 프로',
+      '아이폰12 프로 맥스',
+      '아이폰13 미니',
+      '아이폰13',
+      '아이폰13 프로',
+      '아이폰13 프로 맥스',
+      '갤럭시 Z 플립3',
+      '갤럭시 Z 폴드3',
+      '갤럭시 S22+',
     ],
     저장장치: ['128GB', '1TB', '256GB', '512GB', '64GB'],
   });
   const [filter, setFilter] = useState<StateType>({});
 
+  useEffect(() => {
+    console.log(product);
+
+    if (product === 'earphone') {
+      setBasicFilter(earphoneFilter);
+    }
+  }, []);
+
+  const earphoneFilter = {
+    브랜드: ['Apple', '삼성'],
+    모델: [
+      'Galaxy Buds',
+      'Galaxy Buds+',
+      'Galaxy Buds2',
+      'Galaxy Buds Pro',
+      'Galaxy Buds Live',
+      'Airpods',
+      'Airpods 2세대 유선충전',
+      'Airpods 2세대 무선충전',
+      'Airpods Pro',
+      'Airpods Max',
+      'Airpods 3세대',
+    ],
+  };
   const dispatch = useDispatch();
 
   useEffect(() => {

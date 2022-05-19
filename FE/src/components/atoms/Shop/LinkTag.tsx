@@ -43,11 +43,13 @@ const NavFilterLink = styled.a<LinkProps>`
     props.hoverColor &&
     css`
       &:hover {
-        color: #fd4d57;
+        color: black;
       }
     `}
 
-  color: ${(props) => (props.isClick ? 'red' : '#787a87;')};
+  color: ${(props) => (props.isClick ? '#fff' : '#787a87;')};
+  background-color: ${(props) => (props.isClick ? '#fd4d57' : '')};
+  border-radius: ${(props) => (props.isClick ? '1.4rem' : '')};
 
   font-size: 1.6rem;
 
