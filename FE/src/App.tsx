@@ -13,11 +13,11 @@ const MyProfilePage = React.lazy(() => import('./pages/MyProfilePage'));
 const MyAddressPage = React.lazy(() => import('./pages/MyAddressPage'));
 const MyWishPage = React.lazy(() => import('./pages/MyWishPage'));
 const MyAccountPage = React.lazy(() => import('./pages/MyAccountPage'));
-const PayResultPage = React.lazy(() => import('./pages/PayResultPage'));
+const PayApprovePage = React.lazy(() => import('./pages/PayApprovePage'));
+const PayFailPage = React.lazy(() => import('./pages/PayFailPage'));
 const MySalesPage = React.lazy(() => import('./pages/MySalesPage'));
 
 function App() {
-  console.log(process.env.REACT_APP_API_URL);
   return (
     <Router>
       <PageLayout>
@@ -33,7 +33,11 @@ function App() {
             <Route path="/my/account" element={<MyAccountPage />} />
             <Route path="/shop/:product" element={<ShopPage />} />
             <Route path="/payment/:auctionId" element={<PaymentPage />} />
-            <Route path="/payment/result/:result" element={<PayResultPage />} />
+            <Route
+              path="/payment/result/approve"
+              element={<PayApprovePage />}
+            />
+            <Route path="/payment/result/fail" element={<PayFailPage />} />
             <Route path="*" element={<Error404 />} />
           </Routes>
         </React.Suspense>

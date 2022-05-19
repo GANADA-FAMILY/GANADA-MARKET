@@ -4,7 +4,7 @@ import { ACCESS_TOKEN } from 'constants/headers';
 const api = defaultInstance();
 // api.defaults.headers.common.Authorization = ACCESS_TOKEN;
 api.defaults.headers.common.Authorization =
-  'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxcmVzMzQwM0Bzc2FmeS5jb20iLCJpc3MiOiJnYW5hZGFtYXJrZXQuY29tIiwiZXhwIjoxNjUyOTcyNDU2LCJpYXQiOjE2NTI4ODYwNTZ9.0JUakXnNkyrrS686zDu_qlfc6AukZ4hmcnRAFKOgXBBLPuoTRLl1ewo35KlN0BEF1qJ6gUV_mgFOVKm_6XU0jg';
+  'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJxcmVzMzQwM0Bzc2FmeS5jb20iLCJpc3MiOiJnYW5hZGFtYXJrZXQuY29tIiwiZXhwIjoxNjUzMDA3NzEyLCJpYXQiOjE2NTI5MjEzMTJ9.ilRa5V41YQlUO696U6X5GSTJv4T3lJdAB42QG059FSzy2FtYy38A-bqU5CYBDqVaPS2pFUe3y4l_gIGDRFA0cA';
 // 관심상품 등록
 
 function likeAuction(auctionId: number) {

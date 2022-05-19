@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectPayInfo, setPayMethod } from 'state/reducers/PaySlice';
 import payAPI from 'api/payAPI';
-import PayReadyForm from 'types/Form/PayReadyForm';
 import Container from 'components/layouts/Payment/Container';
 import Title from 'components/atoms/Payment/Title';
 import SubTitle from 'components/atoms/Payment/SubTitle';
@@ -19,9 +18,21 @@ function Pay() {
   const payload = useSelector(selectPayInfo);
   const dispatch = useDispatch();
   const onClick = async () => {
+    window.localStorage.removeItem('completePayInfo');
     const res = await payAPI.PayReady(payload);
-    console.log(res);
+    const { orderId, redirectURL, tid } = res.data;
+    console.log(orderId, redirectURL, tid);
+    window.localStorage.setItem(
+      'completePayInfo',
+      JSON.stringify({
+        orderId,
+        tid,
+      }),
+    );
+    alert('결제페이지로 이동합니다.');
+    window.location.href = redirectURL;
   };
+  const painfo = window.localStorage.getItem('completePayInfo');
   const selectHandler = (bank: string) => {
     setSelect(bank);
     dispatch(setPayMethod(bank));

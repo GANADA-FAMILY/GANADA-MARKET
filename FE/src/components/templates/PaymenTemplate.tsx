@@ -16,7 +16,7 @@ function PaymentTemplate({ auction, delivery }: Props) {
   return (
     <Container>
       <Wrapper>
-        <ProductInfo data={auction.product} />
+        <ProductInfo data={auction.product} imgSrc={auction.auctionImgs[0]} />
         <DeliveryInfo data={delivery} />
         <PayInfo price={13000} />
         <Pay />

@@ -17,14 +17,14 @@ interface Payload {
 
 const initialState: PayState = {
   payInfo: {
-    auctionId: 0,
-    price: 0,
+    auctionId: 44,
+    price: 100,
     paymentMethod: '',
-    buyerName: '',
-    phone: '',
-    postalCode: '',
-    address: '',
-    addressDetail: '',
+    buyerName: '아아 마이크 테스트',
+    phone: '아아 들리십니까',
+    postalCode: '아아',
+    address: '아아ㅏㅇ앙',
+    addressDetail: '학',
   },
 };
 

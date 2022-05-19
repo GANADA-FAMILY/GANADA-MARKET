@@ -10,13 +10,14 @@ interface Props {
     releaseDate: string;
     recentPrice: number;
   };
+  imgSrc: string;
 }
 
-function ProductInfo({ data }: Props) {
+function ProductInfo({ data, imgSrc }: Props) {
   return (
     <Container>
       <ImageWrapper>
-        <Image src="./image/abcmart.png" alt="dunk" height="8rem" />
+        <Image src={imgSrc} alt={data.productName} height="8rem" />
       </ImageWrapper>
       <Wrap>
         <Text>{data.productBrand}</Text>
