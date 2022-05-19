@@ -82,17 +82,21 @@ public class AuctionDetailResponse {
 
     @Getter
     static class Products {
+        Long productId;
         String productName;
         String productBrand;
         String productModel;
+        String description;
         @JsonFormat(timezone = "Asia/Seoul")
         Date releaseDate;
         int releasePrice;
 
         @Builder
         public Products(Product product) {
+            productId = product.getProductId();
             productName = product.getProductName();
             productBrand = product.getProductBrand();
+            description = product.getDescription();
             releaseDate = product.getReleaseDate();
             productModel = product.getDeviceId();
             releasePrice = product.getReleasePrice();
