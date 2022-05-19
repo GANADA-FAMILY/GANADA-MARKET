@@ -36,9 +36,9 @@ public class ProductControllerNegativeCases {
     private static CategorySmallInsertRequest categorySmall;
 
     private static final int TEST_PRODUCT_ID = 12;
-    private static final Long TEST_CATEGORY_LARGE_ID = Long.valueOf(154);
-    private static final Long TEST_CATEGORY_MIDDLE_ID = Long.valueOf(133);
-    private static final Long TEST_CATEGORY_SMALL_ID = Long.valueOf(109);
+    private static final Long TEST_CATEGORY_LARGE_ID = Long.valueOf(-1);
+    private static final Long TEST_CATEGORY_MIDDLE_ID = Long.valueOf(-1);
+    private static final Long TEST_CATEGORY_SMALL_ID = Long.valueOf(-1);
 
     @BeforeAll
     public static void setup() {
@@ -48,14 +48,14 @@ public class ProductControllerNegativeCases {
 
         categoryMiddle = new CategoryMiddleInsertRequest();
         categoryMiddle.setCategoryLargeId(Long.valueOf(-1));
-        categoryMiddle.setCategoryName(" ");
+        categoryMiddle.setCategoryName("sample name");
 
         categorySmall = new CategorySmallInsertRequest();
         categorySmall.setCategoryMiddleId(Long.valueOf(-1));
-        categorySmall.setCategoryName(" ");
+        categorySmall.setCategoryName("sample name");
 
         product = new ProductInsertRequest();
-        product.setProductName(null);
+        product.setProductName("sample name");
         product.setProductBrand("sample brand");
         product.setDescription("sample description");
         product.setDeviceId("sample device id");
@@ -181,12 +181,14 @@ public class ProductControllerNegativeCases {
 
     @Test
     @Order(8)
-    void editCategoryMiddleBadRequestTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/product/category-middle/"+TEST_CATEGORY_MIDDLE_ID)
+    void editCategoryMiddleNotFoundTest() throws Exception {
+        categoryMiddle.setCategoryName("sample middle");
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/product/category-middle/-1")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+adminAccessToken)
                         .contentType("application/json")
                         .content((new JSONObject(oMapper.writeValueAsString(categoryMiddle)).toString())))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -205,30 +207,19 @@ public class ProductControllerNegativeCases {
 
     @Test
     @Order(10)
-    void editCategoryMiddleNotFoundTest() throws Exception {
-        categoryMiddle.setCategoryName("sample middle");
+    void editCategoryMiddleBadRequestTest() throws Exception {
+        categoryMiddle.setCategoryName(" ");
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/product/category-middle/-1")
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/product/category-middle/"+TEST_CATEGORY_MIDDLE_ID)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+adminAccessToken)
                         .contentType("application/json")
                         .content((new JSONObject(oMapper.writeValueAsString(categoryMiddle)).toString())))
-                .andExpect(MockMvcResultMatchers.status().isNotFound())
-                .andDo(MockMvcResultHandlers.print());
-    }
-
-    @Test
-    @Order(11)
-    void editCategorySmallBadRequestTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/product/category-small/"+TEST_CATEGORY_SMALL_ID)
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+adminAccessToken)
-                        .contentType("application/json")
-                        .content((new JSONObject(oMapper.writeValueAsString(categorySmall)).toString())))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andDo(MockMvcResultHandlers.print());
     }
 
     @Test
-    @Order(12)
+    @Order(11)
     void editCategorySmallNotFoundTest() throws Exception {
         categorySmall.setCategoryName("sample small");
 
@@ -237,6 +228,19 @@ public class ProductControllerNegativeCases {
                         .contentType("application/json")
                         .content((new JSONObject(oMapper.writeValueAsString(categorySmall)).toString())))
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    @Order(12)
+    void editCategorySmallBadRequestTest() throws Exception {
+        categorySmall.setCategoryName(" ");
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/product/category-small/"+TEST_CATEGORY_SMALL_ID)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+adminAccessToken)
+                        .contentType("application/json")
+                        .content((new JSONObject(oMapper.writeValueAsString(categorySmall)).toString())))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andDo(MockMvcResultHandlers.print());
     }
 

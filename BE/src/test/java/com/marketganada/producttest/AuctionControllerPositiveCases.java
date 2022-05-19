@@ -160,16 +160,6 @@ public class AuctionControllerPositiveCases {
 
     @Test
     @Order(3)
-    void getAuctionPhoneAllListTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/auction/phone?page=0" +
-                                "&sort=auctionId,DESC")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print());
-    }
-
-    @Test
-    @Order(4)
     void getAuctionEarphoneListTest() throws Exception {
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/api/auction/earphone?page=0" +
                                 "&sort=auctionId,DESC&brand=SAMSUNG&model=Galaxy Buds")
@@ -186,8 +176,34 @@ public class AuctionControllerPositiveCases {
 
     @Test
     @Order(4)
-    void getAuctionEarphoneAllListTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/auction/earphone?page=0" +
+    void insertAuctionPhoneLikeTest() throws Exception {
+        like.setAuctionId(auctionPhoneId);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/auction/like")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
+                        .contentType("application/json")
+                        .content((new JSONObject(oMapper.writeValueAsString(like)).toString())))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    @Order(4)
+    void insertAuctionEarphoneLikeTest() throws Exception {
+        like.setAuctionId(auctionEarphoneId);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/auction/like")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
+                        .contentType("application/json")
+                        .content((new JSONObject(oMapper.writeValueAsString(like)).toString())))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    @Order(5)
+    void getAuctionPhoneAllListTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/auction/phone?page=0" +
                                 "&sort=auctionId,DESC")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -196,14 +212,11 @@ public class AuctionControllerPositiveCases {
 
     @Test
     @Order(5)
-    void insertAuctionLikeTest() throws Exception {
-        like.setAuctionId(auctionPhoneId);
-
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/auction/like")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
-                        .contentType("application/json")
-                        .content((new JSONObject(oMapper.writeValueAsString(like)).toString())))
-                .andExpect(MockMvcResultMatchers.status().isCreated())
+    void getAuctionEarphoneAllListTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/auction/earphone?page=0" +
+                                "&sort=auctionId,DESC")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
+                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -218,6 +231,15 @@ public class AuctionControllerPositiveCases {
 
     @Test
     @Order(7)
+    void getAuctionRecentListTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/auction/recent?page=0")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    @Order(8)
     void deleteAuctionLikeTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/auction/like/"+auctionPhoneId)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
@@ -227,7 +249,7 @@ public class AuctionControllerPositiveCases {
     }
 
     @Test
-    @Order(8)
+    @Order(9)
     void deleteAuctionPhoneTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/auction/"+auctionPhoneId)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
@@ -237,20 +259,11 @@ public class AuctionControllerPositiveCases {
     }
 
     @Test
-    @Order(9)
+    @Order(10)
     void deleteAuctionEarphoneTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/auction/"+auctionEarphoneId)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
                         .contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print());
-    }
-
-    @Test
-    @Order(10)
-    void getAuctionRecentListTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/auction/recent?page=0")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
     }
