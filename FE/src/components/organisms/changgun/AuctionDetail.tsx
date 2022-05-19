@@ -49,7 +49,14 @@ function AuctionDetail({ data }: AuctionDetailProps) {
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(data.auction.isLiked);
   const [price, setPrice] = useState(0);
-  const { startPrice, startTime, cycle, depreciation, product } = data.auction;
+  const {
+    startPrice,
+    startTime,
+    cycle,
+    depreciation,
+    product,
+    productHistory,
+  } = data.auction;
   const { productModel, releaseDate, releasePrice } = product;
   const [timeZone, setTimeZone] = useState<'1개월' | '3개월' | '6개월' | '1년'>(
     '1개월',
@@ -163,7 +170,7 @@ function AuctionDetail({ data }: AuctionDetailProps) {
           timeZone={timeZone}
           handleSetTimeZone={handleSetTimeZone}
         />
-        <AuctionGraph timeZone={timeZone} />
+        <AuctionGraph productHistory={productHistory} timeZone={timeZone} />
       </Main>
     </Wrapper>
   );
