@@ -6,16 +6,18 @@ interface ListProps {
   // rowKey?: ((item: T) => React.Key) | keyof T;
   renderItem?: (item: Entity, index: number) => React.ReactNode;
   className?: string;
+  onClick?: React.MouseEventHandler<HTMLElement>;
 }
 
 function List({
   dataSoruce = [],
   renderItem = () => null,
+  onClick = () => null,
   ...props
 }: ListProps) {
   const myList = dataSoruce.map((item, index) => renderItem(item, index));
   return (
-    <Molecule className={props.className}>
+    <Molecule className={props.className} onClick={onClick}>
       {dataSoruce.length > 0 ? (
         <> {myList} </>
       ) : (

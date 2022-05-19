@@ -11,21 +11,26 @@ export const getAddressbook = createAsyncThunk(
   },
 );
 
-interface AddressState {
-  addressList: Address[];
+interface AddressbookState {
+  addressbook: Address[];
 }
 
 const initialState = {
-  addressList: [],
-} as AddressState;
+  addressbook: [],
+} as AddressbookState;
 
-export const addressSlice = createSlice({
-  name: 'address',
+export const addressbookSlice = createSlice({
+  name: 'addressbook',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getAddressbook.fulfilled, (state, { payload }) => {
-      state.addressList = payload;
+      state.addressbook = payload;
+    });
+    builder.addCase(getAddressbook.rejected, (state, { payload }) => {
+      console.log('오류발생!');
     });
   },
 });
+
+export default addressbookSlice;

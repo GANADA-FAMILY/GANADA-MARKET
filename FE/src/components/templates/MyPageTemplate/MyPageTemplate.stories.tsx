@@ -19,7 +19,7 @@ const Template: ComponentStory<typeof MyPageTemplate> = (args) => (
 export const MyAddressCase = Template.bind({});
 
 MyAddressCase.args = {
-  element: <MyAddress items={[]} />,
+  element: <MyAddress />,
 };
 export const MyHomeCase = Template.bind({});
 

@@ -5,11 +5,23 @@ import { Address } from 'types/Entity/UserAPI';
 
 interface MyListBoxProps {
   items: Array<Address>;
+  onActivate?: React.MouseEventHandler<HTMLAnchorElement>;
+  onModify?: React.MouseEventHandler<HTMLAnchorElement>;
+  onDelete?: React.MouseEventHandler<HTMLAnchorElement>;
 }
-function MyListBox({ items }: MyListBoxProps) {
+function MyListBox({
+  items,
+  onActivate = () => null,
+  onModify = () => null,
+  onDelete = () => null,
+}: MyListBoxProps) {
   return (
     <div>
-      <StyledMyList dataSoruce={items} renderItem={AddressListItem} />
+      <StyledMyList
+        dataSoruce={items}
+        renderItem={AddressListItem}
+        onClick={onModify}
+      />
     </div>
   );
 }
@@ -19,8 +31,9 @@ const StyledMyList = styled(List)`
 `;
 
 function AddressListItem(item: Address | any, index: number) {
+  const { addressId } = item;
   return (
-    <StyledItem item={item}>
+    <StyledItem item={item} key={addressId}>
       <AddressInfo item={item} />
       <ButtonsBox item={item} />
     </StyledItem>

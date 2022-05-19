@@ -2,14 +2,14 @@ import styled from '@emotion/styled';
 import TitleBar from 'components/molecules/My/TitleBar';
 import LinkButton from 'components/atoms/My/LinkButton';
 import Text from 'components/atoms/My/Text';
-import { Address } from 'types/Entity/UserAPI';
+import { useRootSelector } from 'state/Hooks';
 import MyListBox from './MyListBox';
 
-interface MyAddressProps {
-  items: Address[];
-}
-function MyAddress({ items }: MyAddressProps) {
-  console.log(items);
+function MyAddress() {
+  const items = useRootSelector((state) => state.addressbook.addressbook);
+  const modify = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    console.log(e.target);
+  };
   return (
     <Container>
       <TitleContent>
@@ -22,7 +22,7 @@ function MyAddress({ items }: MyAddressProps) {
           </AddButton>
         </ButtonBox>
       </TitleContent>
-      <MyListBox items={items} />
+      <MyListBox items={items} onModify={modify} />
     </Container>
   );
 }

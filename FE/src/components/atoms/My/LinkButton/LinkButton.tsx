@@ -4,17 +4,17 @@ import styled from '@emotion/styled';
 interface LinkButtonProps {
   children?: React.ReactNode;
   href: string;
-  onClick?: React.MouseEventHandler<HTMLElement>;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
 function LinkButton({
   children = '',
   href,
-  onClick,
-  ...rest
+  onClick = () => null,
+  ...props
 }: LinkButtonProps) {
   return (
-    <Atom onClick={onClick} to={{ pathname: href }} {...rest}>
+    <Atom onClick={onClick} to={{ pathname: href }} {...props}>
       {children}
     </Atom>
   );

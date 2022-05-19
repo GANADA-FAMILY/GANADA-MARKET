@@ -5,14 +5,32 @@ import Address from 'types/Entity/UserAPI/Address';
 
 interface ButtonBoxProps {
   item: Address;
-  onClick?: React.MouseEvent<HTMLLinkElement>;
+  onActivate?: React.MouseEventHandler<HTMLAnchorElement>;
+  onModify?: React.MouseEventHandler<HTMLAnchorElement>;
+  onDelete?: React.MouseEventHandler<HTMLAnchorElement>;
+  // key: string;
 }
-function ButtonsBox({ ...props }: ButtonBoxProps) {
+function ButtonsBox({
+  onActivate = () => null,
+  onModify = () => null,
+  onDelete = () => null,
+  ...props
+}: ButtonBoxProps) {
   return (
     <Molecule>
-      {props.item.activate ? '' : <LinkButton href="/">기본 배송지</LinkButton>}
-      <LinkButton href="/">수정</LinkButton>
-      <LinkButton href="/">삭제</LinkButton>
+      {props.item.activate ? (
+        ''
+      ) : (
+        <LinkButton href="#" onClick={onActivate}>
+          기본 배송지
+        </LinkButton>
+      )}
+      <LinkButton href="#" onClick={onModify}>
+        수정
+      </LinkButton>
+      <LinkButton href="#" onClick={onDelete}>
+        삭제
+      </LinkButton>
     </Molecule>
   );
 }
