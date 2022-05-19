@@ -11,12 +11,24 @@ export const getOrderHistory = createAsyncThunk(
   },
 );
 
+export const getFilteredOrderHistory = createAsyncThunk(
+  'api/user/order-history/filtered',
+  async () => {
+    const response = await userAction.getOrderHistory();
+    if (response.data.length < 1) return response.data;
+    console.log(response);
+    return response.data.orderHistory;
+  },
+);
+
 interface OrderHistoryState {
   orderHistory: OrderHistory[];
+  filteredHistory: OrderHistory[];
   tabIndex: number;
 }
 const initialState = {
   orderHistory: [],
+  filteredHistory: [],
   tabIndex: 0,
 } as OrderHistoryState;
 
@@ -25,15 +37,23 @@ export const OrderHistorySlice = createSlice({
   initialState,
   reducers: {
     setTabIndex: (state, { payload }) => {
-      console.log(state.tabIndex);
       state.tabIndex = payload;
-      console.log(state.tabIndex);
     },
   },
   extraReducers: (builder) => {
     builder.addCase(getOrderHistory.fulfilled, (state, { payload }) => {
       console.log(payload);
       state.orderHistory = payload;
+    });
+    builder.addCase(getFilteredOrderHistory.fulfilled, (state, { payload }) => {
+      if (state.tabIndex >= 0) {
+        payload = payload.filter(
+          (o: OrderHistory) => o.status === state.tabIndex,
+        );
+      }
+      console.log(state.tabIndex);
+      console.log(payload);
+      state.filteredHistory = payload;
     });
   },
 });

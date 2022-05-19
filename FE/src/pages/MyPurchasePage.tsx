@@ -3,15 +3,20 @@ import MyPurchase from 'components/organisms/My/MyPurchase/MyPurchase';
 import MyPageTemplate from 'components/templates/MyPageTemplate/MyPageTemplate';
 import { useEffect } from 'react';
 import { useRootDispatch, useRootSelector } from 'state/Hooks';
-import { getOrderHistory } from 'state/reducers/OrderHistorySlice';
+import {
+  getFilteredOrderHistory,
+  getOrderHistory,
+} from 'state/reducers/OrderHistorySlice';
 
 function MyPurchasePage() {
   const dispatch = useRootDispatch();
   const orderHistory = useRootSelector(
     (state) => state.orderHistory.orderHistory,
   );
+  // const tabIndex = useRootSelector((state) => state.orderHistory.tabIndex);
   useEffect(() => {
     dispatch(getOrderHistory());
+    dispatch(getFilteredOrderHistory());
   }, []);
   return (
     <MainContainer>

@@ -1,9 +1,13 @@
 import styled from '@emotion/styled';
 import { TabPane } from 'components/atoms/My';
 import { Tabs } from 'components/molecules/My';
+import getSizeByStatus from 'functions/getSizeByStatus';
 import { Link } from 'react-router-dom';
 import { useRootDispatch, useRootSelector } from 'state/Hooks';
-import { setTabIndex } from 'state/reducers/OrderHistorySlice';
+import {
+  getFilteredOrderHistory,
+  setTabIndex,
+} from 'state/reducers/OrderHistorySlice';
 
 function PurchaseTab() {
   const dispatch = useRootDispatch();
@@ -12,10 +16,13 @@ function PurchaseTab() {
     (state) => state.orderHistory.orderHistory,
   );
   return (
-    <Tabs>
+    <StyledTab>
       <TabPane
         bordered={tabIndex === -1}
-        onClick={() => dispatch(setTabIndex(-1))}
+        onClick={async () => {
+          await dispatch(setTabIndex(-1));
+          dispatch(getFilteredOrderHistory());
+        }}
       >
         <TabLink to="/my/buying">
           <TabBox>
@@ -28,52 +35,66 @@ function PurchaseTab() {
       </TabPane>
       <TabPane
         bordered={tabIndex === 0}
-        onClick={() => dispatch(setTabIndex(0))}
+        onClick={async () => {
+          await dispatch(setTabIndex(0));
+          dispatch(getFilteredOrderHistory());
+        }}
       >
         <TabLink to="/my/buying">
           <TabBox>
-            <TabCount>0</TabCount>
+            <TabCount>{getSizeByStatus(orderHistory, 0)}</TabCount>
             <TabTitle>입금 대기</TabTitle>
           </TabBox>
         </TabLink>
       </TabPane>
       <TabPane
         bordered={tabIndex === 1}
-        onClick={() => dispatch(setTabIndex(1))}
+        onClick={async () => {
+          await dispatch(setTabIndex(1));
+          dispatch(getFilteredOrderHistory());
+        }}
       >
         <TabLink to="/my/buying">
           <TabBox>
-            <TabCount>0</TabCount>
+            <TabCount>{getSizeByStatus(orderHistory, 1)}</TabCount>
             <TabTitle>입금 완료</TabTitle>
           </TabBox>
         </TabLink>
       </TabPane>
       <TabPane
         bordered={tabIndex === 2}
-        onClick={() => dispatch(setTabIndex(2))}
+        onClick={async () => {
+          await dispatch(setTabIndex(2));
+          dispatch(getFilteredOrderHistory());
+        }}
       >
         <TabLink to="/my/buying">
           <TabBox>
-            <TabCount>0</TabCount>
+            <TabCount>{getSizeByStatus(orderHistory, 2)}</TabCount>
             <TabTitle>배송 중</TabTitle>
           </TabBox>
         </TabLink>
       </TabPane>
       <TabPane
         bordered={tabIndex === 3}
-        onClick={() => dispatch(setTabIndex(3))}
+        onClick={async () => {
+          await dispatch(setTabIndex(3));
+          dispatch(getFilteredOrderHistory());
+        }}
       >
         <TabLink to="/my/buying">
           <TabBox>
-            <TabCount>0</TabCount>
+            <TabCount>{getSizeByStatus(orderHistory, 3)}</TabCount>
             <TabTitle>종료</TabTitle>
           </TabBox>
         </TabLink>
       </TabPane>
-    </Tabs>
+    </StyledTab>
   );
 }
-
+const StyledTab = styled(Tabs)`
+  margin-bottom: 1.5rem;
+`;
 const TabLink = styled(Link)`
   position: relative;
   display: block;
