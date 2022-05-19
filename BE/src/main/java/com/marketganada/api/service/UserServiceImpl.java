@@ -212,7 +212,7 @@ public class UserServiceImpl implements UserService{
         addressBookRepository.save(addressBook.get());
 
 
-        return "변경성공";
+        return "success";
     }
 
     @Override
