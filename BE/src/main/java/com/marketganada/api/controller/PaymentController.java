@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.util.Map;
 
 @Api(value = "결제 API", tags = {"Payment."})
 @RestController
@@ -42,20 +43,23 @@ public class PaymentController {
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
 
-        String res = paymentService.insertPayment(paymentInsertRequest, user);
-        if(res.equals("conflict")){
-            return new ResponseEntity(HttpStatus.CONFLICT);
-        }else if(res.equals("fail")){
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        }
-
-        KakaoPayReadyVO kakaoPayReadyVO = null;
         if (paymentInsertRequest.getPaymentMethod().equals("kakaopay")) {
-            kakaoPayReadyVO = paymentService.kakaoPayReady(paymentInsertRequest, user);
-            if (kakaoPayReadyVO != null && kakaoPayReadyVO.getNext_redirect_pc_url().equals("")) {
+
+            Map<String,Object> res = paymentService.insertPayment(paymentInsertRequest, user);
+            String insert = (String) res.get("insert");
+            String paymentId = String.valueOf(res.get("paymentId"));
+            KakaoPayReadyVO kakaoPayReadyVO = (KakaoPayReadyVO) res.get("kakaoPayReadyVO");
+
+            if(insert.equals("conflict")){
+                return new ResponseEntity(HttpStatus.CONFLICT);
+            }else if(insert.equals("fail")){
                 return new ResponseEntity(HttpStatus.BAD_REQUEST);
             }
-            return ResponseEntity.ok(PaymentInsertResponse.of(kakaoPayReadyVO, res));
+
+            if (kakaoPayReadyVO == null || kakaoPayReadyVO.getNext_redirect_pc_url().equals("")) {
+                return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            }
+            return ResponseEntity.ok(PaymentInsertResponse.of(kakaoPayReadyVO, paymentId));
         }
 
         return new ResponseEntity(HttpStatus.BAD_REQUEST);

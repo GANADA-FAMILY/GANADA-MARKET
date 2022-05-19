@@ -10,9 +10,10 @@ import com.marketganada.db.entity.Payment;
 import com.marketganada.db.entity.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PaymentService {
-    String insertPayment(PaymentInsertRequest paymentInsertRequest, User user);
+    Map<String,Object> insertPayment(PaymentInsertRequest paymentInsertRequest, User user);
     KakaoPayReadyVO kakaoPayReady(PaymentInsertRequest paymentInsertRequest, User user);
     KakaoPayApprovalVO kakaoPayInfo(KakaoPaySuccessRequest kakaoPaySuccessRequest, User user);
     void successPayment(Long paymentId);

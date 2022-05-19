@@ -92,7 +92,6 @@ public class AuthController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    //크림은 전화번호가 유니크키 인거 같은데?
     @GetMapping("/find-email/{userPhone}")
     @ApiOperation(value = "이메일 찾기", notes = "입력한 전화번호를 통해 이메일을 찾는다.")
     @ApiResponses({
@@ -124,7 +123,6 @@ public class AuthController {
                                                                   @Valid @RequestBody UserPwFindRequest userPwFindRequest){
         Optional<User> user = userService.getUserByUserEmail(userPwFindRequest.getUserEmail());
         if(user.isPresent()){
-            System.out.println("이메일"+user.get().getUserEmail());
 
             String result = smsService.sendUserPw(user.get(),userPwFindRequest);
             if(result.equals("success")){
