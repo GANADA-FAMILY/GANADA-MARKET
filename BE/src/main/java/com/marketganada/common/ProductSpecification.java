@@ -10,10 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductSpecification {
-//    public static Specification<Product> equalProductName(String productName) {
-//        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("productName"), productName);
-//    }
-
     public static Specification<Product> equalProductNames(List<String> productNames) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = getPredicateOfProductName(productNames,root,criteriaBuilder);
@@ -31,10 +27,6 @@ public class ProductSpecification {
 
         return predicates;
     }
-
-//    public static Specification<Product> equalProductBrand(String productBrand) {
-//        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("productBrand"), productBrand);
-//    }
 
     public static Specification<Product> equalProductBrands(List<String> productBrands) {
         return (root, query, criteriaBuilder) -> {
@@ -57,10 +49,6 @@ public class ProductSpecification {
     public static Specification<Product> equalCategoryLargeName(String categoryLargeName) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("categoryLarge").get("name"), categoryLargeName);
     }
-
-//    public static Specification<Product> equalCategorySmallName(String categorySmallName) {
-//        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("categorySmall").get("name"), categorySmallName);
-//    }
 
     public static Specification<Product> equalCategorySmallNames(List<String> categorySmallNames) {
         return (root, query, criteriaBuilder) -> {
