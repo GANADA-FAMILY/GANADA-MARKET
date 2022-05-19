@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import userAPI from 'api/userAPI';
 import { Bank } from 'types/Entity/UserAPI';
 import BankForm from 'types/Form/BankForm';
@@ -25,7 +25,6 @@ export const updateBank = createAsyncThunk(
 interface BankState {
   bank: Bank;
 }
-
 const initialState = {
   bank: { bank: '', bankNum: '', bankHolder: '' },
 } as BankState;
@@ -33,7 +32,11 @@ const initialState = {
 export const BankSlice = createSlice({
   name: 'addressbook',
   initialState,
-  reducers: {},
+  reducers: {
+    initializeBank: (state, action: PayloadAction<Bank>) => {
+      state.bank = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getBank.fulfilled, (state, { payload }) => {
       state.bank = payload;
@@ -49,5 +52,7 @@ export const BankSlice = createSlice({
     });
   },
 });
+
+export const { initializeBank } = BankSlice.actions;
 
 export default BankSlice;
