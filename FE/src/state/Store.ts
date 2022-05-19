@@ -4,6 +4,7 @@ import { ShopDataFilterSlice } from './reducers/ShopDataFilter';
 import UserSlice from './reducers/UserSlice';
 import AddressbookSlice from './reducers/AddressbookSlice';
 import BankSlice from './reducers/BankSlice';
+import WishSlice from './reducers/WishSlice';
 
 const Store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const Store = configureStore({
     user: UserSlice.reducer,
     addressbook: AddressbookSlice.reducer,
     bank: BankSlice.reducer,
+    wishList: WishSlice.reducer,
   },
 });
 

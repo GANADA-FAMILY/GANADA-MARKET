@@ -7,6 +7,7 @@ import Wish from 'types/Entity/UserAPI/Wish';
 interface MyWishProps {
   items: Wish[] | any;
 }
+
 function MyWish({ items }: MyWishProps) {
   return (
     <section>
