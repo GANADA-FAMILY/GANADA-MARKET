@@ -10,6 +10,7 @@ interface ButtonProps {
   className?: string;
   onClick: MouseEventHandler;
   disabled?: boolean;
+  name?: string;
 }
 function Button({
   children,
@@ -18,6 +19,7 @@ function Button({
   disabled = false,
   className = '',
   onClick = () => null,
+  name = className,
 }: ButtonProps) {
   return (
     <Atom
@@ -25,6 +27,7 @@ function Button({
       disabled={disabled}
       className={classnames(['Button', size, className])}
       onClick={onClick}
+      name={name}
     >
       {children}
     </Atom>

@@ -71,10 +71,11 @@ Default.args = {
 // address
 
 function AddressListItem(item: Address | any, index: number) {
+  const { addressId } = item;
   return (
-    <StyledItem item={item}>
+    <StyledItem item={item} key={addressId}>
       <AddressInfo item={item} />
-      <ButtonsBox item={item} />
+      <ButtonsBox id={addressId} item={item} />
     </StyledItem>
   );
 }

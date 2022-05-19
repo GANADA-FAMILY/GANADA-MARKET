@@ -11,6 +11,25 @@ export const getAddressbook = createAsyncThunk(
   },
 );
 
+export const deleteAddressbook = createAsyncThunk(
+  'api/user/addressbook/:addressId',
+  async (payload: string) => {
+    const response = await userAPI.deleteAddressbook(payload);
+    console.log(response.data);
+    return response.data.addressBookList;
+  },
+);
+
+export const updateRepresentAddressbook = createAsyncThunk(
+  'api/user/addressbook/represent/:addressId',
+  async (payload: string) => {
+    console.log(payload);
+    const response = await userAPI.updateRepresentAddressbook(payload);
+    console.log(response.data);
+    return response.data.addressBookList;
+  },
+);
+
 interface AddressbookState {
   addressbook: Address[];
 }
@@ -29,6 +48,10 @@ export const addressbookSlice = createSlice({
     });
     builder.addCase(getAddressbook.rejected, (state, { payload }) => {
       console.log('오류발생!');
+    });
+    builder.addCase(deleteAddressbook.fulfilled, (state, { payload }) => {
+      console.log('삭제 성공!');
+      // state.addressbook = payload;
     });
   },
 });

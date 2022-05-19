@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { LinkButton } from 'components/atoms/My';
+import { Button, LinkButton } from 'components/atoms/My';
+import theme from 'styles/theme';
 import Address from 'types/Entity/UserAPI/Address';
 
 interface ButtonBoxProps {
@@ -8,12 +9,14 @@ interface ButtonBoxProps {
   onActivate?: React.MouseEventHandler<HTMLAnchorElement>;
   onModify?: React.MouseEventHandler<HTMLAnchorElement>;
   onDelete?: React.MouseEventHandler<HTMLAnchorElement>;
-  // key: string;
+  // onClick: React.MouseEventHandler<HTMLElement>;
+  id: string;
 }
 function ButtonsBox({
   onActivate = () => null,
   onModify = () => null,
   onDelete = () => null,
+  id,
   ...props
 }: ButtonBoxProps) {
   return (
@@ -21,23 +24,44 @@ function ButtonsBox({
       {props.item.activate ? (
         ''
       ) : (
-        <LinkButton href="#" onClick={onActivate}>
+        <Button
+          size="small"
+          type="button"
+          onClick={onActivate}
+          name={`${id}-active`}
+        >
           기본 배송지
-        </LinkButton>
+        </Button>
       )}
-      <LinkButton href="#" onClick={onModify}>
+      <Button
+        size="small"
+        type="button"
+        onClick={onModify}
+        name={`${id}-modify`}
+      >
         수정
-      </LinkButton>
-      <LinkButton href="#" onClick={onDelete}>
+      </Button>
+      <Button
+        size="small"
+        type="button"
+        onClick={onDelete}
+        name={`${id}-delete`}
+      >
         삭제
-      </LinkButton>
+      </Button>
     </Molecule>
   );
 }
 const Molecule = styled.div`
   margin-top: 14px;
   margin-left: auto;
-  a + a {
+  button {
+    font-weight: 300;
+    background-color: ${theme.color.white};
+    color: ${theme.color.black2};
+    border: 1px solid #d3d3d3;
+  }
+  button + button {
     margin-left: 8px;
   }
 `;

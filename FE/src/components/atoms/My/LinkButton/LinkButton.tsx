@@ -19,7 +19,6 @@ function LinkButton({
     </Atom>
   );
 }
-
 const Atom = styled(Link)`
   margin-top: 12px;
   align-self: flex-start;

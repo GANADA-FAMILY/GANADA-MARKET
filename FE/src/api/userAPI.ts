@@ -51,14 +51,17 @@ function createAddressbook(payload: Payload<AddressForm>) {
 
 // 주소록 삭제
 // function deleteAddressbook() {
-function deleteAddressbook() {
-  return api.delete('/user/addressbook');
+function deleteAddressbook(pathValue: string) {
+  return api.delete(`/user/addressbook/${pathValue}`);
 }
 
 // 주소록 수정
 // function updateAddressbook(payload: AddressForm, param: string) {
 function updateAddressbook(payload: Payload<AddressForm>, pathValue: string) {
   return api.put(`/user/addressbook/:${pathValue}`, payload.formData);
+}
+function updateRepresentAddressbook(pathValue: string) {
+  return api.put(`/user/addressbook/represent/:${pathValue}`);
 }
 
 // 계좌 정보
@@ -83,7 +86,6 @@ function getWishList(params?: string) {
 }
 // 프로필 이미지 변경
 function updateProfileImage(payload: FormData) {
-  console.log(123123213);
   return imgApi.put('/user/image', payload);
 }
 
@@ -96,6 +98,7 @@ const userAPI = {
   createAddressbook,
   deleteAddressbook,
   updateAddressbook,
+  updateRepresentAddressbook,
   getBank,
   updateBank,
   getSalesHistory,

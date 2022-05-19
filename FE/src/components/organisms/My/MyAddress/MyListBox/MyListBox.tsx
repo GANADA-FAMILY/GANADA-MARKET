@@ -2,25 +2,22 @@ import styled from '@emotion/styled';
 import { AddressInfo, ButtonsBox, List } from 'components/molecules/My';
 import { Item } from 'components/atoms/My';
 import { Address } from 'types/Entity/UserAPI';
+import React from 'react';
 
 interface MyListBoxProps {
   items: Array<Address>;
-  onActivate?: React.MouseEventHandler<HTMLAnchorElement>;
-  onModify?: React.MouseEventHandler<HTMLAnchorElement>;
-  onDelete?: React.MouseEventHandler<HTMLAnchorElement>;
+  onClick?: React.MouseEventHandler<HTMLElement>;
+  // onActivate?: React.MouseEventHandler<HTMLAnchorElement>;
+  // onModify?: React.MouseEventHandler<HTMLAnchorElement>;
+  // onDelete?: React.MouseEventHandler<HTMLAnchorElement>;
 }
-function MyListBox({
-  items,
-  onActivate = () => null,
-  onModify = () => null,
-  onDelete = () => null,
-}: MyListBoxProps) {
+function MyListBox({ items, onClick }: MyListBoxProps) {
   return (
     <div>
       <StyledMyList
         dataSoruce={items}
         renderItem={AddressListItem}
-        onClick={onModify}
+        onClick={onClick}
       />
     </div>
   );
@@ -35,7 +32,7 @@ function AddressListItem(item: Address | any, index: number) {
   return (
     <StyledItem item={item} key={addressId}>
       <AddressInfo item={item} />
-      <ButtonsBox item={item} />
+      <ButtonsBox item={item} id={addressId} />
     </StyledItem>
   );
 }

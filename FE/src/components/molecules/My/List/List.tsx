@@ -1,10 +1,15 @@
 import styled from '@emotion/styled';
 import Entity from 'types/Entity';
+import { MouseEventHandler } from 'react';
 
 interface ListProps {
   dataSoruce: Entity[];
   // rowKey?: ((item: T) => React.Key) | keyof T;
-  renderItem?: (item: Entity, index: number) => React.ReactNode;
+  renderItem?: (
+    item: Entity,
+    index: number,
+    onClick?: MouseEventHandler<HTMLElement>,
+  ) => React.ReactNode;
   className?: string;
   onClick?: React.MouseEventHandler<HTMLElement>;
 }
@@ -15,7 +20,9 @@ function List({
   onClick = () => null,
   ...props
 }: ListProps) {
-  const myList = dataSoruce.map((item, index) => renderItem(item, index));
+  const myList = dataSoruce.map((item, index) =>
+    renderItem(item, index, onClick),
+  );
   return (
     <Molecule className={props.className} onClick={onClick}>
       {dataSoruce.length > 0 ? (
@@ -26,10 +33,6 @@ function List({
     </Molecule>
   );
 }
-
-List.defaultProps = {
-  renderItem: () => null,
-};
 
 const Molecule = styled.li``;
 const EmptyArea = styled.div`
