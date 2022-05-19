@@ -16,6 +16,7 @@ const AuctionPage = React.lazy(() => import('./pages/AuctionPage'));
 const TestPage = React.lazy(() => import('./pages/TestPage'));
 const MyAccountPage = React.lazy(() => import('./pages/MyAccountPage'));
 const MySalesPage = React.lazy(() => import('./pages/MySalesPage'));
+const LoginPage = React.lazy(() => import('./pages/LoginPage'));
 
 function App() {
   console.log(process.env.REACT_APP_API_URL);
@@ -32,6 +33,7 @@ function App() {
             <Route path="/my/wish" element={<MyWishPage />} />
             <Route path="/my/selling" element={<MySalesPage />} />
             <Route path="/my/account" element={<MyAccountPage />} />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/shop/:product" element={<ShopPage />} />
             <Route path="/payment" element={<PaymentPage />} />
             <Route path="/auction/:auctionId" element={<AuctionPage />} />
