@@ -6,7 +6,6 @@ import InfoGroup from 'components/molecules/My/InfoGroup';
 import InfoItem from 'components/molecules/My/InfoItem';
 import { User } from 'types/Entity/UserAPI';
 import { useAuth, useForm } from 'hooks';
-import { REG } from 'constants/reg';
 import userAPI from 'api/userAPI';
 import { useRootDispatch, useRootSelector } from 'state/Hooks';
 import {
@@ -16,6 +15,7 @@ import {
   updateNickname,
   updatePassword,
 } from 'state/reducers/UserSlice';
+import { REG } from 'constants/reg';
 
 function ProfileContent() {
   const { user, loading, dispatch } = useAuth();
