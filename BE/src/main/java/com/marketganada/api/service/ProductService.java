@@ -32,4 +32,6 @@ public interface ProductService {
     List<CategorySmall> getCategorySmallList();
     String updateCategorySmall(CategorySmallInsertRequest categorySmallInsertRequest, Long categorySmallId);
     String deleteCategorySmall(Long categorySmallId);
+
+    int getRecentPrice(Product product);
 }

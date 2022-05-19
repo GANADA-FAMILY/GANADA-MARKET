@@ -1,24 +1,19 @@
 import styled from '@emotion/styled';
-import { useFetch } from 'hooks';
-import userAPI from 'api/userAPI';
-import { Address } from 'types/Entity/UserAPI';
-import MyPageTemplate from '../components/templates/MyPageTemplate/MyPageTemplate';
+import { useEffect } from 'react';
+import { useRootDispatch, useRootSelector } from 'state/Hooks';
+import { getAddressbook } from 'state/reducers/AddressbookSlice';
 import MyAddress from '../components/organisms/My/MyAddress';
-
-interface addressBookListProps {
-  addressBookList: Array<Address>;
-}
+import MyPageTemplate from '../components/templates/MyPageTemplate/MyPageTemplate';
 
 function MyAddressPage() {
-  const [items, error, isLoading] = useFetch<null, addressBookListProps>({
-    api: userAPI.getAddressbook,
-  });
-
+  const dispatch = useRootDispatch();
+  const items = useRootSelector((state) => state.addressbook.addressbook);
+  useEffect(() => {
+    dispatch(getAddressbook());
+  }, []);
   return (
     <MainContainer>
-      {items !== undefined && (
-        <MyPageTemplate element={<MyAddress items={items.addressBookList} />} />
-      )}
+      {items !== undefined && <MyPageTemplate element={<MyAddress />} />}
     </MainContainer>
   );
 }

@@ -1,11 +1,15 @@
 import { BrowserRouter } from 'react-router-dom';
 import 'index.css';
+import { Provider } from 'react-redux';
+import store from '../src/state/Store';
 
 export const decorators = [
   (Story) => (
-    <BrowserRouter>
-      <Story />
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Story />
+      </BrowserRouter>
+    </Provider>
   ),
 ];
 

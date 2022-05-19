@@ -4,13 +4,26 @@ import InputBox from 'components/atoms/My/InputBox/InputBox';
 import Title from 'components/atoms/My/Title/Title';
 import InfoGroup from 'components/molecules/My/InfoGroup';
 import InfoItem from 'components/molecules/My/InfoItem';
-import { User } from 'types/Entity/UserAPI';
+import { useAuth, useForm } from 'hooks';
+import { useRootSelector } from 'state/Hooks';
+import {
+  changeCurrentPassword,
+  changeNewPassword,
+  changeNicknameForm,
+  updateNickname,
+  updatePassword,
+} from 'state/reducers/UserSlice';
+import { REG } from 'constants/reg';
 
-interface ProfileContentProps {
-  user: User;
-}
+function ProfileContent() {
+  const { user, loading, dispatch } = useAuth();
+  const newNicknameForm = useRootSelector((state) => state.user.nickNameForm);
+  const newPasswordForm = useRootSelector((state) => state.user.passwordForm);
 
-function ProfileContent({ user }: ProfileContentProps) {
+  const validatePasword = () =>
+    REG.PASSWORD.test(newPasswordForm.currentPw) &&
+    REG.PASSWORD.test(newPasswordForm.newPw);
+
   const submitUserInfo = () => {
     console.log(123);
   };
@@ -27,19 +40,26 @@ function ProfileContent({ user }: ProfileContentProps) {
         <InfoItem
           title="비밀번호"
           type="password"
-          submit={submitUserInfo}
+          submit={() => dispatch(updatePassword({ formData: newPasswordForm }))}
           value={'●'.repeat(8)}
+          validate={validatePasword()}
         >
           <Title level={5}>비밀번호 변경</Title>
           <InputBox
             title="이전 비밀번호"
             type="password"
             placeholder="영문,숫자,특수문자 조합 8-16자"
+            name="currentPw"
+            onChange={(e) => dispatch(changeCurrentPassword(e.target.value))}
+            value={newPasswordForm.currentPw}
           />
           <InputBox
             title="새 비밀번호"
             type="password"
+            name="newPw"
             placeholder="영문,숫자,특수문자 조합 8-16자"
+            onChange={(e) => dispatch(changeNewPassword(e.target.value))}
+            value={newPasswordForm.newPw}
           />
         </InfoItem>
       </InfoGroup>
@@ -47,14 +67,17 @@ function ProfileContent({ user }: ProfileContentProps) {
         <InfoItem
           title="닉네임"
           type="text"
-          submit={submitUserInfo}
+          submit={() => dispatch(updateNickname({ formData: newNicknameForm }))}
           value={user.userNickname}
+          validate={newNicknameForm.userNickname !== ''}
         >
           <Title level={5}>닉네임</Title>
           <InputBox
             title="새로운 닉네임"
             type="text"
             placeholder="고객님의 새로운 닉네임"
+            value={newNicknameForm.userNickname}
+            onChange={(e) => dispatch(changeNicknameForm(e.target.value))}
           />
         </InfoItem>
         <InfoItem

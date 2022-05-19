@@ -45,9 +45,7 @@ const dummyList: Address[] = [
   },
 ];
 
-const Template: ComponentStory<typeof MyAddress> = (args) => (
-  <MyAddress {...args} />
-);
+const Template: ComponentStory<typeof MyAddress> = () => <MyAddress />;
 
 export const Default = Template.bind({});
 

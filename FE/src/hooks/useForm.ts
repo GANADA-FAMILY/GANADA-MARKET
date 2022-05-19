@@ -13,16 +13,16 @@ export default function useForm({
   const [values, setState] = useState(initalState);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setState({ ...values, [name]: value });
   };
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
-    // event.preventDefault();
     setErrors(validate(values));
     setIsLoading(true);
+    setState(initalState);
+    event.preventDefault();
   };
   const onChangeLoading = async () => {
     if (isLoading) {

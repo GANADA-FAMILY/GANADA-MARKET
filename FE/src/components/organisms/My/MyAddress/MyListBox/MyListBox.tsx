@@ -5,11 +5,16 @@ import { Address } from 'types/Entity/UserAPI';
 
 interface MyListBoxProps {
   items: Array<Address>;
+  onClick?: React.MouseEventHandler<HTMLElement>;
 }
-function MyListBox({ items }: MyListBoxProps) {
+function MyListBox({ items, onClick }: MyListBoxProps) {
   return (
     <div>
-      <StyledMyList dataSoruce={items} renderItem={AddressListItem} />
+      <StyledMyList
+        dataSoruce={items}
+        renderItem={AddressListItem}
+        onClick={onClick}
+      />
     </div>
   );
 }
@@ -19,10 +24,11 @@ const StyledMyList = styled(List)`
 `;
 
 function AddressListItem(item: Address | any, index: number) {
+  const { addressId } = item;
   return (
-    <StyledItem item={item}>
+    <StyledItem item={item} key={addressId}>
       <AddressInfo item={item} />
-      <ButtonsBox item={item} />
+      <ButtonsBox item={item} id={addressId} />
     </StyledItem>
   );
 }

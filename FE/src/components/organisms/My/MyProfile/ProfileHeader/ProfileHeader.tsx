@@ -3,25 +3,27 @@ import Avatar from 'components/atoms/My/Avartar/Avatar';
 import ImageInput from 'components/atoms/My/ImageInput';
 import LinkButton from 'components/atoms/My/LinkButton';
 import Text from 'components/atoms/My/Text';
-import { User } from 'types/Entity/UserAPI';
+import { useAuth } from 'hooks';
+import { useRef } from 'react';
+import { updateProfileImage } from 'state/reducers/UserSlice';
 
-interface ProfileHeaderProps {
-  user: User;
-  onClickImage: React.MouseEventHandler<HTMLElement>;
-  onChangeImage: React.ChangeEventHandler<HTMLInputElement>;
-  newImage: string;
-  forwardedRef: React.RefObject<HTMLInputElement>;
-}
-function ProfileHeader({
-  user,
-  onClickImage,
-  onChangeImage,
-  newImage,
-  forwardedRef,
-}: ProfileHeaderProps) {
+function ProfileHeader() {
+  const { user, loading, dispatch } = useAuth();
+  const imageRef = useRef<HTMLInputElement>(null);
+  const onChangeImage = async (
+    e: React.ChangeEvent<HTMLInputElement> | any,
+  ) => {
+    const formData = new FormData();
+    formData.append('profileImage', e.target.files[0]);
+    await dispatch(updateProfileImage(formData));
+  };
+  const onClickImage = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    imageRef.current?.click();
+  };
   return (
     <StyledBox>
-      <ProfileAvatar src={user.profileImageUrl} />
+      {!loading && <ProfileAvatar src={user.profileImageUrl} />}
       <ProfileDetail>
         <Text size={24} strong>
           {user.userNickname}
@@ -32,11 +34,7 @@ function ProfileHeader({
           </LinkButton>
           <LinkButton href="/">삭제</LinkButton>
         </ProfileButtonBox>
-        <ImageInput
-          onChange={onChangeImage}
-          value={newImage}
-          forwardedRef={forwardedRef}
-        />
+        <ImageInput onChange={onChangeImage} forwardedRef={imageRef} />
       </ProfileDetail>
     </StyledBox>
   );

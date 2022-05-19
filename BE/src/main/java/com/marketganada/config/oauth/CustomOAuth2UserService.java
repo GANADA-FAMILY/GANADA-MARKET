@@ -29,9 +29,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         //구글 로그인 번호 클릭 -> 구글 로그인 창 -> 구글 로그인 완료 -> code를 리턴 (OAuth-Client 라이브러리)-> AccessToken 요청
         //userRequest 정보 -> loadUser 함수 호출 -> 구글로부터 회원 프로필 받기
 
-        System.out.println("getClientRegistration: "+ userRequest.getClientRegistration());
-        System.out.println("getAccessToken: "+ userRequest.getAccessToken().getTokenValue());
-        System.out.println("getAttributes: "+ oAuth2User.getAttributes());
+//        System.out.println("getClientRegistration: "+ userRequest.getClientRegistration());
+//        System.out.println("getAccessToken: "+ userRequest.getAccessToken().getTokenValue());
+//        System.out.println("getAttributes: "+ oAuth2User.getAttributes());
 
         String provider = userRequest.getClientRegistration().getRegistrationId(); //google
         OAuthAttributes attributes = OAuthAttributes.of(provider,oAuth2User.getAttributes());
@@ -45,10 +45,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         if(!checkUser.isPresent()){
             User user = attributes.toEntity();
-            System.out.println("최초 , 회원가입 진행");
+//            System.out.println("최초 , 회원가입 진행");
             return userRepository.save(user);
         }else{
-            System.out.println("로그인을 이미 한 유저입니다.");
+//            System.out.println("로그인을 이미 한 유저입니다.");
             return userRepository.save(checkUser.get());
         }
 

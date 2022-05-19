@@ -10,6 +10,7 @@ interface ButtonProps {
   className?: string;
   onClick: MouseEventHandler;
   disabled?: boolean;
+  name?: string;
 }
 function Button({
   children,
@@ -18,6 +19,7 @@ function Button({
   disabled = false,
   className = '',
   onClick = () => null,
+  name = className,
 }: ButtonProps) {
   return (
     <Atom
@@ -25,6 +27,7 @@ function Button({
       disabled={disabled}
       className={classnames(['Button', size, className])}
       onClick={onClick}
+      name={name}
     >
       {children}
     </Atom>
@@ -33,15 +36,15 @@ function Button({
 
 const Atom = styled.button<ButtonProps>`
   border-radius: 10px;
-  color: ${theme.color.white};
   border: none;
   align-items: center;
+  background-color: ${theme.color.black2};
   font-weight: ${theme.fontWeight.solid};
   display: inline-block;
   cursor: pointer;
   vertical-align: middle;
   text-align: center;
-  background-color: ${theme.color.black2};
+  color: ${theme.color.white};
   &.small {
     line-height: 3.8rem;
     font-size: 1.2rem;

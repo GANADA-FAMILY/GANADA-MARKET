@@ -18,21 +18,14 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": [
-    "react",
-    "@typescript-eslint",
-    "react-hooks",
-    "prettier"
-  ],
+  "plugins": ["react", "@typescript-eslint", "react-hooks", "prettier"],
   "rules": {
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [
-          ".tsx"
-        ]
+        "extensions": [".tsx"]
       }
     ],
     "import/prefer-default-export": "off",
@@ -57,10 +50,8 @@
     "no-empty-function": "off",
     "react/jsx-uses-react": "off",
     "@typescript-eslint/no-empty-function": "off",
-    "react/require-default-props": [
-      0,
-      {}
-    ],
+    "no-extend-native": "off",
+    "react/require-default-props": [0, {}],
     "import/no-extraneous-dependencies": [
       "error",
       {
@@ -77,14 +68,12 @@
         "peerDependencies": true
       }
     ],
+    "import/no-unresolved": "off",
     "react/react-in-jsx-scope": "off",
     "react/function-component-definition": [
       "error",
       {
-        "namedComponents": [
-          "arrow-function",
-          "function-declaration"
-        ] // 'function-declaration' | 'function-expression' | 'arrow-function'
+        "namedComponents": ["arrow-function", "function-declaration"] // 'function-declaration' | 'function-expression' | 'arrow-function'
       }
     ],
     "no-param-reassign": "off"

@@ -3,6 +3,8 @@ import { ShopFilterSlice } from './reducers/ShopNavFilter';
 import { ShopDataFilterSlice } from './reducers/ShopDataFilter';
 import UserSlice from './reducers/UserSlice';
 import { paySlice } from './reducers/PaySlice';
+import AddressbookSlice from './reducers/AddressbookSlice';
+import BankSlice from './reducers/BankSlice';
 
 const Store = configureStore({
   reducer: {
@@ -10,6 +12,8 @@ const Store = configureStore({
     ShopDataFilter: ShopDataFilterSlice.reducer,
     user: UserSlice.reducer,
     pay: paySlice.reducer,
+    addressbook: AddressbookSlice.reducer,
+    bank: BankSlice.reducer,
   },
 });
 

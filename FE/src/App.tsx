@@ -12,6 +12,8 @@ const MyPurchasePage = React.lazy(() => import('./pages/MyPurchasePage'));
 const MyProfilePage = React.lazy(() => import('./pages/MyProfilePage'));
 const MyAddressPage = React.lazy(() => import('./pages/MyAddressPage'));
 const MyWishPage = React.lazy(() => import('./pages/MyWishPage'));
+const AuctionPage = React.lazy(() => import('./pages/AuctionPage'));
+const TestPage = React.lazy(() => import('./pages/TestPage'));
 const MyAccountPage = React.lazy(() => import('./pages/MyAccountPage'));
 const PayApprovePage = React.lazy(() => import('./pages/PayApprovePage'));
 const PayFailPage = React.lazy(() => import('./pages/PayFailPage'));
@@ -32,6 +34,9 @@ function App() {
             <Route path="/my/selling" element={<MySalesPage />} />
             <Route path="/my/account" element={<MyAccountPage />} />
             <Route path="/shop/:product" element={<ShopPage />} />
+            <Route path="/payment" element={<PaymentPage />} />
+            <Route path="/auction/:id" element={<AuctionPage />} />
+            <Route path="/test" element={<TestPage />} />
             <Route path="/payment/:auctionId" element={<PaymentPage />} />
             <Route
               path="/payment/result/approve"

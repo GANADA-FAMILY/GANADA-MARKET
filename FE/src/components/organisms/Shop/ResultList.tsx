@@ -1,152 +1,74 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import Auction from 'types/Entity/ShopAPI/Auction';
+import { getList } from 'api/shopAPI';
+import {
+  createSearchParams,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 import ResultItem from '../../molecules/Shop/ResultItem';
 import GridContainer from '../../layouts/Shop/GridContainer';
 import Loading from '../../Loading';
 import BlockContainer from '../../layouts/Shop/BlockContainer';
 
-export interface DataType {
-  url: string;
-  id: number;
-  brand: string;
-  product: string;
-  model: string;
-  price: number;
-  date: string;
+interface propsType {
+  initialData: Auction[];
+  onLike: (auctionId: number, trigger: boolean) => void;
 }
 
-function ResultList({ ...rest }) {
-  const [state, setState] = useState<DataType[]>([
-    {
-      id: 1,
-      url: 'https://image.univstore.com/iPhone_13_Pro_Green_thumbnail.jpg',
-      brand: 'Apple',
-      product: 'iPhone 13 Pro 자급제',
-      model: 'MNE23KH/A',
-      price: 1000000000,
-      date: '07:33:03',
-    },
-    {
-      id: 1,
-      url: 'https://image.univstore.com/iPhone_13_Pro_Green_thumbnail.jpg',
-      brand: 'Apple',
-      product: 'iPhone 13 Pro 자급제',
-      model: 'MNE23KH/A',
-      price: 780000,
-      date: '07:33:03',
-    },
-    {
-      id: 1,
-      url: 'https://image.univstore.com/iPhone_13_Pro_Green_thumbnail.jpg',
-      brand: 'Apple',
-      product: 'iPhone 13 Pro 자급제',
-      model: 'MNE23KH/A',
-      price: 780000,
-      date: '07:33:03',
-    },
-    {
-      id: 1,
-      url: 'https://image.univstore.com/iPhone_13_Pro_Green_thumbnail.jpg',
-      brand: 'Apple',
-      product: 'iPhone 13 Pro 자급제',
-      model: 'MNE23KH/A',
-      price: 1000000000,
-      date: '07:33:03',
-    },
-    {
-      id: 1,
-      url: 'https://image.univstore.com/iPhone_13_Pro_Green_thumbnail.jpg',
-      brand: 'Apple',
-      product: 'iPhone 13 Pro 자급제',
-      model: 'MNE23KH/A',
-      price: 1000000000,
-      date: '07:33:03',
-    },
-    {
-      id: 1,
-      url: 'https://image.univstore.com/iPhone_13_Pro_Green_thumbnail.jpg',
-      brand: 'Apple',
-      product: 'iPhone 13 Pro 자급제',
-      model: 'MNE23KH/A',
-      price: 1000000000,
-      date: '07:33:03',
-    },
-  ]);
-
+function ResultList({ initialData, onLike }: propsType) {
+  const [state, setState] = useState<Auction[]>(initialData);
+  const ref = useRef(0);
+  const isLast = useRef<boolean>(false);
+  const itemRef = useRef<Auction[]>([]);
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const params = useParams();
+  const [query] = useSearchParams();
+  const navigate = useNavigate();
 
   const getMoreItem = async () => {
+    ref.current += 1;
     setIsLoaded(true);
     // eslint-disable-next-line no-promise-executor-return
     await new Promise((resolve) => setTimeout(resolve, 1500));
-    const Items: DataType[] = [
-      {
-        id: 1,
-        url: 'https://image.univstore.com/iPhone_13_Pro_Green_thumbnail.jpg',
-        brand: 'Apple',
-        product: 'iPhone 13 Pro 자급제',
-        model: 'MNE23KH/A',
-        price: 780000,
-        date: '07:33:03',
-      },
-      {
-        id: 1,
-        url: 'https://image.univstore.com/iPhone_13_Pro_Green_thumbnail.jpg',
-        brand: 'Apple',
-        product: 'iPhone 13 Pro 자급제',
-        model: 'MNE23KH/A',
-        price: 780000,
-        date: '07:33:03',
-      },
-      {
-        id: 1,
-        url: 'https://image.univstore.com/iPhone_13_Pro_Green_thumbnail.jpg',
-        brand: 'Apple',
-        product: 'iPhone 13 Pro 자급제',
-        model: 'MNE23KH/A',
-        price: 780000,
-        date: '07:33:03',
-      },
-      {
-        id: 1,
-        url: 'https://image.univstore.com/iPhone_13_Pro_Green_thumbnail.jpg',
-        brand: 'Apple',
-        product: 'iPhone 13 Pro 자급제',
-        model: 'MNE23KH/A',
-        price: 780000,
-        date: '07:33:03',
-      },
-      {
-        id: 1,
-        url: 'https://image.univstore.com/iPhone_13_Pro_Green_thumbnail.jpg',
-        brand: 'Apple',
-        product: 'iPhone 13 Pro 자급제',
-        model: 'MNE23KH/A',
-        price: 780000,
-        date: '07:33:03',
-      },
-      {
-        id: 1,
-        url: 'https://image.univstore.com/iPhone_13_Pro_Green_thumbnail.jpg',
-        brand: 'Apple',
-        product: 'iPhone 13 Pro 자급제',
-        model: 'MNE23KH/A',
-        price: 780000,
-        date: '07:33:03',
-      },
-    ];
-    setState((itemLists) => itemLists.concat(Items));
+    setState((itemLists) => itemLists.concat(itemRef.current));
     setIsLoaded(false);
   };
+
   useEffect(() => {
-    console.log(state);
-  }, [state]);
+    if (ref.current > 0 && !isLast.current) {
+      navigate({
+        pathname: `/shop/${params.product}`,
+        search: createSearchParams({
+          page: `${ref.current}`,
+          size: '12',
+          // sort: 'endTime,asc',
+        }).toString(),
+      });
+    }
+  }, [ref.current]);
+
+  useEffect(() => {
+    if (ref.current > 0 && !isLast.current) {
+      (async () => {
+        if (query && params.product) {
+          const res = await getList(params.product, query);
+          itemRef.current = res.data.auctionList;
+          if (res.data.last) {
+            isLast.current = true;
+          }
+        }
+      })();
+    }
+  }, [query]);
 
   const onIntersect = async (
     [entry]: IntersectionObserverEntry[],
     observer: IntersectionObserver,
   ) => {
-    if (entry.isIntersecting && !isLoaded) {
+    if (entry.isIntersecting && !isLoaded && !isLast.current) {
       observer.unobserve(entry.target);
       await getMoreItem();
       observer.observe(entry.target);
@@ -155,7 +77,7 @@ function ResultList({ ...rest }) {
 
   useEffect(() => {
     let observer: IntersectionObserver;
-    if (target) {
+    if (target && !isLast.current) {
       observer = new IntersectionObserver(onIntersect, {
         threshold: 0.4,
       });
@@ -168,14 +90,21 @@ function ResultList({ ...rest }) {
     <GridContainer {...ResultContainer}>
       {state.map((item, idx) => {
         const newLocal = idx + 1;
-        return <ResultItem key={newLocal} data={item} idx={idx + 1} />;
+        return (
+          <ResultItem
+            onLike={onLike}
+            key={newLocal}
+            data={item}
+            idx={idx + 1}
+          />
+        );
       })}
       <div
         style={{ gridColumnStart: '2' }}
         ref={setTarget}
         className="Target-Element"
       >
-        {isLoaded && <Loading />}
+        {isLoaded && !isLast.current && <Loading />}
       </div>
     </GridContainer>
   );
@@ -188,4 +117,4 @@ const ResultContainer = {
   justifyItems: 'center',
 };
 
-export default memo(ResultList);
+export default ResultList;

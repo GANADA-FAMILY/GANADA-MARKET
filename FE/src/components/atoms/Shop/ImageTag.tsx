@@ -14,30 +14,29 @@ function ImageTag({ url }: PropsType) {
     route.push('/');
   };
 
+  const StyledImage = styled.div`
+    position: absolute;
+    background-image: url('${url}');
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+    background-size: 74.5342%;
+    width: 100%;
+    border-radius: 8px;
+    transition: all ease-in-out 300ms;
+    padding-top: 100%;
+    &:hover {
+      transform: scale(1.2);
+    }
+  `;
   return (
     <LinkTag onClick={linkDetail}>
       <BlockContainer {...imageWrapperStyle}>
-        <StyledImage url={url} />
+        <StyledImage />
       </BlockContainer>
     </LinkTag>
   );
 }
-
-const StyledImage = styled.div<PropsType>`
-  background-image: url(${(props: PropsType) => props.url});
-  position: absolute;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100%;
-  background-size: 74.5342%;
-  width: 100%;
-  border-radius: 8px;
-  transition: all ease-in-out 300ms;
-  padding-top: 100%;
-  &:hover {
-    transform: scale(1.2);
-  }
-`;
 
 const imageWrapperStyle = {
   width: '333px',

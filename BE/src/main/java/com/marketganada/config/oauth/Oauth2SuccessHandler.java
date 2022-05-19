@@ -25,16 +25,15 @@ public class Oauth2SuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         GanadaUserDetails oAuth2User = (GanadaUserDetails)authentication.getPrincipal();
         if(oAuth2User.getProvider().equals("kakao")){
-            System.out.println("getAttributes"+ oAuth2User.getAttributes());
 
             Map<String, Object> kakaoAccount = oAuth2User.getAttribute("kakao_account");
             User user = userService.getUserByUserEmail((String) kakaoAccount.get("email")).get();
-            System.out.println("카카오");
+//            System.out.println("카카오");
             writeTokenResponse(response, JwtTokenUtil.getToken(user.getUserEmail()));
 
         }else{
-            System.out.println("구글");
-            System.out.println((String) oAuth2User.getAttribute("email"));
+//            System.out.println("구글");
+
             User user = userService.getUserByUserEmail(oAuth2User.getAttribute("email")).get();
 
             writeTokenResponse(response, JwtTokenUtil.getToken(user.getUserEmail()));
@@ -46,11 +45,8 @@ public class Oauth2SuccessHandler implements AuthenticationSuccessHandler {
         response.setContentType("application/json;charset=UTF-8");
 
         Map<String, Object> data = ImmutableMap.of(
-                "message", "success",
-                "statusCode", 200,
                 "token", token
         );
-        System.out.println(token);
         response.sendRedirect("http://localhost:3000/oauth/redirect");
         PrintWriter pw = response.getWriter();
         pw.print(new ObjectMapper().writeValueAsString(data));

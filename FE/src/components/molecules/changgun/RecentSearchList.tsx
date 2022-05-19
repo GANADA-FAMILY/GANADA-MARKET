@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { TextButton } from '../../atoms/changgun';
+import { Text } from '../../atoms/changgun';
 
 const Wrapper = styled.div`
   display: flex;
@@ -38,9 +38,15 @@ function RecentSearchList() {
         <CancelButton>X</CancelButton>
       </Header>
       <Inner>
-        <TextButton size="small">아이폰</TextButton>
-        <TextButton size="small">아이폰</TextButton>
-        <TextButton size="small">아이폰</TextButton>
+        <Text pointer hoverBold size="small">
+          아이폰
+        </Text>
+        <Text pointer hoverBold size="small">
+          아이폰
+        </Text>
+        <Text pointer hoverBold size="small">
+          아이폰
+        </Text>
       </Inner>
     </Wrapper>
   );

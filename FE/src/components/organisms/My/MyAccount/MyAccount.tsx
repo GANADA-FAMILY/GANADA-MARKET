@@ -1,17 +1,17 @@
 import styled from '@emotion/styled';
-import userAPI from 'api/userAPI';
-import { InputBox, LinkButton, Title, Text, Button } from 'components/atoms/My';
+import { InputBox, Button } from 'components/atoms/My';
 import { InfoGroup, TitleBar } from 'components/molecules/My';
 import { useForm } from 'hooks';
+import { useRootDispatch, useRootSelector } from 'state/Hooks';
+import { updateBank } from 'state/reducers/BankSlice';
 import { Bank } from 'types/Entity/UserAPI';
 import BankBox from './BankBox';
 
-interface MyAccountProps {
-  bank: Bank | any;
-}
-function MyAccount({ bank }: MyAccountProps) {
-  const onSubmit = () => {
-    userAPI.updateBank(values);
+function MyAccount() {
+  const dispatch = useRootDispatch();
+  const bank = useRootSelector((state) => state.bank.bank);
+  const onSubmit = async () => {
+    await dispatch(updateBank({ formData: values }));
   };
   const validate = (form: Bank) => {
     if (
@@ -24,7 +24,7 @@ function MyAccount({ bank }: MyAccountProps) {
   };
 
   const [values, errors, isLoading, handleChange, handleSubmit] = useForm({
-    initalState: { bank: '', bankNum: '', bankHolder: '' },
+    initalState: initalBank,
     onSubmit,
     validate,
   });
@@ -73,6 +73,7 @@ function MyAccount({ bank }: MyAccountProps) {
     </section>
   );
 }
+const initalBank = { bank: '', bankNum: '', bankHolder: '' };
 const StyledInfoGroup = styled(InfoGroup)`
   padding-top: 20px;
 `;

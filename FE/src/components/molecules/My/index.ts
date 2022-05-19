@@ -7,6 +7,7 @@ import Tabs from './Tabs';
 import TitleBar from './TitleBar';
 import AddressInfo from './AddressInfo';
 import ButtonsBox from './ButtonsBox';
+import Modal from './Modal';
 
 export {
   AddressInfo,
@@ -18,4 +19,5 @@ export {
   ModifyButtonBox,
   Tabs,
   TitleBar,
+  Modal,
 };

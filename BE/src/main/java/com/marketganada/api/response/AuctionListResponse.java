@@ -14,12 +14,14 @@ import java.util.List;
 @Getter
 @Setter
 public class AuctionListResponse {
-    List<Auctions> auctionList;
     Long auctionCnt;
+    boolean isLast;
+    List<Auctions> auctionList;
 
-    public static AuctionListResponse of(List<Auction> auctions, List<Boolean> isLikes, Long cnt) {
+    public static AuctionListResponse of(List<Auction> auctions, List<Boolean> isLikes, Long cnt, boolean isLast) {
         AuctionListResponse res = new AuctionListResponse();
         res.setAuctionCnt(cnt);
+        res.setLast(isLast);
         res.setAuctionList(new ArrayList<>());
 
         if(auctions == null)
@@ -51,7 +53,6 @@ public class AuctionListResponse {
         @JsonFormat(timezone = "Asia/Seoul")
         Date endTime;
         boolean isLiked;
-        boolean auctionStatus;
 
         @Builder
         public Auctions(Auction auction, boolean _isLiked, int cnt) {
@@ -66,22 +67,25 @@ public class AuctionListResponse {
             depreciation = auction.getDepreciation();
             startTime = auction.getStartTime();
             endTime = auction.getEndTime();
-            auctionStatus = auction.isAuctionStatus();
             isLiked = _isLiked;
         }
     }
 
     @Getter
     static class Products {
+        Long productId;
         String productName;
         String productBrand;
         String productModel;
+        String description;
 
         @Builder
         public Products(Product product) {
+            productId = product.getProductId();
             productName = product.getProductName();
             productBrand = product.getProductBrand();
             productModel = product.getDeviceId();
+            description = product.getDescription();
         }
     }
 }

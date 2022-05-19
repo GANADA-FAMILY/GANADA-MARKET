@@ -18,6 +18,8 @@ const user = {
   userPhone: '01033334444',
   profileImageUrl: 'https://kream.co.kr/_nuxt/img/blank_profile.4347742.png',
   grade: '일반 회원',
+  orderHistory: [],
+  salesHistory: [],
 };
 
 Default.args = {

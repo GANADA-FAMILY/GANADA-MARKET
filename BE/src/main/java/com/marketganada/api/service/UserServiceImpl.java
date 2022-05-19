@@ -159,9 +159,6 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<AddressBook> getAddressBookList(User user) {
         List<AddressBook> addressBookList = addressBookRepository.findByUser(user);
-        for(AddressBook addressBook : addressBookList){
-            System.out.println(addressBook.getAddressName());
-        }
         return addressBookList;
     }
 
@@ -215,7 +212,7 @@ public class UserServiceImpl implements UserService{
         addressBookRepository.save(addressBook.get());
 
 
-        return "변경성공";
+        return "success";
     }
 
     @Override
@@ -239,6 +236,6 @@ public class UserServiceImpl implements UserService{
 
         s3Service.deleteFile(beforeName);
 
-        return "success";
+        return user.getProfileImageUrl();
     }
 }

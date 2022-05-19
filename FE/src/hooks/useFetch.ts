@@ -33,7 +33,6 @@ export default function useFetch<T, D>({
     }
   };
   useEffect(() => {
-    console.log(true);
     getData();
     setIsLoading(false);
   }, [error, isLoading]);

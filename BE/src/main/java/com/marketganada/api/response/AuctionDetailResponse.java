@@ -9,11 +9,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -28,9 +26,6 @@ public class AuctionDetailResponse {
                     ._isLiked(isLiked)
                     ._isMine(isMine)
                     .build());
-        Date testDate = res.getAuction().getStartTime();
-        System.out.println("옥션디테일 : "+ res.getAuction().getStartTime());
-        System.out.println("testDate : "+ testDate);
 
         return res;
     }
@@ -87,23 +82,30 @@ public class AuctionDetailResponse {
 
     @Getter
     static class Products {
+        Long productId;
         String productName;
         String productBrand;
         String productModel;
+        String description;
+        @JsonFormat(timezone = "Asia/Seoul")
         Date releaseDate;
-        int recentPrice;
+        int releasePrice;
 
         @Builder
         public Products(Product product) {
+            productId = product.getProductId();
             productName = product.getProductName();
             productBrand = product.getProductBrand();
+            description = product.getDescription();
             releaseDate = product.getReleaseDate();
             productModel = product.getDeviceId();
+            releasePrice = product.getReleasePrice();
         }
     }
 
     @Getter
     static class ProductHistories {
+        @JsonFormat(timezone = "Asia/Seoul")
         Date historyDate;
         int historyPrice;
 
