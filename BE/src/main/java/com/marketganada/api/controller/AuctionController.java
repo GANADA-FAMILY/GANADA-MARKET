@@ -224,7 +224,6 @@ public class AuctionController {
 
         Auction auction;
         boolean isLiked = false,isMine = false;
-//        int recentPrice;
 
         try {
             auction = auctionService.getAuctionById(auctionId);
@@ -233,18 +232,8 @@ public class AuctionController {
                 isLiked = auctionService.isThisAuctionLiked(auction, user);
                 isMine = auctionService.isThisAuctionMine(auction, user);
             }
-
-//            Product product = auction.getProduct();
-//            recentPrice = productService.getRecentPrice(product);
-        } catch (Exception e) {
-            if(e.getMessage().equals("not found")) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-            else {
-                e.printStackTrace();
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            }
-
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatus()).build();
         }
 
         return ResponseEntity.ok(AuctionDetailResponse.of(auction,isLiked,isMine));
