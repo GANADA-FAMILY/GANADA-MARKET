@@ -93,10 +93,10 @@ public class UserController {
     @PutMapping(path = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ApiOperation(value = "프로필 이미지 변경", notes = " 입력한 사진으로 프로필 사진을 변경한다.")
     @ApiResponses({
-            @ApiResponse(code = 201, message = "성공", response = BaseResponseBody.class),
+            @ApiResponse(code = 201, message = "성공", response = ProfileImageResponse.class),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity updateUserProfileImage(@ApiIgnore Authentication authentication,
+    public ResponseEntity<ProfileImageResponse> updateUserProfileImage(@ApiIgnore Authentication authentication,
                                                  @RequestPart(value = "profileImage", required = false)
                                                  MultipartFile profileImage) {
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
@@ -110,7 +110,7 @@ public class UserController {
             return new ResponseEntity(e.getStatus());
         }
 
-        return new ResponseEntity(HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ProfileImageResponse.from(res));
     }
 
     @PutMapping("/pw")

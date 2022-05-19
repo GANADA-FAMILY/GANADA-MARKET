@@ -1,5 +1,6 @@
 package com.marketganada.api.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.marketganada.db.entity.Auction;
 import com.marketganada.db.entity.AuctionImg;
 import com.marketganada.db.entity.Product;
@@ -8,24 +9,23 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
 public class AuctionDetailResponse {
     Auctions auction;
 
-    public static AuctionDetailResponse of(Auction auction, boolean isLiked, boolean isMine) {
+    public static AuctionDetailResponse of(Auction auction, boolean isLiked, boolean isMine, int recentPrice) {
         AuctionDetailResponse res = new AuctionDetailResponse();
         if(auction != null)
             res.setAuction(Auctions.builder()
                     .auction(auction)
                     ._isLiked(isLiked)
                     ._isMine(isMine)
+                    ._recentPrice(recentPrice)
                     .build());
 
         return res;
@@ -51,9 +51,9 @@ public class AuctionDetailResponse {
         int likeCnt;
 
         @Builder
-        public Auctions(Auction auction, Boolean _isLiked, Boolean _isMine) {
+        public Auctions(Auction auction, Boolean _isLiked, Boolean _isMine, int _recentPrice) {
             auctionId = auction.getAuctionId();
-            product = Products.builder().product(auction.getProduct()).build();
+            product = Products.builder().product(auction.getProduct())._recentPrice(_recentPrice).build();
             auctionTitle = auction.getAuctionTitle();
             auctionDesc = auction.getDescription();
             seller = auction.getUser().getUserNickname();
@@ -84,20 +84,23 @@ public class AuctionDetailResponse {
         String productName;
         String productBrand;
         String productModel;
+        @JsonFormat(timezone = "Asia/Seoul")
         Date releaseDate;
         int recentPrice;
 
         @Builder
-        public Products(Product product) {
+        public Products(Product product, int _recentPrice) {
             productName = product.getProductName();
             productBrand = product.getProductBrand();
             releaseDate = product.getReleaseDate();
             productModel = product.getDeviceId();
+            recentPrice = _recentPrice;
         }
     }
 
     @Getter
     static class ProductHistories {
+        @JsonFormat(timezone = "Asia/Seoul")
         Date historyDate;
         int historyPrice;
 

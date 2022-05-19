@@ -47,7 +47,7 @@ public class AuctionControllerPositiveCases {
 
     private static SimpleDateFormat simpleDateFormat;
 
-    private static final Long TEST_PRODUCT_PHONE_ID = Long.valueOf(21);
+    private static final Long TEST_PRODUCT_PHONE_ID = Long.valueOf(4);
     private static final Long TEST_PRODUCT_EARPHONE_ID = Long.valueOf(23);
 
     @BeforeAll
@@ -146,7 +146,7 @@ public class AuctionControllerPositiveCases {
     @Order(3)
     void getAuctionPhoneListTest() throws Exception {
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/api/auction/phone?page=0" +
-                                "&sort=auctionId,DESC&brand=apple&model=아이폰12 미니&save=256GB")
+                                "&sort=auctionId,DESC&brand=apple&model=아이폰11&save=64GB")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
