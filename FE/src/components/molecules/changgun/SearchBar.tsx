@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { SearchInput, TextButton } from '../../atoms/changgun';
+import { SearchInput, Text } from '../../atoms/changgun';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -13,7 +13,7 @@ function SearchBar() {
   return (
     <Wrapper>
       <SearchInput />
-      <TextButton>취소</TextButton>
+      <Text>취소</Text>
     </Wrapper>
   );
 }
