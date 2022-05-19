@@ -95,6 +95,7 @@ public class EntityTest {
                 .addressDetail("detail")
                 .addressName("my address")
                 .user(user)
+                .activate(true)
                 .addressPhone("phone")
                 .postalCode("postal")
                 .build();
