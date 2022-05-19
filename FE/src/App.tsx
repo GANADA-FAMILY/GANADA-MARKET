@@ -34,7 +34,7 @@ function App() {
             <Route path="/my/account" element={<MyAccountPage />} />
             <Route path="/shop/:product" element={<ShopPage />} />
             <Route path="/payment" element={<PaymentPage />} />
-            <Route path="/auction/:id" element={<AuctionPage />} />
+            <Route path="/auction/:auctionId" element={<AuctionPage />} />
             <Route path="/test" element={<TestPage />} />
             <Route path="/payment/:auctionId" element={<PaymentPage />} />
             <Route path="*" element={<Error404 />} />

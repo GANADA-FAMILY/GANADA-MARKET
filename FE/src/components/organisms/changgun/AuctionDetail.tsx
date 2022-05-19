@@ -48,7 +48,6 @@ const ButtonInner = styled.div`
 function AuctionDetail({ data }: AuctionDetailProps) {
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(data.auction.isLiked);
-  // const [isLiked, setIsLiked] = useState(true);
   const [price, setPrice] = useState(0);
   const { startPrice, startTime, cycle, depreciation, product } = data.auction;
   const { productModel, releaseDate, releasePrice } = product;
@@ -103,7 +102,7 @@ function AuctionDetail({ data }: AuctionDetailProps) {
       Number(new Date(startTime));
 
     setTimer(Math.floor((Number(nextCycleTime) - Number(today)) / 1000));
-  }, []);
+  }, [cycle, depreciation, startPrice, startTime]);
 
   return (
     <Wrapper>
