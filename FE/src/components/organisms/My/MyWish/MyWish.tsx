@@ -5,7 +5,6 @@ import { Item, LinkButton, Text } from 'components/atoms/My';
 import { List, TitleBar } from 'components/molecules/My';
 import { priceComma } from 'functions';
 import datetimeToLabel from 'functions/datetimeToLabel';
-import { EventHandler } from 'react';
 import { Link } from 'react-router-dom';
 import { useRootDispatch } from 'state/Hooks';
 import { deleteWish } from 'state/reducers/WishSlice';
@@ -44,7 +43,7 @@ function WishItem(
   return (
     <StyledItem item={item}>
       <Link
-        to={`/shop/${auctionId}`}
+        to={`/auction/${auctionId}`}
         css={css`
           display: flex;
           width: 100%;
