@@ -65,7 +65,6 @@ function Header() {
         <Logo width="8rem" height="4rem" />
         <Navigation>
           <NavLink to="/shop/phone">SHOP</NavLink>
-          <NavLink to="/about">ABOUT</NavLink>
           <Modal
             trigger={<SearchIcon width="3rem" height="3rem" />}
             inset="0 0 70% 0"
