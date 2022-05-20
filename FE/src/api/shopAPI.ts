@@ -7,7 +7,7 @@ import Auction from '../types/Entity/ShopAPI/Auction';
 
 const axios = defaultInstance();
 axios.defaults.baseURL = API_URL;
-axios.defaults.headers.common.Authorization = ACCESS_TOKEN;
+axios.defaults.headers.common.Authorization = ACCESS_TOKEN ?? null;
 interface resolveData {
   data: {
     auctionList: Auction[];

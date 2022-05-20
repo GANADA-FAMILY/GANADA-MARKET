@@ -42,7 +42,6 @@ function ShopPage() {
   // 초기 렌더링
   useEffect(() => {
     let unmounted = false;
-
     if (!unmounted) {
       // 리덕스 초기화
       dispatch(navReset());
@@ -58,6 +57,18 @@ function ShopPage() {
           sort: 'endTime,asc',
         }).toString(),
       });
+
+      if (!isQueryEmpty() && params.product && !unmounted) {
+        (async () => {
+          setIsLoaded(true);
+          const res = await getList(params.product, query);
+          if (!unmountRef.current) {
+            setList(res.data.auctionList);
+            setListLen(res.data.auctionCnt);
+            setIsLoaded(false);
+          }
+        })();
+      }
     }
     return () => {
       unmounted = true;
@@ -109,10 +120,10 @@ function ShopPage() {
     if (!isQueryEmpty() && params.product && !unmounted) {
       (async () => {
         setIsLoaded(true);
-        const res = await getList(params.product, query);
-        setList(res.data.auctionList);
-        setListLen(res.data.auctionCnt);
         if (!unmountRef.current) {
+          const res = await getList(params.product, query);
+          setList(res.data.auctionList);
+          setListLen(res.data.auctionCnt);
           setIsLoaded(false);
         }
       })();
