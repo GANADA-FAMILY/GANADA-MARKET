@@ -81,8 +81,9 @@ function LoginForm() {
       })
       .then((res) => {
         localStorage.setItem('token', res.data.token);
-      });
-    navigate('/');
+        navigate('/');
+      })
+      .catch(() => alert('아이디 비밀번호를 확인해보세요!'));
   };
 
   const loginHandler = (e: any) => {
