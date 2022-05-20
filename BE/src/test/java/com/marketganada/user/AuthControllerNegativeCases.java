@@ -1,4 +1,4 @@
-package com.marketganada.controller;
+package com.marketganada.user;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.MethodOrderer;

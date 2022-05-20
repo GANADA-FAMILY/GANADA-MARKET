@@ -239,6 +239,48 @@ public class AuctionControllerPositiveCases {
 
     @Test
     @Order(8)
+    void insertPaymentTest() throws Exception {
+        PaymentInsertRequest p = new PaymentInsertRequest();
+        p.setAuctionId(auctionPhoneId);
+        p.setAddress("?");
+        p.setPaymentMethod("???");
+        p.setAddressDetail("?????");
+        p.setPhone("01000000000");
+        p.setBuyerName("name");
+        p.setPostalCode("00000");
+        p.setPrice(1234);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/payment")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content((new JSONObject(oMapper.writeValueAsString(p)).toString())))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    @Order(8)
+    void insertSuccessTest() throws Exception {
+        PaymentInsertRequest p = new PaymentInsertRequest();
+        p.setAuctionId(auctionPhoneId);
+        p.setAddress("?");
+        p.setPaymentMethod("???");
+        p.setAddressDetail("?????");
+        p.setPhone("01000000000");
+        p.setBuyerName("name");
+        p.setPostalCode("00000");
+        p.setPrice(1234);
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/payment")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content((new JSONObject(oMapper.writeValueAsString(p)).toString())))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    @Order(8)
     void deleteAuctionLikeTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/auction/like/"+auctionPhoneId)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)

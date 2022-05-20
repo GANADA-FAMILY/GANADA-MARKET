@@ -234,6 +234,9 @@ public class AuctionServiceImpl implements AuctionService {
 
         Page<Auction> auctions = auctionRepository.findAll(auctionSpec, pageable);
 
+        if(auctions.toList().size() < 1)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
         return auctions;
     }
 
