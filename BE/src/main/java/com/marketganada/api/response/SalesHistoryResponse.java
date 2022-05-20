@@ -26,8 +26,10 @@ public class SalesHistoryResponse {
             salesInfo.put("productBrand",payment.getAuction().getProduct().getProductBrand());
             salesInfo.put("tradeDate",payment.getTradeDate());
             salesInfo.put("price",payment.getPrice());
+            salesInfo.put("courier",payment.getCourier());
             salesInfo.put("status",payment.getStatus());
             salesInfo.put("trackingNum",payment.getTrackingNum());
+            salesInfo.put("titleImageUrl",payment.getAuction().getTitleImageUrl());
             salesHistory.add(salesInfo);
         }
         res.setSalesHistory(salesHistory);

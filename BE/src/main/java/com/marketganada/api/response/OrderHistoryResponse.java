@@ -27,7 +27,9 @@ public class OrderHistoryResponse {
             orderInfo.put("tradeDate",payment.getTradeDate());
             orderInfo.put("price",payment.getPrice());
             orderInfo.put("status",payment.getStatus());
+            orderInfo.put("courier",payment.getCourier());
             orderInfo.put("trackingNum",payment.getTrackingNum());
+            orderInfo.put("titleImageUrl",payment.getAuction().getTitleImageUrl());
             orderHistory.add(orderInfo);
         }
         res.setOrderHistory(orderHistory);
