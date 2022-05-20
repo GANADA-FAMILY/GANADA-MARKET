@@ -89,7 +89,6 @@ public class UserInfoResponse {
             sellingInfo.put("endTime",auction.getEndTime());
 
 
-
             selling.add(sellingInfo);
         }
         res.setSelling(selling);
