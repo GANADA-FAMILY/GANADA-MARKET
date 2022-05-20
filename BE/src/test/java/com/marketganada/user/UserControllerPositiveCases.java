@@ -245,6 +245,15 @@ public class UserControllerPositiveCases {
     }
 
     @Test
+    @Order(14)
+    void getSellingTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/user/selling")
+                        .header(HttpHeaders.AUTHORIZATION,"Bearer "+accessToken))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
     @Order(15)
     void getOrderTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/user/order-history")

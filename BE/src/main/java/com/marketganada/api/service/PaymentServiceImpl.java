@@ -42,6 +42,7 @@ public class PaymentServiceImpl implements PaymentService{
     private static final String HOST = "https://kapi.kakao.com";
 
     @Override
+    @Transactional
     public Map<String,Object> insertPayment(PaymentInsertRequest paymentInsertRequest, User user) {
         Map<String,Object> result = new HashMap<>();
         String insert  = "success";
@@ -219,6 +220,7 @@ public class PaymentServiceImpl implements PaymentService{
         Optional<Payment> payment = paymentRepository.findById(paymentId);
         //존재하지 않는다면
         if(!payment.isPresent()){
+            System.out.println("????????????????????");
 
             return "fail";
         }

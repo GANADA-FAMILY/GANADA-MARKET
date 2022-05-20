@@ -40,6 +40,9 @@ public class PaymentController {
     })
     public ResponseEntity insertPayment(@ApiIgnore Authentication authentication,
                                         @Valid @RequestBody PaymentInsertRequest paymentInsertRequest) {
+        if(paymentInsertRequest.getPrice()<=0){
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
         GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
 
