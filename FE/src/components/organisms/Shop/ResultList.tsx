@@ -22,10 +22,10 @@ function ResultList({ initialData, query, onLike }: propsType) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [pageNum, setPageNum] = useState(0);
   const [stateLast, setStateLast] = useState(false);
-
+  const unmountRef = useRef(false);
   useEffect(() => {
-    let umounted = false;
-    if (!umounted) {
+    let unmounted = false;
+    if (!unmounted) {
       setState(initialData);
       (async () => {
         const res = await getPageList(
@@ -42,7 +42,8 @@ function ResultList({ initialData, query, onLike }: propsType) {
       })();
     }
     return () => {
-      umounted = true;
+      unmounted = true;
+      unmountRef.current = true;
     };
   }, []);
 
