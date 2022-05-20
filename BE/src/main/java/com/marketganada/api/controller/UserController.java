@@ -292,12 +292,12 @@ public class UserController {
         User user = userDetails.getUser();
 
         List<Payment> paymentList = paymentService.getSalesHistory(user);
-
+        List<Auction> selling = auctionService.getTrueAuctionListByUser(user);
         for(Payment payment : paymentList){
             System.out.println(payment.getPaymentId());
         }
 
-        return ResponseEntity.ok(SalesHistoryResponse.of(paymentList));
+        return ResponseEntity.ok(SalesHistoryResponse.of(paymentList,selling));
 
     }
 
