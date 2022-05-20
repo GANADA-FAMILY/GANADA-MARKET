@@ -1,6 +1,6 @@
 interface Auction {
   auctionId: number;
-  auctionImgs: number[];
+  auctionImgs: string[];
   product: {
     productBrand: string;
     productName: string;

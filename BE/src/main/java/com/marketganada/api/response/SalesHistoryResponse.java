@@ -1,14 +1,14 @@
 package com.marketganada.api.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.marketganada.db.entity.Auction;
 import com.marketganada.db.entity.Payment;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Getter
 @Setter
@@ -33,6 +33,7 @@ public class SalesHistoryResponse {
             salesHistory.add(salesInfo);
         }
         res.setSalesHistory(salesHistory);
+
         return res;
 
     }

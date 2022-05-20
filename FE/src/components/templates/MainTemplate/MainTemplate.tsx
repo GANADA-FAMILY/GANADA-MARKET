@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import auctionAPI from 'api/auctionAPI';
-import AuctionList from 'types/Entity/AuctionList';
+import AuctionList from 'types/Entity/MainAPI/AuctionList';
 import Main from '../../organisms/Main/Main';
 import Slick from '../../organisms/Main/Slick';
 

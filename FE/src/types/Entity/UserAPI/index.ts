@@ -1,3 +1,4 @@
+import userAPI from 'api/userAPI';
 import Address from './Address';
 import User from './User';
 import Product from './Product';

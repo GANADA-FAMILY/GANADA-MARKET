@@ -1,50 +1,83 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from '@emotion/styled';
 import Address from 'types/Entity/UserAPI/Address';
-import userAPI from '../../../api/userAPI';
-import Button from '../../atoms/Main/Button';
-import Container from '../../layouts/Payment/Container';
-import Title from '../../atoms/Payment/Title';
+import { Modal } from 'components/molecules/My';
+import { Button } from 'components/atoms/Main/';
+import Container from 'components/layouts/Payment/Container';
+import Selection from 'components/molecules/Payment/Selection';
+import { Title } from 'components/atoms/Payment';
+import { selectPayInfo, setDelivery } from 'state/reducers/PaySlice';
 
 interface Props {
-  data: Address;
+  data: Address[];
 }
 
 function DeliveryInfo({ data }: Props) {
-  const [adress, setAdress] = useState<Address>();
+  const [visible, setVisible] = useState(false);
+  const select = useSelector(selectPayInfo);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    setAdress(data);
+    if (data.length !== 0) {
+      dispatch(setDelivery(data[0]));
+    }
   }, [data]);
-  const ChangeAdd = () => {
-    window.alert('구현중입니다.');
+  const onShowModal = () => {
+    setVisible(true);
+  };
+  const onCloswModal = () => {
+    setVisible(false);
+  };
+  const plusAddress = () => {
+    navigate('/my/address');
   };
   return (
-    <Container>
+    <DelyContainer>
       <Title>배송주소</Title>
-      {adress && (
-        <Wrapper>
-          <Dl>
-            <Item>
-              <Dt>받는 분</Dt>
-              <Dd>{adress.addressName}</Dd>
-            </Item>
-            <Item>
-              <Dt>연락처</Dt>
-              <Dd>{adress.addressPhone}</Dd>
-            </Item>
-            <Item>
-              <Dt>배송 주소</Dt>
-              <Dd>{adress.addressDetail}</Dd>
-            </Item>
-          </Dl>
-          <Button onClick={ChangeAdd}>변경</Button>
-        </Wrapper>
-      )}
-    </Container>
+      <Wrapper>
+        <Dl>
+          <Item>
+            <Dt>받는 분</Dt>
+            {select && <Dd>{select.buyerName}</Dd>}
+          </Item>
+          <Item>
+            <Dt>연락처</Dt>
+            {select && <Dd>{select.phone}</Dd>}
+          </Item>
+          <Item>
+            <Dt>배송 주소</Dt>
+            {select && (
+              <Dd>
+                {select.address}
+                {select.addressDetail}
+              </Dd>
+            )}
+          </Item>
+        </Dl>
+        <Button onClick={onShowModal}>변경</Button>
+      </Wrapper>
+      <Modal visible={visible} title="배송지 변경" onClose={onCloswModal}>
+        {data.map((item) => (
+          <Selection
+            address={item}
+            onClose={onCloswModal}
+            key={item.addressId}
+          />
+        ))}
+        <Button onClick={plusAddress}>새 배송지 추가</Button>
+      </Modal>
+    </DelyContainer>
   );
 }
 
 export default DeliveryInfo;
+
+const DelyContainer = styled(Container)`
+  text-align: center;
+`;
 
 const Wrapper = styled.div`
   display: flex;
@@ -61,7 +94,8 @@ const Dt = styled.dt`
   width: 8rem;
 `;
 const Dd = styled.dd`
-  /* float: right; */
+  float: right;
+  margin-right: 2rem;
 `;
 const Item = styled.div`
   min-height: 2.6rem;

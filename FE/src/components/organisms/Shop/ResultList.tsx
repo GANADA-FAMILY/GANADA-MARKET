@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Auction from 'types/Entity/ShopAPI/Auction';
 import { getPageList } from 'api/shopAPI';
-import { createSearchParams, useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import ResultItem from '../../molecules/Shop/ResultItem';
 import GridContainer from '../../layouts/Shop/GridContainer';
 import Loading from '../../Loading';
@@ -16,42 +16,72 @@ interface propsType {
 function ResultList({ initialData, query, onLike }: propsType) {
   const [state, setState] = useState<Auction[]>(initialData);
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
-  const [isLast, setLast] = useState(false);
+  const isLast = useRef(0);
   const params = useParams();
   const addItem = useRef<Auction[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [pageNum, setPageNum] = useState(0);
+  const [stateLast, setStateLast] = useState(false);
+
+  useEffect(() => {
+    let isComponentMounted = true;
+    if (isComponentMounted) {
+      (async () => {
+        const res = await getPageList(
+          {
+            ...Object.fromEntries(query),
+            page: '1',
+            size: '12',
+          },
+          params.product,
+        );
+        if (res.data.auctionList.length === 0) {
+          setStateLast(true);
+        }
+      })();
+    }
+    return () => {
+      isComponentMounted = false;
+    };
+  }, []);
+
   const getMoreItem = async () => {
     setIsLoaded(true);
     // eslint-disable-next-line no-promise-executor-return
     await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    if (isLast.current === 1) {
+      isLast.current = 2;
+    } else {
+      setPageNum((prev: number) => prev + 1);
+    }
+
     setState((prev) => prev.concat(addItem.current));
-    setPageNum((prev: number) => prev + 1);
     setIsLoaded(false);
   };
   // 페이지 이동했을때
   useEffect(() => {
     let isComponentMounted = true;
 
-    setIsLoaded(true);
-    if (isComponentMounted) {
+    if (isComponentMounted && isLast.current < 1) {
       (async () => {
         const res = await getPageList(
           {
             ...Object.fromEntries(query),
-            page: `${pageNum}`,
+            page: `${pageNum + 1}`,
             size: '12',
           },
           params.product,
         );
-        if (!res.data.last) {
+        if (res.data.auctionList.length !== 0) {
           addItem.current = res.data.auctionList;
-        } else {
-          setLast(true);
+        }
+
+        if (res.data.last) {
+          isLast.current = 1;
         }
       })();
     }
-    setIsLoaded(false);
 
     return () => {
       isComponentMounted = false;
@@ -62,9 +92,8 @@ function ResultList({ initialData, query, onLike }: propsType) {
     [entry]: IntersectionObserverEntry[],
     observer: IntersectionObserver,
   ) => {
-    if (entry.isIntersecting && !isLoaded && !isLast) {
+    if (entry.isIntersecting && !isLoaded && isLast.current < 2) {
       observer.unobserve(entry.target);
-
       await getMoreItem();
       observer.observe(entry.target);
     }
@@ -72,7 +101,7 @@ function ResultList({ initialData, query, onLike }: propsType) {
 
   useEffect(() => {
     let observer: IntersectionObserver;
-    if (target && !isLast) {
+    if (target && isLast.current < 2) {
       observer = new IntersectionObserver(onIntersect, {
         threshold: 0.4,
       });
@@ -83,7 +112,7 @@ function ResultList({ initialData, query, onLike }: propsType) {
 
   return (
     <GridContainer {...ResultContainer}>
-      {state.length === 0 && state ? (
+      {state.length === 0 ? (
         <div
           style={{
             gridColumnStart: '2',
@@ -107,12 +136,13 @@ function ResultList({ initialData, query, onLike }: propsType) {
           );
         })
       )}
+
       <div
-        style={{ gridColumnStart: '2' }}
+        style={!stateLast ? { gridColumnStart: '2' } : { display: 'none' }}
         ref={setTarget}
         className="Target-Element"
       >
-        {isLoaded && !isLast && <Loading />}
+        {isLoaded && initialData.length !== 0 && <Loading />}
       </div>
     </GridContainer>
   );

@@ -15,10 +15,11 @@ const MyWishPage = React.lazy(() => import('./pages/MyWishPage'));
 const AuctionPage = React.lazy(() => import('./pages/AuctionPage'));
 const TestPage = React.lazy(() => import('./pages/TestPage'));
 const MyAccountPage = React.lazy(() => import('./pages/MyAccountPage'));
+const PayApprovePage = React.lazy(() => import('./pages/PayApprovePage'));
+const PayFailPage = React.lazy(() => import('./pages/PayFailPage'));
 const MySalesPage = React.lazy(() => import('./pages/MySalesPage'));
 
 function App() {
-  console.log(process.env.REACT_APP_API_URL);
   return (
     <Router>
       <PageLayout>
@@ -37,6 +38,11 @@ function App() {
             <Route path="/auction/:auctionId" element={<AuctionPage />} />
             <Route path="/test" element={<TestPage />} />
             <Route path="/payment/:auctionId" element={<PaymentPage />} />
+            <Route
+              path="/payment/result/approve"
+              element={<PayApprovePage />}
+            />
+            <Route path="/payment/result/fail" element={<PayFailPage />} />
             <Route path="*" element={<Error404 />} />
           </Routes>
         </React.Suspense>
