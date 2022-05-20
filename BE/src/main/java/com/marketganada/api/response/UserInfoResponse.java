@@ -51,6 +51,7 @@ public class UserInfoResponse {
             orderInfo.put("price",payment.getPrice());
             orderInfo.put("status",payment.getStatus());
             orderInfo.put("trackingNum",payment.getTrackingNum());
+            orderInfo.put("courier",payment.getCourier());
             orderInfo.put("titleImageUrl",payment.getAuction().getTitleImageUrl());
             orderHistory.add(orderInfo);
         }
@@ -102,8 +103,9 @@ public class UserInfoResponse {
             salesInfo.put("tradeDate",payment.getTradeDate());
             salesInfo.put("price",payment.getPrice());
             salesInfo.put("status",payment.getStatus());
+            salesInfo.put("courier",payment.getCourier());
             salesInfo.put("trackingNum",payment.getTrackingNum());
-            salesInfo.put("imageUrl",payment.getAuction().getTitleImageUrl());
+            salesInfo.put("titleImageUrl",payment.getAuction().getTitleImageUrl());
             salesHistory.add(salesInfo);
         }
         res.setSalesHistory(salesHistory);
