@@ -73,7 +73,7 @@ function SellingItem(
               onClick={purchaseHandler}
             >
               <Text strong color="white2">
-                구매
+                취소
               </Text>
               <Price>
                 <Text size={15} color="white2" strong inline>
@@ -153,18 +153,10 @@ const PurchaseLink = styled(LinkButton)`
   align-items: center;
   width: 16.4rem;
   height: 6rem;
+  text-align: center;
 `;
 const Price = styled.div`
   margin-left: 1.5rem;
   line-height: 1.8rem;
-`;
-const DeleteLink = styled.a`
-  margin-top: 6px;
-  padding: 0 3px;
-  display: inline-flex;
-  font-size: 12px;
-  letter-spacing: -0.06px;
-  color: rgba(34, 34, 34, 0.8);
-  text-decoration: underline;
 `;
 export default MySelling;
