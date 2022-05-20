@@ -21,7 +21,12 @@ const StyledButton = styled.button<LoginButtonProps>`
 
 function LoginButton({ isActive, children, onClick }: LoginButtonProps) {
   return (
-    <StyledButton disabled={!isActive} onClick={onClick} isActive={isActive}>
+    <StyledButton
+      type="submit"
+      disabled={!isActive}
+      onClick={onClick}
+      isActive={isActive}
+    >
       {children}
     </StyledButton>
   );

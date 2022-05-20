@@ -8,6 +8,8 @@ import {
   FlexibleImage,
   LoginButton,
 } from 'components/atoms/changgun';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
   display: flex;
@@ -69,13 +71,33 @@ function LoginForm() {
   const [formValidity, setFormValidity] = useState<boolean>(false);
   const [emailValue, setEmailValue] = useState<string>('');
   const [passwordValue, setPasswordValue] = useState<string>('');
+  const navigate = useNavigate();
+
+  const fetchToken = async () => {
+    await axios
+      .post('/auth/login', {
+        userEmail: emailValue,
+        userPw: passwordValue,
+      })
+      .then((res) => {
+        console.log(res);
+        localStorage.setItem('token', res.data.token);
+      });
+    navigate('/');
+  };
+
+  const loginHandler = (e: any) => {
+    e.preventDefault();
+
+    fetchToken();
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setEmailValidity(
         emailValue.trim().includes('@') || emailValue.trim().length === 0,
       );
-    }, 500);
+    }, 300);
 
     return () => clearTimeout(timer);
   }, [emailValue]);
@@ -85,7 +107,7 @@ function LoginForm() {
       setPasswordValidity(
         passwordValue.trim().length === 0 || passwordValue.trim().length > 7,
       );
-    }, 500);
+    }, 300);
 
     return () => clearTimeout(timer);
   }, [passwordValue]);
@@ -94,10 +116,10 @@ function LoginForm() {
     setFormValidity(
       passwordValidity &&
         emailValidity &&
-        emailValue.trim().length > 0 &&
-        passwordValue.trim().length > 0,
+        emailValue.trim().includes('@') &&
+        passwordValue.trim().length > 7,
     );
-  }, [passwordValidity, emailValidity]);
+  }, [passwordValue, emailValue]);
 
   const emailChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
     setEmailValue(e.currentTarget.value);
@@ -112,7 +134,7 @@ function LoginForm() {
       <Header>
         <Logo width="15rem" height="auto" />
       </Header>
-      <FormGroup>
+      <FormGroup onSubmit={loginHandler}>
         <InputAndError>
           <InputWithLabel
             onChange={emailChangeHandler}
