@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import { MenuList, Navigation, Logo } from '../../molecules/changgun';
 import { MenuLink, NavLink } from '../../atoms/changgun';
 import { ReactComponent as SearchIcon } from '../../../assets/svgs/search.svg';
@@ -31,13 +32,33 @@ const HeaderWrapper = styled.div`
 `;
 
 function Header() {
+  const [token, setToken] = useState<null | string>(
+    localStorage.getItem('token'),
+  );
+
+  const logoutHandler = () => {
+    localStorage.removeItem('token');
+    setToken(null);
+  };
+
   return (
     <HeaderWrapper>
       <HeaderTop>
         <MenuList>
           <MenuLink to="/my/wish">관심상품</MenuLink>
           <MenuLink to="/my">마이페이지</MenuLink>
-          <MenuLink to="/login">로그인</MenuLink>
+          {token ? (
+            <MenuLink
+              onClick={() => {
+                logoutHandler();
+              }}
+              to="/"
+            >
+              로그아웃
+            </MenuLink>
+          ) : (
+            <MenuLink to="/login">로그인</MenuLink>
+          )}
         </MenuList>
       </HeaderTop>
       <HeaderBottom>

@@ -118,7 +118,7 @@ function LoginForm() {
         emailValue.trim().includes('@') &&
         passwordValue.trim().length > 7,
     );
-  }, [passwordValue, emailValue]);
+  }, [passwordValue, emailValue, passwordValidity, emailValidity]);
 
   const emailChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
     setEmailValue(e.currentTarget.value);
