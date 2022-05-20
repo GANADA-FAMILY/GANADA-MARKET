@@ -1,3 +1,4 @@
+/** @jsxImportSource @emotion/react */
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { TabPane } from 'components/atoms/My';
@@ -10,6 +11,8 @@ import {
   setTabIndex,
 } from 'state/reducers/SalesHistorySlice';
 import getSizeByStatus from 'functions/getSizeByStatus';
+import theme from 'styles/theme';
+import { css } from '@emotion/react';
 
 function SellBox() {
   const dispatch = useRootDispatch();
@@ -31,7 +34,11 @@ function SellBox() {
           <TabLink to="/my/sales">
             <TabBox>
               <TabTitle>전체</TabTitle>
-              <TabCount>
+              <TabCount
+                css={css`
+                  color: ${theme.color.orange};
+                `}
+              >
                 {salesHistory.length === undefined ? 0 : salesHistory.length}
               </TabCount>
             </TabBox>

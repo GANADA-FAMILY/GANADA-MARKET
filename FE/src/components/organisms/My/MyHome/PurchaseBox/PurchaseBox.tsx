@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { List, Tabs } from 'components/molecules/My';
@@ -10,6 +12,7 @@ import {
   setTabIndex,
 } from 'state/reducers/OrderHistorySlice';
 import getSizeByStatus from 'functions/getSizeByStatus';
+import theme from 'styles/theme';
 
 function PurchaseBox() {
   const dispatch = useRootDispatch();
@@ -31,7 +34,11 @@ function PurchaseBox() {
           <TabLink to="/my/buying">
             <TabBox>
               <TabTitle>전체</TabTitle>
-              <TabCount>
+              <TabCount
+                css={css`
+                  color: ${theme.color.green};
+                `}
+              >
                 {orderHistory.length === undefined ? 0 : orderHistory.length}
               </TabCount>
             </TabBox>

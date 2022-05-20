@@ -8,6 +8,7 @@ import BankSlice from './reducers/BankSlice';
 import WishSlice from './reducers/WishSlice';
 import OrderHistorySlice from './reducers/OrderHistorySlice';
 import SalesHistorySlice from './reducers/SalesHistorySlice';
+import SellingSlice from './reducers/SellingSlice';
 
 const Store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ const Store = configureStore({
     wishList: WishSlice.reducer,
     orderHistory: OrderHistorySlice.reducer,
     salesHistory: SalesHistorySlice.reducer,
+    sellingList: SellingSlice.reducer,
   },
 });
 

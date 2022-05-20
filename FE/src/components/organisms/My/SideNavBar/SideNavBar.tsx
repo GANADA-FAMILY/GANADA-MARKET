@@ -25,6 +25,9 @@ function SideNavBar() {
           <MenuItem>
             <Link to="/my/wish">관심 상품</Link>
           </MenuItem>
+          <MenuItem>
+            <Link to="/my/selling">판매 중</Link>
+          </MenuItem>
         </Menu>
         <Menu title="내 정보">
           <MenuItem>
@@ -33,15 +36,9 @@ function SideNavBar() {
           <MenuItem>
             <Link to="/my/address">주소록</Link>
           </MenuItem>
-          {/* <MenuItem>
-            <Link to="/my/payment">결제 정보</Link>
-          </MenuItem> */}
           <MenuItem>
             <Link to="/my/account">판매 정산 계좌</Link>
           </MenuItem>
-          {/* <MenuItem>
-            <Link to="/my/point">포인트</Link>
-          </MenuItem> */}
         </Menu>
       </Nav>
     </Container>
