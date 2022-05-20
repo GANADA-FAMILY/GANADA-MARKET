@@ -298,4 +298,10 @@ public class AuctionServiceImpl implements AuctionService {
 
         return auctionCnt;
     }
+
+    @Override
+    public List<Auction> getTrueAuctionListByUser(User user) {
+        List<Auction> selling = auctionRepository.findByUserAndAuctionStatus(user,true);
+        return selling;
+    }
 }

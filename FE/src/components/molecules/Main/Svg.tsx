@@ -4,12 +4,14 @@ import { Icon } from 'components/atoms/Main';
 
 interface Props {
   fill: string;
+  width?: string;
+  height?: string;
 }
 
-function SVG({ fill }: Props) {
+function SVG({ fill, width, height }: Props) {
   const options = {
-    width: '17px',
-    height: '18px',
+    width: width ?? '17px',
+    height: height ?? '18px',
     stroke: 'black',
     strokeWidth: '1',
     fill,

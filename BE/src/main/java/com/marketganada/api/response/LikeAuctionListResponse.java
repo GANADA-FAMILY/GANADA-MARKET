@@ -50,7 +50,7 @@ public class LikeAuctionListResponse {
             }
             long reqDateTime = reqDate.getTime();
 
-            long time = (curDateTime - reqDateTime) / (60000*24);
+            long time = (curDateTime - reqDateTime) / (60000*60);
 
             //현재가격 = 시작가 - (감가 * ((현재시간 - 시작시간)  / 사이클)  )
             //                          190000                    - (      5000                           *         ((23시 - 01시) / 사이클)) )

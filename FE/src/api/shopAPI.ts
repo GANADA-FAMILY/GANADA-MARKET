@@ -5,7 +5,7 @@ import { AxiosError } from 'axios';
 import Auction from '../types/Entity/ShopAPI/Auction';
 
 const token =
-  'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJrcml0ZTEyMzQ1QG5hdmVyLmNvbSIsImlzcyI6ImdhbmFkYW1hcmtldC5jb20iLCJleHAiOjE2NTI5NzA1NjQsImlhdCI6MTY1Mjg4NDE2NH0.yUdQqkWF-ZArb_vITxapG6CMw1Gu15jtHycCQG1VZBcqR_pSniZw6quMSsQi26S8VtqlrsdQPSHX6tMgto8mPA';
+  'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJrcml0ZTEyMzQ1QG5hdmVyLmNvbSIsImlzcyI6ImdhbmFkYW1hcmtldC5jb20iLCJleHAiOjE2NTMwNTcxNDcsImlhdCI6MTY1Mjk3MDc0N30.4qyW9d9OePqRD-t4Cd0FmdVQcprlv1nVT6CSi5zpf_sbxYcFJvqkNzDGGjrqvUpPyMcwQe8CaJw4GN0lJsXLPA';
 
 const axios = defaultInstance();
 axios.defaults.baseURL = API_URL;
@@ -17,6 +17,14 @@ interface resolveData {
     last: boolean;
   };
 }
+interface queryType {
+  page: string;
+  size: string;
+  save?: string;
+  brand?: string;
+  sort?: string;
+  model?: string;
+}
 
 export async function getList(
   product: string | undefined,
@@ -27,6 +35,22 @@ export async function getList(
     return await axios.get(`/auction/${product}`, {
       params: {
         ...currentQueries,
+      },
+    });
+  } catch (err) {
+    const errors = err as Error | AxiosError;
+    throw new Error(errors.message);
+  }
+}
+
+export async function getPageList(
+  query: queryType,
+  product: string | undefined,
+): Promise<resolveData> {
+  try {
+    return await axios.get(`/auction/${product}`, {
+      params: {
+        ...query,
       },
     });
   } catch (err) {
@@ -49,6 +73,16 @@ export async function likeAPI(auctionId: number | undefined) {
 export async function disLikeAPI(auctionId: number | undefined) {
   try {
     return await axios.delete(`/auction/like/${auctionId}`);
+  } catch (err) {
+    const errors = err as Error | AxiosError;
+    throw new Error(errors.message);
+  }
+}
+
+export async function getFilterAPI(categoryLargeId: number) {
+  try {
+    // 4번 스마트폰 5번 이어폰
+    return await axios.get(`/product-get/category-large/${categoryLargeId}`);
   } catch (err) {
     const errors = err as Error | AxiosError;
     throw new Error(errors.message);

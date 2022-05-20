@@ -6,8 +6,6 @@ export const getAddressbook = createAsyncThunk(
   'api/user/addressbook',
   async () => {
     const response = await userAPI.getAddressbook();
-    console.log(response.data);
-    // response.data.addressBookList.map;
     return response.data.addressBookList;
   },
 );
@@ -50,13 +48,11 @@ export const AddressbookSlice = createSlice({
       console.log('오류발생!');
     });
     builder.addCase(deleteAddressbook.fulfilled, (state, { payload }) => {
-      console.log('삭제 성공!');
       state.addressbook = payload;
     });
     builder.addCase(
       updateRepresentAddressbook.fulfilled,
       (state, { payload }) => {
-        console.log('변경 성공!');
         state.addressbook = payload;
       },
     );

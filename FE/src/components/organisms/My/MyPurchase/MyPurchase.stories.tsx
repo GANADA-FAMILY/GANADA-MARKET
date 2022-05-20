@@ -6,8 +6,12 @@ export default {
   title: 'organisms/My/MyPurchase',
 };
 
-const Template: ComponentStory<typeof MyPurchase> = () => <MyPurchase />;
+const Template: ComponentStory<typeof MyPurchase> = (args) => (
+  <MyPurchase {...args} />
+);
 
-export const Default = Template.bind({});
+export const Default = Template.bind({
+  orderHistory: [],
+});
 
 Default.args = {};

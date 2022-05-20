@@ -1,21 +1,16 @@
 import styled from '@emotion/styled';
 import { TitleBar, List } from 'components/molecules/My';
+import { useRootDispatch, useRootSelector } from 'state/Hooks';
 import { User } from 'types/Entity/UserAPI';
 import MembershipBox from './MembershipBox';
 import PurchaseBox from './PurchaseBox';
 import SellBox from './SellBox';
 
-const user: User = {
-  userEmail: 'zxc123@naver.com',
-  userNickname: 'zxc123',
-  userPhone: '01033334444',
-  profileImageUrl: 'https://kream.co.kr/_nuxt/img/blank_profile.4347742.png',
-  grade: '일반 회원',
-  orderHistory: [],
-  salesHistory: [],
-};
-
-function MyHome() {
+interface MyHomeProps {
+  user: User;
+}
+function MyHome({ user }: MyHomeProps) {
+  const dispatch = useRootDispatch();
   return (
     <Container>
       <MembershipBox user={user} />
@@ -23,10 +18,10 @@ function MyHome() {
       <PurchaseBox />
       <MyHomeTitle title="판매 내역" size={18} src="/my/selling" />
       <SellBox />
-      <MyHomeTitle title="관심 상품" size={18} src="/my/wish" />
+      {/* <MyHomeTitle title="관심 상품" size={18} src="/my/wish" />
       <ListArea>
         <List dataSoruce={[]} />
-      </ListArea>
+      </ListArea> */}
     </Container>
   );
 }

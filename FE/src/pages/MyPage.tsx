@@ -1,13 +1,15 @@
-import React from 'react';
 import styled from '@emotion/styled';
-// import MyHomeContainer from '../components/organisms/my/MyHomeContainer';
+import { useAuth } from 'hooks';
 import MyHome from '../components/organisms/My/MyHome';
 import MyPageTemplate from '../components/templates/MyPageTemplate/MyPageTemplate';
 
 function MyPage() {
+  const { user } = useAuth();
   return (
     <MainContainer>
-      <MyPageTemplate element={<MyHome />} />
+      {user !== undefined && (
+        <MyPageTemplate element={<MyHome user={user} />} />
+      )}
     </MainContainer>
   );
 }

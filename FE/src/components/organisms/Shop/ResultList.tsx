@@ -1,12 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Auction from 'types/Entity/ShopAPI/Auction';
-import { getList } from 'api/shopAPI';
-import {
-  createSearchParams,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from 'react-router-dom';
+import { getPageList } from 'api/shopAPI';
+import { useParams } from 'react-router-dom';
 import ResultItem from '../../molecules/Shop/ResultItem';
 import GridContainer from '../../layouts/Shop/GridContainer';
 import Loading from '../../Loading';
@@ -15,60 +10,89 @@ import BlockContainer from '../../layouts/Shop/BlockContainer';
 interface propsType {
   initialData: Auction[];
   onLike: (auctionId: number, trigger: boolean) => void;
+  query: URLSearchParams;
 }
 
-function ResultList({ initialData, onLike }: propsType) {
+function ResultList({ initialData, query, onLike }: propsType) {
   const [state, setState] = useState<Auction[]>(initialData);
-  const ref = useRef(0);
-  const isLast = useRef<boolean>(false);
-  const itemRef = useRef<Auction[]>([]);
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const isLast = useRef(0);
   const params = useParams();
-  const [query] = useSearchParams();
-  const navigate = useNavigate();
-
-  const getMoreItem = async () => {
-    ref.current += 1;
-    setIsLoaded(true);
-    // eslint-disable-next-line no-promise-executor-return
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setState((itemLists) => itemLists.concat(itemRef.current));
-    setIsLoaded(false);
-  };
+  const addItem = useRef<Auction[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [pageNum, setPageNum] = useState(0);
+  const [stateLast, setStateLast] = useState(false);
 
   useEffect(() => {
-    if (ref.current > 0 && !isLast.current) {
-      navigate({
-        pathname: `/shop/${params.product}`,
-        search: createSearchParams({
-          page: `${ref.current}`,
-          size: '12',
-          // sort: 'endTime,asc',
-        }).toString(),
-      });
-    }
-  }, [ref.current]);
-
-  useEffect(() => {
-    if (ref.current > 0 && !isLast.current) {
+    let isComponentMounted = true;
+    if (isComponentMounted) {
       (async () => {
-        if (query && params.product) {
-          const res = await getList(params.product, query);
-          itemRef.current = res.data.auctionList;
-          if (res.data.last) {
-            isLast.current = true;
-          }
+        const res = await getPageList(
+          {
+            ...Object.fromEntries(query),
+            page: '1',
+            size: '12',
+          },
+          params.product,
+        );
+        if (res.data.auctionList.length === 0) {
+          setStateLast(true);
         }
       })();
     }
-  }, [query]);
+    return () => {
+      isComponentMounted = false;
+    };
+  }, []);
+
+  const getMoreItem = async () => {
+    setIsLoaded(true);
+    // eslint-disable-next-line no-promise-executor-return
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    if (isLast.current === 1) {
+      isLast.current = 2;
+    } else {
+      setPageNum((prev: number) => prev + 1);
+    }
+
+    setState((prev) => prev.concat(addItem.current));
+    setIsLoaded(false);
+  };
+  // 페이지 이동했을때
+  useEffect(() => {
+    let isComponentMounted = true;
+
+    if (isComponentMounted && isLast.current < 1) {
+      (async () => {
+        const res = await getPageList(
+          {
+            ...Object.fromEntries(query),
+            page: `${pageNum + 1}`,
+            size: '12',
+          },
+          params.product,
+        );
+        if (res.data.auctionList.length !== 0) {
+          addItem.current = res.data.auctionList;
+        }
+
+        if (res.data.last) {
+          isLast.current = 1;
+        }
+      })();
+    }
+
+    return () => {
+      isComponentMounted = false;
+    };
+  }, [pageNum]);
 
   const onIntersect = async (
     [entry]: IntersectionObserverEntry[],
     observer: IntersectionObserver,
   ) => {
-    if (entry.isIntersecting && !isLoaded && !isLast.current) {
+    if (entry.isIntersecting && !isLoaded && isLast.current < 2) {
       observer.unobserve(entry.target);
       await getMoreItem();
       observer.observe(entry.target);
@@ -77,7 +101,7 @@ function ResultList({ initialData, onLike }: propsType) {
 
   useEffect(() => {
     let observer: IntersectionObserver;
-    if (target && !isLast.current) {
+    if (target && isLast.current < 2) {
       observer = new IntersectionObserver(onIntersect, {
         threshold: 0.4,
       });
@@ -88,23 +112,37 @@ function ResultList({ initialData, onLike }: propsType) {
 
   return (
     <GridContainer {...ResultContainer}>
-      {state.map((item, idx) => {
-        const newLocal = idx + 1;
-        return (
-          <ResultItem
-            onLike={onLike}
-            key={newLocal}
-            data={item}
-            idx={idx + 1}
-          />
-        );
-      })}
+      {state.length === 0 ? (
+        <div
+          style={{
+            gridColumnStart: '2',
+            fontSize: '10rem',
+            whiteSpace: 'nowrap',
+          }}
+          className="noData"
+        >
+          경매 정보가 없습니다.
+        </div>
+      ) : (
+        state.map((item, idx) => {
+          const newLocal = idx + 1;
+          return (
+            <ResultItem
+              onLike={onLike}
+              key={newLocal}
+              data={item}
+              idx={idx + 1}
+            />
+          );
+        })
+      )}
+
       <div
-        style={{ gridColumnStart: '2' }}
+        style={!stateLast ? { gridColumnStart: '2' } : { display: 'none' }}
         ref={setTarget}
         className="Target-Element"
       >
-        {isLoaded && !isLast.current && <Loading />}
+        {isLoaded && initialData.length !== 0 && <Loading />}
       </div>
     </GridContainer>
   );

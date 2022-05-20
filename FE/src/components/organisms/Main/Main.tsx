@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
-import AuctionList from 'types/Entity/AuctionList';
+import AuctionList from 'types/Entity/MainAPI/AuctionList';
 import GridBox from '../../layouts/Main/GridBox';
 import Text from '../../atoms/Main/Text';
 import Button from '../../atoms/Main/Button';

@@ -6,43 +6,43 @@ interface Transaction {
 const DUMMY_DATA = [
   {
     historyDate: '2022-05-18T01:04:33.000+00:00',
-    historyPrice: '100',
+    historyPrice: '1000000',
   },
   {
     historyDate: '2022-05-18T01:04:33.000+00:00',
-    historyPrice: '200',
+    historyPrice: '1000000',
   },
   {
     historyDate: '2022-05-17T01:04:33.000+00:00',
-    historyPrice: '300',
+    historyPrice: '1000000',
   },
   {
     historyDate: '2021-07-01T01:04:33.000+00:00',
-    historyPrice: '200',
+    historyPrice: '1000000',
   },
   {
     historyDate: '2022-04-18T01:04:33.000+00:00',
-    historyPrice: '1200',
+    historyPrice: '1000000',
   },
   {
     historyDate: '2022-03-01T01:04:33.000+00:00',
-    historyPrice: '100',
+    historyPrice: '1000000',
   },
   {
     historyDate: '2022-05-10T01:04:33.000+00:00',
-    historyPrice: '600',
+    historyPrice: '1300000',
   },
   {
     historyDate: '2021-12-22T01:04:33.000+00:00',
-    historyPrice: '700',
+    historyPrice: '1000000',
   },
   {
     historyDate: '2021-06-20T01:04:33.000+00:00',
-    historyPrice: '800',
+    historyPrice: '1000000',
   },
   {
     historyDate: '2021-06-20T01:04:33.000+00:00',
-    historyPrice: '1000',
+    historyPrice: '1250000',
   },
   {
     historyDate: '2021-06-18T01:04:33.000+00:00',
@@ -50,27 +50,27 @@ const DUMMY_DATA = [
   },
   {
     historyDate: '2022-01-20T01:04:33.000+00:00',
-    historyPrice: '3000',
+    historyPrice: '1000000',
   },
   {
     historyDate: '2022-04-05T01:04:33.000+00:00',
-    historyPrice: '100',
+    historyPrice: '999999',
   },
   {
     historyDate: '2022-03-18T01:04:33.000+00:00',
-    historyPrice: '1000',
+    historyPrice: '1000000',
   },
   {
     historyDate: '2022-02-22T01:04:33.000+00:00',
-    historyPrice: '100',
+    historyPrice: '1000000',
   },
   {
     historyDate: '2022-01-01T01:04:33.000+00:00',
-    historyPrice: '400',
+    historyPrice: '808000',
   },
   {
     historyDate: '2022-05-18T01:04:33.000+00:00',
-    historyPrice: '100',
+    historyPrice: '1200000',
   },
 ];
 

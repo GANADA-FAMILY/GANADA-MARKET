@@ -7,14 +7,12 @@ import Address from 'types/Entity/UserAPI/Address';
 interface ButtonBoxProps {
   item: Address;
   onActivate?: React.MouseEventHandler<HTMLAnchorElement>;
-  onModify?: React.MouseEventHandler<HTMLAnchorElement>;
   onDelete?: React.MouseEventHandler<HTMLAnchorElement>;
   // onClick: React.MouseEventHandler<HTMLElement>;
   id: string;
 }
 function ButtonsBox({
   onActivate = () => null,
-  onModify = () => null,
   onDelete = () => null,
   id,
   ...props
@@ -33,14 +31,6 @@ function ButtonsBox({
           기본 배송지
         </Button>
       )}
-      <Button
-        size="small"
-        type="button"
-        onClick={onModify}
-        name={`${id}-modify`}
-      >
-        수정
-      </Button>
       <Button
         size="small"
         type="button"

@@ -12,12 +12,18 @@ interface Props {
 interface ItemProps {
   bank: string;
   src: string;
+  alt: string;
 }
 
 function PayMethod({ item, checked, onClick }: Props) {
   return (
     <Container checked={checked} onClick={onClick}>
-      {item !== undefined ? <SubTitle>{item.bank}</SubTitle> : ''}
+      {item !== undefined && (
+        <>
+          <SubTitle>{item.bank}</SubTitle>
+          <Logo src={item.src} alt={item.alt} />
+        </>
+      )}
     </Container>
   );
 }

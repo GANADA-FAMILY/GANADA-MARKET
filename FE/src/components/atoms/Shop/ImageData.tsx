@@ -11,10 +11,12 @@ import BlockContainer from '../../layouts/Shop/BlockContainer';
 
 interface PropsData {
   brand: string;
-  date?: string;
-  price?: number;
-  model?: string;
+  startPrice: number;
+  model: string;
   product: string;
+  description: string;
+  startTime: string;
+  cycle: number;
   onLike: (auctionId: number, trigger: boolean) => void;
   isLike?: boolean;
   auctionId?: number;
@@ -29,8 +31,10 @@ function ImageData({
   product,
   brand,
   title,
-  // date,
-  // price,
+  cycle,
+  startPrice,
+  startTime,
+  description,
   model,
   isLike,
   onLike,
@@ -38,11 +42,11 @@ function ImageData({
 }: PropsData) {
   const router = Router();
   const clickEvent = () => {
-    router.push('/productDetail');
+    router.push(`/auction/${auctionId}`);
   };
   const time = useSetTime(100);
   const [likeState, setLikeState] = useState(isLike);
-  // const priceToString = priceComma(price).concat('원');
+  const priceToString = priceComma(startPrice).concat('원');
 
   const setLike = () => {
     if (likeState && auctionId) {
@@ -52,6 +56,12 @@ function ImageData({
       setLikeState((prev) => !prev);
       onLike(auctionId, true);
     }
+  };
+
+  const priceToCycle = () => {
+    console.log(startPrice, '시작가격');
+    console.log(cycle, '싸이클');
+    console.log(startTime, '시간');
   };
 
   return (
@@ -71,36 +81,67 @@ function ImageData({
         <TextTag {...basicFontStyle}>{title}</TextTag>
       </BlockContainer>
       <BlockContainer {...modelContainer}>
-        <TextTag {...basicFontStyle}>{model}</TextTag>
+        <TextTag {...basicFontStyle}>모델명: {model}</TextTag>
       </BlockContainer>
-      {/* <BlockContainer>
-        <TextTag {...basicFontStyle}>{priceToString}</TextTag>
-      </BlockContainer> */}
+      <BlockContainer {...descriptionBlock}>
+        {description.split(',').map((el) => (
+          <TextTag key={el.length} {...descriptionStyle}>
+            {el}
+          </TextTag>
+        ))}
+      </BlockContainer>
       <SVGWrap onClick={setLike}>
-        <Svg fill={likeState ? 'black' : '#ebebeb'} />
+        <Svg
+          fill={likeState ? 'black' : '#ebebeb'}
+          width="2rem"
+          height="2rem"
+        />
       </SVGWrap>
       <BlockContainer {...timeContainStyle}>
-        <TextTag>남은 시간 : </TextTag>
-        <TextTag {...timeStyle}>{time}</TextTag>
+        <TextTag {...timeFontStyle}>시작 가 : </TextTag>
+        <TextTag {...timeStyle}>{priceToString}</TextTag>
       </BlockContainer>
     </FlexContainer>
   );
 }
+const timeFontStyle = {
+  whiteSpace: 'nowrap',
+};
+
+const descriptionBlock = {
+  marginTop: '3rem',
+};
+const descriptionStyle = {
+  padding: '4px 8px',
+  color: '#787a87',
+  fontSize: '1.3rem',
+  lineHeight: '1.6rem',
+  border: '1px solid black',
+  borderRadius: '3px',
+  marginBottom: '0.4rem',
+  marginLeft: '0.4rem',
+};
+
 const containerStyle = {
-  padding: '3.2rem 0.8rem',
+  padding: '1rem 0.8rem',
   flexDirection: 'column',
 };
 
 const timeContainStyle = {
   textAlign: 'center',
   fontSize: '2rem',
-  marginTop: '2rem',
+  position: 'absolute',
+  bottom: '0%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  whiteSpace: 'nowrap',
 };
 const SVGWrap = styled.div<svgProps>`
-  margin-top: 1rem;
   &:hover {
     cursor: pointer;
   }
+  position: absolute;
+  bottom: 0%;
 `;
 
 const timeStyle = {

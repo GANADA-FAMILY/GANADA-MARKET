@@ -20,7 +20,7 @@ function SideNavBar() {
             <Link to="/my/buying">구매 내역</Link>
           </MenuItem>
           <MenuItem>
-            <Link to="/my/selling">판매 내역</Link>
+            <Link to="/my/sales">판매 내역</Link>
           </MenuItem>
           <MenuItem>
             <Link to="/my/wish">관심 상품</Link>

@@ -1,15 +1,17 @@
 export const DUMMY_DATA = {
   auction: {
-    auctionId: 140,
+    auctionId: 101,
     auctionImgs: [
-      'http://ccimg.hellomarket.com/images/2021/item/12/12/22/0954574_5433529_1.jpg?size=s6',
+      'https://ganada2.s3.ap-northeast-2.amazonaws.com/img/아이폰12 프로맥스 그래파이트.jpg',
     ],
     product: {
-      productName: 'Airpods 3세대',
+      productId: 36,
+      productName: '아이폰12 프로 맥스',
       productBrand: 'apple',
-      productModel: 'A2566',
-      releaseDate: '2021-10-19T00:00:00.000+09:00',
-      releasePrice: 450000,
+      productModel: 'A2411',
+      description: '2020년형,128GB,5G',
+      releaseDate: '2020-11-20T00:00:00.000+09:00',
+      releasePrice: 1490000,
     },
     productHistory: [
       {
@@ -81,15 +83,14 @@ export const DUMMY_DATA = {
         historyPrice: 200,
       },
     ],
-    auctionTitle: '에어팟 3세대. 우리아파트 456세대.',
-    auctionDesc:
-      '에어팟 3세대 팝니다. 미개봉 마켓이니 당연히 사용 안했고요, 작년 10월 생산분입니다. 시세 보다 내려서 파니 빨리 겟하세요',
-    seller: '김상희',
-    startTime: '2022-05-18T01:39:30.000+09:00',
-    startPrice: 200000,
-    cycle: 1,
-    depreciation: 500,
-    endTime: '2022-05-23T00:00:00.000+09:00',
+    auctionTitle: '아이폰 12 프로 맥스 그래파이트 말파이트같은 단단함 128GB',
+    auctionDesc: '말파이트보다 더 단단한 그래파이트',
+    seller: '김민성',
+    startTime: '2022-05-17T00:00:00.000+09:00',
+    startPrice: 1200000,
+    cycle: 20,
+    depreciation: 2000,
+    endTime: '2022-05-25T00:00:00.000+09:00',
     auctionStatus: true,
     isLiked: false,
     isMine: false,

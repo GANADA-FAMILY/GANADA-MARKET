@@ -1,18 +1,12 @@
 package com.marketganada.api.controller;
 
-import com.marketganada.api.request.AddressBookInsertRequest;
-import com.marketganada.api.request.UserBankUpdateRequest;
-import com.marketganada.api.request.UserNicknameUpdateRequest;
-import com.marketganada.api.request.UserPwUpdateRequest;
+import com.marketganada.api.request.*;
 import com.marketganada.api.response.*;
 import com.marketganada.api.service.AuctionService;
 import com.marketganada.api.service.PaymentService;
 import com.marketganada.api.service.UserService;
 import com.marketganada.config.auth.GanadaUserDetails;
-import com.marketganada.db.entity.AddressBook;
-import com.marketganada.db.entity.Likes;
-import com.marketganada.db.entity.Payment;
-import com.marketganada.db.entity.User;
+import com.marketganada.db.entity.*;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -55,8 +49,9 @@ public class UserController {
 
         List<Payment> orderHistory = paymentService.getOrderHistory(user);
         List<Payment> salesHistory = paymentService.getSalesHistory(user);
+        List<Auction> selling = auctionService.getTrueAuctionListByUser(user);
 
-        return ResponseEntity.ok(UserInfoResponse.of(user,orderHistory,salesHistory));
+        return ResponseEntity.ok(UserInfoResponse.of(user,orderHistory,salesHistory,selling));
     }
 
     @DeleteMapping
@@ -283,9 +278,9 @@ public class UserController {
     }
 
     @GetMapping("/sales-history")
-    @ApiOperation(value = "판매내역 조회", notes = "판매내역을 조회한다.")
+    @ApiOperation(value = "판매내역 조회(판매 완료)", notes = "판매내역을 조회한다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "성공", response = LikeAuctionListResponse.class),
+            @ApiResponse(code = 200, message = "성공", response = SalesHistoryResponse.class),
             @ApiResponse(code = 403, message = "권한 없는 유저"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
@@ -295,11 +290,23 @@ public class UserController {
 
         List<Payment> paymentList = paymentService.getSalesHistory(user);
 
-        for(Payment payment : paymentList){
-            System.out.println(payment.getPaymentId());
-        }
-
         return ResponseEntity.ok(SalesHistoryResponse.of(paymentList));
+
+    }
+
+    @GetMapping("/selling")
+    @ApiOperation(value = "판매내역 조회(판매 중)", notes = "판매내역을 조회한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공", response = SellingListResponse.class),
+            @ApiResponse(code = 403, message = "권한 없는 유저"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity getSellingAuction(@ApiIgnore Authentication authentication){
+        GanadaUserDetails userDetails = (GanadaUserDetails) authentication.getDetails();
+        User user = userDetails.getUser();
+        List<Auction> selling = auctionService.getTrueAuctionListByUser(user);
+
+        return ResponseEntity.ok(SellingListResponse.of(selling));
 
     }
 
@@ -307,7 +314,7 @@ public class UserController {
     @GetMapping("/order-history")
     @ApiOperation(value = "구매내역 조회", notes = "구매내역을 조회한다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "성공", response = LikeAuctionListResponse.class),
+            @ApiResponse(code = 200, message = "성공", response = OrderHistoryResponse.class),
             @ApiResponse(code = 403, message = "권한 없는 유저"),
             @ApiResponse(code = 500, message = "서버 오류")
     })

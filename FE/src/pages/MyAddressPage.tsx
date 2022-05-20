@@ -1,20 +1,19 @@
 import styled from '@emotion/styled';
-import { Address } from 'types/Entity/UserAPI';
-import useAsync from 'hooks/useAsync';
-import { getAddressbook } from 'state/reducers/AddressSlice';
-import { useRootSelector } from 'state/Hooks';
+import { useEffect } from 'react';
+import { useRootDispatch, useRootSelector } from 'state/Hooks';
+import { getAddressbook } from 'state/reducers/AddressbookSlice';
 import MyAddress from '../components/organisms/My/MyAddress';
 import MyPageTemplate from '../components/templates/MyPageTemplate/MyPageTemplate';
 
 function MyAddressPage() {
-  const { data } = useAsync<Address[], void>({
-    thunk: getAddressbook(),
-    selector: useRootSelector((state) => state.addressbook.addressbook),
-  });
-
+  const dispatch = useRootDispatch();
+  const items = useRootSelector((state) => state.addressbook.addressbook);
+  useEffect(() => {
+    dispatch(getAddressbook());
+  }, []);
   return (
     <MainContainer>
-      {data !== undefined && <MyPageTemplate element={<MyAddress />} />}
+      {items !== undefined && <MyPageTemplate element={<MyAddress />} />}
     </MainContainer>
   );
 }

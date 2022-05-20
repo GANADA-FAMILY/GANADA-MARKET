@@ -19,10 +19,15 @@ import Nav from '../components/organisms/Shop/Nav';
 import ProductData from '../components/organisms/Shop/ProductData';
 import ResultList from '../components/organisms/Shop/ResultList';
 
+interface parseType {
+  brand: string[];
+  model: string[];
+  save: string[];
+}
+
 function ShopPage() {
   const [rstList, setList] = useState<Auction[]>([]);
   const [listLen, setListLen] = useState(0);
-  const [filterList, setFilterList] = useState([]);
   const [isLoaded, setIsLoaded] = useState(true);
   const params = useParams();
   const [query] = useSearchParams();
@@ -50,17 +55,48 @@ function ShopPage() {
       }).toString(),
     });
   }, []);
+  useEffect(() => {
+    // 404 연결
+    link404();
+    // 필터링 바뀔 때마다 데이터 query 변경
+    const data = changeData(selectData.filterArray.filterArray);
+    if (params.product === 'phone') {
+      navigate({
+        pathname: `/shop/${params.product}`,
+        search: createSearchParams({
+          page: '0',
+          size: '12',
+          sort: `${selectNav.filter.name}`,
+          brand: data[0]?.split('=')[1] ?? 'ALL',
+          model: data[1]?.split('=')[1] ?? 'ALL',
+          save: data[2]?.split('=')[1] ?? 'ALL',
+        }).toString(),
+      });
+    } else if (params.product === 'earphone') {
+      navigate({
+        pathname: `/shop/${params.product}`,
+        search: createSearchParams({
+          page: '0',
+          size: '12',
+          sort: `${selectNav.filter.name}`,
+          brand: data[0]?.split('=')[1] ?? 'ALL',
+          model: data[1]?.split('=')[1] ?? 'ALL',
+        }).toString(),
+      });
+    }
+  }, [selectData, selectNav]);
 
+  // 필터 셀렉했을때
   useEffect(() => {
     let isComponentMounted = true;
-    if (!isQueryEmpty() && params.product) {
+
+    if (!isQueryEmpty() && params.product && isComponentMounted) {
       (async () => {
+        setIsLoaded(true);
         const res = await getList(params.product, query);
-        if (isComponentMounted) {
-          setList(res.data.auctionList);
-          setListLen(res.data.auctionCnt);
-          setIsLoaded(false);
-        }
+        setList(res.data.auctionList);
+        setListLen(res.data.auctionCnt);
+        setIsLoaded(false);
       })();
     }
     return () => {
@@ -73,29 +109,38 @@ function ShopPage() {
     return Object.keys(obj).length === 0;
   }
 
-  // useEffect(() => {
-
-  //   // 404 연결
-  //   link404();
-  //   // Query에 맞는 데이터를 rstList에 넣는다.
-  //   (async () => {
-  //     const res = await getList(params.product, query);
-  //     setList(res.data);
-  //   })();
-  // }, [query, params.product]);
-
-  useEffect(() => {
-    // 404 연결
-    link404();
-    // 필터링 바뀔 때마다 데이터 query 변경
-    console.log('nav필터', selectNav);
-    console.log('data필터', selectData);
-  }, [selectData, selectNav]);
-
   const link404 = () => {
     if (production.current.indexOf(String(params.product)) < 0) {
       route.push('/404');
     }
+  };
+
+  // 데이터 정제 메소드
+  const changeData = (array: string[]) => {
+    const obj: parseType = {
+      brand: [],
+      model: [],
+      save: [],
+    };
+    array.forEach((item) => {
+      if (item === 'Apple') {
+        obj.brand.push('apple');
+      } else if (item === '삼성') {
+        obj.brand.push('SAMSUNG');
+      } else if (Number(item[0])) {
+        obj.save.push(item);
+      } else {
+        obj.model.push(item);
+      }
+    });
+    return Object.entries(obj).map((el) => {
+      // eslint-disable-next-line prefer-const
+      let tmp = '';
+      if (el[1].length !== 0) {
+        return tmp.concat(el[0]).concat('=').concat(el[1]);
+      }
+      return null;
+    });
   };
 
   const onLike = async (auctionId: number, trigger: boolean) => {
@@ -110,13 +155,13 @@ function ShopPage() {
     <>
       <FlexContainer {...style}>
         <Nav initialData={String(params.product)} count={listLen} />
-        <ProductData />
+        <ProductData product={String(params.product)} />
       </FlexContainer>
       <BlockContainer {...blockStyle}>
         {isLoaded ? (
           <Loading />
         ) : (
-          <ResultList onLike={onLike} initialData={rstList} />
+          <ResultList onLike={onLike} initialData={rstList} query={query} />
         )}
       </BlockContainer>
     </>
