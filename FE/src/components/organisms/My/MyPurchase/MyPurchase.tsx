@@ -1,4 +1,5 @@
 import 'antd/lib/table/style/index.css';
+import 'antd/lib/pagination/style/index.css';
 import { TitleBar } from 'components/molecules/My';
 import styled from 'styled-components';
 import { OrderHistory } from 'types/Entity/UserAPI';
