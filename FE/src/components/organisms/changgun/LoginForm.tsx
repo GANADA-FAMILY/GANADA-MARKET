@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Logo, InputWithLabel } from 'components/molecules/changgun';
 import {
@@ -5,6 +6,7 @@ import {
   MenuLink,
   Text,
   FlexibleImage,
+  LoginButton,
 } from 'components/atoms/changgun';
 
 const Wrapper = styled.div`
@@ -21,7 +23,7 @@ const Header = styled.header`
 const FormGroup = styled.form`
   display: flex;
   flex-direction: column;
-  row-gap: 3rem;
+  row-gap: 2rem;
 `;
 
 const HelperMenu = styled.section`
@@ -55,26 +57,91 @@ const SocialIconBox = styled.div`
   height: 2.5rem;
 `;
 
+const InputAndError = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+`;
+
 function LoginForm() {
+  const [emailValidity, setEmailValidity] = useState<boolean>(true);
+  const [passwordValidity, setPasswordValidity] = useState<boolean>(true);
+  const [formValidity, setFormValidity] = useState<boolean>(false);
+  const [emailValue, setEmailValue] = useState<string>('');
+  const [passwordValue, setPasswordValue] = useState<string>('');
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setEmailValidity(
+        emailValue.trim().includes('@') || emailValue.trim().length === 0,
+      );
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [emailValue]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setPasswordValidity(
+        passwordValue.trim().length === 0 || passwordValue.trim().length > 7,
+      );
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [passwordValue]);
+
+  useEffect(() => {
+    setFormValidity(
+      passwordValidity &&
+        emailValidity &&
+        emailValue.trim().length > 0 &&
+        passwordValue.trim().length > 0,
+    );
+  }, [passwordValidity, emailValidity]);
+
+  const emailChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
+    setEmailValue(e.currentTarget.value);
+  };
+
+  const passwordChangeHandler = (e: React.FormEvent<HTMLInputElement>) => {
+    setPasswordValue(e.currentTarget.value);
+  };
+
   return (
     <Wrapper>
       <Header>
         <Logo width="15rem" height="auto" />
       </Header>
       <FormGroup>
-        <InputWithLabel
-          labelName="이메일 주소"
-          placeholder="예) gildong@ganada.co.kr"
-        />
-        <InputWithLabel labelName="비밀번호" />
-        <Button
-          isActive={false}
-          padding="1.2rem"
-          additionalStyles="color: #fff; font-size: 1.6rem; font-weight: 600"
-          activeStyle="color: #fff; background-color: black"
-        >
-          로그인
-        </Button>
+        <InputAndError>
+          <InputWithLabel
+            onChange={emailChangeHandler}
+            labelName="이메일 주소"
+            placeholder="예) gildong@ganada.co.kr"
+            value={emailValue}
+          />
+          <Text
+            size="xsmall"
+            styles={emailValidity ? 'color: #fff' : 'color :red'}
+          >
+            이메일을 입력하세요
+          </Text>
+        </InputAndError>
+        <InputAndError>
+          <InputWithLabel
+            type="password"
+            onChange={passwordChangeHandler}
+            labelName="패스워드"
+            value={passwordValue}
+          />
+          <Text
+            size="xsmall"
+            styles={passwordValidity ? 'color: #fff' : 'color :red'}
+          >
+            패스워드를 입력하세요
+          </Text>
+        </InputAndError>
+        <LoginButton isActive={formValidity}>로그인</LoginButton>
       </FormGroup>
       <HelperMenu>
         <MenuLink to="/findid">아이디 찾기</MenuLink>

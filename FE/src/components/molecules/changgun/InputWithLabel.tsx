@@ -4,6 +4,9 @@ import { Input, Label } from 'components/atoms/changgun';
 interface InputWithLabelProps {
   labelName: string;
   placeholder?: string;
+  onChange?: (e: React.FormEvent<HTMLInputElement>) => void;
+  value: string;
+  type?: string;
 }
 
 const Wrapper = styled.div`
@@ -14,13 +17,25 @@ const Wrapper = styled.div`
 
 InputWithLabel.defaultProps = {
   placeholder: '',
+  type: 'text',
 };
 
-function InputWithLabel({ labelName, placeholder }: InputWithLabelProps) {
+function InputWithLabel({
+  labelName,
+  placeholder,
+  onChange,
+  value,
+  type,
+}: InputWithLabelProps) {
   return (
     <Wrapper>
       <Label>{labelName}</Label>
-      <Input placeholder={placeholder} />
+      <Input
+        type={type}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+      />
     </Wrapper>
   );
 }
