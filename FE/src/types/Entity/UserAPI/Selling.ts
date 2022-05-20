@@ -4,6 +4,7 @@ interface Selling {
   productName: string;
   productBrand: string;
   auctionTitle: string;
+  endTime: string;
   currentPrice: number;
 }
 
