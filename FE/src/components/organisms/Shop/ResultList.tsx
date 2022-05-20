@@ -14,7 +14,7 @@ interface propsType {
 }
 
 function ResultList({ initialData, query, onLike }: propsType) {
-  const [state, setState] = useState<Auction[]>(initialData);
+  const [state, setState] = useState<Auction[]>([]);
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
   const isLast = useRef(0);
   const params = useParams();
@@ -26,6 +26,7 @@ function ResultList({ initialData, query, onLike }: propsType) {
   useEffect(() => {
     let umounted = false;
     if (!umounted) {
+      setState(initialData);
       (async () => {
         const res = await getPageList(
           {
