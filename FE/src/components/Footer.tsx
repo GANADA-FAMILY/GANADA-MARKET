@@ -28,10 +28,10 @@ function Footer() {
             @DevTeam
           </Text>
           <Wrap>
-            <StyledLi>
+            <StyledLi key={FooterData.devteam.Git}>
               <Text>{FooterData.devteam.Git}</Text>
             </StyledLi>
-            <StyledLi>
+            <StyledLi key={FooterData.devteam.Notion}>
               <Text>{FooterData.devteam.Notion}</Text>
             </StyledLi>
           </Wrap>

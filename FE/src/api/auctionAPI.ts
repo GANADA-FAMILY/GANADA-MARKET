@@ -16,6 +16,16 @@ function unlikeAuction(param: number) {
 
 // 최근 올린 경매 리스트 조회
 function justDropAuction() {
+  if (ACCESS_TOKEN === 'Bearer null') {
+    return api.get('/auction/recent', {
+      headers: {
+        Authorization: 'null',
+      },
+      params: {
+        page: 0,
+      },
+    });
+  }
   return api.get('/auction/recent', {
     params: { page: 0 },
   });
