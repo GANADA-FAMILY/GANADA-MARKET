@@ -22,9 +22,10 @@ SubTitle.defaultProps = {
 
 const Atom = styled.p<Props>`
   font-size: ${(props) => props.fontSize};
+  line-height: 2rem;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /* overflow: hidden;
+  text-overflow: ellipsis; */
 `;
 
 export default SubTitle;
