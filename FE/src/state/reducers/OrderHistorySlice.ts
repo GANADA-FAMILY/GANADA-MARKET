@@ -16,7 +16,6 @@ export const getFilteredOrderHistory = createAsyncThunk(
   async () => {
     const response = await userAction.getOrderHistory();
     if (response.data.length < 1) return response.data;
-    console.log(response);
     return response.data.orderHistory;
   },
 );
@@ -42,7 +41,6 @@ export const OrderHistorySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getOrderHistory.fulfilled, (state, { payload }) => {
-      console.log(payload);
       state.orderHistory = payload;
     });
     builder.addCase(getFilteredOrderHistory.fulfilled, (state, { payload }) => {
@@ -51,8 +49,6 @@ export const OrderHistorySlice = createSlice({
           (o: OrderHistory) => o.status === state.tabIndex,
         );
       }
-      console.log(state.tabIndex);
-      console.log(payload);
       state.filteredHistory = payload;
     });
   },

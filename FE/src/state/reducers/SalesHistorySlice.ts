@@ -15,7 +15,6 @@ export const getFilteredSalesHistory = createAsyncThunk(
   async () => {
     const response = await userAction.getSalesHistory();
     if (response.data.length < 1) return response.data;
-    console.log(response);
     return response.data.salesHistory;
   },
 );
@@ -40,7 +39,6 @@ export const SalesHistorySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getSalesHistory.fulfilled, (state, { payload }) => {
-      console.log(payload);
       state.salesHistory = payload;
     });
     builder.addCase(getFilteredSalesHistory.fulfilled, (state, { payload }) => {
@@ -49,8 +47,6 @@ export const SalesHistorySlice = createSlice({
           (o: SalesHistory) => o.status === state.tabIndex,
         );
       }
-      console.log(state.tabIndex);
-      console.log(payload);
       state.filteredsalesHistory = payload;
     });
   },

@@ -29,7 +29,8 @@ function SellingItem(
   index: number,
   onClick?: React.MouseEventHandler<HTMLElement>,
 ) {
-  const { auctionId, auctionImg, auctionTitle, endTime, currentPrice } = item;
+  const { auctionId, titleImageUrl, auctionTitle, endTime, currentPrice } =
+    item;
   const dispatch = useRootDispatch();
   const purchaseHandler = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.stopPropagation();
@@ -51,7 +52,7 @@ function SellingItem(
         <ProductInfo>
           <ProductBox>
             <ProductImageBox>
-              <ProductImage src={auctionImg} alt="이미지" />
+              <ProductImage src={titleImageUrl} alt="이미지" />
             </ProductImageBox>
           </ProductBox>
           <ProductDetail>
