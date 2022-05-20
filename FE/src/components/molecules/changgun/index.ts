@@ -11,3 +11,4 @@ export * from './AuctionTransactionsHeader';
 export * from './AuctionGraphData';
 export * from './AuctionGraph';
 export * from './AuctionTransactionsHeader';
+export * from './InputWithLabel';
