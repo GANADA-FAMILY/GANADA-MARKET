@@ -6,6 +6,7 @@ import AddressbookSlice from './reducers/AddressbookSlice';
 import BankSlice from './reducers/BankSlice';
 import WishSlice from './reducers/WishSlice';
 import OrderHistorySlice from './reducers/OrderHistorySlice';
+import SalesHistorySlice from './reducers/SalesHistorySlice';
 
 const Store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const Store = configureStore({
     bank: BankSlice.reducer,
     wishList: WishSlice.reducer,
     orderHistory: OrderHistorySlice.reducer,
+    salesHistory: SalesHistorySlice.reducer,
   },
 });
 

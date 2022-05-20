@@ -30,7 +30,7 @@ function App() {
             <Route path="/my/profile" element={<MyProfilePage />} />
             <Route path="/my/address" element={<MyAddressPage />} />
             <Route path="/my/wish" element={<MyWishPage />} />
-            <Route path="/my/selling" element={<MySalesPage />} />
+            <Route path="/my/sales" element={<MySalesPage />} />
             <Route path="/my/account" element={<MyAccountPage />} />
             <Route path="/shop/:product" element={<ShopPage />} />
             <Route path="/payment" element={<PaymentPage />} />
