@@ -6,7 +6,7 @@ import {
   createSearchParams,
 } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { disLikeAPI, getFilterAPI, getList, likeAPI } from 'api/shopAPI';
+import { disLikeAPI, getList, likeAPI } from 'api/shopAPI';
 import Auction from 'types/Entity/ShopAPI/Auction';
 import Loading from 'components/Loading';
 import FlexContainer from '../components/layouts/Shop/FlexContainer';
@@ -89,11 +89,11 @@ function ShopPage() {
   // 필터 셀렉했을때
   useEffect(() => {
     let isComponentMounted = true;
-    setIsLoaded(true);
+
     if (!isQueryEmpty() && params.product && isComponentMounted) {
       (async () => {
-        const res = await getList(params.product, query);
         setIsLoaded(true);
+        const res = await getList(params.product, query);
         setList(res.data.auctionList);
         setListLen(res.data.auctionCnt);
         setIsLoaded(false);
@@ -101,7 +101,6 @@ function ShopPage() {
     }
     return () => {
       isComponentMounted = false;
-      setIsLoaded(false);
     };
   }, [query]);
 

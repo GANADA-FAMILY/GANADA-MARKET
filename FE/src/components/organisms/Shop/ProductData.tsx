@@ -36,8 +36,6 @@ function ProductData({ product }: propsType) {
   const [filter, setFilter] = useState<StateType>({});
 
   useEffect(() => {
-    console.log(product);
-
     if (product === 'earphone') {
       setBasicFilter(earphoneFilter);
     }
