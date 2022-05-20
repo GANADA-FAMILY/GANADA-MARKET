@@ -58,6 +58,12 @@ function ImageData({
     }
   };
 
+  const priceToCycle = () => {
+    console.log(startPrice, '시작가격');
+    console.log(cycle, '싸이클');
+    console.log(startTime, '시간');
+  };
+
   return (
     <FlexContainer {...containerStyle}>
       <BlockContainer {...brandContainer}>
@@ -92,7 +98,7 @@ function ImageData({
         />
       </SVGWrap>
       <BlockContainer {...timeContainStyle}>
-        <TextTag {...timeFontStyle}>현재 거래 가격 : </TextTag>
+        <TextTag {...timeFontStyle}>시작 가 : </TextTag>
         <TextTag {...timeStyle}>{priceToString}</TextTag>
       </BlockContainer>
     </FlexContainer>

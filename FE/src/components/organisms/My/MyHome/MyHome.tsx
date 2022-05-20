@@ -18,10 +18,10 @@ function MyHome({ user }: MyHomeProps) {
       <PurchaseBox />
       <MyHomeTitle title="판매 내역" size={18} src="/my/selling" />
       <SellBox />
-      <MyHomeTitle title="관심 상품" size={18} src="/my/wish" />
+      {/* <MyHomeTitle title="관심 상품" size={18} src="/my/wish" />
       <ListArea>
         <List dataSoruce={[]} />
-      </ListArea>
+      </ListArea> */}
     </Container>
   );
 }

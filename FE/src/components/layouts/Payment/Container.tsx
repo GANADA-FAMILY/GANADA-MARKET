@@ -3,11 +3,16 @@ import styled from '@emotion/styled';
 
 interface Props {
   children: React.ReactNode;
+  className?: string;
 }
 
-function Container({ children }: Props) {
-  return <Box>{children}</Box>;
+function Container({ children, className }: Props) {
+  return <Box className={className}>{children}</Box>;
 }
+
+Container.defaultProps = {
+  className: '',
+};
 
 export default Container;
 

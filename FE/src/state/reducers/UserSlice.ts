@@ -9,14 +9,12 @@ import {
 
 export const fetchUserByToken = createAsyncThunk('api/user', async () => {
   const response = await userAction.getUser();
-  console.log(response.data);
   return response.data;
 });
 
 export const updateNickname = createAsyncThunk(
   'api/user/nickname',
   async (payload: Payload<UserUpdateNicknameForm>) => {
-    console.log(payload);
     await userAction.updateNickname(payload);
     return payload.formData?.userNickname;
   },
@@ -25,7 +23,6 @@ export const updateNickname = createAsyncThunk(
 export const updatePassword = createAsyncThunk(
   'api/user/pw',
   async (payload: Payload<UserUpdatePasswordForm>) => {
-    console.log(payload);
     await userAction.updatePassword(payload);
     return payload.formData?.newPw;
   },
@@ -35,7 +32,6 @@ export const updateProfileImage = createAsyncThunk(
   'api/user/image',
   async (payload: FormData) => {
     const response = await userAction.updateProfileImage(payload);
-    console.log(response.data.profileImageUrl);
     return response.data.profileImageUrl;
   },
 );

@@ -1,14 +1,14 @@
 package com.marketganada.api.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.marketganada.db.entity.Auction;
 import com.marketganada.db.entity.Payment;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Getter
 @Setter
@@ -26,11 +26,14 @@ public class SalesHistoryResponse {
             salesInfo.put("productBrand",payment.getAuction().getProduct().getProductBrand());
             salesInfo.put("tradeDate",payment.getTradeDate());
             salesInfo.put("price",payment.getPrice());
+            salesInfo.put("courier",payment.getCourier());
             salesInfo.put("status",payment.getStatus());
             salesInfo.put("trackingNum",payment.getTrackingNum());
+            salesInfo.put("titleImageUrl",payment.getAuction().getTitleImageUrl());
             salesHistory.add(salesInfo);
         }
         res.setSalesHistory(salesHistory);
+
         return res;
 
     }

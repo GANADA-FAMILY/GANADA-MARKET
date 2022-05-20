@@ -9,7 +9,7 @@ interface ImageProps {
 }
 
 function Image({ src, alt, ...rest }: ImageProps) {
-  return <ImageAtom src={src} alt={alt} {...rest} />;
+  return <ImageAtom src={src} alt={alt} {...rest} loading="lazy" />;
 }
 
 Image.defaultProps = {

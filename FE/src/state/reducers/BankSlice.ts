@@ -7,7 +7,6 @@ import Payload from 'types/Form/Payload';
 // 정산계좌 조회
 export const getBank = createAsyncThunk('api/user/bank', async () => {
   const response = await userAPI.getBank();
-  console.log(response.data);
   return response.data;
 });
 
@@ -17,7 +16,6 @@ export const updateBank = createAsyncThunk(
   async (payload: Payload<BankForm>) => {
     await userAPI.updateBank(payload);
     const response = await userAPI.getBank();
-    console.log(response.data);
     return response.data;
   },
 );

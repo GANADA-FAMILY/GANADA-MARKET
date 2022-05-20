@@ -16,8 +16,8 @@ function Footer() {
           <Wrap>
             {FooterData.copyright.map((item) => {
               return (
-                <StyledLi>
-                  <Text key={item}>{item}</Text>
+                <StyledLi key={item}>
+                  <Text>{item}</Text>
                 </StyledLi>
               );
             })}
@@ -28,10 +28,10 @@ function Footer() {
             @DevTeam
           </Text>
           <Wrap>
-            <StyledLi>
+            <StyledLi key={FooterData.devteam.Git}>
               <Text>{FooterData.devteam.Git}</Text>
             </StyledLi>
-            <StyledLi>
+            <StyledLi key={FooterData.devteam.Notion}>
               <Text>{FooterData.devteam.Notion}</Text>
             </StyledLi>
           </Wrap>
@@ -39,7 +39,11 @@ function Footer() {
         <FlexBox>
           <LinkBox>
             {FooterData.link.map((item) => {
-              return <LinkTo to="#">{item}</LinkTo>;
+              return (
+                <LinkTo to="#" key={item}>
+                  {item}
+                </LinkTo>
+              );
             })}
           </LinkBox>
           {FooterData.info.map((item) => {

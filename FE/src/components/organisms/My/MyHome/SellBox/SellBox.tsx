@@ -1,52 +1,104 @@
-import React from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { TabPane } from 'components/atoms/My';
 import { List, Tabs } from 'components/molecules/My';
+import { useRootDispatch, useRootSelector } from 'state/Hooks';
+import { useEffect } from 'react';
+import {
+  getFilteredSalesHistory,
+  getSalesHistory,
+  setTabIndex,
+} from 'state/reducers/SalesHistorySlice';
+import getSizeByStatus from 'functions/getSizeByStatus';
 
 function SellBox() {
+  const dispatch = useRootDispatch();
+  const salesHistory = useRootSelector(
+    (state) => state.salesHistory.salesHistory,
+  );
+  useEffect(() => {
+    dispatch(getSalesHistory());
+  }, []);
   return (
     <StyledBox>
-      <Tabs>
-        <TabPane>
-          <TabLink to="/my/selling">
+      <StyledTab>
+        <TabPane
+          onClick={async () => {
+            await dispatch(setTabIndex(-1));
+            dispatch(getFilteredSalesHistory());
+          }}
+        >
+          <TabLink to="/my/sales">
             <TabBox>
               <TabTitle>전체</TabTitle>
-              <TabCount>0</TabCount>
+              <TabCount>
+                {salesHistory.length === undefined ? 0 : salesHistory.length}
+              </TabCount>
             </TabBox>
           </TabLink>
         </TabPane>
-        <TabPane>
-          <TabLink to="/my/selling">
+        <TabPane
+          onClick={async () => {
+            await dispatch(setTabIndex(0));
+            dispatch(getFilteredSalesHistory());
+          }}
+        >
+          <TabLink to="/my/sales">
             <TabBox>
-              <TabTitle>입찰 중</TabTitle>
-              <TabCount>0</TabCount>
+              <TabTitle>입금 대기</TabTitle>
+              <TabCount>{getSizeByStatus(salesHistory, 0)}</TabCount>
             </TabBox>
           </TabLink>
         </TabPane>
-        <TabPane>
-          <TabLink to="/my/selling">
+        <TabPane
+          onClick={async () => {
+            await dispatch(setTabIndex(1));
+            dispatch(getFilteredSalesHistory());
+          }}
+        >
+          <TabLink to="/my/sales">
             <TabBox>
-              <TabTitle>진행 중</TabTitle>
-              <TabCount>0</TabCount>
+              <TabTitle>입금 완료</TabTitle>
+              <TabCount>{getSizeByStatus(salesHistory, 1)}</TabCount>
             </TabBox>
           </TabLink>
         </TabPane>
-        <TabPane>
-          <TabLink to="/my/selling">
+        <TabPane
+          onClick={async () => {
+            await dispatch(setTabIndex(2));
+            dispatch(getFilteredSalesHistory());
+          }}
+        >
+          <TabLink to="/my/sales">
+            <TabBox>
+              <TabTitle>배송 중</TabTitle>
+              <TabCount>{getSizeByStatus(salesHistory, 2)}</TabCount>
+            </TabBox>
+          </TabLink>
+        </TabPane>
+        <TabPane
+          onClick={async () => {
+            await dispatch(setTabIndex(3));
+            dispatch(getFilteredSalesHistory());
+          }}
+        >
+          <TabLink to="/my/sales">
             <TabBox>
               <TabTitle>종료</TabTitle>
-              <TabCount>0</TabCount>
+              <TabCount>{getSizeByStatus(salesHistory, 3)}</TabCount>
             </TabBox>
           </TabLink>
         </TabPane>
-      </Tabs>
+      </StyledTab>
       <ListArea>
-        <List dataSoruce={[]} />
+        <List dataSoruce={salesHistory} />
       </ListArea>
     </StyledBox>
   );
 }
+const StyledTab = styled(Tabs)`
+  margin-bottom: 1.5rem;
+`;
 const TabLink = styled(Link)`
   position: relative;
   display: block;

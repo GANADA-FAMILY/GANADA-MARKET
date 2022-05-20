@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import axios from 'axios';
-import Container from '../../layouts/Payment/Container';
-import Title from '../../atoms/Payment/Title';
-import SubTitle from '../../atoms/Payment/SubTitle';
-import PayMethod from '../../molecules/Payment/PayMethod';
-import GrayText from '../../atoms/Payment/GrayText';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectPayInfo, setPayMethod } from 'state/reducers/PaySlice';
+import payAPI from 'api/payAPI';
+import Container from 'components/layouts/Payment/Container';
+import Title from 'components/atoms/Payment/Title';
+import SubTitle from 'components/atoms/Payment/SubTitle';
+import PayMethod from 'components/molecules/Payment/PayMethod';
+import GrayText from 'components/atoms/Payment/GrayText';
 
 interface ButtonProps {
   disabled: boolean;
@@ -13,28 +15,25 @@ interface ButtonProps {
 
 function Pay() {
   const [select, setSelect] = useState('');
-  const onClick = () => {
-    const token = sessionStorage.getItem('token');
-    axios
-      .post(
-        '/kakaopay',
-        {
-          userid: 3,
-          price: 13000,
-          productid: 4,
-          productname: '조단',
-        },
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        },
-      )
-      .then((res) => {
-        const nextUrl = res.data.next_redirect_web_url;
-        window.open(nextUrl, 'kakaopay test');
-        console.log(nextUrl);
-      });
+  const payload = useSelector(selectPayInfo);
+  const dispatch = useDispatch();
+  const onClick = async () => {
+    window.localStorage.removeItem('completePayInfo');
+    const res = await payAPI.PayReady(payload);
+    const { orderId, redirectURL, tid } = res.data;
+    window.localStorage.setItem(
+      'completePayInfo',
+      JSON.stringify({
+        orderId,
+        tid,
+      }),
+    );
+    alert('결제페이지로 이동합니다.');
+    window.location.href = redirectURL;
+  };
+  const selectHandler = (bank: string) => {
+    setSelect(bank);
+    dispatch(setPayMethod(bank));
   };
   return (
     <Container>
@@ -49,8 +48,8 @@ function Pay() {
             <PayMethod
               key={item.bank}
               item={item}
-              checked={select === item.bank}
-              onClick={() => setSelect(item.bank)}
+              checked={select === item.alt}
+              onClick={() => selectHandler(item.alt)}
             />
           );
         })}
@@ -98,18 +97,22 @@ const Text = styled.p`
 const bank = [
   {
     bank: '카카오페이',
-    src: './image/kakaopay.png',
+    src: '/images/kakaopay.png',
+    alt: 'kakaopay',
   },
   {
     bank: '네이버페이',
-    src: './image/naverpay.png',
+    src: '/images/naverpay.png',
+    alt: 'naverpay',
   },
   {
     bank: '토스',
-    src: './image/toss.png',
+    src: '/images/toss.png',
+    alt: 'toss',
   },
   {
     bank: '페이코',
-    src: './image/payco.png',
+    src: '/images/payco.png',
+    alt: 'payco',
   },
 ];
