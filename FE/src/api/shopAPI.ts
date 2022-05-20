@@ -2,14 +2,12 @@ import { API_URL } from 'constants/url';
 import { URLSearchParams } from 'url';
 import { defaultInstance } from 'api';
 import { AxiosError } from 'axios';
+import { ACCESS_TOKEN } from 'constants/headers';
 import Auction from '../types/Entity/ShopAPI/Auction';
-
-const token =
-  'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJrcml0ZTEyMzQ1QG5hdmVyLmNvbSIsImlzcyI6ImdhbmFkYW1hcmtldC5jb20iLCJleHAiOjE2NTMwNTcxNDcsImlhdCI6MTY1Mjk3MDc0N30.4qyW9d9OePqRD-t4Cd0FmdVQcprlv1nVT6CSi5zpf_sbxYcFJvqkNzDGGjrqvUpPyMcwQe8CaJw4GN0lJsXLPA';
 
 const axios = defaultInstance();
 axios.defaults.baseURL = API_URL;
-axios.defaults.headers.common.Authorization = token;
+axios.defaults.headers.common.Authorization = ACCESS_TOKEN;
 interface resolveData {
   data: {
     auctionList: Auction[];

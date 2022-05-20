@@ -8,7 +8,6 @@ import com.marketganada.api.service.AuctionService;
 import com.marketganada.api.service.ProductService;
 import com.marketganada.config.auth.GanadaUserDetails;
 import com.marketganada.db.entity.Auction;
-import com.marketganada.db.entity.Product;
 import com.marketganada.db.entity.User;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -3,6 +3,8 @@ package com.marketganada.producttest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.marketganada.api.request.AuctionInsertRequest;
 import com.marketganada.api.request.LikeRequest;
+import com.marketganada.api.request.PaymentInsertRequest;
+import com.marketganada.api.request.TrackingNumUpdateRequest;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
@@ -11,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -120,6 +124,46 @@ public class AuctionControllerJwtErrorCases {
     @Order(18)
     void getAuctionRecentListTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/auction?page=0")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
+                .andExpect(MockMvcResultMatchers.status().isUnauthorized())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+
+
+    @Test
+    @Order(8)
+    void insertPaymentTest() throws Exception {
+        PaymentInsertRequest p = new PaymentInsertRequest();
+        p.setPrice(1234);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/payment")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content((new JSONObject(oMapper.writeValueAsString(p)).toString())))
+                .andExpect(MockMvcResultMatchers.status().isUnauthorized())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    @Order(9)
+    void insertTrackTest() throws Exception {
+        TrackingNumUpdateRequest t = new TrackingNumUpdateRequest();
+        t.setTrackingNum("0000");
+        t.setCourier("!?!?");
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/payment/tracking/-1")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content((new JSONObject(oMapper.writeValueAsString(t)).toString())))
+                .andExpect(MockMvcResultMatchers.status().isUnauthorized())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    @Order(10)
+    void confirmPaymentTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/payment/confirm/-1")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
                 .andExpect(MockMvcResultMatchers.status().isUnauthorized())
                 .andDo(MockMvcResultHandlers.print());

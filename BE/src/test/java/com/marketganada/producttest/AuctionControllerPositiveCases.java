@@ -43,6 +43,7 @@ public class AuctionControllerPositiveCases {
 
     private static Long auctionPhoneId;
     private static Long auctionEarphoneId;
+    private static Long paymentId;
 
     private static SimpleDateFormat simpleDateFormat;
 
@@ -239,6 +240,53 @@ public class AuctionControllerPositiveCases {
 
     @Test
     @Order(8)
+    void insertPaymentTest() throws Exception {
+        PaymentInsertRequest p = new PaymentInsertRequest();
+        p.setAuctionId(auctionPhoneId);
+        p.setAddress("string");
+        p.setPaymentMethod("kakaopay");
+        p.setAddressDetail("string");
+        p.setPhone("string");
+        p.setBuyerName("string");
+        p.setPostalCode("string");
+        p.setPrice(1234);
+
+        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.post("/api/payment")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content((new JSONObject(oMapper.writeValueAsString(p)).toString())))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+
+        paymentId = new JSONObject(result.andReturn().getResponse().getContentAsString()).getLong("orderId")-1;
+    }
+
+//    @Test
+//    @Order(9)
+//    void insertTrackTest() throws Exception {
+//        TrackingNumUpdateRequest t = new TrackingNumUpdateRequest();
+//        t.setTrackingNum("0000");
+//        t.setCourier("!?!?");
+//
+//        mockMvc.perform(MockMvcRequestBuilders.put("/api/payment/tracking/"+paymentId)
+//                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
+//                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                        .content((new JSONObject(oMapper.writeValueAsString(t)).toString())))
+//                .andExpect(MockMvcResultMatchers.status().isCreated())
+//                .andDo(MockMvcResultHandlers.print());
+//    }
+//
+//    @Test
+//    @Order(10)
+//    void confirmPaymentTest() throws Exception {
+//        mockMvc.perform(MockMvcRequestBuilders.put("/api/payment/confirm/"+paymentId)
+//                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
+//                .andExpect(MockMvcResultMatchers.status().isCreated())
+//                .andDo(MockMvcResultHandlers.print());
+//    }
+
+    @Test
+    @Order(11)
     void deleteAuctionLikeTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/auction/like/"+auctionPhoneId)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
@@ -248,7 +296,7 @@ public class AuctionControllerPositiveCases {
     }
 
     @Test
-    @Order(9)
+    @Order(12)
     void deleteAuctionPhoneTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/auction/"+auctionPhoneId)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
@@ -258,7 +306,7 @@ public class AuctionControllerPositiveCases {
     }
 
     @Test
-    @Order(10)
+    @Order(13)
     void deleteAuctionEarphoneTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/auction/"+auctionEarphoneId)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)

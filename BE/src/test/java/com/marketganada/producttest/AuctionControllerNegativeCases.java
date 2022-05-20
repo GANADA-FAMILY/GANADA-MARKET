@@ -1,9 +1,7 @@
 package com.marketganada.producttest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.marketganada.api.request.AuctionInsertRequest;
-import com.marketganada.api.request.LikeRequest;
-import com.marketganada.api.request.UserLoginRequest;
+import com.marketganada.api.request.*;
 import org.json.JSONObject;
 import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
@@ -141,6 +139,44 @@ public class AuctionControllerNegativeCases {
 
     @Test
     @Order(6)
+    void insertPaymentTest() throws Exception {
+        PaymentInsertRequest p = new PaymentInsertRequest();
+        p.setPaymentMethod("???");
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/payment")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content((new JSONObject(oMapper.writeValueAsString(p)).toString())))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    @Order(7)
+    void insertTrackTest() throws Exception {
+        TrackingNumUpdateRequest t = new TrackingNumUpdateRequest();
+        t.setTrackingNum("0000");
+        t.setCourier("!?!?");
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/payment/tracking/735")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content((new JSONObject(oMapper.writeValueAsString(t)).toString())))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    @Order(8)
+    void confirmPaymentTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/payment/confirm/735")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    @Order(9)
     void deleteAuctionLikeTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/auction/like/"+TEST_AUCTION_ID)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
@@ -150,7 +186,7 @@ public class AuctionControllerNegativeCases {
     }
 
     @Test
-    @Order(7)
+    @Order(10)
     void deleteAuctionTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/auction/"+TEST_AUCTION_ID)
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
@@ -160,7 +196,7 @@ public class AuctionControllerNegativeCases {
     }
 
     @Test
-    @Order(8)
+    @Order(11)
     void deleteAuctionNotLoginTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/auction/"+TEST_AUCTION_ID)
                         .contentType("application/json"))
@@ -169,7 +205,7 @@ public class AuctionControllerNegativeCases {
     }
 
     @Test
-    @Order(9)
+    @Order(12)
     void deleteAuctionNotOwnerTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/auction/30")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer "+accessToken)
