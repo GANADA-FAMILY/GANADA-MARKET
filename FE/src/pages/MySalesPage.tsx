@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { MySales } from 'components/organisms/My';
+import { useRootDispatch } from 'state/Hooks';
 import { ProductHistory } from 'types/Entity/UserAPI';
 import MyPageTemplate from '../components/templates/MyPageTemplate/MyPageTemplate';
 
@@ -47,6 +48,7 @@ const items: ProductHistory[] = [
 ];
 
 function MySalesPage() {
+  const dispatch = useRootDispatch();
   return (
     <MainContainer>
       <MyPageTemplate element={<MySales items={items} />} />
