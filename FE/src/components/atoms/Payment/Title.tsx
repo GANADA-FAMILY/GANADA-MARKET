@@ -17,8 +17,8 @@ Title.defaultProps = {
 const Atom = styled.h1`
   font-size: 2rem;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /* overflow: hidden; */
+  /* text-overflow: ellipsis; */
 `;
 
 export default Title;

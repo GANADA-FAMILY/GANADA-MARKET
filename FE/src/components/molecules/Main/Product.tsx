@@ -44,7 +44,6 @@ function Product({ data }: Props) {
           console.log(err);
         });
     } else {
-      console.log(data.auctionId);
       auctionAPI
         .likeAuction(data.auctionId)
         .then(() => {

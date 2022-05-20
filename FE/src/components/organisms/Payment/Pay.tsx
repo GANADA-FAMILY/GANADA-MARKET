@@ -21,7 +21,6 @@ function Pay() {
     window.localStorage.removeItem('completePayInfo');
     const res = await payAPI.PayReady(payload);
     const { orderId, redirectURL, tid } = res.data;
-    console.log(orderId, redirectURL, tid);
     window.localStorage.setItem(
       'completePayInfo',
       JSON.stringify({
@@ -32,7 +31,6 @@ function Pay() {
     alert('결제페이지로 이동합니다.');
     window.location.href = redirectURL;
   };
-  const painfo = window.localStorage.getItem('completePayInfo');
   const selectHandler = (bank: string) => {
     setSelect(bank);
     dispatch(setPayMethod(bank));

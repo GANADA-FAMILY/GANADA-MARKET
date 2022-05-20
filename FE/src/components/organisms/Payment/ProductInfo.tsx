@@ -2,6 +2,8 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Text from '../../atoms/Main/Text';
 import Image from '../../atoms/Main/Image';
+import Title from '../../atoms/Payment/Title';
+import SubTitle from '../../atoms/Payment/SubTitle';
 
 interface Props {
   data: {
@@ -20,8 +22,8 @@ function ProductInfo({ data, imgSrc }: Props) {
         <Image src={imgSrc} alt={data.productName} height="8rem" />
       </ImageWrapper>
       <Wrap>
-        <Text>{data.productBrand}</Text>
-        <Text>{data.productName}</Text>
+        <Title>{data.productBrand}</Title>
+        <SubTitle>{data.productName}</SubTitle>
       </Wrap>
     </Container>
   );
