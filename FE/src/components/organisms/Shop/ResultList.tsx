@@ -14,7 +14,7 @@ interface propsType {
 }
 
 function ResultList({ initialData, query, onLike }: propsType) {
-  const [state, setState] = useState<Auction[]>(initialData);
+  const [state, setState] = useState<Auction[]>([]);
   const [target, setTarget] = useState<HTMLDivElement | null>(null);
   const isLast = useRef(0);
   const params = useParams();
@@ -24,8 +24,9 @@ function ResultList({ initialData, query, onLike }: propsType) {
   const [stateLast, setStateLast] = useState(false);
 
   useEffect(() => {
-    let isComponentMounted = true;
-    if (isComponentMounted) {
+    let umounted = false;
+    if (!umounted) {
+      setState(initialData);
       (async () => {
         const res = await getPageList(
           {
@@ -41,7 +42,7 @@ function ResultList({ initialData, query, onLike }: propsType) {
       })();
     }
     return () => {
-      isComponentMounted = false;
+      umounted = true;
     };
   }, []);
 
@@ -61,9 +62,8 @@ function ResultList({ initialData, query, onLike }: propsType) {
   };
   // 페이지 이동했을때
   useEffect(() => {
-    let isComponentMounted = true;
-
-    if (isComponentMounted && isLast.current < 1) {
+    let unmounted = false;
+    if (!unmounted && isLast.current < 1) {
       (async () => {
         const res = await getPageList(
           {
@@ -84,7 +84,7 @@ function ResultList({ initialData, query, onLike }: propsType) {
     }
 
     return () => {
-      isComponentMounted = false;
+      unmounted = true;
     };
   }, [pageNum]);
 

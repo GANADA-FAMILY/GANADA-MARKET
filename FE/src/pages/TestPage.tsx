@@ -1,5 +1,5 @@
 function TestPage() {
-  return <div>simple page</div>;
+  return <div>sss</div>;
 }
 
 export default TestPage;

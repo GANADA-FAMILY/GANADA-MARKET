@@ -170,7 +170,10 @@ function AuctionDetail({ data }: AuctionDetailProps) {
           timeZone={timeZone}
           handleSetTimeZone={handleSetTimeZone}
         />
-        <AuctionGraph productHistory={productHistory} timeZone={timeZone} />
+
+        {productHistory.length > 0 && (
+          <AuctionGraph productHistory={productHistory} timeZone={timeZone} />
+        )}
       </Main>
     </Wrapper>
   );
