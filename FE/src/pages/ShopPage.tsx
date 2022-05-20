@@ -37,70 +37,88 @@ function ShopPage() {
   const dispatch = useDispatch();
   const route = Router();
   const production = useRef<string[]>([]);
+  const unmountRef = useRef(false);
   production.current = ['phone', 'earPhone'];
   // 초기 렌더링
   useEffect(() => {
-    // 리덕스 초기화
-    dispatch(navReset());
-    dispatch(dataReset());
-    // DB에서 값을 product 목록을 가져와서 ref에 넣는다.
-    // 404 연결
-    link404();
-    navigate({
-      pathname: `/shop/${params.product}`,
-      search: createSearchParams({
-        page: '0',
-        size: '12',
-        sort: 'endTime,asc',
-      }).toString(),
-    });
-  }, []);
-  useEffect(() => {
-    // 404 연결
-    link404();
-    // 필터링 바뀔 때마다 데이터 query 변경
-    const data = changeData(selectData.filterArray.filterArray);
-    if (params.product === 'phone') {
+    let unmounted = false;
+
+    if (!unmounted) {
+      // 리덕스 초기화
+      dispatch(navReset());
+      dispatch(dataReset());
+      // DB에서 값을 product 목록을 가져와서 ref에 넣는다.
+      // 404 연결
+      link404();
       navigate({
         pathname: `/shop/${params.product}`,
         search: createSearchParams({
           page: '0',
           size: '12',
-          sort: `${selectNav.filter.name}`,
-          brand: data[0]?.split('=')[1] ?? 'ALL',
-          model: data[1]?.split('=')[1] ?? 'ALL',
-          save: data[2]?.split('=')[1] ?? 'ALL',
-        }).toString(),
-      });
-    } else if (params.product === 'earphone') {
-      navigate({
-        pathname: `/shop/${params.product}`,
-        search: createSearchParams({
-          page: '0',
-          size: '12',
-          sort: `${selectNav.filter.name}`,
-          brand: data[0]?.split('=')[1] ?? 'ALL',
-          model: data[1]?.split('=')[1] ?? 'ALL',
+          sort: 'endTime,asc',
         }).toString(),
       });
     }
+    return () => {
+      unmounted = true;
+      unmountRef.current = true;
+    };
+  }, []);
+  useEffect(() => {
+    let unmounted = false;
+
+    if (!unmounted) {
+      // 404 연결
+      link404();
+      // 필터링 바뀔 때마다 데이터 query 변경
+      const data = changeData(selectData.filterArray.filterArray);
+      if (params.product === 'phone') {
+        navigate({
+          pathname: `/shop/${params.product}`,
+          search: createSearchParams({
+            page: '0',
+            size: '12',
+            sort: `${selectNav.filter.name}`,
+            brand: data[0]?.split('=')[1] ?? 'ALL',
+            model: data[1]?.split('=')[1] ?? 'ALL',
+            save: data[2]?.split('=')[1] ?? 'ALL',
+          }).toString(),
+        });
+      } else if (params.product === 'earphone') {
+        navigate({
+          pathname: `/shop/${params.product}`,
+          search: createSearchParams({
+            page: '0',
+            size: '12',
+            sort: `${selectNav.filter.name}`,
+            brand: data[0]?.split('=')[1] ?? 'ALL',
+            model: data[1]?.split('=')[1] ?? 'ALL',
+          }).toString(),
+        });
+      }
+    }
+    return () => {
+      unmounted = true;
+    };
   }, [selectData, selectNav]);
 
   // 필터 셀렉했을때
   useEffect(() => {
-    let isComponentMounted = true;
+    let unmounted = false;
 
-    if (!isQueryEmpty() && params.product && isComponentMounted) {
+    if (!isQueryEmpty() && params.product && !unmounted) {
       (async () => {
         setIsLoaded(true);
         const res = await getList(params.product, query);
         setList(res.data.auctionList);
         setListLen(res.data.auctionCnt);
-        setIsLoaded(false);
+        if (!unmountRef.current) {
+          setIsLoaded(false);
+        }
       })();
     }
     return () => {
-      isComponentMounted = false;
+      unmounted = true;
     };
   }, [query]);
 
