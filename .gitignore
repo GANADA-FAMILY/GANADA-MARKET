@@ -1,4 +1,4 @@
 /build
 /web
 .env.production
-.application-private.yml
+application-private.yml
