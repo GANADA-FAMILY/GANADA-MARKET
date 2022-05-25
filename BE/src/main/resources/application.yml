@@ -6,23 +6,6 @@ server:
 spring:
   profiles:
     include: private
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://realganada.cvdtnlvc0pv1.ap-northeast-2.rds.amazonaws.com:3306/ganada?&serverTimezone=Asia/Seoul&useUnicode=true&characterEncoding=utf8
-    username: realganada
-    password: realganada
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
-        format_sql: true
-  servlet:
-    multipart:
-      max-file-size: 100MB
-      max-request-size: 100MB
 
 
 
