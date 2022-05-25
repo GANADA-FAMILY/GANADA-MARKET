@@ -21,7 +21,7 @@
     "noEmit": true,
     "removeComments": false,
     "jsx": "react-jsx",
-    "jsxImportSource": "@emotion/react",
+    "jsxImportSource": "@emotion/react"
   },
   "include": [
     "src"
