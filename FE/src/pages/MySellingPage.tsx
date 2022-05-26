@@ -15,9 +15,7 @@ function MySellingPage() {
 
   return (
     <MainContainer>
-      {sellingList[0] !== undefined && (
-        <MyPageTemplate element={<MySelling items={sellingList} />} />
-      )}
+      <MyPageTemplate element={<MySelling items={sellingList} />} />
     </MainContainer>
   );
 }

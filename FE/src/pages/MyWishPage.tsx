@@ -15,7 +15,7 @@ function MyWishPage() {
 
   return (
     <MainContainer>
-      {wishList && <MyPageTemplate element={<MyWish items={wishList} />} />}
+      <MyPageTemplate element={<MyWish items={wishList} />} />
     </MainContainer>
   );
 }
