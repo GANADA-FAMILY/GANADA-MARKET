@@ -53,14 +53,13 @@ function AuctionCreatePage() {
 
     axios.post('http://localhost:8080/api/auction', formData, {
       headers: {
-        Authorization:
-          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwY2cwNTI3QG5hdmVyLmNvbSIsImlzcyI6ImdhbmFkYW1hcmtldC5jb20iLCJleHAiOjE2NTM1NTM2MzgsImlhdCI6MTY1MzQ2NzIzOH0.EPDnDLWD2men2F8IIy8gFf68o86IqBkawfEVolhJIGlAfGV7s-3hld3UEZvtdQH9uJUgd9JsEkjIMoa_q-_c3Q',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     });
   };
 
   return (
-    <Wrapper onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <label htmlFor="제목">
         auctionTitle, 제목
         <input ref={auctionTitle} type="text" />
@@ -94,7 +93,7 @@ function AuctionCreatePage() {
         <input ref={endTime} type="text" />
       </label>
       <button type="submit">데이터 넣기</button>
-    </Wrapper>
+    </form>
   );
 }
 

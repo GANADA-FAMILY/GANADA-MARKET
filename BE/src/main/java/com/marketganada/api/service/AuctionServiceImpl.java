@@ -214,7 +214,7 @@ public class AuctionServiceImpl implements AuctionService {
     @Override
     public Page<Auction> getAuctionPhoneList(List<String> brand, List<String> model, List<String> save, Pageable pageable) {
         Specification<Product> spec = (root, query, criteriaBuilder) -> null;
-        spec = spec.and(ProductSpecification.equalCategoryLargeName("스마트폰"));
+        spec = spec.and(ProductSpecification.equalCategoryLargeName("phone"));
 
         if(!brand.get(0).equals("ALL"))
             spec = spec.and(ProductSpecification.equalProductBrands(brand));
@@ -244,7 +244,7 @@ public class AuctionServiceImpl implements AuctionService {
     public Page<Auction> getAuctionEarphoneList(List<String> brand, List<String> model, Pageable pageable) {
         Specification<Product> spec = (root, query, criteriaBuilder) -> null;
 
-        spec = spec.and(ProductSpecification.equalCategoryLargeName("이어폰"));
+        spec = spec.and(ProductSpecification.equalCategoryLargeName("earphone"));
 
         if(!brand.get(0).equals("ALL"))
             spec = spec.and(ProductSpecification.equalProductBrands(brand));
