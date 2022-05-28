@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import Text from '../../atoms/Main/Text';
-import Image from '../../atoms/Main/Image';
-import Title from '../../atoms/Payment/Title';
-import SubTitle from '../../atoms/Payment/SubTitle';
+import Text from '../../atoms/Main/Text/Text';
+import Image from '../../atoms/Main/Image/Image';
+import Title from '../../atoms/Main/Title/Title';
+import SubTitle from '../../atoms/Main/SubTitle';
 
 interface Props {
   data: {

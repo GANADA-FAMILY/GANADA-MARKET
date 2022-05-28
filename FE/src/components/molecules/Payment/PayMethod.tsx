@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
-import SubTitle from '../../atoms/Payment/SubTitle';
-import Logo from '../../atoms/Payment/Logo';
+import SubTitle from '../../atoms/Main/SubTitle';
+import Logo from '../../atoms/Main/Logo/Logo';
 
 interface Props {
   checked: boolean;

@@ -4,10 +4,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectPayInfo, setPayMethod } from 'state/reducers/PaySlice';
 import payAPI from 'api/payAPI';
 import Container from 'components/layouts/Payment/Container';
-import Title from 'components/atoms/Payment/Title';
-import SubTitle from 'components/atoms/Payment/SubTitle';
+import Title from 'components/atoms/Main/Title/Title';
+import SubTitle from 'components/atoms/Main/SubTitle';
 import PayMethod from 'components/molecules/Payment/PayMethod';
-import GrayText from 'components/atoms/Payment/GrayText';
+import GrayText from 'components/atoms/Main/GrayText';
 
 interface ButtonProps {
   disabled: boolean;

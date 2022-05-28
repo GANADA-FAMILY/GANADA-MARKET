@@ -3,7 +3,7 @@ import Slider from 'react-slick';
 import './slickStyle.css';
 import './slick-theme.css';
 import styled from '@emotion/styled';
-import Image from '../../atoms/Main/Image';
+import Image from '../../atoms/Main/Image/Image';
 
 function Slick() {
   const settings = {

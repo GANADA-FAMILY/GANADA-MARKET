@@ -4,8 +4,8 @@ import styled from '@emotion/styled';
 import { priceComma } from 'functions';
 import AuctionList from 'types/Entity/MainAPI/AuctionList';
 import auctionAPI from 'api/auctionAPI';
-import Image from '../../atoms/Main/Image';
-import Text from '../../atoms/Main/Text';
+import Image from '../../atoms/Main/Image/Image';
+import Text from '../../atoms/Main/Text/Text';
 import FlexBox from '../../layouts/Main/FlexBox';
 import Svg from './Svg';
 
@@ -86,8 +86,8 @@ const Title = styled.h1`
 `;
 
 const Descript = styled(Text)`
-  font-size: 1.3rem;
-  color: grey;
+  /* font-size: 1.3rem; */
+  /* color: grey; */
 `;
 
 const SVGWrap = styled.div`

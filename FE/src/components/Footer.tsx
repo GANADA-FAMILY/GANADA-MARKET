@@ -2,15 +2,15 @@ import React from 'react';
 import styled from '@emotion/styled';
 import FlexBox from './layouts/Main/FlexBox';
 import GridBox from './layouts/Main/GridBox';
-import Text from './atoms/Main/Text';
-import LinkTo from './atoms/Main/LinkTo';
+import Text from './atoms/Main/Text/Text';
+import LinkTo from './atoms/Main/Linkto/LinkTo';
 
 function Footer() {
   return (
     <Container>
       <GridBox columns="1fr 1fr 2fr">
         <FlexBox>
-          <Text fontSize="3rem" fontWeight="bold">
+          <Text fontSize={3} fontWeight="bold">
             @Copyright
           </Text>
           <Wrap>
@@ -24,7 +24,7 @@ function Footer() {
           </Wrap>
         </FlexBox>
         <FlexBox>
-          <Text fontSize="3rem" fontWeight="bold">
+          <Text fontSize={3} fontWeight="bold">
             @DevTeam
           </Text>
           <Wrap>

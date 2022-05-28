@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { priceComma } from 'functions';
 import Container from '../../layouts/Payment/Container';
-import Title from '../../atoms/Payment/Title';
+import Title from '../../atoms/Main/Title/Title';
 import theme from '../../../styles/theme';
 
 interface Props {
