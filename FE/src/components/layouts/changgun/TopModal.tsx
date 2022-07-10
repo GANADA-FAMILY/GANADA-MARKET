@@ -1,19 +1,11 @@
+import { useRootDispatch } from 'state/Hooks';
+import { closeModal } from 'state/reducers/ModalOpenSlice';
 import styled from 'styled-components';
-import { useState } from 'react';
 
 interface ModalProps {
   children: React.ReactNode;
-  trigger: React.ReactNode;
+  shouldShow: boolean;
 }
-
-const ModalTrigger = styled.button`
-  border: none;
-  background: none;
-
-  &:hover {
-    cursor: pointer;
-  }
-`;
 
 const BackDrop = styled.div`
   position: fixed;
@@ -35,20 +27,14 @@ const ModalBody = styled.div`
   }
 `;
 
-function TopModal({ children, trigger }: ModalProps) {
-  const [showModal, setShowModal] = useState(false);
-  return (
-    <>
-      <ModalTrigger type="button" onClick={() => setShowModal(true)}>
-        {trigger}
-      </ModalTrigger>
-      {showModal && (
-        <BackDrop onClick={() => setShowModal(false)}>
-          <ModalBody onClick={(e) => e.stopPropagation()}>{children}</ModalBody>
-        </BackDrop>
-      )}
-    </>
-  );
+function TopModal({ children, shouldShow }: ModalProps) {
+  const dispatch = useRootDispatch();
+
+  return shouldShow ? (
+    <BackDrop onClick={() => dispatch(closeModal())}>
+      <ModalBody onClick={(e) => e.stopPropagation()}>{children}</ModalBody>
+    </BackDrop>
+  ) : null;
 }
 
 export { TopModal };

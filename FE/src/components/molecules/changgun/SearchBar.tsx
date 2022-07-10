@@ -1,3 +1,5 @@
+import { useRootDispatch } from 'state/Hooks';
+import { closeModal } from 'state/reducers/ModalOpenSlice';
 import styled from 'styled-components';
 import { SearchInput, Text } from '../../atoms/changgun';
 
@@ -10,10 +12,19 @@ const Wrapper = styled.div`
 `;
 
 function SearchBar() {
+  const dispatch = useRootDispatch();
+
   return (
     <Wrapper>
       <SearchInput />
-      <Text>취소</Text>
+      <Text
+        onClick={() => {
+          dispatch(closeModal());
+        }}
+        pointer
+      >
+        취소
+      </Text>
     </Wrapper>
   );
 }

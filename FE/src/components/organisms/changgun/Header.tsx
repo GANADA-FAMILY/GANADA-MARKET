@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { useRootDispatch, useRootSelector } from 'state/Hooks';
+import { openModal } from 'state/reducers/ModalOpenSlice';
 import { MenuList, Navigation, Logo } from '../../molecules/changgun';
 import { MenuLink, NavLink } from '../../atoms/changgun';
 import { ReactComponent as SearchIcon } from '../../../assets/svgs/search.svg';
@@ -32,6 +34,10 @@ const HeaderWrapper = styled.div`
 `;
 
 function Header() {
+  const modalOpen = useRootSelector((state) => state.modalOpen);
+  const dispatch = useRootDispatch();
+  const [shouldShow, setShouldShow] = useState(false);
+
   const [token, setToken] = useState<null | string>(
     localStorage.getItem('token'),
   );
@@ -65,7 +71,17 @@ function Header() {
         <Logo width="8rem" height="4rem" />
         <Navigation>
           <NavLink to="/shop/phone">SHOP</NavLink>
-          <SearchIcon fill="#333" width="3rem" height="3rem" />
+          <SearchIcon
+            onClick={() => {
+              dispatch(openModal());
+            }}
+            fill="#333"
+            width="3rem"
+            height="3rem"
+          />
+          <TopModal shouldShow={modalOpen}>
+            <Search />
+          </TopModal>
         </Navigation>
       </HeaderBottom>
     </HeaderWrapper>
