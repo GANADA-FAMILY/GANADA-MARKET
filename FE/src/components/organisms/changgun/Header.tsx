@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { MenuList, Navigation, Logo } from '../../molecules/changgun';
 import { MenuLink, NavLink } from '../../atoms/changgun';
 import { ReactComponent as SearchIcon } from '../../../assets/svgs/search.svg';
-import { Modal } from '../../layouts/changgun';
+import { TopModal } from '../../layouts/changgun';
 import { Search } from './Search';
 
 const HeaderTop = styled.div`
@@ -65,12 +65,9 @@ function Header() {
         <Logo width="8rem" height="4rem" />
         <Navigation>
           <NavLink to="/shop/phone">SHOP</NavLink>
-          <Modal
-            trigger={<SearchIcon width="3rem" height="3rem" />}
-            inset="0 0 70% 0"
-          >
+          <TopModal trigger={<SearchIcon width="3rem" height="3rem" />}>
             <Search />
-          </Modal>
+          </TopModal>
         </Navigation>
       </HeaderBottom>
     </HeaderWrapper>

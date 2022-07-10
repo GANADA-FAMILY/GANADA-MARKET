@@ -3,12 +3,7 @@ import { useState } from 'react';
 
 interface ModalProps {
   children: React.ReactNode;
-  inset: string;
   trigger: React.ReactNode;
-}
-
-interface ModalBodyStyle {
-  inset: string;
 }
 
 const ModalTrigger = styled.button`
@@ -30,12 +25,17 @@ const BackDrop = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
 `;
 
-const ModalBody = styled.div<ModalBodyStyle>`
+const ModalBody = styled.div`
   background-color: white;
   width: 100%;
+  padding: 20px;
+
+  @media (max-width: 768px) {
+    height: 100vh;
+  }
 `;
 
-function Modal({ children, inset, trigger }: ModalProps) {
+function TopModal({ children, trigger }: ModalProps) {
   const [showModal, setShowModal] = useState(false);
   return (
     <>
@@ -44,13 +44,11 @@ function Modal({ children, inset, trigger }: ModalProps) {
       </ModalTrigger>
       {showModal && (
         <BackDrop onClick={() => setShowModal(false)}>
-          <ModalBody onClick={(e) => e.stopPropagation()} inset={inset}>
-            {children}
-          </ModalBody>
+          <ModalBody onClick={(e) => e.stopPropagation()}>{children}</ModalBody>
         </BackDrop>
       )}
     </>
   );
 }
 
-export { Modal };
+export { TopModal };
