@@ -1,6 +1,16 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 
+interface ModalProps {
+  children: React.ReactNode;
+  inset: string;
+  trigger: React.ReactNode;
+}
+
+interface ModalBodyStyle {
+  inset: string;
+}
+
 const ModalTrigger = styled.button`
   border: none;
   background: none;
@@ -10,31 +20,19 @@ const ModalTrigger = styled.button`
   }
 `;
 
-interface ModalProps {
-  children: React.ReactNode;
-  inset: string;
-  trigger: React.ReactNode;
-}
-
-const ModalBackground = styled.div`
+const BackDrop = styled.div`
   position: fixed;
   z-index: 1;
   left: 0;
   top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
+  width: 100vw;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
 `;
 
-interface ModalBodyStyle {
-  inset: string;
-}
-
 const ModalBody = styled.div<ModalBodyStyle>`
-  position: fixed;
   background-color: white;
-  inset: ${(p) => p.inset};
+  width: 100%;
 `;
 
 function Modal({ children, inset, trigger }: ModalProps) {
@@ -45,11 +43,11 @@ function Modal({ children, inset, trigger }: ModalProps) {
         {trigger}
       </ModalTrigger>
       {showModal && (
-        <ModalBackground onClick={() => setShowModal(false)}>
+        <BackDrop onClick={() => setShowModal(false)}>
           <ModalBody onClick={(e) => e.stopPropagation()} inset={inset}>
             {children}
           </ModalBody>
-        </ModalBackground>
+        </BackDrop>
       )}
     </>
   );
