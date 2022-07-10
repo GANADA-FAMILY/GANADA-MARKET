@@ -4,6 +4,7 @@ import { Text } from '../../atoms/changgun';
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  row-gap: 1rem;
 `;
 
 const Header = styled.header`
@@ -13,19 +14,22 @@ const Header = styled.header`
 
 const Title = styled.p`
   font-weight: 500;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
 `;
 
 const CancelButton = styled.button`
   border: none;
   color: #999;
   font-size: 0.8rem;
+  width: 15px;
+  aspect-ratio: 1;
+  border-radius: 50%;
 `;
 
-const Inner = styled.main`
+const Inner = styled.ul`
   display: flex;
   flex-direction: column;
-  row-gap: 1rem;
+  row-gap: 1.5rem;
   padding-top: 1rem;
   align-items: flex-start;
 `;

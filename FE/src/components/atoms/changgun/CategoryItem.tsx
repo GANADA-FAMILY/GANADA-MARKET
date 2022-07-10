@@ -4,6 +4,12 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  :hover {
+    p {
+      font-weight: 500;
+    }
+  }
 `;
 
 const ImageWrapper = styled.div`
@@ -18,7 +24,7 @@ const CategoryImage = styled.img`
 `;
 
 const CategoryName = styled.p`
-  font-size: 1.2rem;
+  font-size: 1.4rem;
 `;
 
 interface CategoryItem {

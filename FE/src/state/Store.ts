@@ -9,6 +9,7 @@ import WishSlice from './reducers/WishSlice';
 import OrderHistorySlice from './reducers/OrderHistorySlice';
 import SalesHistorySlice from './reducers/SalesHistorySlice';
 import SellingSlice from './reducers/SellingSlice';
+import ModalOpenSlice from './reducers/ModalOpenSlice';
 
 const Store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const Store = configureStore({
     orderHistory: OrderHistorySlice.reducer,
     salesHistory: SalesHistorySlice.reducer,
     sellingList: SellingSlice.reducer,
+    modalOpen: ModalOpenSlice.reducer,
   },
 });
 

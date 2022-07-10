@@ -1,2 +1,2 @@
-export * from './Modal';
+export * from './TopModal';
 export * from './PageLayout';
