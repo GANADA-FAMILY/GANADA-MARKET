@@ -65,9 +65,7 @@ function Header() {
         <Logo width="8rem" height="4rem" />
         <Navigation>
           <NavLink to="/shop/phone">SHOP</NavLink>
-          <TopModal trigger={<SearchIcon width="3rem" height="3rem" />}>
-            <Search />
-          </TopModal>
+          <SearchIcon fill="#333" width="3rem" height="3rem" />
         </Navigation>
       </HeaderBottom>
     </HeaderWrapper>
