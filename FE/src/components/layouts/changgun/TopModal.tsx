@@ -1,15 +1,16 @@
-import { useRootDispatch } from 'state/Hooks';
+import ReactDOM from 'react-dom';
+import { useRootDispatch, useRootSelector } from 'state/Hooks';
 import { closeModal } from 'state/reducers/ModalOpenSlice';
 import styled from 'styled-components';
 
 interface ModalProps {
   children: React.ReactNode;
-  shouldShow: boolean;
 }
 
 const BackDrop = styled.div`
   position: fixed;
-  z-index: 1;
+  /* Header의 z-index가 1이기 때문에 10으로 설정 */
+  z-index: 10;
   left: 0;
   top: 0;
   width: 100vw;
@@ -27,14 +28,20 @@ const ModalBody = styled.div`
   }
 `;
 
-function TopModal({ children, shouldShow }: ModalProps) {
+function TopModal({ children }: ModalProps) {
   const dispatch = useRootDispatch();
+  const modalOpen = useRootSelector((state) => state.modalOpen);
 
-  return shouldShow ? (
+  // getElementById의 반환 타입이 HTMLElement || null
+  // CreatePortal은 null타입을 인자로 받지않으므로 타입캐스팅이 필요
+  const modalRoot = document.getElementById('modal') as HTMLElement;
+  const modalNode = (
     <BackDrop onClick={() => dispatch(closeModal())}>
       <ModalBody onClick={(e) => e.stopPropagation()}>{children}</ModalBody>
     </BackDrop>
-  ) : null;
+  );
+
+  return modalOpen ? ReactDOM.createPortal(modalNode, modalRoot) : null;
 }
 
 export { TopModal };

@@ -1,6 +1,7 @@
 type KeyType = {
   [key: string]: string;
 };
+
 const color: KeyType = {
   white: '#FFFFFF',
   white2: '#ebebeb',
@@ -17,8 +18,10 @@ const fontWeight: KeyType = {
   solid: '600',
   bold: '700',
 };
+
 const theme = {
   color,
   fontWeight,
 };
+
 export default theme;

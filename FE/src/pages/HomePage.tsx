@@ -1,4 +1,3 @@
-import React from 'react';
 import MainTemplate from '../components/templates/MainTemplate/MainTemplate';
 
 function HomePage() {

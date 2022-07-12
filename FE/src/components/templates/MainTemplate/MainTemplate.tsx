@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import auctionAPI from 'api/auctionAPI';
 import AuctionList from 'types/Entity/MainAPI/AuctionList';
 import Main from '../../organisms/Main/Main';
