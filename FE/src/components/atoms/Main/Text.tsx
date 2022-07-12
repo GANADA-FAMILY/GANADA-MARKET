@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { StringMap } from 'ts-jest';
 
 interface TextProps {
   children: React.ReactNode;

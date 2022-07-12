@@ -32,6 +32,8 @@ function TopModal({ children }: ModalProps) {
   const dispatch = useRootDispatch();
   const modalOpen = useRootSelector((state) => state.modalOpen);
 
+  // getElementById의 반환 타입이 HTMLElement || null
+  // CreatePortal은 null타입을 인자로 받지않으므로 타입캐스팅이 필요
   const modalRoot = document.getElementById('modal') as HTMLElement;
   const modalNode = (
     <BackDrop onClick={() => dispatch(closeModal())}>
