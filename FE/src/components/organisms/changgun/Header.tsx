@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { useRootDispatch, useRootSelector } from 'state/Hooks';
+import { useRootDispatch } from 'state/Hooks';
 import { openModal } from 'state/reducers/ModalOpenSlice';
 import { ReactComponent as SearchIcon } from 'assets/svgs/search.svg';
 import { MenuList, Navigation, Logo } from '../../molecules/changgun';
@@ -30,11 +30,10 @@ const HeaderWrapper = styled.div`
   top: 0;
   width: 100%;
   height: 10rem;
-  z-index: 10;
+  z-index: 1;
 `;
 
 function Header() {
-  const modalOpen = useRootSelector((state) => state.modalOpen);
   const dispatch = useRootDispatch();
 
   const [token, setToken] = useState<null | string>(
@@ -48,11 +47,6 @@ function Header() {
 
   return (
     <HeaderWrapper>
-      {modalOpen && (
-        <TopModal>
-          <Search />
-        </TopModal>
-      )}
       <HeaderTop>
         <MenuList>
           <MenuLink to="/my/wish">관심상품</MenuLink>

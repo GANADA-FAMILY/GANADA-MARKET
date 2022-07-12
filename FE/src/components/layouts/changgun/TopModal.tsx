@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom';
-import { useRootDispatch } from 'state/Hooks';
+import { useRootDispatch, useRootSelector } from 'state/Hooks';
 import { closeModal } from 'state/reducers/ModalOpenSlice';
 import styled from 'styled-components';
 
@@ -9,7 +9,8 @@ interface ModalProps {
 
 const BackDrop = styled.div`
   position: fixed;
-  z-index: 1;
+  /* Header의 z-index가 1이기 때문에 10으로 설정 */
+  z-index: 10;
   left: 0;
   top: 0;
   width: 100vw;
@@ -29,12 +30,16 @@ const ModalBody = styled.div`
 
 function TopModal({ children }: ModalProps) {
   const dispatch = useRootDispatch();
+  const modalOpen = useRootSelector((state) => state.modalOpen);
 
-  return (
+  const modalRoot = document.getElementById('modal') as HTMLElement;
+  const modalNode = (
     <BackDrop onClick={() => dispatch(closeModal())}>
       <ModalBody onClick={(e) => e.stopPropagation()}>{children}</ModalBody>
     </BackDrop>
   );
+
+  return modalOpen ? ReactDOM.createPortal(modalNode, modalRoot) : null;
 }
 
 export { TopModal };
