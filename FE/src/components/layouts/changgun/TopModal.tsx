@@ -1,10 +1,10 @@
+import ReactDOM from 'react-dom';
 import { useRootDispatch } from 'state/Hooks';
 import { closeModal } from 'state/reducers/ModalOpenSlice';
 import styled from 'styled-components';
 
 interface ModalProps {
   children: React.ReactNode;
-  shouldShow: boolean;
 }
 
 const BackDrop = styled.div`
@@ -27,14 +27,14 @@ const ModalBody = styled.div`
   }
 `;
 
-function TopModal({ children, shouldShow }: ModalProps) {
+function TopModal({ children }: ModalProps) {
   const dispatch = useRootDispatch();
 
-  return shouldShow ? (
+  return (
     <BackDrop onClick={() => dispatch(closeModal())}>
       <ModalBody onClick={(e) => e.stopPropagation()}>{children}</ModalBody>
     </BackDrop>
-  ) : null;
+  );
 }
 
 export { TopModal };

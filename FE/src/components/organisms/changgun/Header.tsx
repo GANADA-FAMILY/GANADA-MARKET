@@ -48,6 +48,11 @@ function Header() {
 
   return (
     <HeaderWrapper>
+      {modalOpen && (
+        <TopModal>
+          <Search />
+        </TopModal>
+      )}
       <HeaderTop>
         <MenuList>
           <MenuLink to="/my/wish">관심상품</MenuLink>
@@ -78,9 +83,6 @@ function Header() {
             width="3rem"
             height="3rem"
           />
-          <TopModal shouldShow={modalOpen}>
-            <Search />
-          </TopModal>
         </Navigation>
       </HeaderBottom>
     </HeaderWrapper>
