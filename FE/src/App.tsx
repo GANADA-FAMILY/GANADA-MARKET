@@ -21,6 +21,7 @@ const MySalesPage = React.lazy(() => import('./pages/MySalesPage'));
 const MySellingPage = React.lazy(() => import('./pages/MySellingPage'));
 const LoginPage = React.lazy(() => import('./pages/LoginPage'));
 const AuctionCreatePage = React.lazy(() => import('./pages/AuctionCreatePage'));
+const LoginPage2 = React.lazy(() => import('./pages/LoginPage2'));
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
             <Route path="/my/selling" element={<MySellingPage />} />
             <Route path="/my/account" element={<MyAccountPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/login2" element={<LoginPage2 />} />
             <Route path="/shop/:product" element={<ShopPage />} />
             <Route path="/payment" element={<PaymentPage />} />
             <Route path="/auction/:auctionId" element={<AuctionPage />} />
