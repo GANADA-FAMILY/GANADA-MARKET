@@ -10,7 +10,6 @@ function LoginPage() {
     event.preventDefault();
     const form = { userEmail: email, userPw: password };
     const res = await axios.post('http://localhost:8080/api/auth/login', form);
-    console.log(res);
     if (res.status === 200) {
       window.localStorage.setItem('token', res.data.token);
       navigate('/');
